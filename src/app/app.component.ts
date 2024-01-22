@@ -1,28 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { FetchService } from './services/fetch.service';
-import { catchError } from 'rxjs';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { UsersComponent } from './components/users/users.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    ToolbarComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  public response: any = {
-    data: 'Data',
-    errorMessage: 'errorMessage',
-  };
-  constructor(private _fetchService: FetchService) {}
-
-  public ngOnInit(): void {
-    this._fetchService.get('https://localhost:7001/api/Users').subscribe(console.log)
-  }
-
-  // onClick() {
-  //   console.log('onClick')
-  // }
-}
+export class AppComponent {}

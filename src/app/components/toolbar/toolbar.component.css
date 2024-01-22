@@ -1,0 +1,6 @@
+.toolbar-vega {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+}

@@ -1,0 +1,15 @@
+<mat-toolbar color="primary" class="toolbar-vega">
+  <button
+    mat-fab
+    color="warn"
+    aria-label="Pages menu"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>grid_view</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu" backdropClass="positionX-mat-menu-center-vega">
+  <button routerLink="/" mat-menu-item ariaCurrentWhenActive="page">Home</button>
+  <button routerLink="/users" mat-menu-item ariaCurrentWhenActive="page">Users</button>
+</mat-menu>
