@@ -1,6 +1,14 @@
-.toolbar-vega {
+.toolbar-app-toolbar {
+  height: calc(var(--large-size) * 3);
   display: flex;
   justify-content: center;
   position: fixed;
   bottom: 0;
+}
+
+.buttons-app-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
 }

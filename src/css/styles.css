@@ -1,0 +1,16 @@
+@import './variables.css';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.app-toolbar-pages-global + .cdk-overlay-connected-position-bounding-box {
+  transform: translateX(-28px);
+}
+
+.app-toolbar-pages-global,
+.app-toolbar-settings-global,
+.app-toolbar-actions-global {
+  transform: translateY(-72px);
+}

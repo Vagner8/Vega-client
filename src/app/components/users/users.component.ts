@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, WritableSignal, signal } from '@angular/core';
 import { FetchService } from '../../services/fetch.service';
 import { User } from '../../types/user';
 import { MatTableModule } from '@angular/material/table';
@@ -11,7 +11,8 @@ import { MatTableModule } from '@angular/material/table';
   styleUrl: './users.component.css',
 })
 export class UsersComponent {
-  public users = signal<User[]>([]);
+  public users: WritableSignal<User[]> = signal<User[]>([]);
+  public displayedColumns: string[] = ['position', 'name', 'email', 'id', 'updated'];
 
   constructor(private _fetchService: FetchService) {}
 
