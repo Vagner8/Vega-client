@@ -1,0 +1,43 @@
+.mat-drawer-container-app-root {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding-bottom: var(--toolbar-height);
+}
+
+.mat-drawer-app-root {
+  bottom: var(--toolbar-height);
+}
+
+.toolbar-app-root{
+  z-index: 1;
+  height: var(--toolbar-height);
+  display: flex;
+  justify-content: right;
+  position: fixed;
+  bottom: 0;
+}
+
+.buttons-app-root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+}
+
+.mat-drawer-content-app-root {
+  width: 315px;
+}
+
+.mat-list-app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-list-button-app-root {
+  justify-content: start;
+  height: calc(var(--size-large) * 2);
+  &:hover {
+    border-radius: 0;
+  }
+}

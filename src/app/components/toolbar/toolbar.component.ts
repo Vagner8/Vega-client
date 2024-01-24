@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { SettingsComponent } from '../settings/settings.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,6 +18,7 @@ import { SettingsComponent } from '../settings/settings.component';
     RouterLinkActive,
     MatMenuModule,
     SettingsComponent,
+    MatSidenavModule
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
@@ -24,6 +26,7 @@ import { SettingsComponent } from '../settings/settings.component';
 export class ToolbarComponent implements AfterViewInit {
   @ViewChildren(MatMenuTrigger)
   private _matMenuTriggerQueryLists!: QueryList<MatMenuTrigger>;
+  showFiller = false;
 
   private _matMenuTriggers!: MatMenuTrigger[];
 

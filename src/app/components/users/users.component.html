@@ -1,30 +1,35 @@
 <h1>Users</h1>
-<table [dataSource]="users()" mat-table class="mat-elevation-z8 demo-table">
-  <ng-container matColumnDef="position">
+<table [dataSource]="users()" mat-table class="mat-elevation-z8 table-app-users">
+  <ng-container matColumnDef="{{matColumnDefs[0]}}">
     <th mat-header-cell *matHeaderCellDef>No.</th>
     <td mat-cell *matCellDef="let element; let i = index">{{i + 1}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="{{matColumnDefs[1]}}">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{element.firstName}} {{element.lastName}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="email">
+  <ng-container matColumnDef="{{matColumnDefs[2]}}">
     <th mat-header-cell *matHeaderCellDef>Email</th>
     <td mat-cell *matCellDef="let element">{{element.email}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="id">
+  <ng-container matColumnDef="{{matColumnDefs[3]}}">
     <th mat-header-cell *matHeaderCellDef>ID</th>
     <td mat-cell *matCellDef="let element">{{element.userId}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="updated">
+  <ng-container matColumnDef="{{matColumnDefs[4]}}">
     <th mat-header-cell *matHeaderCellDef>Updated</th>
     <td mat-cell *matCellDef="let element">{{element.updated}}</td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <ng-container matColumnDef="{{matColumnDefs[5]}}">
+    <th mat-header-cell *matHeaderCellDef>Created</th>
+    <td mat-cell *matCellDef="let element">{{element.created}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="matColumnDefs"></tr>
+  <tr mat-row *matRowDef="let row; columns: matColumnDefs;"></tr>
 </table>

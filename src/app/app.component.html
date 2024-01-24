@@ -1,4 +1,42 @@
-<div>
+<mat-drawer-container class="mat-drawer-container-app-root" autosize>
+  <mat-drawer [opened]="matDrawerOpened" class="mat-drawer-app-root" mode="side" position="end">
+    <div class="mat-drawer-content-app-root">
+      @switch (matDrawertrigger) {
+      @case ('actions') {
+      <h1>Actions menu</h1>
+      }
+      @case ('pages') {
+      <mat-list class="mat-list-app-root">
+        <button class="mat-list-button-app-root" routerLink="/" mat-flat-button><mat-icon>home</mat-icon>Home</button>
+        <button class="mat-list-button-app-root" routerLink="/users" mat-flat-button><mat-icon>group</mat-icon>Users</button>
+      </mat-list>
+
+      <mat-menu>
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+      }
+      @case ('settings') {
+      <h1>Settings menu</h1>
+      }
+      }
+    </div>
+  </mat-drawer>
   <router-outlet></router-outlet>
-</div>
-<app-toolbar></app-toolbar>
+</mat-drawer-container>
+
+<mat-toolbar color="primary" class="toolbar-app-root">
+  <div class="buttons-app-root">
+    <button (click)="onOpenMatDrawer('actions')" mat-mini-fab color="warn" aria-label="Actions menu">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+
+    <button (click)="onOpenMatDrawer('pages')" mat-fab color="warn" aria-label="Pages mneu">
+      <mat-icon>apps</mat-icon>
+    </button>
+
+    <button (click)="onOpenMatDrawer('settings')" mat-mini-fab color="warn" aria-label="Settings menu">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

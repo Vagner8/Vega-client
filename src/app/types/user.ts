@@ -6,5 +6,5 @@ export interface User {
   email: string;
   phone: string;
   updated: string;
-  dateTime: string;
+  created: string;
 }

@@ -1,5 +1,7 @@
 :root {
-  --small-size: 8px;
-  --medium-size: 16px;
-  --large-size: 24px;
+  --size-small: 8px;
+  --size-medium: 16px;
+  --size-large: 24px;
+
+  --toolbar-height: calc(var(--size-large) * 3);
 }
