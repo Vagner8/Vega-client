@@ -15,10 +15,9 @@ body {
   transform: translateY(-72px);
 }
 
-.mat-drawer-app-root {
+.mat-drawer-app-drawer {
   .mat-drawer-inner-container {
     display: flex;
     flex-direction: column-reverse;
-    height: 1500px;
   }
 }

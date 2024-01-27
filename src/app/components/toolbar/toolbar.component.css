@@ -1,0 +1,15 @@
+.buttons-app-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 320px;
+}
+
+.toolbar-app-toolbar {
+  z-index: 1;
+  height: var(--toolbar-height);
+  display: flex;
+  justify-content: right;
+  position: fixed;
+  bottom: 0;
+}

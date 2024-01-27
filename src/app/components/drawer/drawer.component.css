@@ -1,0 +1,23 @@
+.mat-drawer-container-app-drawer {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding-bottom: var(--toolbar-height);
+}
+
+.mat-drawer-app-drawer {
+  bottom: var(--toolbar-height);
+}
+
+.mat-list-app-drawer {
+  display: flex;
+  flex-direction: column;
+  width: 315px;
+  button {
+    justify-content: start;
+    height: calc(var(--size-large) * 2);
+    &:hover {
+      border-radius: 0;
+    }
+  }
+}
