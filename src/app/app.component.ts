@@ -1,16 +1,18 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
-import { MatMenu } from '@angular/material/menu';
+import {
+  MatButtonModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatDividerModule,
+  MatListModule,
+  MatMenu,
+} from '@mat';
+import { ScrollToBottomDirective } from './directives/scroll-to-bottom.directive';
 
-type MatDrawertriggers = 'actions' | 'pages' | 'settings';
+type matDrawerTriggers = 'actions' | 'pages' | 'settings';
 
 @Component({
   selector: 'app-root',
@@ -18,25 +20,28 @@ type MatDrawertriggers = 'actions' | 'pages' | 'settings';
   imports: [
     CommonModule,
     RouterOutlet,
-    ToolbarComponent,
+    RouterLink,
+    
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
     MatDividerModule,
     MatListModule,
-    RouterLink,
-    MatMenu
+    MatMenu,
+
+    ScrollToBottomDirective
   ],
+  providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   public matDrawerOpened: boolean = false;
-  public matDrawertrigger!: MatDrawertriggers;
+  public matDrawerTrigger!: matDrawerTriggers;
 
-  public onOpenMatDrawer(matDrawertrigger: MatDrawertriggers): void {
-    this.matDrawertrigger = matDrawertrigger;
+  public onOpenMatDrawer(matDrawerTrigger: matDrawerTriggers): void {
+    this.matDrawerTrigger = matDrawerTrigger;
     if (this.matDrawerOpened) return;
     this.matDrawerOpened = true;
   }
