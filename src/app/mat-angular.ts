@@ -5,3 +5,4 @@ export * from '@angular/material/toolbar';
 export * from '@angular/material/divider';
 export * from '@angular/material/list';
 export * from '@angular/material/menu';
+export * from '@angular/material/table';

@@ -33,3 +33,7 @@
   <tr mat-header-row *matHeaderRowDef="matColumnDefs"></tr>
   <tr mat-row *matRowDef="let row; columns: matColumnDefs;"></tr>
 </table>
+
+<button (click)="onAddUser()">Add user</button>
+<button (click)="onDeleteUser()">Delete user</button>
+<button (click)="onGetUser()">onGetUser</button>

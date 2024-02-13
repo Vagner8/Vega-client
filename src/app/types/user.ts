@@ -1,5 +1,5 @@
 export interface User {
-  userId: number;
+  userId: string;
   login: string;
   firstName: string;
   lastName: string;
@@ -7,4 +7,5 @@ export interface User {
   phone: string;
   updated: string;
   created: string;
+  password: null | string;
 }

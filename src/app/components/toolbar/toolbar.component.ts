@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { DrawerTriggers, GlobalStateService } from '@services';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 
@@ -10,7 +10,11 @@ import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
   styleUrl: './toolbar.component.css'
 })
 export class ToolbarComponent {
-  constructor(private _globalStateService: GlobalStateService) {}
+  error: WritableSignal<string | null>;
+
+  constructor(private _globalStateService: GlobalStateService) {
+    this.error = this._globalStateService.error
+  }
 
   public onOpenDrawer(drawerTrigger: DrawerTriggers): void {
     this._globalStateService.drawerTrigger.set(drawerTrigger);

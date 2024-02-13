@@ -14,13 +14,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError(this._handleError));
   }
 
-  private _handleError(error: HttpErrorResponse): Observable<never> {
-    const errorMessage = 'Something bad happened; please try again later.'
+  private _handleError = (error: HttpErrorResponse): Observable<never> => {
+    const errorMessage = 'Something bad happened; please try again later.';
     this._globalStateService.error.set(errorMessage);
     if (error.status === 0) {
-      console.error('An error occurred:', error.error);
+      console.error('An error occurred:', error.message);
     } else {
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      console.error(`Backend returned code ${error.status}`);
     }
     return throwError(() => new Error(errorMessage));
   }

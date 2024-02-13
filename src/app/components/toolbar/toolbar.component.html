@@ -12,4 +12,7 @@
       <mat-icon>settings</mat-icon>
     </button>
   </div>
+  @if (error()) {
+    <div><h1>Error</h1></div>
+  }
 </mat-toolbar>
