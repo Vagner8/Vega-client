@@ -1,7 +1,7 @@
 import { Component, WritableSignal, signal } from '@angular/core';
 import { MatTableModule } from '@mat';
 import { CommonModule } from '@angular/common';
-import { User } from '@types';
+import { UsersTypes } from '@types';
 import { FetchService, API } from '@services';
 
 @Component({
@@ -12,19 +12,19 @@ import { FetchService, API } from '@services';
   styleUrl: './users.component.css',
 })
 export class UsersComponent {
-  public users: WritableSignal<User[]> = signal<User[]>([]);
+  public users: WritableSignal<UsersTypes.User[]> = signal<UsersTypes.User[]>([]);
   public matColumnDefs: string[] = ['position', 'name', 'email', 'id', 'updated', 'created'];
 
   constructor(private _fetchService: FetchService) {}
 
   public ngOnInit(): void {
     this._fetchService
-      .get<User[]>(API.Users)
+      .get<UsersTypes.User[]>(API.Users)
       .subscribe(users => this.users.set(users.result));
   }
 
   public onAddUser() {
-    this._fetchService.post<User>(API.Users, {
+    this._fetchService.post<UsersTypes.User>(API.Users, {
       data: {
         userId: 'index',
         login: `login`,
@@ -50,7 +50,7 @@ export class UsersComponent {
 
   public onGetUser() {
     this._fetchService
-      .get<User[]>(API.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' })
+      .get<UsersTypes.User[]>(API.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' })
       .subscribe(user => console.log("🚀 ~ onGetUser:", user));
   }
 }

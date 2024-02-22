@@ -1,17 +1,17 @@
 <mat-drawer-container class="mat-drawer-container-app-drawer" autosize>
-  <mat-drawer [opened]="drawerOpened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
+  <mat-drawer [opened]="drawerIsOpened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
     <mat-list class="mat-list-app-drawer">
       @switch (drawerTrigger()) {
-        @case ('actions') {
+        @case ('Actions') {
           <button mat-flat-button><mat-icon>add</mat-icon>Create</button>
           <button mat-flat-button><mat-icon>edit</mat-icon>Edit</button>
           <button mat-flat-button><mat-icon>delete</mat-icon>Delete</button>
         }
-        @case ('pages') {
+        @case ('Pages') {
           <button routerLink="/" mat-flat-button><mat-icon>home</mat-icon>Home</button>
           <button routerLink="/users" mat-flat-button><mat-icon>group</mat-icon>Users</button>
         }
-        @case ('settings') {
+        @case ('Settings') {
         <h1>Settings menu</h1>
         }
       }

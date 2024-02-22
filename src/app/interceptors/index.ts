@@ -1,2 +1,1 @@
-export * from './http-error.interceptor';
-export * from './http-response.Interceptor';
+export * from './error.interceptor';

@@ -1,13 +1,12 @@
-import { Injectable, signal } from '@angular/core';
-
-export type DrawerTriggers = 'actions' | 'pages' | 'settings' | 'idle';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GlobalStateService {
-  public error = signal<null | string>(null);
+  private _error = signal<null | string>(null);
 
-  public drawerOpened = signal<boolean>(false);
-  public drawerTrigger = signal<DrawerTriggers>('idle');
+  public get error(): WritableSignal<null | string> {
+    return this._error;
+  }
 }

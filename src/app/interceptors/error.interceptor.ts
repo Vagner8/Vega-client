@@ -4,7 +4,7 @@ import { Observable, catchError, throwError } from "rxjs";
 import { GlobalStateService } from "../services/global-state.service";
 
 @Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private _globalStateService: GlobalStateService
@@ -15,7 +15,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   }
 
   private _handleError = (error: HttpErrorResponse): Observable<never> => {
-    const errorMessage = 'Something bad happened; please try again later.';
+    const errorMessage = 'Something bad happened, please try again later.';
     this._globalStateService.error.set(errorMessage);
     if (error.status === 0) {
       console.error('An error occurred:', error.message);

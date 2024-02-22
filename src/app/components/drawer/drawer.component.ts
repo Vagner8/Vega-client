@@ -1,7 +1,8 @@
-import { Component, WritableSignal } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule, MatIcon, MatSidenavModule, MatButton } from '@mat';
-import { DrawerTriggers, GlobalStateService } from '@services';
+import { DrawerStateService } from '@services';
+import { DrawerTypes } from '@types';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
 
 @Component({
@@ -19,16 +20,18 @@ import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directi
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',
 })
-export class DrawerComponent {
-  public drawerOpened!: WritableSignal<boolean>;
-  public drawerTrigger!: WritableSignal<DrawerTriggers>; 
+export class DrawerComponent implements OnInit {
+  public drawerIsOpened!: WritableSignal<boolean>;
+  public drawerTrigger!: WritableSignal<DrawerTypes.Triggers>; 
 
-  constructor(private _globalStateService: GlobalStateService) {
-    this.drawerOpened = this._globalStateService.drawerOpened;
-    this.drawerTrigger = this._globalStateService.drawerTrigger;
+  constructor(private _drawerStateService: DrawerStateService) {}
+
+  public ngOnInit(): void {
+    this.drawerIsOpened = this._drawerStateService.isOpened;
+    this.drawerTrigger = this._drawerStateService.trigger;
   }
 
   public onCloseDrawer(): void {
-    this.drawerOpened.set(false);
+    this.drawerIsOpened.set(false);
   }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DrawerComponent, ToolbarComponent } from '@components';
+import { GlobalStateService } from '@services';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,10 @@ import { DrawerComponent, ToolbarComponent } from '@components';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {}
+export class AppComponent {
+  error: WritableSignal<string | null>;
+
+  constructor(private _globalStateService: GlobalStateService) {
+    this.error = this._globalStateService.error
+  }
+}
