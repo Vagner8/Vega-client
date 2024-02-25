@@ -28,10 +28,10 @@ export class InputComponent {
   @ViewChild('inputElementRef')
   private _inputElementRef!: ElementRef<HTMLInputElement>;
   @Input() inputFormControl!: FormControl;
-  @Input() type: InputType.Type = 'text';
-  @Input() clearButton: boolean = true;
-  @Input() placeholder: string = '';
-  @Input() label: string = '';
+  @Input() type: string = 'text';
+  @Input() clearButton = true;
+  @Input() placeholder = '';
+  @Input() label = '';
 
   public togglePasswordVisibility(): void {
     const input = this._inputElementRef.nativeElement;

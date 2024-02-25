@@ -2,8 +2,9 @@ import { Component, OnInit, WritableSignal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule, MatIcon, MatSidenavModule, MatButton } from '@mat';
 import { DrawerStateService } from '@services';
-import { DrawerType } from '@types';
+import { TriggersType } from '@types';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
+import { TriggersComponent } from './triggers/triggers.component';
 
 @Component({
   selector: 'app-drawer',
@@ -16,13 +17,14 @@ import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directi
     MatSidenavModule,
     MatButton,
     ScrollToBottomDirective,
+    TriggersComponent
   ],
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',
 })
 export class DrawerComponent implements OnInit {
   public drawerOpened!: WritableSignal<boolean>;
-  public drawerTrigger!: WritableSignal<DrawerType.Trigger>;
+  public drawerTrigger!: WritableSignal<keyof TriggersType.Buttons>;
 
   constructor(private _drawerStateService: DrawerStateService) {}
 

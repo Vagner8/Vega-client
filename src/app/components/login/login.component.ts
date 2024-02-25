@@ -13,6 +13,7 @@ import {
   MatInputModule,
 } from '@mat';
 import { InputComponent } from '../input/input.component';
+import { InputType, LoginType, CommonType } from '@types';
 
 @Component({
   selector: 'app-login',
@@ -30,17 +31,34 @@ import { InputComponent } from '../input/input.component';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  public emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  public passwordFormControl = new FormControl('', [Validators.required]);
-  public loginFormGroup = new FormGroup({
-    email: this.emailFormControl,
-    password: this.passwordFormControl,
-  });
-  
+  public inputs: LoginType.Input[] = [
+    {
+      label: 'Email',
+      type: 'email',
+      formControl: new FormControl('', [Validators.required, Validators.email]),
+    },
+    {
+      label: 'Password',
+      type: 'password',
+      formControl: new FormControl('', [Validators.required]),
+    },
+  ];
+
+  public loginFormGroup = new FormGroup(this._getControls());
+
   public onSubmit(): void {
     console.log('🚀 ~ formGroup:', this.loginFormGroup);
   }
+
+  private _getControls(): CommonType.Controls {
+    return this.inputs.reduce((acc, input) => {
+      acc[input.label] = input.formControl;
+      return acc;
+    }, {} as CommonType.Controls)
+  }
 }
+
+// public loginFormGroup = new FormGroup({
+//   email: this.emailFormControl,
+//   password: this.passwordFormControl,
+// });
