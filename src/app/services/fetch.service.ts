@@ -21,6 +21,7 @@ export interface QueryParams {
 export enum API {
   Users = 'Users',
   Products = 'Products',
+  Auth = 'Auth'
 }
 
 @Injectable({

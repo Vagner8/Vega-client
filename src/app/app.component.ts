@@ -1,20 +1,20 @@
 import { Component, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DrawerComponent, ToolbarComponent } from '@components';
-import { GlobalStateService } from '@services';
+import { DrawerComponent, LoginComponent, ToolbarComponent } from '@components';
+import { CommonStateService } from '@services';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, DrawerComponent, ToolbarComponent],
+  imports: [CommonModule, DrawerComponent, ToolbarComponent, LoginComponent],
   providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  error: WritableSignal<string | null>;
+  public error: WritableSignal<string | null>;
 
-  constructor(private _globalStateService: GlobalStateService) {
-    this.error = this._globalStateService.error
+  constructor(private _commonStateService: CommonStateService) {
+    this.error = this._commonStateService.error;
   }
 }

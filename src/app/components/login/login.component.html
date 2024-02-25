@@ -1,1 +1,8 @@
-<p>login works!</p>
+<div class="app-login">
+  <h1>Login</h1>
+  <form class="form-app-login" (submit)="onSubmit()" [formGroup]="loginFormGroup">
+    <app-input label="Email" type="email" [inputFormControl]="emailFormControl"></app-input>
+    <app-input label="Password" type="password" [inputFormControl]="passwordFormControl"></app-input>
+    <button type="submit" mat-raised-button color="primary" [disabled]="loginFormGroup.invalid">Submit</button>
+  </form>
+</div>

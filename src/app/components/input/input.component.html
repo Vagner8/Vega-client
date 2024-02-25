@@ -1,0 +1,20 @@
+<mat-form-field class="mat-form-field-app-input">
+  <mat-label>{{label | capitalizeFirstLetter}}</mat-label>
+  <input #inputElementRef [type]="type" matInput [formControl]="inputFormControl" [placeholder]="placeholder">
+  @if (inputFormControl.value && clearButton) {
+  <button matSuffix mat-icon-button aria-label="Clear" (click)="inputFormControl.setValue('')">
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+  @if (inputFormControl.value && type === 'password') {
+  <button matSuffix mat-icon-button aria-label="Visibility" (click)="togglePasswordVisibility()">
+    <mat-icon>{{inputElementRef.type === 'password' ? 'visibility' : 'visibility_off'}}</mat-icon>
+  </button>
+  }
+  @if (inputFormControl.hasError(type) && !inputFormControl.hasError('required')) {
+  <mat-error>Please enter a valid {{label}}</mat-error>
+  }
+  @if (inputFormControl.hasError('required')) {
+  <mat-error>{{label}} is <strong>required</strong></mat-error>
+  }
+</mat-form-field>
