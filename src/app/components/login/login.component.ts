@@ -32,18 +32,17 @@ import { InputType, LoginType, CommonType } from '@types';
 })
 export class LoginComponent {
   public inputs: LoginType.Input[] = [
-    {
-      label: 'Email',
-      type: 'email',
-      formControl: new FormControl('', [Validators.required, Validators.email]),
-    },
-    {
-      label: 'Password',
-      type: 'password',
-      formControl: new FormControl('', [Validators.required]),
-    },
+    new LoginType.Input(
+      'Email',
+      'email',
+      new FormControl('', [Validators.required, Validators.email])
+    ),
+    new LoginType.Input(
+      'Password',
+      'password',
+      new FormControl('', [Validators.required])
+    ),
   ];
-
   public loginFormGroup = new FormGroup(this._getControls());
 
   public onSubmit(): void {
@@ -54,11 +53,6 @@ export class LoginComponent {
     return this.inputs.reduce((acc, input) => {
       acc[input.label] = input.formControl;
       return acc;
-    }, {} as CommonType.Controls)
+    }, {} as CommonType.Controls);
   }
 }
-
-// public loginFormGroup = new FormGroup({
-//   email: this.emailFormControl,
-//   password: this.passwordFormControl,
-// });
