@@ -7,7 +7,6 @@ import {
   MatInputModule,
 } from '@mat';
 import { CapitalizeFirstLetterPipe } from '@pipes';
-import { InputType } from '@types';
 
 @Component({
   selector: 'app-input',
@@ -39,6 +38,6 @@ export class InputComponent {
   }
 
   public togglePasswordVisibilityIcon(): string {
-    return this._inputElementRef.nativeElement.type === 'password' ? 'visibility' : 'visibility_off'
+    return this._inputElementRef.nativeElement.type === 'password' ? 'visibility' : 'visibility_off';
   }
 }

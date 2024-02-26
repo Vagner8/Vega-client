@@ -8,11 +8,11 @@ export class CommonStateService  {
   private readonly _login = signal<boolean>(false);
 
   public get error(): WritableSignal<string | null> {
-    return this._error
+    return this._error;
   }
   
   public get login(): WritableSignal<boolean> {
-    return this._login
+    return this._login;
   }
 
   public setError(error: string): void {

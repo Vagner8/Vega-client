@@ -1,10 +1,9 @@
-import { Component, OnInit, WritableSignal } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule, MatIcon, MatSidenavModule, MatButton } from '@mat';
 import { DrawerStateService } from '@services';
-import { TriggersType } from '@types';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
-import { TriggersComponent } from './triggers/triggers.component';
+import { DrawerTrigger, DrawerTriggers, IconName, PagePath } from '@types';
 
 @Component({
   selector: 'app-drawer',
@@ -17,23 +16,45 @@ import { TriggersComponent } from './triggers/triggers.component';
     MatSidenavModule,
     MatButton,
     ScrollToBottomDirective,
-    TriggersComponent
   ],
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',
 })
-export class DrawerComponent implements OnInit {
-  public drawerOpened!: WritableSignal<boolean>;
-  public drawerTrigger!: WritableSignal<keyof TriggersType.Triggers>;
+export class DrawerComponent {
+  public opened: WritableSignal<boolean> = this._drawerStateService.opened;
+  public trigger: WritableSignal<keyof DrawerTriggers> = this._drawerStateService.trigger;
 
   constructor(private _drawerStateService: DrawerStateService) {}
 
-  public ngOnInit(): void {
-    this.drawerOpened = this._drawerStateService.opened;
-    this.drawerTrigger = this._drawerStateService.trigger;
+  public onClose(): void {
+    this._drawerStateService.setOpened(false);
   }
 
-  public onCloseDrawer(): void {
-    this._drawerStateService.setOpened(false);
+  public createButtons(key: keyof DrawerTriggers): DrawerTrigger[] {
+    const drawerTriggers = {
+      actions: [
+        this._createButton('Create', IconName.Add),
+        this._createButton('Edit', IconName.Edit),
+        this._createButton('Delete', IconName.Delete),
+      ],
+      pages: [
+        this._createButton('Home', IconName.Home, PagePath.Home),
+        this._createButton('Users', IconName.Group, PagePath.Users),
+      ],
+      settings: [],
+    };
+    return drawerTriggers[key];
+  }
+
+  private _createButton(
+    label: string,
+    iconName: IconName,
+    pagePath?: PagePath,
+  ): DrawerTrigger {
+    return {
+      label,
+      iconName,
+      pagePath,
+    };
   }
 }

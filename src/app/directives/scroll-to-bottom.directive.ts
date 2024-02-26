@@ -17,7 +17,7 @@ export class ScrollToBottomDirective implements AfterViewInit {
 
   constructor(
     private _elementRef: ElementRef,
-    rendererFactory: RendererFactory2
+    rendererFactory: RendererFactory2,
   ) {
     this._renderer = rendererFactory.createRenderer(null, null);
   }
@@ -30,7 +30,7 @@ export class ScrollToBottomDirective implements AfterViewInit {
     if (!this.appCssSelector)
       return this._setScroll(this._elementRef.nativeElement);
     const scrollableElement = this._elementRef.nativeElement.querySelector(
-      this.appCssSelector
+      this.appCssSelector,
     );
     if (!scrollableElement) return;
     this._setScroll(scrollableElement);

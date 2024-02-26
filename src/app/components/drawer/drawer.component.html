@@ -1,8 +1,11 @@
 <mat-drawer-container class="mat-drawer-container-app-drawer" autosize>
-  <mat-drawer [opened]="drawerOpened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
+  <mat-drawer [opened]="opened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
     <mat-list class="mat-list-app-drawer">
-      <app-triggers [drawerTrigger]="drawerTrigger()"></app-triggers>
-      <button (click)="onCloseDrawer()" mat-flat-button><mat-icon>close</mat-icon>Close</button>
+      @for (button of createButtons(trigger()); track $index) {
+      <button mat-flat-button
+        [routerLink]="button.pagePath"><mat-icon>{{button.iconName}}</mat-icon>{{button.label}}</button>
+      }
+      <button (click)='onClose()' mat-flat-button><mat-icon>close</mat-icon>Close</button>
     </mat-list>
   </mat-drawer>
   <router-outlet></router-outlet>

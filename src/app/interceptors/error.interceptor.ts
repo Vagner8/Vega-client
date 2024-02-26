@@ -14,9 +14,9 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private _commonStateService: CommonStateService) {}
 
   public intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+    request: HttpRequest<unknown>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError(this._handleError));
   }
 
