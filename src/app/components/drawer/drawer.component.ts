@@ -24,7 +24,7 @@ import { TriggersComponent } from './triggers/triggers.component';
 })
 export class DrawerComponent implements OnInit {
   public drawerOpened!: WritableSignal<boolean>;
-  public drawerTrigger!: WritableSignal<keyof TriggersType.Buttons>;
+  public drawerTrigger!: WritableSignal<keyof TriggersType.Triggers>;
 
   constructor(private _drawerStateService: DrawerStateService) {}
 

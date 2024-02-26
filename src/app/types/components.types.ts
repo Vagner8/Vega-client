@@ -1,4 +1,4 @@
-import { FormControl, FormControlOptions, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 export namespace RoutingType {
   export enum RouterLink {
@@ -16,32 +16,24 @@ export namespace IconType {
 }
 
 export namespace TriggersType {
-  export interface Button {
+  export interface Trigger {
     text: string;
     iconName: IconType.Name;
     routerLink?: RoutingType.RouterLink;
   }
 
-  export interface Buttons {
-    actions: Button[];
-    pages: Button[];
-    settings: Button[];
+  export interface Triggers {
+    actions: Trigger[];
+    pages: Trigger[];
+    settings: Trigger[];
   }
 }
 
 export namespace LoginType {
-  export interface InputType {
+  export interface Input {
     formControl: FormControl;
     label: string;
     type: InputType.Type;
-  }
-
-  export class Input implements InputType {
-    constructor(
-      public label: string,
-      public type: InputType.Type,
-      public formControl: FormControl
-    ) {}
   }
 }
 

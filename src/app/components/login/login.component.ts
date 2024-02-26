@@ -13,7 +13,7 @@ import {
   MatInputModule,
 } from '@mat';
 import { InputComponent } from '../input/input.component';
-import { InputType, LoginType, CommonType } from '@types';
+import { LoginType, CommonType, InputType } from '@types';
 
 @Component({
   selector: 'app-login',
@@ -32,12 +32,12 @@ import { InputType, LoginType, CommonType } from '@types';
 })
 export class LoginComponent {
   public inputs: LoginType.Input[] = [
-    new LoginType.Input(
+    new Input(
       'Email',
       'email',
       new FormControl('', [Validators.required, Validators.email])
     ),
-    new LoginType.Input(
+    new Input(
       'Password',
       'password',
       new FormControl('', [Validators.required])
@@ -55,4 +55,12 @@ export class LoginComponent {
       return acc;
     }, {} as CommonType.Controls);
   }
+}
+
+export class Input implements LoginType.Input {
+  constructor(
+    public label: string,
+    public type: InputType.Type,
+    public formControl: FormControl
+  ) {}
 }

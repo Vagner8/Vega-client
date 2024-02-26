@@ -6,13 +6,13 @@ import { TriggersType } from '@types';
 })
 export class DrawerStateService {
   private readonly _opened = signal<boolean>(false);
-  private readonly _trigger = signal<keyof TriggersType.Buttons>('pages');
+  private readonly _trigger = signal<keyof TriggersType.Triggers>('pages');
 
   public get opened(): WritableSignal<boolean> {
     return this._opened;
   }
 
-  public get trigger(): WritableSignal<keyof TriggersType.Buttons> {
+  public get trigger(): WritableSignal<keyof TriggersType.Triggers> {
     return this._trigger;
   }
 
@@ -20,7 +20,7 @@ export class DrawerStateService {
     this._opened.set(value);
   }
 
-  public setTrigger(trigger: keyof TriggersType.Buttons): void {
+  public setTrigger(trigger: keyof TriggersType.Triggers): void {
     this._trigger.set(trigger);
   }
 }

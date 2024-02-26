@@ -10,9 +10,9 @@ import { IconType, RoutingType, TriggersType } from '@types';
   styleUrl: './triggers.component.css',
 })
 export class TriggersComponent {
-  @Input() public drawerTrigger!: keyof TriggersType.Buttons;
+  @Input() public drawerTrigger!: keyof TriggersType.Triggers;
 
-  public buttons: TriggersType.Buttons = {
+  public buttons: TriggersType.Triggers = {
     actions: [
       { text: 'Create', iconName: 'add' },
       { text: 'Edit', iconName: 'edit' },
