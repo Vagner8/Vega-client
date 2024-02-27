@@ -32,8 +32,7 @@
           }
         ],
         "quotes": ["error", "single"],
-        "semi": ["error", "always"],
-        "comma-dangle": ["error", "always-multiline"]
+        "semi": ["error", "always"]
       }
     },
     {

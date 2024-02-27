@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "localize": ["ru"],
+            "localize": ["en-US"],
             "outputPath": "dist/vega-client",
             "index": "src/index.html",
             "browser": "src/main.ts",

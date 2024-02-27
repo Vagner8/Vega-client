@@ -1,8 +1,8 @@
 import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { MatTableModule } from '@mat';
 import { CommonModule } from '@angular/common';
-import { User } from '@types';
-import { FetchService, API } from '@services';
+import { ApiUrl, User } from '@types';
+import { FetchService } from '@services';
 
 @Component({
   selector: 'app-users',
@@ -19,12 +19,12 @@ export class UsersComponent implements OnInit {
 
   public ngOnInit(): void {
     this._fetchService
-      .get<User[]>(API.Users)
+      .get<User[]>(ApiUrl.Users)
       .subscribe(users => this.users.set(users.result));
   }
 
   public onAddUser() {
-    this._fetchService.post<User>(API.Users, {
+    this._fetchService.post<User>(ApiUrl.Users, {
       data: {
         userId: 'index',
         login: 'login',
@@ -43,14 +43,14 @@ export class UsersComponent implements OnInit {
   }
 
   public onDeleteUser() {
-    this._fetchService.delete(API.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' }).subscribe(data => {
+    this._fetchService.delete(ApiUrl.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' }).subscribe(data => {
       console.log('🚀 ~ onDeleteUser:', data);
     });
   }
 
   public onGetUser() {
     this._fetchService
-      .get<User[]>(API.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' })
+      .get<User[]>(ApiUrl.Users, { userId: 'f7de89ab-f65b-465b-aee8-58730763b97e' })
       .subscribe(user => console.log('🚀 ~ onGetUser:', user));
   }
 }

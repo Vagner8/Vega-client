@@ -13,7 +13,8 @@ import {
   MatInputModule,
 } from '@mat';
 import { InputComponent } from '../input/input.component';
-import { Controls, InputType, LoginInput } from '@types';
+import { ApiUrl, Controls, InputType, LoginInput, User } from '@types';
+import { CommonStateService, FetchService } from '@services';
 
 @Component({
   selector: 'app-login',
@@ -33,20 +34,32 @@ import { Controls, InputType, LoginInput } from '@types';
 export class LoginComponent {
   public inputs: LoginInput[] = [
     this._createInput(
-      $localize`Email`,
+      'Email',
       InputType.Email,
-      new FormControl('', [Validators.required, Validators.email]),
+      new FormControl('', [Validators.required, Validators.email])
     ),
     this._createInput(
-      $localize`Password`,
+      'Password',
       InputType.Password,
-      new FormControl('', [Validators.required]),
-    ),
+      new FormControl('', [Validators.required])
+    )
   ];
   public loginFormGroup = new FormGroup(this._getControls());
 
-  public onSubmit(): void {
-    console.log('🚀 ~ onSubmit:', this.loginFormGroup);
+  constructor(
+    private _fetchService: FetchService,
+    private _commonStateService: CommonStateService
+  ) {}
+
+  public onLogin(): void {
+    this._fetchService
+      .post<User>(ApiUrl.login, {
+        userName: this.loginFormGroup.value['Email'],
+        password: this.loginFormGroup.value['Password'],
+      })
+      .subscribe((user) => {
+        console.log('🚀 ~ result:', user);
+      });
   }
 
   private _getControls(): Controls {
@@ -59,7 +72,7 @@ export class LoginComponent {
   private _createInput(
     label: string,
     type: InputType,
-    formControl: FormControl,
+    formControl: FormControl
   ): LoginInput {
     return {
       label,

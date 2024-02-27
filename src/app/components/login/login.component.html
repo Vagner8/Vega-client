@@ -1,6 +1,6 @@
 <div class="app-login">
   <h1>Login</h1>
-  <form class="form-app-login" (submit)="onSubmit()" [formGroup]="loginFormGroup">
+  <form class="form-app-login" (submit)="onLogin()" [formGroup]="loginFormGroup">
     @for (input of inputs; track input.label) {
       <app-input [label]="input.label" [inputType]="input.type" [inputFormControl]="input.formControl"></app-input>
     }
