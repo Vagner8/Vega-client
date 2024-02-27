@@ -6,7 +6,6 @@ import {
   MatIcon,
   MatInputModule,
 } from '@mat';
-import { CapitalizeFirstLetterPipe } from '@pipes';
 
 @Component({
   selector: 'app-input',
@@ -14,7 +13,6 @@ import { CapitalizeFirstLetterPipe } from '@pipes';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    CapitalizeFirstLetterPipe,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

@@ -5,7 +5,7 @@
       <button mat-flat-button
         [routerLink]="button.pagePath"><mat-icon>{{button.iconName}}</mat-icon>{{button.label}}</button>
       }
-      <button (click)='onClose()' mat-flat-button><mat-icon>close</mat-icon>Close</button>
+      <button (click)="onClose()" mat-flat-button><mat-icon>close</mat-icon>Close</button>
     </mat-list>
   </mat-drawer>
   <router-outlet></router-outlet>

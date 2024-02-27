@@ -1,5 +1,5 @@
 <mat-form-field class="mat-form-field-app-input">
-  <mat-label>{{label | capitalizeFirstLetter}}</mat-label>
+  <mat-label>{{label}}</mat-label>
   <input #inputElementRef [type]="type" matInput [formControl]="inputFormControl" [placeholder]="placeholder">
   @if (inputFormControl.value && clearButton) {
   <button matSuffix mat-icon-button aria-label="Clear" (click)="inputFormControl.setValue('')">
