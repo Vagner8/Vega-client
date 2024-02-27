@@ -44,6 +44,48 @@
           <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2979689092320439093" datatype="html">
+        <source>Clear input</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/input/input.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5866413865167768633" datatype="html">
+        <source>Password visibility</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/input/input.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7785679899744532927" datatype="html">
+        <source>Please enter a valid</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/input/input.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6608576580294436927" datatype="html">
+        <source>is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/input/input.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4768749765465246664" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/login/login.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1431416938026210429" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/login/login.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

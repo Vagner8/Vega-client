@@ -5,4 +5,6 @@ export enum IconName {
   Home = 'home',
   Group = 'group',
   Close = 'close',
+  Visibility = 'visibility',
+  Visibility_off = 'visibility_off',
 }

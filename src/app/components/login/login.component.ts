@@ -33,20 +33,20 @@ import { Controls, InputType, LoginInput } from '@types';
 export class LoginComponent {
   public inputs: LoginInput[] = [
     this._createInput(
-      'Email',
-      'email',
+      $localize`Email`,
+      InputType.Email,
       new FormControl('', [Validators.required, Validators.email]),
     ),
     this._createInput(
-      'Password',
-      'password',
+      $localize`Password`,
+      InputType.Password,
       new FormControl('', [Validators.required]),
     ),
   ];
   public loginFormGroup = new FormGroup(this._getControls());
 
   public onSubmit(): void {
-    console.log('🚀 ~ formGroup:', this.loginFormGroup);
+    console.log('🚀 ~ onSubmit:', this.loginFormGroup);
   }
 
   private _getControls(): Controls {

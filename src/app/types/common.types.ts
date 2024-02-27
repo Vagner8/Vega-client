@@ -10,4 +10,8 @@ export enum Locale {
   Cz = 'cz',
 }
 
-export type InputType = 'text' | 'email' | 'password';
+export enum InputType {
+  Text = 'text',
+  Email = 'email',
+  Password = 'password'
+}

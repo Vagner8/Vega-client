@@ -1,4 +1,10 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatButtonModule,
@@ -6,6 +12,7 @@ import {
   MatIcon,
   MatInputModule,
 } from '@mat';
+import { IconName, InputType } from '@types';
 
 @Component({
   selector: 'app-input',
@@ -20,22 +27,33 @@ import {
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
   @ViewChild('inputElementRef')
   private _inputElementRef!: ElementRef<HTMLInputElement>;
   @Input() inputFormControl!: FormControl;
-  @Input() type: string = 'text';
+  @Input() inputType = InputType.Text;
   @Input() clearButton = true;
   @Input() placeholder = '';
   @Input() label = '';
 
-  public togglePasswordVisibility(): void {
+  public toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;
-    input.type = input.type === 'text' ? 'password' : 'text';
+    input.type =
+      input.type === InputType.Text ? InputType.Password : InputType.Text;
   }
 
-  public togglePasswordVisibilityIcon(): string {
-    return this._inputElementRef.nativeElement.type === 'password' ? 'visibility' : 'visibility_off';
+  public toggleVisibilityIcon(): string {
+    return this._inputElementRef.nativeElement.type === InputType.Password
+      ? IconName.Visibility
+      : IconName.Visibility_off;
+  }
+
+  public get messages() {
+    return {
+      valid: `${$localize`Please enter a valid`}`,
+      required: `${$localize`is required`}`,
+    };
   }
 }
