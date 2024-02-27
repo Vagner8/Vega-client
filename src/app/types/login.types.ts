@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { InputType } from './elements.types';
+import { InputType } from './common.types';
 
 export interface LoginInput {
   formControl: FormControl;

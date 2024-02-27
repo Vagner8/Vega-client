@@ -33,13 +33,13 @@ export class DrawerComponent {
   public createButtons(key: keyof DrawerTriggers): DrawerTrigger[] {
     const drawerTriggers = {
       actions: [
-        this._createButton('Create', IconName.Add),
-        this._createButton('Edit', IconName.Edit),
-        this._createButton('Delete', IconName.Delete),
+        this._createButton($localize`Create`, IconName.Add),
+        this._createButton($localize`Edit`, IconName.Edit),
+        this._createButton($localize`Delete`, IconName.Delete),
       ],
       pages: [
-        this._createButton('Home', IconName.Home, PagePath.Home),
-        this._createButton('Users', IconName.Group, PagePath.Users),
+        this._createButton($localize`Home`, IconName.Home, PagePath.Home),
+        this._createButton($localize`Users`, IconName.Group, PagePath.Users),
       ],
       settings: [],
     };
