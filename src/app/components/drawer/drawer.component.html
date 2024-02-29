@@ -3,7 +3,7 @@
     <mat-list class="mat-list-app-drawer">
       @for (drawerTrigger of createDrawerTriggers(trigger()); track $index) {
       <button mat-flat-button
-        [routerLink]="getRouterLink(drawerTrigger.name)"><mat-icon>{{drawerTrigger.icon}}</mat-icon>{{drawerTrigger.name}}</button>
+        [routerLink]="getRouterLink(drawerTrigger.name)" [disabled]="drawerTrigger.disabled"><mat-icon>{{drawerTrigger.icon}}</mat-icon>{{drawerTrigger.name}}</button>
       }
       <button (click)="onClose()" mat-flat-button i18n><mat-icon>close</mat-icon>Close</button>
     </mat-list>

@@ -7,5 +7,6 @@ export enum IconName {
   Close = 'close',
   Visibility = 'visibility',
   Visibility_off = 'visibility_off',
-  View_cozy = 'view_cozy'
+  View_cozy = 'view_cozy',
+  Task_alt = 'task_alt'
 }

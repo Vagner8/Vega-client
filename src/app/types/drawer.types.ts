@@ -3,6 +3,7 @@ import { IconName } from './icon.types';
 export interface DrawerTrigger {
   name: TriggerName;
   icon: IconName;
+  disabled: boolean;
 }
 
 export interface DrawerTriggers {
@@ -17,4 +18,6 @@ export enum TriggerName {
   Create = 'Create',
   Edit = 'Edit',
   Delete = 'Delete',
+  Ok = 'Ok',
+  Modal = 'modal'
 }

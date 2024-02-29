@@ -4,6 +4,7 @@ import {
   CreateUserComponent,
   EditUserComponent,
   UsersComponent,
+  ModalComponent,
 } from '@components';
 import { TriggerName } from './types/drawer.types';
 
@@ -14,6 +15,7 @@ const usersRoutes: Routes = [
 ];
 
 export const routes: Routes = [
+  { path: `${TriggerName.Modal}/:page/:action`, component: ModalComponent },
   { path: TriggerName.Home, component: HomeComponent },
   { path: TriggerName.Users, children: usersRoutes },
   { path: '**', redirectTo: TriggerName.Home },

@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule, MatIcon, MatSidenavModule, MatButton } from '@mat';
-import { CommonStateService, DrawerStateService } from '@services';
+import {
+  ActionsStateService,
+  CommonStateService,
+  DrawerStateService,
+} from '@services';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
 import { DrawerTriggers, IconName, TriggerName } from '@types';
 
@@ -23,8 +27,17 @@ import { DrawerTriggers, IconName, TriggerName } from '@types';
 export class DrawerComponent {
   constructor(
     private _drawerStateService: DrawerStateService,
-    private _commonStateService: CommonStateService
+    private _commonStateService: CommonStateService,
+    private _actionsStateService: ActionsStateService
   ) {}
+
+  get ok() {
+    return this._actionsStateService.ok;
+  }
+
+  get edit() {
+    return this._actionsStateService.edit;
+  }
 
   get opened() {
     return this._drawerStateService.opened;
@@ -39,11 +52,20 @@ export class DrawerComponent {
   }
 
   createDrawerTriggers(trigger: keyof DrawerTriggers) {
-    const drawerTriggers = {
+    const drawerTriggers: DrawerTriggers = {
       actions: [
         this._createDrawerTrigger(TriggerName.Delete, IconName.Delete),
         this._createDrawerTrigger(TriggerName.Create, IconName.Add),
-        this._createDrawerTrigger(TriggerName.Edit, IconName.Edit),
+        this._createDrawerTrigger(
+          TriggerName.Edit,
+          IconName.Edit,
+          this.edit().disabled
+        ),
+        this._createDrawerTrigger(
+          TriggerName.Ok,
+          IconName.Task_alt,
+          this.ok().disabled
+        ),
       ],
       pages: [
         this._createDrawerTrigger(TriggerName.Home, IconName.Home),
@@ -57,13 +79,20 @@ export class DrawerComponent {
   getRouterLink(drawerTriggerName: string) {
     const trigger = this.trigger();
     if (trigger !== 'actions') return drawerTriggerName;
-    return `${this._commonStateService.url().split('/')[1]}/${drawerTriggerName}`;
+    return `${
+      this._commonStateService.url().split('/')[1]
+    }/${drawerTriggerName}`;
   }
 
-  private _createDrawerTrigger(name: string, icon: IconName) {
+  private _createDrawerTrigger(
+    name: TriggerName,
+    icon: IconName,
+    disabled: boolean = false
+  ) {
     return {
       name,
       icon,
+      disabled,
     };
   }
 }

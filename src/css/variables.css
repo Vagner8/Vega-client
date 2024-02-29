@@ -3,5 +3,7 @@
   --size-medium: 16px;
   --size-large: 24px;
 
+  --color-common: #fff;
+
   --toolbar-height: calc(var(--size-large) * 3);
 }
