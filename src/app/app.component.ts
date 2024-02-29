@@ -1,4 +1,4 @@
-import { Component, WritableSignal } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   DrawerComponent,
@@ -6,6 +6,8 @@ import {
   ToolbarComponent,
 } from '@components';
 import { CommonStateService } from '@services';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,10 +17,30 @@ import { CommonStateService } from '@services';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
-  constructor(private _commonStateService: CommonStateService) {}
+export class AppComponent implements OnInit, OnDestroy {
+  private _subscription: Subscription[] = [];
 
-  public get error(): WritableSignal<string | null> {
+  constructor(
+    private _commonStateService: CommonStateService,
+    private _router: Router,
+  ) {}
+
+  ngOnInit() {
+    this._subscription = [this._routerEventsSubscribe()];
+  }
+
+  ngOnDestroy() {
+    this._subscription.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  get error() {
     return this._commonStateService.error;
+  }
+
+  private _routerEventsSubscribe() {
+    return this._router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) return;
+      this._commonStateService.setUrl(event.urlAfterRedirects);
+    });
   }
 }

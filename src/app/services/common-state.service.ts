@@ -1,16 +1,25 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonStateService {
   private readonly _error = signal<string>('');
+  private readonly _url = signal<string>('');
 
-  public get error(): WritableSignal<string | null> {
+  get error() {
     return this._error;
   }
 
-  public setError(error: string): void {
+  setError(error: string) {
     this._error.set(error);
+  }
+
+  get url() {
+    return this._url;
+  }
+
+  setUrl(url: string) {
+    this._url.set(url);
   }
 }

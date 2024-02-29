@@ -13,7 +13,7 @@ import { CommonStateService } from '../services/common-state.service';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private _commonStateService: CommonStateService) {}
 
-  public intercept(
+  intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {

@@ -14,19 +14,19 @@ export interface RequestDto<T> {
 export class FetchService {
   constructor(private _httpClient: HttpClient) {}
 
-  public get<T>(url: ApiUrl, params?: QueryParams): Observable<ResponseDto<T>> {
+  get<T>(url: ApiUrl, params?: QueryParams): Observable<ResponseDto<T>> {
     return this._httpClient.get<ResponseDto<T>>(url, { params });
   }
 
-  public post<T>(url: ApiUrl, data: object): Observable<ResponseDto<T>> {
+  post<T>(url: ApiUrl, data: object): Observable<ResponseDto<T>> {
     return this._httpClient.post<ResponseDto<T>>(url, data);
   }
 
-  public put<T>(url: ApiUrl, data: RequestDto<T>): Observable<ResponseDto<T>> {
+  put<T>(url: ApiUrl, data: RequestDto<T>): Observable<ResponseDto<T>> {
     return this._httpClient.put<ResponseDto<T>>(url, data);
   }
 
-  public delete<T>(url: ApiUrl, params: QueryParams): Observable<ResponseDto<T>> {
+  delete<T>(url: ApiUrl, params: QueryParams): Observable<ResponseDto<T>> {
     return this._httpClient.delete<ResponseDto<T>>(url, { params });
   }
 }

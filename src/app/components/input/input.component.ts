@@ -35,19 +35,19 @@ export class InputComponent {
   @Input() clearButton = true;
   @Input() controlInput!: [string, FormControl];
 
-  public toggleInputType(): void {
+  toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;
     input.type =
       input.type === InputType.Text ? InputType.Password : InputType.Text;
   }
 
-  public toggleVisibilityIcon(): string {
+  toggleVisibilityIcon(): string {
     return this._inputElementRef.nativeElement.type === InputType.Password
       ? IconName.Visibility
       : IconName.Visibility_off;
   }
 
-  public get messages() {
+  get messages() {
     return {
       valid: `${$localize`Please enter a valid`}`,
       required: `${$localize`is required`}`,

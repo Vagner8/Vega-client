@@ -8,19 +8,19 @@ export class DrawerStateService {
   private readonly _opened = signal<boolean>(false);
   private readonly _trigger = signal<keyof DrawerTriggers>('pages');
 
-  public get opened(): WritableSignal<boolean> {
+  get opened(): WritableSignal<boolean> {
     return this._opened;
   }
 
-  public get trigger(): WritableSignal<keyof DrawerTriggers> {
+  get trigger(): WritableSignal<keyof DrawerTriggers> {
     return this._trigger;
   }
 
-  public setOpened(value: boolean): void {
+  setOpened(value: boolean): void {
     this._opened.set(value);
   }
 
-  public setTrigger(trigger: keyof DrawerTriggers): void {
+  setTrigger(trigger: keyof DrawerTriggers): void {
     this._trigger.set(trigger);
   }
 }

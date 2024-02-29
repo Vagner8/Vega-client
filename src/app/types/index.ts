@@ -1,6 +1,5 @@
 export * from './common.types';
 export * from './drawer.types';
 export * from './icon.types';
-export * from './routing.types';
 export * from './user.types';
 export * from './http.types';

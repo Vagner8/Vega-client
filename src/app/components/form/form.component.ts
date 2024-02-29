@@ -14,11 +14,11 @@ export class FormComponent {
   @Input() formGroup!: FormGroup;
   @Output() submitEvent = new EventEmitter();
 
-  public onSubmitEvent(): void {
+  onSubmitEvent(): void {
     this.submitEvent.emit();
   }
 
-  public get controlInputs(): [string, FormControl][] {
+  get controlInputs(): [string, FormControl][] {
     return Object.entries(this.formGroup.controls) as [string, FormControl][];
   }
 }

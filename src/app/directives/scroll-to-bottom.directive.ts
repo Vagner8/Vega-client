@@ -22,7 +22,7 @@ export class ScrollToBottomDirective implements AfterViewInit {
     this._renderer = rendererFactory.createRenderer(null, null);
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     this._scrollToBottom();
   }
 

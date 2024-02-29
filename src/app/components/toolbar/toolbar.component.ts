@@ -13,7 +13,7 @@ import { DrawerTriggers } from '@types';
 export class ToolbarComponent {
   constructor(private _drawerStateService: DrawerStateService) {}
 
-  public onOpenDrawer(trigger: keyof DrawerTriggers): void {
+  onOpenDrawer(trigger: keyof DrawerTriggers): void {
     this._drawerStateService.setTrigger(trigger);
     if (this._drawerStateService.opened()) return;
     this._drawerStateService.setOpened(true);

@@ -11,7 +11,7 @@ import { NavigationError, Router } from '@angular/router';
 export class SettingsComponent implements OnInit {
   constructor(private _router: Router) {}
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationError) {
         console.log('NavigationError:', event);

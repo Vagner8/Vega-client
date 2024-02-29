@@ -26,12 +26,3 @@ export enum InputLabel {
 export type FormGroupMap<T> = {
   [K in keyof T]: FormControl;
 };
-
-export enum RoutePath {
-  Actions = 'Actions',
-  Pages = 'Pages',
-  Settings = 'Settings',
-  Create = 'Create',
-  Home = 'Home',
-  Users = 'Users',
-}

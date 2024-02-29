@@ -1,14 +1,20 @@
 import { IconName } from './icon.types';
-import { PagePath } from './routing.types';
 
 export interface DrawerTrigger {
-  label: string;
-  iconName: IconName;
-  pagePath?: PagePath;
+  name: TriggerName;
+  icon: IconName;
 }
 
 export interface DrawerTriggers {
   actions: DrawerTrigger[];
   pages: DrawerTrigger[];
   settings: DrawerTrigger[];
+}
+
+export enum TriggerName {
+  Home = 'Home',
+  Users = 'Users',
+  Create = 'Create',
+  Edit = 'Edit',
+  Delete = 'Delete',
 }

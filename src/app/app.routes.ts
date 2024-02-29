@@ -1,25 +1,20 @@
 import { Routes } from '@angular/router';
 import {
-  UsersComponent,
   HomeComponent,
-  UserRegisterComponent,
+  CreateUserComponent,
+  EditUserComponent,
+  UsersComponent,
 } from '@components';
-import { RoutePath } from './types/common.types';
+import { TriggerName } from './types/drawer.types';
+
+const usersRoutes: Routes = [
+  { path: '', component: UsersComponent, pathMatch: 'full' },
+  { path: TriggerName.Create, component: CreateUserComponent },
+  { path: TriggerName.Edit, component: EditUserComponent },
+];
 
 export const routes: Routes = [
-  {
-    path: RoutePath.Actions,
-    children: [{ path: RoutePath.Create, component: UserRegisterComponent }],
-  },
-  {
-    path: RoutePath.Pages,
-    children: [
-      { path: RoutePath.Home, component: HomeComponent },
-      { path: RoutePath.Users, component: UsersComponent },
-    ],
-  },
-  {
-    path: RoutePath.Settings,
-    children: [],
-  },
+  { path: TriggerName.Home, component: HomeComponent },
+  { path: TriggerName.Users, children: usersRoutes },
+  { path: '**', redirectTo: TriggerName.Home },
 ];

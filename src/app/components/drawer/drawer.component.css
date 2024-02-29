@@ -1,16 +1,17 @@
 .mat-drawer-container-app-drawer {
+  padding: var(--size-small);
   width: 100%;
   height: 100%;
 }
 
-.router-outlet-app-drawer {
-  padding: var(--size-small);
+.mat-drawer-app-drawer {
+  width: 150px;
 }
 
 .mat-list-app-drawer {
   display: flex;
   flex-direction: column;
-  width: 315px;
+  width: 100%;
   button {
     justify-content: start;
     height: calc(var(--size-large) * 2);

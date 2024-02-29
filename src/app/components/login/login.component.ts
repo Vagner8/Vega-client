@@ -12,14 +12,14 @@ import { FormComponent } from '../form/form.component';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  public loginFormGroup = new FormGroup({
+  loginFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
   constructor(private _fetchService: FetchService) {}
 
-  public onLogin(): void {
+  onLogin(): void {
     this._fetchService
       .post<User>(ApiUrl.login, this.loginFormGroup.value)
       .subscribe((user) => {

@@ -9,19 +9,19 @@ export class UserStateService {
   private readonly _login = signal<boolean>(false);
   private readonly _token = signal<string>('');
 
-  public get login(): WritableSignal<boolean> {
+  get login(): WritableSignal<boolean> {
     return this._login;
   }
 
-  public setLogin(login: boolean): void {
+  setLogin(login: boolean): void {
     this._login.set(login);
   }
 
-  public get user(): WritableSignal<User | null> {
+  get user(): WritableSignal<User | null> {
     return this._user;
   }
 
-  public setUser(value: Partial<User>): void {
+  setUser(value: Partial<User>): void {
     this._user.update((user) => {
       if (!user) return null;
       return {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonStateService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  constructor(private _commonStateService: CommonStateService) {}
+
+  get url() {
+    return this._commonStateService.url;
+  }
+}

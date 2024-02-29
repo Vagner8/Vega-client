@@ -1,9 +1,9 @@
-import { Component, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatListModule, MatIcon, MatSidenavModule, MatButton } from '@mat';
-import { DrawerStateService } from '@services';
+import { CommonStateService, DrawerStateService } from '@services';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
-import { DrawerTrigger, DrawerTriggers, IconName, PagePath } from '@types';
+import { DrawerTriggers, IconName, TriggerName } from '@types';
 
 @Component({
   selector: 'app-drawer',
@@ -21,40 +21,49 @@ import { DrawerTrigger, DrawerTriggers, IconName, PagePath } from '@types';
   styleUrl: './drawer.component.css',
 })
 export class DrawerComponent {
-  public opened: WritableSignal<boolean> = this._drawerStateService.opened;
-  public trigger: WritableSignal<keyof DrawerTriggers> = this._drawerStateService.trigger;
+  constructor(
+    private _drawerStateService: DrawerStateService,
+    private _commonStateService: CommonStateService
+  ) {}
 
-  constructor(private _drawerStateService: DrawerStateService) {}
+  get opened() {
+    return this._drawerStateService.opened;
+  }
 
-  public onClose(): void {
+  get trigger() {
+    return this._drawerStateService.trigger;
+  }
+
+  onClose() {
     this._drawerStateService.setOpened(false);
   }
 
-  public createButtons(key: keyof DrawerTriggers): DrawerTrigger[] {
+  createDrawerTriggers(trigger: keyof DrawerTriggers) {
     const drawerTriggers = {
       actions: [
-        this._createButton($localize`Delete`, IconName.Delete),
-        this._createButton($localize`Create`, IconName.Add),
-        this._createButton($localize`Edit`, IconName.Edit),
+        this._createDrawerTrigger(TriggerName.Delete, IconName.Delete),
+        this._createDrawerTrigger(TriggerName.Create, IconName.Add),
+        this._createDrawerTrigger(TriggerName.Edit, IconName.Edit),
       ],
       pages: [
-        this._createButton($localize`Home`, IconName.Home, PagePath.Home),
-        this._createButton($localize`Users`, IconName.Group, PagePath.Users),
+        this._createDrawerTrigger(TriggerName.Home, IconName.Home),
+        this._createDrawerTrigger(TriggerName.Users, IconName.Group),
       ],
       settings: [],
     };
-    return drawerTriggers[key];
+    return drawerTriggers[trigger];
   }
 
-  private _createButton(
-    label: string,
-    iconName: IconName,
-    pagePath?: PagePath,
-  ): DrawerTrigger {
+  getRouterLink(drawerTriggerName: string) {
+    const trigger = this.trigger();
+    if (trigger !== 'actions') return drawerTriggerName;
+    return `${this._commonStateService.url().split('/')[1]}/${drawerTriggerName}`;
+  }
+
+  private _createDrawerTrigger(name: string, icon: IconName) {
     return {
-      label,
-      iconName,
-      pagePath,
+      name,
+      icon,
     };
   }
 }
