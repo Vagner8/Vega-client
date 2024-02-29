@@ -33,9 +33,9 @@ export class DrawerComponent {
   public createButtons(key: keyof DrawerTriggers): DrawerTrigger[] {
     const drawerTriggers = {
       actions: [
+        this._createButton($localize`Delete`, IconName.Delete),
         this._createButton($localize`Create`, IconName.Add),
         this._createButton($localize`Edit`, IconName.Edit),
-        this._createButton($localize`Delete`, IconName.Delete),
       ],
       pages: [
         this._createButton($localize`Home`, IconName.Home, PagePath.Home),

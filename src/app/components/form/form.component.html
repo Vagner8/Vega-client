@@ -1,0 +1,6 @@
+<form (submit)="onSubmitEvent()" [formGroup]="formGroup">
+  @for (controlInput of controlInputs; track controlInput[0]) {
+    <app-input [controlInput]="controlInput"></app-input>
+  }
+  <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">Submit</button>
+</form>

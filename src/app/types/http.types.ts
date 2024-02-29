@@ -18,4 +18,5 @@ export enum ApiBaseUrl {
 export enum ApiUrl {
   Users = `${ApiBaseUrl.Users}/users`,
   login = `${ApiBaseUrl.Auth}/login`,
+  UserRegister = `${ApiBaseUrl.Auth}/register`
 }

@@ -1,9 +1,4 @@
 .app-login {
   padding: var(--size-small);
-}
-
-.form-app-login {
-  display: flex;
-  flex-direction: column;
   width: 320px;
 }

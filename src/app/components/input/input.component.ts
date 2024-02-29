@@ -32,11 +32,8 @@ import { IconName, InputType } from '@types';
 export class InputComponent {
   @ViewChild('inputElementRef')
   private _inputElementRef!: ElementRef<HTMLInputElement>;
-  @Input() inputFormControl!: FormControl;
-  @Input() inputType = InputType.Text;
   @Input() clearButton = true;
-  @Input() placeholder = '';
-  @Input() label = '';
+  @Input() controlInput!: [string, FormControl];
 
   public toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;

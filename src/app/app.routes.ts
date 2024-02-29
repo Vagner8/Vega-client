@@ -1,13 +1,25 @@
 import { Routes } from '@angular/router';
-import { UsersComponent } from './components/users/users.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
+import {
+  UsersComponent,
+  HomeComponent,
+  UserRegisterComponent,
+} from '@components';
+import { RoutePath } from './types/common.types';
 
 export const routes: Routes = [
-  { path: '**', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
-  { path: '', children: [
-    { path: 'home', component: HomeComponent },
-    { path: 'users', component: UsersComponent },
-  ] },
+  {
+    path: RoutePath.Actions,
+    children: [{ path: RoutePath.Create, component: UserRegisterComponent }],
+  },
+  {
+    path: RoutePath.Pages,
+    children: [
+      { path: RoutePath.Home, component: HomeComponent },
+      { path: RoutePath.Users, component: UsersComponent },
+    ],
+  },
+  {
+    path: RoutePath.Settings,
+    children: [],
+  },
 ];

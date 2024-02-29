@@ -1,0 +1,5 @@
+h1 {
+  padding: var(--size-small);
+  margin: 0;
+  border-bottom: 1px var(--mat-sidenav-container-divider-color) solid;
+}
