@@ -7,7 +7,7 @@ import {
   DrawerStateService,
 } from '@services';
 import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
-import { DrawerTriggers, IconName, TriggerName } from '@types';
+import { DrawerTrigger, DrawerTriggers, IconName, TriggerName } from '@types';
 
 @Component({
   selector: 'app-drawer',
@@ -31,8 +31,8 @@ export class DrawerComponent {
     private _actionsStateService: ActionsStateService
   ) {}
 
-  get ok() {
-    return this._actionsStateService.ok;
+  get send() {
+    return this._actionsStateService.send;
   }
 
   get edit() {
@@ -51,21 +51,21 @@ export class DrawerComponent {
     this._drawerStateService.setOpened(false);
   }
 
-  createDrawerTriggers(trigger: keyof DrawerTriggers) {
+  createDrawerTriggers(trigger: keyof DrawerTriggers | null) {
+    if (!trigger) return;
     const drawerTriggers: DrawerTriggers = {
       actions: [
-        this._createDrawerTrigger(TriggerName.Delete, IconName.Delete),
+        this._createDrawerTrigger(TriggerName.Delete, IconName.Delete, {
+          confirm: true,
+        }),
         this._createDrawerTrigger(TriggerName.Create, IconName.Add),
-        this._createDrawerTrigger(
-          TriggerName.Edit,
-          IconName.Edit,
-          this.edit().disabled
-        ),
-        this._createDrawerTrigger(
-          TriggerName.Ok,
-          IconName.Task_alt,
-          this.ok().disabled
-        ),
+        this._createDrawerTrigger(TriggerName.Edit, IconName.Edit, {
+          disabled: this.edit().disabled,
+        }),
+        this._createDrawerTrigger(TriggerName.Send, IconName.Send, {
+          disabled: this.send().disabled,
+          confirm: true,
+        }),
       ],
       pages: [
         this._createDrawerTrigger(TriggerName.Home, IconName.Home),
@@ -85,14 +85,14 @@ export class DrawerComponent {
   }
 
   private _createDrawerTrigger(
-    name: TriggerName,
-    icon: IconName,
-    disabled: boolean = false
+    name: DrawerTrigger['name'],
+    icon: DrawerTrigger['icon'],
+    option?: DrawerTrigger['option']
   ) {
     return {
       name,
       icon,
-      disabled,
+      option,
     };
   }
 }

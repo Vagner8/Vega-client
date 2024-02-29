@@ -1,4 +1,4 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { DrawerTriggers } from '@types';
 
 @Injectable({
@@ -6,21 +6,21 @@ import { DrawerTriggers } from '@types';
 })
 export class DrawerStateService {
   private readonly _opened = signal<boolean>(false);
-  private readonly _trigger = signal<keyof DrawerTriggers>('pages');
+  private readonly _trigger = signal<keyof DrawerTriggers | null>(null);
 
-  get opened(): WritableSignal<boolean> {
+  get opened() {
     return this._opened;
   }
 
-  get trigger(): WritableSignal<keyof DrawerTriggers> {
+  get trigger() {
     return this._trigger;
   }
 
-  setOpened(value: boolean): void {
+  setOpened(value: boolean) {
     this._opened.set(value);
   }
 
-  setTrigger(trigger: keyof DrawerTriggers): void {
+  setTrigger(trigger: keyof DrawerTriggers | null) {
     this._trigger.set(trigger);
   }
 }

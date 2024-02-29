@@ -2,10 +2,11 @@
   <mat-drawer [opened]="opened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
     <mat-list class="mat-list-app-drawer">
       @for (drawerTrigger of createDrawerTriggers(trigger()); track $index) {
-      <button mat-flat-button
-        [routerLink]="getRouterLink(drawerTrigger.name)" [disabled]="drawerTrigger.disabled"><mat-icon>{{drawerTrigger.icon}}</mat-icon>{{drawerTrigger.name}}</button>
+      <button mat-flat-button [routerLink]="getRouterLink(drawerTrigger.name)"
+        [disabled]="drawerTrigger.option?.disabled"><mat-icon>{{drawerTrigger.icon}}</mat-icon>{{drawerTrigger.name}}</button>
       }
-      <button (click)="onClose()" mat-flat-button i18n><mat-icon>close</mat-icon>Close</button>
+      <button class="confirm-button-app-drawer" mat-flat-button><mat-icon>task_alt</mat-icon>Confirm</button>
+      <button class="cancel-button-app-drawer" mat-flat-button><mat-icon>cancel</mat-icon>Cancel</button>
     </mat-list>
   </mat-drawer>
   <div class="router-outlet-app-drawer">

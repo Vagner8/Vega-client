@@ -1,4 +1,4 @@
-@import './variables.css';
+@import "./variables.css";
 
 body {
   margin: 0;
@@ -19,5 +19,11 @@ body {
   .mat-drawer-inner-container {
     display: flex;
     flex-direction: column-reverse;
+  }
+}
+
+app-form {
+  .mat-mdc-form-field-icon-suffix {
+    display: flex;
   }
 }

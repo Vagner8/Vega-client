@@ -4,6 +4,8 @@
   --size-large: 24px;
 
   --color-common: #fff;
+  --color-success: green;
+  --color-danger: red;
 
   --toolbar-height: calc(var(--size-large) * 3);
 }

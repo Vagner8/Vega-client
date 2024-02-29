@@ -14,6 +14,10 @@ export class ToolbarComponent {
   constructor(private _drawerStateService: DrawerStateService) {}
 
   onOpenDrawer(trigger: keyof DrawerTriggers): void {
+    if (this._drawerStateService.trigger() === trigger) {
+      this._drawerStateService.setTrigger(null);
+      return this._drawerStateService.setOpened(false);
+    }
     this._drawerStateService.setTrigger(trigger);
     if (this._drawerStateService.opened()) return;
     this._drawerStateService.setOpened(true);

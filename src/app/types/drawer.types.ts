@@ -3,7 +3,7 @@ import { IconName } from './icon.types';
 export interface DrawerTrigger {
   name: TriggerName;
   icon: IconName;
-  disabled: boolean;
+  option?: Partial<{ confirm: boolean; disabled: boolean }>;
 }
 
 export interface DrawerTriggers {
@@ -19,5 +19,6 @@ export enum TriggerName {
   Edit = 'Edit',
   Delete = 'Delete',
   Ok = 'Ok',
-  Modal = 'modal'
+  Modal = 'modal',
+  Send = 'Send',
 }

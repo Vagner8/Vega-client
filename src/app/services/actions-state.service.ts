@@ -12,15 +12,15 @@ interface EditAction extends Action {}
   providedIn: 'root',
 })
 export class ActionsStateService {
-  private readonly _ok = signal<OkAction>({ disabled: true });
+  private readonly _send = signal<OkAction>({ disabled: true });
   private readonly _edit = signal<EditAction>({ disabled: true });
 
-  get ok() {
-    return this._ok;
+  get send() {
+    return this._send;
   }
 
   setOk(value: Partial<OkAction>) {
-    this._ok.update((prev) => ({ ...prev, ...value }));
+    this._send.update((prev) => ({ ...prev, ...value }));
   }
 
   get edit() {
