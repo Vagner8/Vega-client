@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DrawerStateService } from '@services';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
-import { DrawerTriggers } from '@types';
+import { DrawerActions } from '@types';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,13 +13,13 @@ import { DrawerTriggers } from '@types';
 export class ToolbarComponent {
   constructor(private _drawerStateService: DrawerStateService) {}
 
-  onOpenDrawer(trigger: keyof DrawerTriggers): void {
-    if (this._drawerStateService.trigger() === trigger) {
-      this._drawerStateService.setTrigger(null);
-      return this._drawerStateService.setOpened(false);
+  onOpenDrawer(action: keyof DrawerActions): void {
+    if (this._drawerStateService.currentAction() === action) {
+      this._drawerStateService.currentAction.set(null);
+      return this._drawerStateService.opened.set(false);
     }
-    this._drawerStateService.setTrigger(trigger);
+    this._drawerStateService.currentAction.set(action);
     if (this._drawerStateService.opened()) return;
-    this._drawerStateService.setOpened(true);
+    this._drawerStateService.opened.set(true);
   }
 }

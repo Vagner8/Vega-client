@@ -4,7 +4,6 @@ export * from './home/home.component';
 export * from './drawer/drawer.component';
 export * from './login/login.component';
 export * from './header/header.component';
-export * from './modal/modal.component';
 
 export * from './users/users.component';
 export * from './users/create-user/create-user.component';

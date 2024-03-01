@@ -1,0 +1,13 @@
+:host {
+  .Confirm {
+    color: var(--color-success);
+  }
+  
+  .Cancel {
+    color: var(--color-danger);
+  }
+}
+
+button[disabled] {
+  background-color: var(--color-common);
+}

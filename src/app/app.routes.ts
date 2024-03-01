@@ -3,20 +3,18 @@ import {
   HomeComponent,
   CreateUserComponent,
   EditUserComponent,
-  UsersComponent,
-  ModalComponent,
+  UsersComponent
 } from '@components';
-import { TriggerName } from './types/drawer.types';
+import { ActionName } from './types/drawer.types';
 
 const usersRoutes: Routes = [
   { path: '', component: UsersComponent, pathMatch: 'full' },
-  { path: TriggerName.Create, component: CreateUserComponent },
-  { path: TriggerName.Edit, component: EditUserComponent },
+  { path: ActionName.Create, component: CreateUserComponent },
+  { path: ActionName.Edit, component: EditUserComponent },
 ];
 
 export const routes: Routes = [
-  { path: `${TriggerName.Modal}/:page/:action`, component: ModalComponent },
-  { path: TriggerName.Home, component: HomeComponent },
-  { path: TriggerName.Users, children: usersRoutes },
-  { path: '**', redirectTo: TriggerName.Home },
+  { path: ActionName.Home, component: HomeComponent },
+  { path: ActionName.Users, children: usersRoutes },
+  { path: '**', redirectTo: ActionName.Home },
 ];

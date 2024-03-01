@@ -2,12 +2,6 @@
   padding: calc(var(--size-small) / 2);
   width: 100%;
   height: 100%;
-  .confirm-button-app-drawer {
-    color: var(--color-success);
-  }
-  .cancel-button-app-drawer {
-    color: var(--color-danger);
-  }
 }
 
 .mat-drawer-app-drawer {
@@ -25,8 +19,4 @@
       border-radius: 0;
     }
   }
-}
-
-button[disabled] {
-  background-color: var(--color-common);
 }

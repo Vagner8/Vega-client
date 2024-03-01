@@ -19,7 +19,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup.valueChanges.subscribe((values) => {
-      this._actionsStateService.setOk({
+      this._actionsStateService.send.set({
         disabled: !Object.values(values).some(Boolean),
       });
     });

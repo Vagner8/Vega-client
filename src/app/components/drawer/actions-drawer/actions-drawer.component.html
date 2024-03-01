@@ -1,0 +1,8 @@
+@for (action of commonActions(); track action.name) {
+<button mat-flat-button [routerLink]="getRouterLink(action.name)"
+  [disabled]="action.option?.disabled"><mat-icon>{{action.icon}}</mat-icon>{{action.name}}</button>
+}
+
+@for (action of confirmActions(); track action.name) {
+<button class={{action.name}} mat-flat-button><mat-icon>{{action.icon}}</mat-icon>{{action.name}}</button>
+}

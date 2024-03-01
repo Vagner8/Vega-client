@@ -19,15 +19,7 @@ export class ActionsStateService {
     return this._send;
   }
 
-  setOk(value: Partial<OkAction>) {
-    this._send.update((prev) => ({ ...prev, ...value }));
-  }
-
   get edit() {
     return this._edit;
-  }
-
-  setEdit(value: Partial<EditAction>) {
-    this._edit.update((prev) => ({ ...prev, ...value }));
   }
 }

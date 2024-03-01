@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from './modal.component';
+import { ActionsDrawerComponent } from './actions-drawer.component';
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+describe('ActionsDrawerComponent', () => {
+  let component: ActionsDrawerComponent;
+  let fixture: ComponentFixture<ActionsDrawerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent]
+      imports: [ActionsDrawerComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ModalComponent);
+    fixture = TestBed.createComponent(ActionsDrawerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
