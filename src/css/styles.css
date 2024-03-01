@@ -27,3 +27,9 @@ app-form {
     display: flex;
   }
 }
+
+.mat-drawer-container-app-drawer {
+  mat-drawer-content {
+    height: calc(-130px + 100vh);
+  }
+}

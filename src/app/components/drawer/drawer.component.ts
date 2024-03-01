@@ -6,7 +6,6 @@ import {
   CommonStateService,
   DrawerStateService,
 } from '@services';
-import { ScrollToBottomDirective } from 'app/directives/scroll-to-bottom.directive';
 import { DrawerTrigger, DrawerTriggers, IconName, TriggerName } from '@types';
 
 @Component({
@@ -19,7 +18,6 @@ import { DrawerTrigger, DrawerTriggers, IconName, TriggerName } from '@types';
     MatIcon,
     MatSidenavModule,
     MatButton,
-    ScrollToBottomDirective,
   ],
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',

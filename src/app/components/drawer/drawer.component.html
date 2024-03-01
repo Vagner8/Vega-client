@@ -1,5 +1,5 @@
 <mat-drawer-container class="mat-drawer-container-app-drawer" autosize>
-  <mat-drawer [opened]="opened()" appScrollToBottom class="mat-drawer-app-drawer" mode="side" position="end">
+  <mat-drawer [opened]="opened()" class="mat-drawer-app-drawer" mode="side" position="end">
     <mat-list class="mat-list-app-drawer">
       @for (drawerTrigger of createDrawerTriggers(trigger()); track $index) {
       <button mat-flat-button [routerLink]="getRouterLink(drawerTrigger.name)"
