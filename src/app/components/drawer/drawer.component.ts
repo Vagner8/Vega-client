@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { DrawerStateService } from '@services';
-import { ActionsDrawerComponent } from './actions-drawer/actions-drawer.component';
+import { CommonActsService } from '@services';
+import { ActsDrawerComponent } from './acts-drawer/actions-drawer.component';
+import { DrawerState } from '@types';
 
 @Component({
   selector: 'app-drawer',
@@ -11,19 +12,15 @@ import { ActionsDrawerComponent } from './actions-drawer/actions-drawer.componen
     RouterOutlet,
     MatListModule,
     MatSidenavModule,
-    ActionsDrawerComponent,
+    ActsDrawerComponent,
   ],
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',
 })
 export class DrawerComponent {
-  constructor(private _drawerStateService: DrawerStateService) {}
+  constructor(private _commonActsService: CommonActsService) {}
 
-  get opened() {
-    return this._drawerStateService.opened;
-  }
-
-  onClose() {
-    this.opened.set(false);
+  get opened(): boolean {
+    return this._commonActsService.drawer() === DrawerState.Close ? false : true;
   }
 }

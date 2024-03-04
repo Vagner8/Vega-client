@@ -26,3 +26,13 @@ export enum InputLabel {
 export type FormGroupMap<T> = {
   [K in keyof T]: FormControl;
 };
+
+export enum Visibility {
+  Hidden = 'hidden',
+  Visible = 'visible',
+}
+
+export enum DrawerState {
+  Open = 'Open',
+  Close = 'Close',
+}

@@ -10,5 +10,8 @@ export enum IconName {
   View_cozy = 'view_cozy',
   Task_alt = 'task_alt',
   Send = 'send',
-  Cancel = 'cancel'
+  Cancel = 'cancel',
+  Settings = 'settings',
+  Apps = 'apps',
+  Filter_list = 'filter_list'
 }

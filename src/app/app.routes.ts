@@ -3,18 +3,21 @@ import {
   HomeComponent,
   CreateUserComponent,
   EditUserComponent,
-  UsersComponent
+  UsersComponent,
 } from '@components';
-import { ActionName } from './types/drawer.types';
+import {
+  ActiveBtnActName,
+  NavigationBtnActName,
+} from './types/btn-act.types';
 
 const usersRoutes: Routes = [
   { path: '', component: UsersComponent, pathMatch: 'full' },
-  { path: ActionName.Create, component: CreateUserComponent },
-  { path: ActionName.Edit, component: EditUserComponent },
+  { path: ActiveBtnActName.Create, component: CreateUserComponent },
+  { path: ActiveBtnActName.Edit, component: EditUserComponent },
 ];
 
 export const routes: Routes = [
-  { path: ActionName.Home, component: HomeComponent },
-  { path: ActionName.Users, children: usersRoutes },
-  { path: '**', redirectTo: ActionName.Home },
+  { path: NavigationBtnActName.Home, component: HomeComponent },
+  { path: NavigationBtnActName.Users, children: usersRoutes },
+  { path: '**', redirectTo: NavigationBtnActName.Home },
 ];

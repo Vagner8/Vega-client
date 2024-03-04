@@ -11,3 +11,12 @@
 button[disabled] {
   background-color: var(--color-common);
 }
+
+button {
+  width: 100%;
+  justify-content: start;
+  height: calc(var(--size-large) * 2);
+  &:hover {
+    border-radius: 0;
+  }
+}

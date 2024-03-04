@@ -12,11 +12,4 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  button {
-    justify-content: start;
-    height: calc(var(--size-large) * 2);
-    &:hover {
-      border-radius: 0;
-    }
-  }
 }

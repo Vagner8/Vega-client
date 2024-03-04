@@ -1,15 +1,9 @@
 <mat-toolbar color="primary" class="toolbar-app-toolbar">
   <div class="buttons-app-toolbar">
-    <button (click)="onOpenDrawer('settings')" mat-mini-fab color="warn" aria-label="Settings menu">
-      <mat-icon>settings</mat-icon>
-    </button>
-    
-    <button (click)="onOpenDrawer('pages')" mat-mini-fab color="warn" aria-label="Pages menu">
-      <mat-icon>apps</mat-icon>
-    </button>
-
-    <button (click)="onOpenDrawer('actions')" mat-mini-fab color="warn" aria-label="Actions menu">
-      <mat-icon>filter_list</mat-icon>
-    </button>
+    @for (toolbarAct of toolbarActs; track $index) {
+      <button (click)="onOpenDrawer(toolbarAct)" mat-mini-fab color="warn" [attr.aria-label]="toolbarAct.name">
+        <mat-icon>{{toolbarAct.signal().icon}}</mat-icon>
+      </button>
+    }
   </div>
 </mat-toolbar>

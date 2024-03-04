@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { DrawerStateService } from '@services';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
-import { DrawerActions } from '@types';
+import {
+  BtnRecsService,
+  BtnActService,
+  CommonActsService,
+} from '@services';
+import { BtnAct, BtnActType, DrawerState } from '@types';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,15 +15,25 @@ import { DrawerActions } from '@types';
   styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent {
-  constructor(private _drawerStateService: DrawerStateService) {}
+  constructor(
+    private _commonActsService: CommonActsService,
+    private _btnActsService: BtnActService,
+    private _btnRecsService: BtnRecsService
+  ) {}
 
-  onOpenDrawer(action: keyof DrawerActions): void {
-    if (this._drawerStateService.currentAction() === action) {
-      this._drawerStateService.currentAction.set(null);
-      return this._drawerStateService.opened.set(false);
+  get toolbarActs() {
+    return this._btnActsService.getActs(BtnActType.Toolbar);
+  }
+
+  onOpenDrawer(toolbarAct: BtnAct): void {
+    const toolbarActRec =
+      this._btnRecsService.recs[BtnActType.Toolbar];
+    if (toolbarActRec()?.name === toolbarAct.name) {
+      this._commonActsService.drawer.set(DrawerState.Close);
+      this._btnRecsService.reset();
+    } else {
+      this._btnRecsService.rec(toolbarAct);
+      this._commonActsService.drawer.set(DrawerState.Open);
     }
-    this._drawerStateService.currentAction.set(action);
-    if (this._drawerStateService.opened()) return;
-    this._drawerStateService.opened.set(true);
   }
 }
