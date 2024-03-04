@@ -16,11 +16,11 @@ export class FormComponent implements OnInit {
   @Input() formGroup!: FormGroup;
   @Output() submitEvent = new EventEmitter();
 
-  constructor(private _btnActsService: BtnActService) {}
+  constructor(private _btnActs: BtnActService) {}
 
   ngOnInit() {
     this.formGroup.valueChanges.subscribe((values) => {
-      const sendBtnAct = this._btnActsService.getActive(ActiveBtnActName.Send);
+      const sendBtnAct = this._btnActs.getActive(ActiveBtnActName.Send);
       sendBtnAct.signal.update((state) => ({
         ...state,
         disabled: !Object.values(values).some(Boolean),

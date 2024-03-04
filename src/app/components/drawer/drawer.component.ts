@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { CommonActsService } from '@services';
-import { ActsDrawerComponent } from './acts-drawer/actions-drawer.component';
+import { ActsDrawerComponent } from './acts-drawer/acts-drawer.component';
 import { DrawerState } from '@types';
 
 @Component({

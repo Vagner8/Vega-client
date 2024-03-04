@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActsDrawerComponent } from './actions-drawer.component';
+import { ActsDrawerComponent } from './acts-drawer.component';
 
 describe('ActsDrawerComponent', () => {
   let component: ActsDrawerComponent;

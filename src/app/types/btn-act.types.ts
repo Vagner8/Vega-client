@@ -6,7 +6,7 @@ export interface BtnActState {
   icon: IconName;
   visibility: Visibility;
   confirm: boolean;
-  link: boolean;
+  navigate: boolean;
   disabled: boolean;
 }
 
@@ -49,6 +49,8 @@ export interface BtnAct {
   type: BtnActType;
   name: BtnActName;
   signal: WritableSignal<BtnActState>;
+  update(value: Partial<BtnActState>): void;
+  reset(key: keyof BtnActState): void;
 }
 
 export interface BtnActGroup {

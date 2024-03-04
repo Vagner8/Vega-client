@@ -10,26 +10,26 @@ import {
   providedIn: 'root',
 })
 export class BtnRecsService {
-  readonly recs: BtnRecGroup = {
+  public readonly recs: BtnRecGroup = {
     [BtnActType.Active]: signal(null),
     [BtnActType.Navigation]: signal(null),
     [BtnActType.Toolbar]: signal(null),
     [BtnActType.Settings]: signal(null),
   };
 
-  activityRec(): BtnRec {
+  get active(): BtnRec {
     return this.recs[BtnActType.Active];
   }
 
-  navigationRec(): BtnRec {
+  get navigation(): BtnRec {
     return this.recs[BtnActType.Navigation];
   }
 
-  toolbarRec(): BtnRec {
+  get toolbar(): BtnRec {
     return this.recs[BtnActType.Toolbar];
   }
 
-  settingsRec(): BtnRec {
+  get settings(): BtnRec {
     return this.recs[BtnActType.Settings];
   }
 

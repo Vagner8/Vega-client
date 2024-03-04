@@ -10,39 +10,40 @@ import {
   BtnActGroup,
   BtnAct,
   BtnActName,
+  SettingsBtnActName,
 } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BtnActService {
-  private readonly _acts!: BtnActGroup;
+  public readonly acts!: BtnActGroup;
 
   constructor() {
-    this._acts = this._createActs();
+    this.acts = this._createActs();
   }
 
   getActs(type: BtnActType | BtnActName): BtnAct[] {
-    return this._acts[type];
+    return this.acts[type];
   }
 
   getActive(name: ActiveBtnActName): BtnAct {
-    return this._get(this._acts[BtnActType.Active], name);
+    return this._get(this.acts[BtnActType.Active], name);
   }
 
-  getNavigation(name: ActiveBtnActName): BtnAct {
-    return this._get(this._acts[BtnActType.Navigation], name);
+  getNavigation(name: NavigationBtnActName): BtnAct {
+    return this._get(this.acts[BtnActType.Navigation], name);
   }
 
-  getSettings(name: ActiveBtnActName): BtnAct {
-    return this._get(this._acts[BtnActType.Settings], name);
+  getSettings(name: SettingsBtnActName): BtnAct {
+    return this._get(this.acts[BtnActType.Settings], name);
   }
 
-  getToolbar(name: ActiveBtnActName): BtnAct {
-    return this._get(this._acts[BtnActType.Toolbar], name);
+  getToolbar(name: ToolbarBtnActName): BtnAct {
+    return this._get(this.acts[BtnActType.Toolbar], name);
   }
 
-  private _get(acts: BtnAct[], name: ActiveBtnActName): BtnAct {
+  private _get(acts: BtnAct[], name: BtnActName): BtnAct {
     const act = acts.find((act) => act.name === name);
     if (!act) throw new Error(`No BtnAct: ${name}`);
     return act;
@@ -51,132 +52,88 @@ export class BtnActService {
   private _createActs = (): BtnActGroup => {
     return {
       [BtnActType.Active]: [
-        this._createAct(
-          ActiveBtnActName.Send,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Send,
-            disabled: true,
-            confirm: true,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ActiveBtnActName.Edit,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Edit,
-            disabled: true,
-            confirm: false,
-            link: true,
-          })
-        ),
-        this._createAct(
-          ActiveBtnActName.Delete,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Delete,
-            disabled: true,
-            confirm: false,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ActiveBtnActName.Confirm,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Hidden,
-            icon: IconName.Task_alt,
-            disabled: false,
-            confirm: false,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ActiveBtnActName.Cancel,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Hidden,
-            icon: IconName.Cancel,
-            disabled: false,
-            confirm: false,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ActiveBtnActName.Create,
-          BtnActType.Active,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Add,
-            disabled: false,
-            confirm: true,
-            link: true,
-          })
-        ),
+        this._createAct(ActiveBtnActName.Send, BtnActType.Active, {
+          visibility: Visibility.Visible,
+          icon: IconName.Send,
+          disabled: true,
+          confirm: true,
+          navigate: false,
+        }),
+        this._createAct(ActiveBtnActName.Edit, BtnActType.Active, {
+          visibility: Visibility.Visible,
+          icon: IconName.Edit,
+          disabled: true,
+          confirm: false,
+          navigate: true,
+        }),
+        this._createAct(ActiveBtnActName.Delete, BtnActType.Active, {
+          visibility: Visibility.Visible,
+          icon: IconName.Delete,
+          disabled: true,
+          confirm: false,
+          navigate: false,
+        }),
+        this._createAct(ActiveBtnActName.Confirm, BtnActType.Active, {
+          visibility: Visibility.Hidden,
+          icon: IconName.Task_alt,
+          disabled: false,
+          confirm: false,
+          navigate: false,
+        }),
+        this._createAct(ActiveBtnActName.Cancel, BtnActType.Active, {
+          visibility: Visibility.Hidden,
+          icon: IconName.Cancel,
+          disabled: false,
+          confirm: false,
+          navigate: false,
+        }),
+        this._createAct(ActiveBtnActName.Create, BtnActType.Active, {
+          visibility: Visibility.Visible,
+          icon: IconName.Add,
+          disabled: false,
+          confirm: true,
+          navigate: true,
+        }),
       ],
       [BtnActType.Navigation]: [
-        this._createAct(
-          NavigationBtnActName.Home,
-          BtnActType.Navigation,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Home,
-            disabled: false,
-            confirm: false,
-            link: true,
-          })
-        ),
-        this._createAct(
-          NavigationBtnActName.Users,
-          BtnActType.Navigation,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Group,
-            disabled: false,
-            confirm: false,
-            link: true,
-          })
-        ),
+        this._createAct(NavigationBtnActName.Home, BtnActType.Navigation, {
+          visibility: Visibility.Visible,
+          icon: IconName.Home,
+          disabled: false,
+          confirm: false,
+          navigate: true,
+        }),
+        this._createAct(NavigationBtnActName.Users, BtnActType.Navigation, {
+          visibility: Visibility.Visible,
+          icon: IconName.Group,
+          disabled: false,
+          confirm: false,
+          navigate: true,
+        }),
       ],
       [BtnActType.Settings]: [],
       [BtnActType.Toolbar]: [
-        this._createAct(
-          ToolbarBtnActName.Settings,
-          BtnActType.Toolbar,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Settings,
-            disabled: false,
-            confirm: false,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ToolbarBtnActName.Navigation,
-          BtnActType.Toolbar,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Apps,
-            disabled: false,
-            confirm: false,
-            link: false,
-          })
-        ),
-        this._createAct(
-          ToolbarBtnActName.Active,
-          BtnActType.Toolbar,
-          signal<BtnActState>({
-            visibility: Visibility.Visible,
-            icon: IconName.Filter_list,
-            disabled: false,
-            confirm: false,
-            link: false,
-          })
-        ),
+        this._createAct(ToolbarBtnActName.Settings, BtnActType.Toolbar, {
+          visibility: Visibility.Visible,
+          icon: IconName.Settings,
+          disabled: true,
+          confirm: false,
+          navigate: false,
+        }),
+        this._createAct(ToolbarBtnActName.Navigation, BtnActType.Toolbar, {
+          visibility: Visibility.Visible,
+          icon: IconName.Apps,
+          disabled: false,
+          confirm: false,
+          navigate: false,
+        }),
+        this._createAct(ToolbarBtnActName.Active, BtnActType.Toolbar, {
+          visibility: Visibility.Visible,
+          icon: IconName.Filter_list,
+          disabled: true,
+          confirm: false,
+          navigate: false,
+        }),
       ],
     };
   };
@@ -184,12 +141,18 @@ export class BtnActService {
   private _createAct = (
     name: BtnAct['name'],
     type: BtnAct['type'],
-    signal: BtnAct['signal']
+    defaultState: BtnActState
   ): BtnAct => {
     return {
       name,
       type,
-      signal,
+      signal: signal(defaultState),
+      update(value) {
+        this.signal.update((state) => ({ ...state, ...value }));
+      },
+      reset(key) {
+        this.signal.update((state) => ({ ...state, [key]: defaultState[key] }));
+      },
     };
   };
 }
