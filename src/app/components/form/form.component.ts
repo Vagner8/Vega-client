@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@mat';
-import { BtnActService } from '@services';
-import { ActiveBtnActName } from '@types';
+import { BtnService } from '@services';
 
 @Component({
   selector: 'app-form',
@@ -16,12 +15,12 @@ export class FormComponent implements OnInit {
   @Input() formGroup!: FormGroup;
   @Output() submitEvent = new EventEmitter();
 
-  constructor(private _btnActs: BtnActService) {}
+  constructor(private _btn: BtnService) {}
 
   ngOnInit() {
     this.formGroup.valueChanges.subscribe((values) => {
-      const sendBtnAct = this._btnActs.getActive(ActiveBtnActName.Send);
-      sendBtnAct.signal.update((state) => ({
+      const sendBtn = this._btn.get('active', 'Send');
+      sendBtn.signal.update((state) => ({
         ...state,
         disabled: !Object.values(values).some(Boolean),
       }));

@@ -5,6 +5,6 @@ import { DrawerState } from '@types';
   providedIn: 'root',
 })
 export class CommonActsService {
-  public readonly drawer = signal<DrawerState>(DrawerState.Close);
+  public readonly drawer = signal<DrawerState>('close');
   public readonly error = signal<string | null>(null);
 }

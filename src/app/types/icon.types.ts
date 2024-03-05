@@ -1,17 +1,16 @@
-export enum IconName {
-  Add = 'add',
-  Edit = 'edit',
-  Delete = 'delete',
-  Home = 'home',
-  Group = 'group',
-  Close = 'close',
-  Visibility = 'visibility',
-  Visibility_off = 'visibility_off',
-  View_cozy = 'view_cozy',
-  Task_alt = 'task_alt',
-  Send = 'send',
-  Cancel = 'cancel',
-  Settings = 'settings',
-  Apps = 'apps',
-  Filter_list = 'filter_list'
-}
+export type IconName =
+  | 'add'
+  | 'edit'
+  | 'delete'
+  | 'home'
+  | 'group'
+  | 'close'
+  | 'visibility'
+  | 'visibility_off'
+  | 'view_cozy'
+  | 'task_alt'
+  | 'send'
+  | 'cancel'
+  | 'settings'
+  | 'apps'
+  | 'filter_list';

@@ -1,4 +1,6 @@
 import { FormControl } from '@angular/forms';
+import { BtnType } from './btn.types';
+import { WritableSignal } from '@angular/core';
 
 export interface ControlInput {
   formControl: FormControl;
@@ -27,12 +29,17 @@ export type FormGroupMap<T> = {
   [K in keyof T]: FormControl;
 };
 
-export enum Visibility {
-  Hidden = 'hidden',
-  Visible = 'visible',
-}
+export type Visibility = 'hidden' | 'visible';
 
-export enum DrawerState {
-  Open = 'Open',
-  Close = 'Close',
-}
+export type DrawerState = 'open' | 'close';
+
+export type RecType = BtnType;
+
+export type Rec = {
+  type: RecType;
+  name: WritableSignal<string | null>;
+};
+
+export type RecKey = 'btn';
+
+export type RecGroup = Record<RecKey, Rec[]>;

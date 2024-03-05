@@ -1,9 +1,9 @@
 <mat-toolbar color="primary" class="toolbar-app-toolbar">
   <div class="buttons-app-toolbar">
-    @for (toolbarAct of toolbarActs; track toolbarAct.name) {
-      <button [disabled]="toolbarAct.name === 'Navigation' ? false : isDisabled$ | async" (click)="onClick(toolbarAct)" mat-mini-fab
-        color="warn" [attr.aria-label]="toolbarAct.name">
-        <mat-icon>{{toolbarAct.signal().icon}}</mat-icon>
+    @for (btn of toolbarBtns; track btn.name) {
+      <button [disabled]="btn.name === 'navigation' ? false : isDisabled$ | async" (click)="onClick(btn)" mat-mini-fab
+        color="warn" [attr.aria-label]="btn.name">
+        <mat-icon>{{btn.signal().icon}}</mat-icon>
       </button>
     }
   </div>

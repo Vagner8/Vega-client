@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
-import { BtnRecsService, BtnActService, CommonActsService } from '@services';
-import { BtnAct, BtnActType, DrawerState, IconName } from '@types';
+import { RecService, BtnService, CommonActsService } from '@services';
+import { Btn } from '@types';
 import { Observable, map } from 'rxjs';
 
 @Component({
@@ -18,8 +18,8 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     private _commonActsService: CommonActsService,
-    private _btnActs: BtnActService,
-    private _btnRecs: BtnRecsService,
+    private _btn: BtnService,
+    private _rec: RecService,
     private _router: Router
   ) {}
 
@@ -32,24 +32,24 @@ export class ToolbarComponent implements OnInit {
     );
   }
 
-  get toolbarActs() {
-    return this._btnActs.getActs(BtnActType.Toolbar);
+  get toolbarBtns() {
+    return this._btn.btns.toolbar;
   }
 
-  onClick(toolbarAct: BtnAct): void {
-    this._btnRecs.rec(toolbarAct);
-    if (toolbarAct.signal().icon === IconName.Close) {
+  onClick(toolbarAct: Btn): void {
+    toolbarAct.rec();
+    if (toolbarAct.signal().icon === 'close') {
       this._resetIcons();
-      this._commonActsService.drawer.set(DrawerState.Close);
+      this._commonActsService.drawer.set('open');
       return;
     } else {
       this._resetIcons();
-      toolbarAct.update({ icon: IconName.Close });
-      this._commonActsService.drawer.set(DrawerState.Open);
+      toolbarAct.update({ icon: 'close' });
+      this._commonActsService.drawer.set('open');
     }
   }
 
   private _resetIcons(): void {
-    this._btnActs.acts[BtnActType.Toolbar].forEach((act) => act.reset('icon'));
+    this._btn.btns.toolbar.forEach((act) => act.reset('icon'));
   }
 }

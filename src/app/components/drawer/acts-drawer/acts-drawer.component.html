@@ -1,4 +1,0 @@
-@for (action of btnActs(); track action.name) {
-  <button mat-flat-button [disabled]="action.signal().disabled"
-      (click)="onClick(action)"><mat-icon>{{action.signal().icon}}</mat-icon>{{action.name}}</button>
-}

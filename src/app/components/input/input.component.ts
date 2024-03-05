@@ -42,9 +42,9 @@ export class InputComponent {
   }
 
   toggleVisibilityIcon(): string {
-    return this._inputElementRef.nativeElement.type === InputType.Password
-      ? IconName.Visibility
-      : IconName.Visibility_off;
+    return this._inputElementRef.nativeElement.type === 'password'
+      ? 'visibility'
+      : 'visibility_off';
   }
 
   get messages() {
