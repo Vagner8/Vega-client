@@ -33,7 +33,7 @@ export class BtnsDrawerComponent implements OnInit {
   }
 
   private _disableActionsAndSettingsTaps(name: TapName) {
-    const disabled = name !== PageTapName.Home;
+    const disabled = name === PageTapName.Home;
     this.toolbarActionsTap.update({ disabled });
     this.toolbarSettingsTap.update({ disabled });
   }

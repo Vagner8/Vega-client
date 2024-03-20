@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Component, WritableSignal } from '@angular/core';
+import { ParamMap } from '@angular/router';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +11,9 @@ import { Observable, map } from 'rxjs';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(private _route: ActivatedRoute) {}
+  constructor(private _state: StateService) {}
 
-  get params(): Observable<string> {
-    return this._route.paramMap.pipe(map((paramMap) => `${paramMap}`));
+  get paramMap(): WritableSignal<ParamMap | null> {
+    return this._state.paramMap;
   }
 }

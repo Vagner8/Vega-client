@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-page',
@@ -9,11 +10,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './page.component.css',
 })
 export class PageComponent implements OnInit {
-  constructor(private _activatedRoute: ActivatedRoute) {}
+  constructor(private _route: ActivatedRoute, private _state: StateService) {}
 
   ngOnInit(): void {
-    this._activatedRoute.params.subscribe((params) => {
-      console.log('🚀 ~ params:', params);
-    });
+    this._route.paramMap.subscribe(this._state.paramMap.set);
   }
 }
