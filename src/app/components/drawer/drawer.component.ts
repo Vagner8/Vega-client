@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, WritableSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { CommonActsService } from '@services';
-import { BtnsDrawerComponent } from './btns-drawer/btns-drawer.component';
+import { StateService } from '@services';
+import { BtnsDrawerComponent } from './drawer-taps/drawer-taps.component';
 
 @Component({
   selector: 'app-drawer',
@@ -12,9 +12,9 @@ import { BtnsDrawerComponent } from './btns-drawer/btns-drawer.component';
   styleUrl: './drawer.component.css',
 })
 export class DrawerComponent {
-  constructor(private _commonActsService: CommonActsService) {}
+  constructor(private _state: StateService) {}
 
-  get opened(): boolean {
-    return this._commonActsService.drawer() === 'close' ? false : true;
+  get opened(): WritableSignal<boolean> {
+    return this._state.drawerOpened;
   }
 }

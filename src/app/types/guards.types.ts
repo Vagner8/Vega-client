@@ -1,12 +1,18 @@
-import { BtnType } from './btn.types';
+import { EntitySatesUnion, ProductState, UserState } from './entity.types';
 
-const mock: Record<BtnType, string> = {
-  active: '',
-  navigation: '',
-  settings: '',
-  toolbar: '',
+export const hasEntityOwnProperty = (
+  states: EntitySatesUnion,
+  prop: string
+): boolean => {
+  return Object.prototype.hasOwnProperty.call(states[0], prop);
 };
 
-export const isKeyofBtnGroup = (value: string): value is BtnType => {
-  return Object.keys(mock).includes(value);
+export const isUser = (states: EntitySatesUnion): states is UserState[] => {
+  return hasEntityOwnProperty(states, 'email');
+};
+
+export const isProduct = (
+  states: EntitySatesUnion
+): states is ProductState[] => {
+  return hasEntityOwnProperty(states, 'price');
 };

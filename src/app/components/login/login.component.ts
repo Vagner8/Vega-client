@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiUrl, User } from '@types';
+import { ApiUrl, UserState } from '@types';
 import { FetchService } from '@services';
 import { FormComponent } from '../form/form.component';
 
@@ -21,7 +21,7 @@ export class LoginComponent {
 
   onLogin(): void {
     this._fetchService
-      .post<User>(ApiUrl.login, this.loginFormGroup.value)
+      .post<UserState>(ApiUrl.login, this.loginFormGroup.value)
       .subscribe((user) => {
         console.log('🚀 ~ result:', user);
       });

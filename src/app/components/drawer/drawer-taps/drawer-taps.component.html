@@ -1,0 +1,4 @@
+@for (tap of taps; track tap.name) {
+  <button mat-flat-button [disabled]="tap.signal().disabled"
+    (click)="onClick(tap)"><mat-icon>{{tap.signal().icon}}</mat-icon>{{tap.name}}</button>
+}

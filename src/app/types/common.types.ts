@@ -1,5 +1,4 @@
 import { FormControl } from '@angular/forms';
-import { BtnType } from './btn.types';
 import { WritableSignal } from '@angular/core';
 
 export interface ControlInput {
@@ -31,12 +30,8 @@ export type FormGroupMap<T> = {
 
 export type Visibility = 'hidden' | 'visible';
 
-export type DrawerState = 'open' | 'close';
-
-export type RecType = BtnType;
 
 export type Rec = {
-  type: RecType;
   name: WritableSignal<string | null>;
 };
 

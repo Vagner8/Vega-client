@@ -5,8 +5,7 @@ import {
   HeaderComponent,
   ToolbarComponent,
 } from '@components';
-import { CommonActsService } from '@services';
-// import { Router } from '@angular/router';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-root',
@@ -17,18 +16,9 @@ import { CommonActsService } from '@services';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(
-    private _commonActsService: CommonActsService,
-    // private _router: Router
-  ) {}
-
-  // ngOnInit(): void {
-  //   this._router.events.subscribe((data) => {
-  //     console.log('🚀 ~ data:', data);
-  //   });
-  // }
+  constructor(private _state: StateService) {}
 
   get error() {
-    return this._commonActsService.error;
+    return this._state.error;
   }
 }

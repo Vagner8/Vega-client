@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BtnsDrawerComponent } from './btns-drawer.component';
+import { BtnsDrawerComponent } from './drawer-taps.component';
 
 describe('BtnsDrawerComponent', () => {
   let component: BtnsDrawerComponent;

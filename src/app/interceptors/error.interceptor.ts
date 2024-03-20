@@ -7,11 +7,11 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { CommonActsService } from '@services';
+import { StateService } from '@services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private _commonActsService: CommonActsService) {}
+  constructor(private _state: StateService) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -22,7 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private _handleError = (error: HttpErrorResponse): Observable<never> => {
     const errorMessage = 'Something bad happened, please try again later.';
-    this._commonActsService.error.set(errorMessage);
+    this._state.error.set(errorMessage);
     if (error.status === 0) {
       console.error('An error occurred:', error.message);
     } else {

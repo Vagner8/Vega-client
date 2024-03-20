@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
-import { RecService, BtnService, CommonActsService } from '@services';
-import { Btn } from '@types';
-import { Observable, map } from 'rxjs';
+import { TapService, StateService } from '@services';
+import { Tap, PageTapName, TapPlace, ToolbarTapName } from '@types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,41 +14,28 @@ import { Observable, map } from 'rxjs';
 })
 export class ToolbarComponent implements OnInit {
   isDisabled$!: Observable<boolean>;
+  taps: Tap[] = [];
 
-  constructor(
-    private _commonActsService: CommonActsService,
-    private _btn: BtnService,
-    private _rec: RecService,
-    private _router: Router
-  ) {}
+  constructor(private _state: StateService, private _tap: TapService) {}
 
   ngOnInit(): void {
-    this.isDisabled$ = this._router.events.pipe(
-      map((data) => {
-        if (!(data instanceof NavigationEnd)) return true;
-        return data.urlAfterRedirects.toLowerCase().includes('home');
-      })
-    );
+    this.taps = this._tap.getTaps(TapPlace.Toolbar);
   }
 
-  get toolbarBtns() {
-    return this._btn.btns.toolbar;
-  }
-
-  onClick(toolbarAct: Btn): void {
-    toolbarAct.rec();
-    if (toolbarAct.signal().icon === 'close') {
+  onClick(tap: Tap): void {
+    tap.rec();
+    if (tap.signal().icon === 'close') {
       this._resetIcons();
-      this._commonActsService.drawer.set('open');
+      this._state.drawerOpened.set(false);
       return;
     } else {
       this._resetIcons();
-      toolbarAct.update({ icon: 'close' });
-      this._commonActsService.drawer.set('open');
+      tap.update({ icon: 'close' });
+      this._state.drawerOpened.set(true);
     }
   }
 
   private _resetIcons(): void {
-    this._btn.btns.toolbar.forEach((act) => act.reset('icon'));
+    this.taps.forEach((tap) => tap.restore('icon'));
   }
 }

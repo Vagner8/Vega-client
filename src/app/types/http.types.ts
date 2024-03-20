@@ -1,5 +1,5 @@
 export interface ResponseDto<T> {
-  result: T;
+  data: T;
   success: boolean;
   error: string;
   token: string;

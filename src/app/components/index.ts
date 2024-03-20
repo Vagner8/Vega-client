@@ -6,5 +6,3 @@ export * from './login/login.component';
 export * from './header/header.component';
 
 export * from './users/users.component';
-export * from './users/create-user/create-user.component';
-export * from './users/edit-user/edit-user.component';

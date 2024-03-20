@@ -1,22 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
-  url = '';
+export class HeaderComponent {
+  constructor(private _route: ActivatedRoute) {}
 
-  constructor(private _router: Router) {}
-
-  ngOnInit(): void {
-    this._router.events.subscribe((data) => {
-      if (!(data instanceof NavigationEnd)) return;
-      this.url = data.urlAfterRedirects;
-    });
+  get params(): Observable<string> {
+    return this._route.paramMap.pipe(map((paramMap) => `${paramMap}`));
   }
 }
