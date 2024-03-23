@@ -1,43 +1,23 @@
-import { Injectable, signal } from '@angular/core';
-import {
-  Entity,
-  EntityGroup,
-  EntitySateUnion,
-  EntitySatesUnion,
-  ProductEntity,
-  UserEntity,
-} from 'app/types/entity.types';
-import { isProduct, isUser } from 'app/types/guards.types';
+import { Injectable } from '@angular/core';
+import { Data } from '@angular/router';
+import { EntityDto, isResponseDto } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EntityService {
-  readonly entities: EntityGroup = {
-    users: [],
-    products: [],
+  private readonly _entitiesDto = new Map<string, EntityDto[]>();
+
+  set = (data: Data): void => {
+    const responseDto = data['responseDto'];
+    if (!responseDto) return;
+    if (!isResponseDto<EntityDto[]>(responseDto))
+      throw new Error(`ResponseDto is ${responseDto}`);
+    this._entitiesDto.set(responseDto.data[0].name, responseDto.data);
   };
 
-  set(states: EntitySatesUnion): void {
-    if (isUser(states)) this.entities.users = states.map(this._create);
-    if (isProduct(states)) this.entities.products = states.map(this._create);
+  get(name: string | null): EntityDto[] | undefined {
+    if (!name) return [];
+    return this._entitiesDto.get(name);
   }
-
-  getUser(id: string): UserEntity | undefined {
-    return this.entities.users.find((user) => user.id === id);
-  }
-
-  getProduct(id: string): ProductEntity | undefined {
-    return this.entities.products.find((product) => product.id === id);
-  }
-
-  private _create = <T extends EntitySateUnion>(state: T): Entity<T> => {
-    return {
-      id: state.id,
-      signal: signal(state),
-      update(value) {
-        this.signal.update((state) => ({ ...state, ...value }));
-      },
-    };
-  };
 }

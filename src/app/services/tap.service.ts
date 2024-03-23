@@ -10,6 +10,7 @@ import {
   TapState,
   ToolbarTapName,
   Visibility,
+  RouteParam,
 } from '@types';
 import { Subject } from 'rxjs';
 
@@ -19,7 +20,7 @@ import { Subject } from 'rxjs';
 export class TapService {
   private readonly _taps = new Map<string, Tap[]>();
   private readonly _rec = new Map<TapPlace, TapName>();
-  
+
   readonly rec$ = new Subject<{ place: TapPlace; name: TapName }>();
 
   constructor() {
@@ -144,8 +145,10 @@ export class TapService {
       options,
 
       url: () => {
-        const pageName = this.getRec(TapPlace.Pages);
-        return place === TapPlace.Pages ? [pageName] : [pageName, { name }];
+        const first = this.getRec(TapPlace.Pages);
+        return place === TapPlace.Pages
+          ? [first]
+          : [first, { [RouteParam.Second]: name }];
       },
 
       update(value: Partial<TapState>) {
@@ -167,7 +170,7 @@ export class TapService {
 
       click() {
         this.rec();
-      }
+      },
     };
   };
 

@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
-import { Tap, PageTapName, TapPlace, ToolbarTapName } from '@types';
-import { Observable } from 'rxjs';
+import { Tap, TapPlace } from '@types';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,7 +12,6 @@ import { Observable } from 'rxjs';
   styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent implements OnInit {
-  isDisabled$!: Observable<boolean>;
   taps: Tap[] = [];
 
   constructor(private _state: StateService, private _tap: TapService) {}

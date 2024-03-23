@@ -30,7 +30,6 @@ export type FormGroupMap<T> = {
 
 export type Visibility = 'hidden' | 'visible';
 
-
 export type Rec = {
   name: WritableSignal<string | null>;
 };
@@ -38,3 +37,8 @@ export type Rec = {
 export type RecKey = 'btn';
 
 export type RecGroup = Record<RecKey, Rec[]>;
+
+export enum RouteParam {
+  First = 'first',
+  Second = 'second',
+}

@@ -1,35 +1,25 @@
-import { WritableSignal } from '@angular/core';
-
-export type EntityType = keyof EntityGroup;
-
-export interface UserEntity extends Entity<UserState> {}
-export interface ProductEntity extends Entity<ProductState> {}
-
-export interface Entity<T> {
-  id: string;
-  signal: WritableSignal<T>;
-  update(value: Partial<T>): void;
+export enum EntityName {
+  Users = 'Users',
+  Products = 'Products',
 }
 
-export interface EntityGroup {
-  users: UserEntity[];
-  products: ProductEntity[];
+export enum FieldAction {
+  None = 0,
+  Create = 1,
+  Update = 3,
+  Delete = 4,
 }
 
-export interface UserState {
+export interface FieldDto {
   id: string;
   name: string;
-  email: string;
-  phone: string;
+  value: string;
+  action: FieldAction;
+  order: number;
 }
 
-export interface ProductState {
+export interface EntityDto {
   id: string;
-  name: string;
-  price: string;
+  name: EntityName;
+  fields: FieldDto[];
 }
-
-export type EntityUnion = UserEntity | ProductEntity;
-export type EntitiesUnion = UserEntity[] | ProductEntity[];
-export type EntitySateUnion = UserState | ProductState;
-export type EntitySatesUnion = UserState[] | ProductState[];
