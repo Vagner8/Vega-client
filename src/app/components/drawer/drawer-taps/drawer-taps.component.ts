@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatButton, MatIcon } from '@mat';
 import { TapService } from '@services';
-import { PageTapName, Tap, TapName, TapPlace, ToolbarTapName } from '@types';
+import { Tap, TapPlace, ToolbarTapName } from '@types';
 
 @Component({
   selector: 'app-drawer-taps',
@@ -29,12 +29,5 @@ export class BtnsDrawerComponent implements OnInit {
   onClick(tap: Tap): void {
     tap.click();
     if (tap.options?.navigation) this._router.navigate(tap.url());
-    this._disableActionsAndSettingsTaps(tap.name);
-  }
-
-  private _disableActionsAndSettingsTaps(name: TapName) {
-    const disabled = name === PageTapName.Home;
-    this.toolbarActionsTap.update({ disabled });
-    this.toolbarSettingsTap.update({ disabled });
   }
 }

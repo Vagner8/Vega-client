@@ -12,8 +12,7 @@ export enum ActionTapName {
 }
 
 export enum PageTapName {
-  Home = 'Home',
-  Users = 'Users',
+  Matrices = 'Matrices'
 }
 
 export enum ToolbarTapName {
@@ -45,7 +44,7 @@ export interface TapState {
 }
 
 export interface Tap {
-  name: TapName;
+  name: string;
   place: TapPlace;
   signal: WritableSignal<TapState>;
   url(): (string | object)[];

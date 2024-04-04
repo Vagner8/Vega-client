@@ -5,9 +5,9 @@ export interface ResponseDto<T> {
 }
 
 export enum Api {
-  Entity = 'https://localhost:7002/api/entity',
+  Matrix = 'https://localhost:7002/api/matrix',
 }
 
-export enum EntityApi {
-  Many = `${Api.Entity}/many`,
+export enum MatrixApi {
+  Many = `${Api.Matrix}/many`,
 }

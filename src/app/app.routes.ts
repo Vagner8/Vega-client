@@ -12,7 +12,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: PageTapName.Home,
+    redirectTo: PageTapName.Matrices,
     pathMatch: 'full',
   },
 ];

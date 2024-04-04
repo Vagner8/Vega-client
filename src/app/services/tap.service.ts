@@ -19,15 +19,15 @@ import { Subject } from 'rxjs';
 })
 export class TapService {
   private readonly _taps = new Map<string, Tap[]>();
-  private readonly _rec = new Map<TapPlace, TapName>();
+  private readonly _rec = new Map<TapPlace, string>();
 
-  readonly rec$ = new Subject<{ place: TapPlace; name: TapName }>();
+  readonly rec$ = new Subject<{ place: TapPlace; name: string }>();
 
   constructor() {
     this._setTaps();
   }
 
-  getRec(place: TapPlace): TapName {
+  getRec(place: TapPlace): string {
     const name = this._rec.get(place);
     if (!name) throw new Error(`Tap name is ${name}`);
     return name;
@@ -79,18 +79,15 @@ export class TapService {
       }),
     ]);
     this._taps.set(TapPlace.Pages, [
-      this._page(PageTapName.Home, this._state('visible', 'home', false), {
+      this._page(PageTapName.Matrices, this._state('visible', 'home', false), {
         navigation: true,
-      }),
-      this._page(PageTapName.Users, this._state('visible', 'group', false), {
-        navigation: true,
-      }),
+      })
     ]);
     this._taps.set(TapPlace.Settings, []);
     this._taps.set(TapPlace.Toolbar, [
       this._toolbar(
         ToolbarTapName.Settings,
-        this._state('visible', 'settings', true),
+        this._state('visible', 'settings', false),
         {
           navigation: true,
         }
@@ -104,7 +101,7 @@ export class TapService {
       ),
       this._toolbar(
         ToolbarTapName.Actions,
-        this._state('visible', 'filter_list', true),
+        this._state('visible', 'filter_list', false),
         {
           navigation: true,
         }
@@ -120,7 +117,7 @@ export class TapService {
     return this._tap(name, TapPlace.Actions, initState, options);
   }
 
-  private _page(name: TapName, initState: TapState, options?: TapOptions): Tap {
+  private _page(name: string, initState: TapState, options?: TapOptions): Tap {
     return this._tap(name, TapPlace.Pages, initState, options);
   }
 
@@ -133,7 +130,7 @@ export class TapService {
   }
 
   private _tap = (
-    name: TapName,
+    name: string,
     place: TapPlace,
     initState: TapState,
     options?: TapOptions

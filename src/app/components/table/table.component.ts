@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { EntityDto } from '@types';
+import { TableDto } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -10,7 +10,7 @@ import { EntityDto } from '@types';
   styleUrl: './table.component.css',
 })
 export class TableComponent {
-  @Input() dataSource?: EntityDto[];
+  @Input() dataSource?: TableDto[];
   
   get displayedColumns(): string[] {
     if (!this.dataSource) return [];

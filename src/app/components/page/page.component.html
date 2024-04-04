@@ -1,2 +1,3 @@
-<app-header></app-header>
-<app-table [dataSource]="entitiesDto"></app-table>
+<app-header [address]="address$ | async"></app-header>
+<app-create [address]="address$ | async"></app-create>
+<app-control></app-control>

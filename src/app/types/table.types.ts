@@ -1,4 +1,4 @@
-export enum EntityName {
+export enum TableName {
   Users = 'Users',
   Products = 'Products',
 }
@@ -6,8 +6,8 @@ export enum EntityName {
 export enum FieldAction {
   None = 0,
   Create = 1,
-  Update = 3,
-  Delete = 4,
+  Update = 2,
+  Delete = 3,
 }
 
 export interface FieldDto {
@@ -18,8 +18,8 @@ export interface FieldDto {
   order: number;
 }
 
-export interface EntityDto {
+export interface TableDto {
   id: string;
-  name: EntityName;
+  name: TableName;
   fields: FieldDto[];
 }

@@ -1,27 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { RouteParam } from '@types';
-import { Observable, map } from 'rxjs';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
-  header$!: Observable<string>;
+export class HeaderComponent {
+  private _address: [string, string] | null = null;
 
-  constructor(private _route: ActivatedRoute) {}
+  @Input()
+  set address(value: [string, string] | null) {
+    this._address = value;
+  }
 
-  ngOnInit(): void {
-    this.header$ = this._route.paramMap.pipe(
-      map(
-        (paramMap) =>
-          `${paramMap.get(RouteParam.First) || ''} ${paramMap.get(RouteParam.Second) || ''}`
-      )
-    );
+  get address(): string {
+    return this._address ? this._address.join(' ') : '';
   }
 }
