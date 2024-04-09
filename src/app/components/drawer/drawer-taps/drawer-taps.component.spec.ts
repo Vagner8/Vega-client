@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BtnsDrawerComponent } from './drawer-taps.component';
+import { DrawerTapsComponent } from './drawer-taps.component';
 
-describe('BtnsDrawerComponent', () => {
-  let component: BtnsDrawerComponent;
-  let fixture: ComponentFixture<BtnsDrawerComponent>;
+describe('DrawerTapsComponent', () => {
+  let component: DrawerTapsComponent;
+  let fixture: ComponentFixture<DrawerTapsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BtnsDrawerComponent]
+      imports: [DrawerTapsComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BtnsDrawerComponent);
+    fixture = TestBed.createComponent(DrawerTapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

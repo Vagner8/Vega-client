@@ -1,1 +1,10 @@
-<p>control works!</p>
+@for (item of control; track item.name) {
+  @switch (item.valueType) {
+    @case ('Text') {
+      <app-input [label]="item.name" [formControl]="item.formControl"></app-input>
+    }
+    @case ('Select') {
+      <app-select [label]="item.name" [formControl]="item.formControl" [options]="item.options?.selectOptions"></app-select>
+    }
+  }
+}

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatButton, MatIcon } from '@mat';
 import { TapService } from '@services';
-import { Tap, TapPlace, ToolbarTapName } from '@types';
+import { RouteParam, Tap, TapPlace } from '@types';
 
 @Component({
   selector: 'app-drawer-taps',
@@ -11,23 +11,22 @@ import { Tap, TapPlace, ToolbarTapName } from '@types';
   templateUrl: './drawer-taps.component.html',
   styleUrl: './drawer-taps.component.css',
 })
-export class BtnsDrawerComponent implements OnInit {
-  toolbarActionsTap!: Tap;
-  toolbarSettingsTap!: Tap;
+export class DrawerTapsComponent {
+  First: string = '';
 
-  constructor(private _tap: TapService, private _router: Router) {}
-
-  ngOnInit(): void {
-    this.toolbarActionsTap = this._tap.getToolbarTap(ToolbarTapName.Actions);
-    this.toolbarSettingsTap = this._tap.getToolbarTap(ToolbarTapName.Settings);
-  }
+  constructor(private tap: TapService, private router: Router) {}
 
   get taps(): Tap[] {
-    return this._tap.getTaps(this._tap.getRec(TapPlace.Toolbar));
+    return this.tap.getTaps(this.tap.getRec(TapPlace.Toolbar));
   }
 
   onClick(tap: Tap): void {
-    tap.click();
-    if (tap.options?.navigation) this._router.navigate(tap.url());
+    if (!tap.options?.navigation) return;
+    if (tap.place === TapPlace.Pages) {
+      this.First = tap.name;
+      this.router.navigate([tap.name]);
+    } else {
+      this.router.navigate([this.First, { [RouteParam.Second]: tap.name }]);
+    }
   }
 }

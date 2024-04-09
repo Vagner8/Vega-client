@@ -1,31 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { RouteParam } from '@types';
+import { ControlDto } from '@types';
 import { CreateComponent } from '../create/create.component';
-import { ControlComponent } from '../control/control.component';
 import { HeaderComponent } from '../header/header.component';
 import { TableComponent } from '../table/table.component';
+import { MatrixService } from '@services';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, CreateComponent, TableComponent, ControlComponent],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    HeaderComponent,
+    CreateComponent,
+    TableComponent,
+  ],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })
-export class PageComponent implements OnInit {
-  address$!: Observable<[string, string]>;
+export class PageComponent {
+  @Input() First: string = '';
+  @Input() Second: string = '';
 
-  constructor(private _route: ActivatedRoute) { }
+  constructor(private matrix: MatrixService) {}
 
-  ngOnInit(): void {
-    this.address$ = this._route.paramMap.pipe(
-      map(
-        (paramMap) =>
-          [`${paramMap.get(RouteParam.First) || ''}`, `${paramMap.get(RouteParam.Second) || ''}`]
-      )
-    );
+  get controls(): Signal<ControlDto[]> {
+    return this.matrix.matricesControls;
   }
 }

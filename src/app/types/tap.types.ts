@@ -39,13 +39,13 @@ export enum TapPlaces {
 
 export interface TapState {
   icon: IconName;
-  visibility: Visibility;
-  disabled: boolean;
+  visibility?: Visibility;
+  disabled?: boolean;
 }
 
 export interface Tap {
   name: string;
-  place: TapPlace;
+  place: string;
   signal: WritableSignal<TapState>;
   url(): (string | object)[];
   update(value: Partial<TapState>): void;
@@ -59,4 +59,10 @@ export interface Tap {
 export interface TapOptions {
   confirm?: boolean;
   navigation?: boolean;
+}
+
+export interface TapBuilder {
+  setState(state: TapState): TapBuilder;
+  setOptions(options: TapOptions): TapBuilder;
+  build(): Tap;
 }

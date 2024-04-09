@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import {
-  IconName,
   Tap,
   ActionTapName,
   TapName,
@@ -9,8 +8,8 @@ import {
   TapPlace,
   TapState,
   ToolbarTapName,
-  Visibility,
   RouteParam,
+  TapBuilder,
 } from '@types';
 import { Subject } from 'rxjs';
 
@@ -18,24 +17,23 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class TapService {
-  private readonly _taps = new Map<string, Tap[]>();
-  private readonly _rec = new Map<TapPlace, string>();
-
-  readonly rec$ = new Subject<{ place: TapPlace; name: string }>();
+  readonly taps = new Map<string, Tap[]>();
+  readonly rec = new Map<string, string>();
+  readonly rec$ = new Subject<{ place: string; name: string }>();
 
   constructor() {
-    this._setTaps();
+    this.setTaps();
   }
 
   getRec(place: TapPlace): string {
-    const name = this._rec.get(place);
+    const name = this.rec.get(place);
     if (!name) throw new Error(`Tap name is ${name}`);
     return name;
   }
 
   getTaps(key: string | undefined): Tap[] {
     if (!key) throw new Error(`Key is ${key}`);
-    const taps = this._taps.get(key);
+    const taps = this.taps.get(key);
     if (!taps) throw new Error(`Taps are ${taps}`);
     return taps;
   }
@@ -50,136 +48,116 @@ export class TapService {
     return this.getTap(TapPlace.Toolbar, name);
   }
 
-  private _setTaps(): void {
-    this._taps.set(TapPlace.Actions, [
-      this._action(ActionTapName.Send, this._state('visible', 'send', true), {
-        confirm: true,
-      }),
-      this._action(ActionTapName.Edit, this._state('visible', 'edit', true), {
-        confirm: true,
-        navigation: true,
-      }),
-      this._action(
-        ActionTapName.Delete,
-        this._state('visible', 'delete', true),
-        {
-          confirm: true,
-        }
-      ),
-      this._action(
-        ActionTapName.Confirm,
-        this._state('hidden', 'task_alt', false)
-      ),
-      this._action(
-        ActionTapName.Cancel,
-        this._state('hidden', 'cancel', false)
-      ),
-      this._action(ActionTapName.Create, this._state('visible', 'add', false), {
-        navigation: true,
-      }),
+  private setTaps(): void {
+    this.taps.set(TapPlace.Actions, [
+      this.setActionTap(ActionTapName.Send)
+        .setState({ icon: 'send' })
+        .setOptions({ confirm: true, navigation: false })
+        .build(),
+      this.setActionTap(ActionTapName.Edit)
+        .setState({ icon: 'edit' })
+        .setOptions({ confirm: true })
+        .build(),
+      this.setActionTap(ActionTapName.Delete)
+        .setState({ icon: 'delete', disabled: true })
+        .setOptions({ confirm: true })
+        .build(),
+      this.setActionTap(ActionTapName.Confirm)
+        .setState({ icon: 'task_alt', visibility: 'hidden' })
+        .setOptions({ navigation: false })
+        .build(),
+      this.setActionTap(ActionTapName.Cancel)
+        .setState({ icon: 'cancel', visibility: 'hidden' })
+        .setOptions({ navigation: false })
+        .build(),
+      this.setActionTap(ActionTapName.Create)
+        .setState({ icon: 'add' })
+        .build()
     ]);
-    this._taps.set(TapPlace.Pages, [
-      this._page(PageTapName.Matrices, this._state('visible', 'home', false), {
-        navigation: true,
-      })
+    this.taps.set(TapPlace.Pages, [
+      this.setPageTap(PageTapName.Matrices)
+        .setState({ icon: 'home' })
+        .build()
     ]);
-    this._taps.set(TapPlace.Settings, []);
-    this._taps.set(TapPlace.Toolbar, [
-      this._toolbar(
-        ToolbarTapName.Settings,
-        this._state('visible', 'settings', false),
-        {
-          navigation: true,
-        }
-      ),
-      this._toolbar(
-        ToolbarTapName.Pages,
-        this._state('visible', 'apps', false),
-        {
-          navigation: true,
-        }
-      ),
-      this._toolbar(
-        ToolbarTapName.Actions,
-        this._state('visible', 'filter_list', false),
-        {
-          navigation: true,
-        }
-      ),
+    this.taps.set(TapPlace.Settings, []);
+    this.taps.set(TapPlace.Toolbar, [
+      this.setToolbarTap(ToolbarTapName.Settings)
+        .setState({ icon: 'settings' })
+        .build(),
+      this.setToolbarTap(ToolbarTapName.Pages)
+        .setState({ icon: 'apps' })
+        .build(),
+      this.setToolbarTap(ToolbarTapName.Actions)
+        .setState({ icon: 'filter_list' })
+        .build(),
     ]);
   }
 
-  private _action(
-    name: TapName,
-    initState: TapState,
-    options?: TapOptions
-  ): Tap {
-    return this._tap(name, TapPlace.Actions, initState, options);
+  setActionTap(name: string): TapBuilder {
+    return this.tap(name, TapPlace.Actions);
   }
 
-  private _page(name: string, initState: TapState, options?: TapOptions): Tap {
-    return this._tap(name, TapPlace.Pages, initState, options);
+  setPageTap(name: string): TapBuilder {
+    return this.tap(name, TapPlace.Pages);
   }
 
-  private _toolbar(
-    name: TapName,
-    initState: TapState,
-    options?: TapOptions
-  ): Tap {
-    return this._tap(name, TapPlace.Toolbar, initState, options);
+  setToolbarTap(name: TapName): TapBuilder {
+    return this.tap(name, TapPlace.Toolbar);
   }
 
-  private _tap = (
-    name: string,
-    place: TapPlace,
-    initState: TapState,
-    options?: TapOptions
-  ): Tap => {
-    return {
+  private tap = (name: string, place: string): TapBuilder => {
+    const defaultState: TapState = { icon: 'apps', visibility: 'visible', disabled: false };
+    const defaultOptions: TapOptions = { confirm: false, navigation: true };
+    const tap: Tap = {
       name,
       place,
-      signal: signal(initState),
-      options,
-
-      url: () => {
+      signal: signal(defaultState),
+      options: defaultOptions,
+      url: (): (string | object)[] => {
         const first = this.getRec(TapPlace.Pages);
         return place === TapPlace.Pages
           ? [first]
           : [first, { [RouteParam.Second]: name }];
       },
 
-      update(value: Partial<TapState>) {
+      update(value: Partial<TapState>): void {
         this.signal.update((state) => ({ ...state, ...value }));
       },
 
-      reset() {
-        this.signal.set(initState);
+      reset(): void {
+        this.signal.set(defaultState);
       },
 
-      restore(key) {
-        this.signal.update((state) => ({ ...state, [key]: initState[key] }));
+      restore(key): void {
+        this.signal.update((state) => ({ ...state, [key]: defaultState[key] }));
       },
 
-      rec: () => {
+      rec: (): void => {
         this.rec$.next({ place, name });
-        this._rec.set(place, name);
+        this.rec.set(place, name);
       },
 
-      click() {
+      click(): void {
         this.rec();
       },
     };
-  };
 
-  private _state(
-    visibility: Visibility,
-    icon: IconName,
-    disabled: boolean
-  ): TapState {
-    return {
-      visibility,
-      icon,
-      disabled,
+    const builder: TapBuilder = {
+      setState(state: TapState): TapBuilder {
+        tap.signal = signal({...defaultState, ...state});
+        return builder;
+      },
+
+      setOptions(options: TapOptions): TapBuilder {
+        tap.options = {...defaultOptions, ...options};
+        return builder;
+      },
+
+      build(): Tap {
+        return tap;
+      }
     };
-  }
+
+    return builder;
+  };
 }

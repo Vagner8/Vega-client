@@ -39,6 +39,11 @@ export type RecKey = 'btn';
 export type RecGroup = Record<RecKey, Rec[]>;
 
 export enum RouteParam {
-  First = 'first',
-  Second = 'second',
+  First = 'First',
+  Second = 'Second',
+}
+
+export interface Address {
+  [RouteParam.First]: string,
+  [RouteParam.Second]: string
 }

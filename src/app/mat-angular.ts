@@ -8,3 +8,4 @@ export * from '@angular/material/menu';
 export * from '@angular/material/table';
 export * from '@angular/material/input';
 export * from '@angular/material/form-field';
+export * from '@angular/material/select';

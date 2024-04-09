@@ -1,22 +1,22 @@
 <mat-form-field class="mat-form-field-app-input">
-  <mat-label i18n>{{controlInput[0]}}</mat-label>
-  <input #inputElementRef [type]="controlInput[0]" matInput [formControl]="controlInput[1]">
-  @if (controlInput[1].value && clearButton) {
+  <mat-label i18n>{{label}}</mat-label>
+  <input #inputElementRef [type]="label" matInput [formControl]="formControl">
+  @if (formControl.value && clearButton) {
   <button type="button" matSuffix mat-icon-button i18n-aria-label aria-label="Clear input"
-    (click)="controlInput[1].setValue('')">
+    (click)="formControl.setValue('')">
     <mat-icon>close</mat-icon>
   </button>
   }
-  @if (controlInput[1].value && controlInput[0] === 'password') {
+  @if (formControl.value && label === 'password') {
   <button type="button" matSuffix mat-icon-button i18n-aria-label aria-label="Password visibility"
     (click)="toggleInputType()">
     <mat-icon>{{toggleVisibilityIcon()}}</mat-icon>
   </button>
   }
-  @if (controlInput[1].hasError(controlInput[0]) && !controlInput[1].hasError('required')) {
-  <mat-error>{{messages.valid}} {{controlInput[0]}}</mat-error>
+  @if (formControl.hasError(label) && !formControl.hasError('required')) {
+  <mat-error>{{messages.valid}} {{label}}</mat-error>
   }
-  @if (controlInput[1].hasError('required')) {
-  <mat-error>{{controlInput[0]}} {{messages.required}}</mat-error>
+  @if (formControl.hasError('required')) {
+  <mat-error>{{label}} {{messages.required}}</mat-error>
   }
 </mat-form-field>

@@ -12,7 +12,7 @@ import {
   MatIcon,
   MatInputModule,
 } from '@mat';
-import { IconName, InputType } from '@types';
+import { InputType } from '@types';
 
 @Component({
   selector: 'app-input',
@@ -30,21 +30,18 @@ import { IconName, InputType } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  @ViewChild('inputElementRef')
-  private _inputElementRef!: ElementRef<HTMLInputElement>;
+  @ViewChild('inputElementRef') private _inputElementRef!: ElementRef<HTMLInputElement>;
   @Input() clearButton = true;
-  @Input() controlInput!: [string, FormControl];
+  @Input() label: string = '';
+  @Input() formControl!: FormControl;
 
   toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;
-    input.type =
-      input.type === InputType.Text ? InputType.Password : InputType.Text;
+    input.type = input.type === InputType.Text ? InputType.Password : InputType.Text;
   }
 
   toggleVisibilityIcon(): string {
-    return this._inputElementRef.nativeElement.type === 'password'
-      ? 'visibility'
-      : 'visibility_off';
+    return this._inputElementRef.nativeElement.type === 'password' ? 'visibility' : 'visibility_off';
   }
 
   get messages() {

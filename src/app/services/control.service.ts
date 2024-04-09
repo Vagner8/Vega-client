@@ -1,29 +1,33 @@
-import { Injectable, signal } from '@angular/core';
-import { Control, ControlDto, ControlType, Operation } from 'app/types/control.type';
+import { Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ControlItem, ControlNames, ControlOptions, ControlFieldType } from '@types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ControlService {
-  private readonly _controls: Control[] = [];
+  readonly controls: ControlItem[][] = [];
+  private selectOptions = [ControlFieldType.Number, ControlFieldType.Select, ControlFieldType.Text];
 
-  constructor() {
-    this.add('Name');
+  add(): void {
+    this.controls.push([
+      this.create('name'),
+      this.create('value'),
+      this.create('type', ControlFieldType.Select, { selectOptions: this.selectOptions }),
+      this.create('operation')
+    ]);
   }
 
-  toControl({ id, type, name, value, operation }: ControlDto): Control {
+  toDto() {
+    
+  }
+
+  private create(name: ControlNames, valueType = ControlFieldType.Text, options?: ControlOptions): ControlItem {
     return {
-      id,
-      signal: signal({ type, name, value, operation })
+      name,
+      valueType,
+      formControl: new FormControl(''),
+      options
     };
-  }
-
-  add(
-    name: string = '',
-    value: string = '',
-    type: ControlType = ControlType.Text,
-    operation: Operation = Operation.Create
-  ): void {
-    this._controls.push({ signal: signal({ type, name, value, operation }) });
   }
 }

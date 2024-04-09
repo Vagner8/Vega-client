@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { TableDto } from '@types';
+import { MatrixService } from '@services';
+import { ControlDto } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -10,16 +11,12 @@ import { TableDto } from '@types';
   styleUrl: './table.component.css',
 })
 export class TableComponent {
-  @Input() dataSource?: TableDto[];
-  
-  get displayedColumns(): string[] {
-    if (!this.dataSource) return [];
-    console.log('🚀 ~ this.dataSource[0].fields.map(({name}) => name):', this.dataSource[0].fields.map(({name}) => name));
-    console.log('🚀 ~ this.dataSource:', this.dataSource);
-    return this.dataSource[0].fields.map(({name}) => name);
-  }
+  // @Input() controls: ControlDto[] | null = [];
+  displayedColumns = ['name'];
 
-  // ngDoCheck() {
-  //   console.log('🚀 ~ this.dataSource:', this.dataSource);
-  // }
+  constructor(private matrix: MatrixService) { }
+
+  get controls(): Signal<ControlDto[]> {
+    return this.matrix.matricesControls;
+  }
 }
