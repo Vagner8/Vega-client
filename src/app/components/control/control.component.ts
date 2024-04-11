@@ -12,8 +12,4 @@ import { SelectComponent } from '../select/select.component';
 })
 export class ControlComponent {
   @Input() control: ControlItem[] = [];
-
-  ngDoCheck() {
-    console.log(this.control);
-  }
 }

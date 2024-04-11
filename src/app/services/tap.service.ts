@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   Tap,
   ActionTapName,
@@ -8,10 +9,9 @@ import {
   TapPlace,
   TapState,
   ToolbarTapName,
-  RouteParam,
   TapBuilder,
 } from '@types';
-import { Subject } from 'rxjs';
+import { NavigationService } from './navigation.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,9 +19,8 @@ import { Subject } from 'rxjs';
 export class TapService {
   readonly taps = new Map<string, Tap[]>();
   readonly rec = new Map<string, string>();
-  readonly rec$ = new Subject<{ place: string; name: string }>();
 
-  constructor() {
+  constructor(private router: Router, private navigation: NavigationService) {
     this.setTaps();
   }
 
@@ -31,24 +30,24 @@ export class TapService {
     return name;
   }
 
-  getTaps(key: string | undefined): Tap[] {
+  getTaps(key: string | undefined) {
     if (!key) throw new Error(`Key is ${key}`);
     const taps = this.taps.get(key);
     if (!taps) throw new Error(`Taps are ${taps}`);
     return taps;
   }
 
-  getTap(place: TapPlace, name: TapName): Tap {
+  getTap(place: TapPlace, name: TapName) {
     const tap = this.getTaps(place).find((tap) => tap.name === name);
     if (!tap) throw new Error(`Tap is ${tap}`);
     return tap;
   }
 
-  getToolbarTap(name: TapName): Tap {
+  getToolbarTap(name: TapName) {
     return this.getTap(TapPlace.Toolbar, name);
   }
 
-  private setTaps(): void {
+  private setTaps() {
     this.taps.set(TapPlace.Actions, [
       this.setActionTap(ActionTapName.Send)
         .setState({ icon: 'send' })
@@ -70,14 +69,10 @@ export class TapService {
         .setState({ icon: 'cancel', visibility: 'hidden' })
         .setOptions({ navigation: false })
         .build(),
-      this.setActionTap(ActionTapName.Create)
-        .setState({ icon: 'add' })
-        .build()
+      this.setActionTap(ActionTapName.Create).setState({ icon: 'add' }).build(),
     ]);
     this.taps.set(TapPlace.Pages, [
-      this.setPageTap(PageTapName.Matrices)
-        .setState({ icon: 'home' })
-        .build()
+      this.setPageTap(PageTapName.Matrices).setState({ icon: 'home' }).build(),
     ]);
     this.taps.set(TapPlace.Settings, []);
     this.taps.set(TapPlace.Toolbar, [
@@ -93,69 +88,74 @@ export class TapService {
     ]);
   }
 
-  setActionTap(name: string): TapBuilder {
+  setActionTap(name: string) {
     return this.tap(name, TapPlace.Actions);
   }
 
-  setPageTap(name: string): TapBuilder {
+  setPageTap(name: string) {
     return this.tap(name, TapPlace.Pages);
   }
 
-  setToolbarTap(name: TapName): TapBuilder {
+  setToolbarTap(name: string) {
     return this.tap(name, TapPlace.Toolbar);
   }
 
   private tap = (name: string, place: string): TapBuilder => {
-    const defaultState: TapState = { icon: 'apps', visibility: 'visible', disabled: false };
-    const defaultOptions: TapOptions = { confirm: false, navigation: true };
+    let defaultState: TapState = {
+      icon: 'apps',
+      visibility: 'visible',
+      disabled: false,
+    };
+    let defaultOptions: TapOptions = { confirm: false, navigation: true };
     const tap: Tap = {
       name,
       place,
       signal: signal(defaultState),
       options: defaultOptions,
-      url: (): (string | object)[] => {
-        const first = this.getRec(TapPlace.Pages);
-        return place === TapPlace.Pages
-          ? [first]
-          : [first, { [RouteParam.Second]: name }];
+
+      url(address) {
+        return this.place === TapPlace.Pages
+          ? [this.name]
+          : [address.page, this.name];
       },
 
-      update(value: Partial<TapState>): void {
+      navigate: () => {
+        if (!tap.options?.navigation) return;
+        this.router.navigate(tap.url(this.navigation.address()));
+      },
+
+      update(value: Partial<TapState>) {
         this.signal.update((state) => ({ ...state, ...value }));
       },
 
-      reset(): void {
+      reset() {
         this.signal.set(defaultState);
       },
 
-      restore(key): void {
+      restore(key) {
         this.signal.update((state) => ({ ...state, [key]: defaultState[key] }));
       },
 
-      rec: (): void => {
-        this.rec$.next({ place, name });
+      rec: () => {
         this.rec.set(place, name);
-      },
-
-      click(): void {
-        this.rec();
       },
     };
 
     const builder: TapBuilder = {
-      setState(state: TapState): TapBuilder {
-        tap.signal = signal({...defaultState, ...state});
+      setState(state: TapState) {
+        defaultState = { ...defaultState, ...state };
+        tap.signal = signal(defaultState);
         return builder;
       },
 
-      setOptions(options: TapOptions): TapBuilder {
-        tap.options = {...defaultOptions, ...options};
+      setOptions(options: TapOptions) {
+        tap.options = defaultOptions = { ...defaultOptions, ...options };
         return builder;
       },
 
-      build(): Tap {
+      build() {
         return tap;
-      }
+      },
     };
 
     return builder;

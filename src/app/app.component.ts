@@ -46,7 +46,6 @@ export class AppComponent implements OnInit, OnDestroy {
       ...(this.tap.taps.get(TapPlace.Pages) || []),
       ...this.setPageTaps(),
     ]);
-    console.log(this.tap.taps.get(TapPlace.Pages));
   };
 
   private setPageTaps = (): Tap[] => {

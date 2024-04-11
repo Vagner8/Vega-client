@@ -1,11 +1,15 @@
 import { Routes } from '@angular/router';
-import { PageComponent } from '@components';
-import { RouteParam, PageTapName } from '@types';
+import { CreateComponent, PageComponent, TableComponent } from '@components';
+import { PageTapName } from '@types';
 
 export const routes: Routes = [
   {
-    path: `:${RouteParam.First}`,
+    path: ':page',
     component: PageComponent,
+    children: [
+      { path: '', component: TableComponent },
+      { path: ':action', component: CreateComponent },
+    ],
   },
   { path: '', redirectTo: PageTapName.Matrices, pathMatch: 'full' },
   { path: '**', redirectTo: PageTapName.Matrices, pathMatch: 'full' },

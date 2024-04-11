@@ -21,9 +21,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './page.component.css',
 })
 export class PageComponent {
-  @Input() First: string = '';
-  @Input() Second: string = '';
-
   constructor(private matrix: MatrixService) {}
 
   get controls(): Signal<ControlDto[]> {

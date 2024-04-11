@@ -1,5 +1,5 @@
 import { WritableSignal } from '@angular/core';
-import { Visibility } from './common.types';
+import { Address, Visibility } from './common.types';
 import { IconName } from './icon.types';
 
 export enum ActionTapName {
@@ -12,7 +12,7 @@ export enum ActionTapName {
 }
 
 export enum PageTapName {
-  Matrices = 'Matrices'
+  Matrices = 'Matrices',
 }
 
 export enum ToolbarTapName {
@@ -47,12 +47,12 @@ export interface Tap {
   name: string;
   place: string;
   signal: WritableSignal<TapState>;
-  url(): (string | object)[];
+  url(address: Address): string[];
+  navigate(): void;
   update(value: Partial<TapState>): void;
   restore(key: keyof TapState): void;
   reset(): void;
   rec(): void;
-  click(): void;
   options?: TapOptions;
 }
 

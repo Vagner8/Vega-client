@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { NavigationService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,9 @@ import { Component, Input } from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  @Input() First: string = '';
-  @Input() Second: string = '';
+  constructor(private navigation: NavigationService) {}
+
+  get address() {
+    return this.navigation.address;
+  }
 }

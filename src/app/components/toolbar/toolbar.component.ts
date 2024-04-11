@@ -14,26 +14,26 @@ import { Tap, TapPlace } from '@types';
 export class ToolbarComponent implements OnInit {
   taps: Tap[] = [];
 
-  constructor(private _state: StateService, private _tap: TapService) {}
+  constructor(private state: StateService, private tap: TapService) {}
 
-  ngOnInit(): void {
-    this.taps = this._tap.getTaps(TapPlace.Toolbar);
+  ngOnInit() {
+    this.taps = this.tap.getTaps(TapPlace.Toolbar);
   }
 
-  onClick(tap: Tap): void {
+  onClick(tap: Tap) {
     tap.rec();
     if (tap.signal().icon === 'close') {
-      this._resetIcons();
-      this._state.drawerOpened.set(false);
+      this.resetIcons();
+      this.state.drawerOpened.set(false);
       return;
     } else {
-      this._resetIcons();
+      this.resetIcons();
       tap.update({ icon: 'close' });
-      this._state.drawerOpened.set(true);
+      this.state.drawerOpened.set(true);
     }
   }
 
-  private _resetIcons(): void {
+  private resetIcons() {
     this.taps.forEach((tap) => tap.restore('icon'));
   }
 }
