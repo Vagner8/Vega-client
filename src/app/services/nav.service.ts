@@ -5,7 +5,7 @@ import { Address } from '@types';
 @Injectable({
   providedIn: 'root',
 })
-export class NavigationService {
+export class NavService {
   address = signal<Address>({ page: '', action: '' });
 
   constructor(private router: Router) {
@@ -19,7 +19,9 @@ export class NavigationService {
 
   private on = (event: Event) => {
     if (event instanceof NavigationEnd) {
-      this.address.set(this.toAddress(event.url));
+      console.log('🚀 ~ NavService ~ this.toAddress(event.url):', event);
+
+      this.address.set(this.toAddress(event.urlAfterRedirects));
     }
   };
 }

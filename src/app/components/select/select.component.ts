@@ -11,6 +11,6 @@ import { MatSelectModule } from '@mat';
 })
 export class SelectComponent {
   @Input() formControl!: FormControl;
-  @Input() label: string = '';
   @Input() options?: string[] = [];
+  @Input() label: string = '';
 }

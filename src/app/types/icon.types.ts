@@ -13,4 +13,6 @@ export type IconName =
   | 'cancel'
   | 'settings'
   | 'apps'
-  | 'filter_list';
+  | 'filter_list'
+  | 'category'
+  | 'dataset';

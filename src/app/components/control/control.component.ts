@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { InputComponent } from '../input/input.component';
-import { ControlItem } from '@types';
 import { SelectComponent } from '../select/select.component';
 
 @Component({
@@ -11,5 +10,5 @@ import { SelectComponent } from '../select/select.component';
   styleUrl: './control.component.css'
 })
 export class ControlComponent {
-  @Input() control: ControlItem[] = [];
+  @Input() control = [];
 }

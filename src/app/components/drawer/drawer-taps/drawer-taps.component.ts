@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButton, MatIcon } from '@mat';
 import { TapService } from '@services';
-import { Tap, TapPlace } from '@types';
+import { Tap, Taps } from '@types';
 
 @Component({
   selector: 'app-drawer-taps',
@@ -14,8 +14,8 @@ import { Tap, TapPlace } from '@types';
 export class DrawerTapsComponent {
   constructor(private tap: TapService) {}
 
-  get taps(): Tap[] {
-    return this.tap.getTaps(this.tap.getRec(TapPlace.Toolbar));
+  get taps() {
+    return this.tap.data[this.tap.rec.Toolbar as keyof Taps];
   }
 
   onClick(tap: Tap): void {

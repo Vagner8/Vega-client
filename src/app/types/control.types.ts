@@ -1,28 +1,25 @@
 import { FormControl } from '@angular/forms';
-import { ControlDto } from './dto.types';
 
-export enum Operation {
-  None,
-  Create,
-  Update,
-  Delete,
+export type ControlName = 'Act' | 'Name' | 'Icon' | 'Sort';
+export type ControlAct = 'None' | 'Add' | 'Update' | 'Remove';
+export type ControlType = 'Text' | 'Select' | 'Number' | 'Email';
+
+export interface ControlDtoBase {
+  name: ControlName | string;
+  data: string;
+  type: ControlType;
+  act: ControlAct;
 }
 
-export enum ControlFieldType {
-  Text = 'Text',
-  Select = 'Select',
-  Number = 'Number'
+export interface ControlDto extends ControlDtoBase {
+  id: string;
 }
 
-export interface ControlOptions {
-  selectOptions: string[];
-}
+export type ControlBase = Record<
+  keyof ControlDtoBase,
+  FormControl<string | null>
+>;
 
-export type ControlNames = keyof Omit<ControlDto, 'id'>;
-
-export interface ControlItem {
-  name: ControlNames;
-  valueType: ControlFieldType;
-  formControl: FormControl;
-  options?: ControlOptions;
+export interface Control extends ControlBase {
+  id?: string;
 }

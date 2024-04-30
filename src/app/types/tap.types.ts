@@ -1,18 +1,18 @@
 import { WritableSignal } from '@angular/core';
-import { Address, Visibility } from './common.types';
+import { Visibility } from './common.types';
 import { IconName } from './icon.types';
 
+export enum PageTypeName {
+  Matrices = 'Matrices',
+}
+
 export enum ActionTapName {
-  Create = 'Create',
-  Edit = 'Edit',
-  Delete = 'Delete',
+  Add = 'Add',
+  Update = 'Update',
+  Remove = 'Remove',
   Send = 'Send',
   Confirm = 'Confirm',
   Cancel = 'Cancel',
-}
-
-export enum PageTapName {
-  Matrices = 'Matrices',
 }
 
 export enum ToolbarTapName {
@@ -21,48 +21,47 @@ export enum ToolbarTapName {
   Actions = 'Actions',
 }
 
-export type TapName = ActionTapName | PageTapName | ToolbarTapName;
-
-export enum TapPlace {
-  Actions = 'Actions',
-  Pages = 'Pages',
-  Settings = 'Settings',
-  Toolbar = 'Toolbar',
-}
-
-export enum TapPlaces {
-  Actions = 'Actions',
-  Pages = 'Pages',
-  Settings = 'Settings',
-  Toolbar = 'Toolbar',
+export interface Taps {
+  Settings: Tap[];
+  Pages: Tap[];
+  Actions: Tap[];
+  Toolbar: Tap[];
 }
 
 export interface TapState {
   icon: IconName;
-  visibility?: Visibility;
-  disabled?: boolean;
+  visibility: Visibility;
+  disabled: boolean;
 }
 
 export interface Tap {
   name: string;
-  place: string;
+  place: keyof Taps;
   signal: WritableSignal<TapState>;
-  url(address: Address): string[];
   navigate(): void;
   update(value: Partial<TapState>): void;
   restore(key: keyof TapState): void;
   reset(): void;
-  rec(): void;
-  options?: TapOptions;
+  options: TapOptions;
 }
 
 export interface TapOptions {
-  confirm?: boolean;
-  navigation?: boolean;
+  confirm: boolean;
+  navigation: boolean;
 }
 
 export interface TapBuilder {
   setState(state: TapState): TapBuilder;
   setOptions(options: TapOptions): TapBuilder;
   build(): Tap;
+}
+
+export interface TapBaseProps {
+  name: string;
+  state?: Partial<TapState>;
+  options?: Partial<TapOptions>;
+}
+
+export interface TapProps extends TapBaseProps {
+  place: keyof Taps;
 }

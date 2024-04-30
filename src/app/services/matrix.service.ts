@@ -1,24 +1,25 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { ControlDto, LineDto, MatrixDto, } from '@types';
+import { Injectable } from '@angular/core';
+import { ControlName, Matrix, MatrixDto } from '@types';
+import { TapService } from './tap.service';
+import { MapService } from './map.service';
+import { ControlService } from './control.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MatrixService {
-  matrices = signal<MatrixDto[]>([]);
-  matricesControls = computed<ControlDto[]>(() => this.getMatricesControls());
-  lines = computed<LineDto[]>(() => this.getLines());
-  linesControls = computed<ControlDto[]>(() => this.getLinesControls());
+  data = new Map<string, Matrix>();
+  dataDto = new Map<string, MatrixDto>();
 
-  private getMatricesControls(): ControlDto[] {
-    return this.matrices().map(matrix => matrix.controls).flat();
-  }
+  constructor(
+    private map: MapService,
+    private control: ControlService
+  ) {}
 
-  private getLines(): LineDto[] {
-    return this.matrices().map(matrix => matrix.lines).flat();
-  }
-
-  private getLinesControls(): ControlDto[] {
-    return this.lines().map(line => line.Controls).flat();
+  onInit(matrices: MatrixDto[]) {
+    matrices.forEach((m) => {
+      const control = this.control.findDto("Name", m.controls);
+      if (control) this.data.set(control.data, this.map.toMatrix(m));
+    });
   }
 }

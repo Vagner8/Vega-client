@@ -1,7 +1,7 @@
-import { Component, Signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { MatrixService } from '@services';
-import { ControlDto } from '@types';
+import { ControlService, MatrixService, NavService } from '@services';
+import { ControlName, Unit } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -11,12 +11,32 @@ import { ControlDto } from '@types';
   styleUrl: './table.component.css',
 })
 export class TableComponent {
-  // @Input() controls: ControlDto[] | null = [];
-  displayedColumns = ['name'];
+  displayedColumns!: string[];
 
-  constructor(private matrix: MatrixService) { }
+  constructor(
+    private nav: NavService,
+    private matrix: MatrixService,
+    private control: ControlService
+  ) {}
 
-  get controls(): Signal<ControlDto[]> {
-    return this.matrix.matricesControls;
+  get address() {
+    return this.nav.address;
+  }
+
+  hasMatrices() {
+    return Boolean(this.matrix.data.size);
+  }
+
+  cell(displayedColumn: string, unit: Unit) {
+    return unit.controls.find((c) => c.name.value === displayedColumn)?.data
+      .value;
+  }
+
+  lines(page: string) {
+    const matrix = this.matrix.data.get(page);
+    if (!matrix) return [];
+    this.displayedColumns =
+      this.control.find("Sort", matrix.controls)?.data.value?.split(':') || [];
+    return matrix.units;
   }
 }
