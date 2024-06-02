@@ -1,14 +1,14 @@
 import { Control, ControlDto } from './control.types';
-import { UnitDto, Unit } from './unit.types';
+import { Group, GroupDto } from './group.types';
 
 export interface MatrixDto {
-  id?: string;
-  units: UnitDto[];
+  id: string;
+  groups: GroupDto[];
   controls: ControlDto[];
 }
 
 export interface Matrix {
   id?: string;
-  units: Unit[];
+  groups: Group[];
   controls: Control[];
 }

@@ -28,6 +28,7 @@
       "@interceptors": ["app/interceptors/index.ts"],
       "@components": ["app/components/index.ts"],
       "@services": ["app/services/index.ts"],
+      "@config": ["app/config/index.ts"],
       "@types": ["app/types/index.ts"],
       "@pipes": ["app/pipes/index.ts"],
       "@mat": ["app/mat-angular.ts"]

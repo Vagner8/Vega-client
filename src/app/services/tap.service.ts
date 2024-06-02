@@ -60,7 +60,7 @@ export class TapService {
         if (place === 'Actions') this.rec.Settings = '';
         if (place === 'Settings') this.rec.Actions = '';
         if (!initialOptions.navigation) return;
-        const page = this.rec.Pages || PageTypeName.Matrices;
+        const page = this.rec.Pages || PageTypeName.Groups;
         const action = this.rec.Actions || this.rec.Settings;
         if (action) this.router.navigate([page, action]);
         else this.router.navigate([page]);

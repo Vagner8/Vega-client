@@ -3,7 +3,7 @@ import { Visibility } from './common.types';
 import { IconName } from './icon.types';
 
 export enum PageTypeName {
-  Matrices = 'Matrices',
+  Groups = 'Groups',
 }
 
 export enum ActionTapName {

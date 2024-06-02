@@ -1,25 +1,22 @@
+import { Signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-export type ControlName = 'Act' | 'Name' | 'Icon' | 'Sort';
+export type ControlIndicator = 'Matrix' | 'Group' | 'Act' | 'Icon' | 'Sort';
 export type ControlAct = 'None' | 'Add' | 'Update' | 'Remove';
-export type ControlType = 'Text' | 'Select' | 'Number' | 'Email';
 
-export interface ControlDtoBase {
-  name: ControlName | string;
-  data: string;
-  type: ControlType;
-  act: ControlAct;
-}
-
-export interface ControlDto extends ControlDtoBase {
+export interface ControlDto {
   id: string;
+  indicator: string;
+  data: string;
 }
 
-export type ControlBase = Record<
-  keyof ControlDtoBase,
-  FormControl<string | null>
->;
-
-export interface Control extends ControlBase {
+export interface Control {
   id?: string;
+  indicator: FormControl;
+  data: FormControl;
+  signal: Signal<ControlState>;
+}
+
+export interface ControlState {
+  disabled: boolean;
 }

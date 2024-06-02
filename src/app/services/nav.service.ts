@@ -19,8 +19,6 @@ export class NavService {
 
   private on = (event: Event) => {
     if (event instanceof NavigationEnd) {
-      console.log('🚀 ~ NavService ~ this.toAddress(event.url):', event);
-
       this.address.set(this.toAddress(event.urlAfterRedirects));
     }
   };

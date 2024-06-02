@@ -6,6 +6,6 @@ export interface UnitDto {
 }
 
 export interface Unit {
-  id: string;
-  controls: Control[]
+  id?: string;
+  controls: Control[];
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
-import { TapService, StateService, NavService } from '@services';
+import { TapService, StateService } from '@services';
 import { Tap } from '@types';
 
 @Component({

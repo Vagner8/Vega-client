@@ -24,7 +24,7 @@ export const tapConfig: Record<keyof Taps, TapBaseProps[]> = {
   Settings: [],
   Pages: [
     {
-      name: PageTypeName.Matrices,
+      name: PageTypeName.Groups,
       state: { icon: 'dataset' },
     },
   ],

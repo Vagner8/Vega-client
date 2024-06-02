@@ -1,33 +1,46 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { ControlDto, MatrixDto, UnitDto } from '@types';
+import {
+  Control,
+  ControlDto,
+  Group,
+  GroupDto,
+  Matrix,
+  MatrixDto,
+  Unit,
+  UnitDto,
+} from '@types';
+import { ControlService } from '@services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  toMatrix({ id, units, controls }: MatrixDto) {
+  constructor(private control: ControlService) {}
+
+  toMatrix = ({ id, groups, controls }: MatrixDto): Matrix => {
+    return {
+      id,
+      groups: groups.map(this.toGroup),
+      controls: controls.map(this.toControl),
+    };
+  };
+
+  toGroup = ({ id, units, controls }: GroupDto): Group => {
     return {
       id,
       units: units.map(this.toUnit),
       controls: controls.map(this.toControl),
     };
-  }
+  };
 
-  toUnit({ id, controls }: UnitDto) {
+  toUnit = ({ id, controls }: UnitDto): Unit => {
     return {
       id,
       controls: controls.map(this.toControl),
     };
-  }
+  };
 
-  toControl({ id, name, data, type, act }: ControlDto) {
-    return {
-      id,
-      name: new FormControl(name),
-      data: new FormControl(data),
-      type: new FormControl(type),
-      act: new FormControl(act),
-    };
-  }
+  toControl = (control: ControlDto): Control => {
+    return this.control.create(control);
+  };
 }

@@ -1,32 +1,37 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from '../header/header.component';
-import { TableComponent } from '../table/table.component';
-import { RouterOutlet } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { MatrixService } from '@services';
-import { HttpClient } from '@angular/common/http';
-import { MatrixApi, MatrixDto, ResponseDto } from '@types';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map } from 'rxjs';
+import { ControlDto } from '@types';
+import { ControlService, MatrixService } from '@services';
+import { MatTableModule } from '@mat';
+import { SortPipe } from 'app/pipes/sort.pipe';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [CommonModule, TableComponent],
+  imports: [CommonModule, MatTableModule, SortPipe],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })
 export class PageComponent {
-  private subscriptions: Subscription[] = [];
+  controlsDto$!: Observable<ControlDto[]>;
+  columns$!: Observable<string[]>;
 
-  constructor(private matrix: MatrixService, private http: HttpClient) {}
+  constructor(
+    private ar: ActivatedRoute,
+    private matrix: MatrixService,
+    private control: ControlService
+  ) {}
 
-  ngOnInit() {
-    // this.http
-    //   .get<ResponseDto<MatrixDto[]>>(MatrixApi.Many)
-    //   .subscribe((responseDto) => this.matrix.init(responseDto.data));
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  ngOnInit(): void {
+    this.controlsDto$ = this.ar.data.pipe(map(this.matrix.onInit));
+    this.columns$ = this.controlsDto$.pipe(
+      map((controlsDto) => {
+        const sortControl = this.control.findDto('Sort', controlsDto);
+        if ( sortControl?.data ) return sortControl.data.split(':');
+        return controlsDto.map((c) => c.indicator)
+      })
+    );
   }
 }
