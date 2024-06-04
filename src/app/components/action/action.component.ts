@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray } from '@angular/forms';
 import { ControlComponent } from '@components';
-import { MatrixService } from '@services';
-import { Control } from '@types';
 
 @Component({
   selector: 'app-action',
@@ -12,5 +9,4 @@ import { Control } from '@types';
   styleUrl: './action.component.css'
 })
 export class ActionComponent {
-  constructor(private matrix: MatrixService) {}
 }

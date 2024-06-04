@@ -1,7 +1,12 @@
 import { Signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-export type ControlIndicator = 'Matrix' | 'Group' | 'Act' | 'Icon' | 'Sort';
+export type ControlIndicator =
+  | 'Matrix'
+  | 'Group'
+  | 'Act'
+  | 'Icon'
+  | 'Sort';
 export type ControlAct = 'None' | 'Add' | 'Update' | 'Remove';
 
 export interface ControlDto {
@@ -19,4 +24,8 @@ export interface Control {
 
 export interface ControlState {
   disabled: boolean;
+}
+
+export interface Controls {
+  [key: string]: Control;
 }

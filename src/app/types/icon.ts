@@ -15,4 +15,5 @@ export type IconName =
   | 'apps'
   | 'filter_list'
   | 'category'
-  | 'dataset';
+  | 'dataset'
+  | 'diversity_2';

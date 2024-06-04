@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { ControlDto } from '@types';
+import { ControlDto, MatrixDto } from '@types';
 import { ControlService, MatrixService } from '@services';
 import { MatTableModule } from '@mat';
 import { SortPipe } from 'app/pipes/sort.pipe';
@@ -15,8 +15,8 @@ import { SortPipe } from 'app/pipes/sort.pipe';
   styleUrl: './page.component.css',
 })
 export class PageComponent {
-  controlsDto$!: Observable<ControlDto[]>;
-  columns$!: Observable<string[]>;
+  matrixDto$!: Observable<MatrixDto>;
+  displayedColumns$!: Observable<string[]>;
 
   constructor(
     private ar: ActivatedRoute,
@@ -24,14 +24,5 @@ export class PageComponent {
     private control: ControlService
   ) {}
 
-  ngOnInit(): void {
-    this.controlsDto$ = this.ar.data.pipe(map(this.matrix.onInit));
-    this.columns$ = this.controlsDto$.pipe(
-      map((controlsDto) => {
-        const sortControl = this.control.findDto('Sort', controlsDto);
-        if ( sortControl?.data ) return sortControl.data.split(':');
-        return controlsDto.map((c) => c.indicator)
-      })
-    );
-  }
+  ngOnInit(): void {}
 }

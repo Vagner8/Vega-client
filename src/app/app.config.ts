@@ -1,11 +1,10 @@
-import { ApplicationConfig } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideExperimentalZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
-import {
-  HTTP_INTERCEPTORS,
-  provideHttpClient,
-  withFetch,
-} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { ErrorInterceptor } from '@interceptors';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideTokens } from './tokens';
@@ -13,7 +12,7 @@ import { provideTokens } from './tokens';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideTokens(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(),
     provideRouter(routes, withComponentInputBinding()),
     {
       provide: HTTP_INTERCEPTORS,
@@ -21,5 +20,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     provideAnimations(),
+    provideExperimentalZonelessChangeDetection(),
   ],
 };

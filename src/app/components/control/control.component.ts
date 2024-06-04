@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 import { SelectComponent } from '../select/select.component';
 import { Control } from '@types';

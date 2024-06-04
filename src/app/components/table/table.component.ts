@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { ControlService, MatrixService, NavService } from '@services';
+import { ControlService, MatrixService } from '@services';
 import { Unit } from '@types';
 
 @Component({
@@ -14,14 +14,9 @@ export class TableComponent {
   displayedColumns!: string[];
 
   constructor(
-    private nav: NavService,
     private matrix: MatrixService,
     private control: ControlService
   ) {}
-
-  get address() {
-    return this.nav.address;
-  }
 
   // hasMatrices() {
   //   return Boolean(this.matrix.data.size);

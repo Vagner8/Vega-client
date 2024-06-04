@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   DrawerComponent,
   HeaderComponent,
   ToolbarComponent,
 } from '@components';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
+import { MatrixService } from '@services';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    HttpClientModule,
-    HeaderComponent,
-    DrawerComponent,
-    ToolbarComponent,
-  ],
+  imports: [RouterOutlet, HeaderComponent, DrawerComponent, ToolbarComponent],
   providers: [],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor(private matrix: MatrixService) {}
+
+  ngOnInit(): void {
+    this.matrix.fetch.subscribe(this.matrix.onInit);
+  }
+}

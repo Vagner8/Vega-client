@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
-  Control,
   ControlDto,
+  Controls,
   Group,
   GroupDto,
   Matrix,
@@ -9,38 +9,41 @@ import {
   Unit,
   UnitDto,
 } from '@types';
-import { ControlService } from '@services';
+import { ControlService, TapService } from '@services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private control: ControlService) {}
+  constructor(private tap: TapService, private control: ControlService) {}
 
   toMatrix = ({ id, groups, controls }: MatrixDto): Matrix => {
     return {
       id,
-      groups: groups.map(this.toGroup),
-      controls: controls.map(this.toControl),
+      groups: this.toGroups(groups),
+      controls: this.toControls(controls),
     };
   };
 
-  toGroup = ({ id, units, controls }: GroupDto): Group => {
-    return {
+  toGroups = (groups: GroupDto[]): Group[] => {
+    return groups.map(({ id, units, controls }) => ({
       id,
-      units: units.map(this.toUnit),
-      controls: controls.map(this.toControl),
-    };
+      units: this.toUnits(units),
+      controls: this.toControls(controls),
+    }));
   };
 
-  toUnit = ({ id, controls }: UnitDto): Unit => {
-    return {
+  toUnits = (units: UnitDto[]): Unit[] => {
+    return units.map(({ id, controls }) => ({
       id,
-      controls: controls.map(this.toControl),
-    };
+      controls: this.toControls(controls),
+    }));
   };
 
-  toControl = (control: ControlDto): Control => {
-    return this.control.create(control);
+  toControls = (controls: ControlDto[]): Controls => {
+    return controls.reduce((acc, c) => {
+      acc[c.indicator] = this.control.create(c);
+      return acc;
+    }, {} as Controls);
   };
 }

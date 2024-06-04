@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { NavService } from '@services';
+import { TapService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +11,9 @@ import { NavService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(private nav: NavService) {}
+  constructor(private tap: TapService) {}
 
   get address() {
-    return this.nav.address;
+    return this.tap.address;
   }
 }

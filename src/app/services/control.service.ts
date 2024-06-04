@@ -6,7 +6,10 @@ import { Control, ControlDto, ControlIndicator } from '@types';
   providedIn: 'root',
 })
 export class ControlService {
-  findDto(indicator: ControlIndicator, controls: ControlDto[]): ControlDto | undefined {
+  findDto(
+    indicator: ControlIndicator,
+    controls: ControlDto[]
+  ): ControlDto | undefined {
     return controls.find((c) => c.indicator === indicator);
   }
 
@@ -18,8 +21,14 @@ export class ControlService {
     return {
       id,
       indicator: new FormControl(indicator || ''),
-      data:  new FormControl(data || ''),
-      signal: signal({ disabled: false })
-    }
+      data: new FormControl(data || ''),
+      signal: signal({ disabled: false }),
+    };
   }
+
+  sort = (controls: ControlDto[]): string[] => {
+    const data = this.findDto('Sort', controls)?.data;
+    if (!data) return [];
+    return data.split(':');
+  };
 }

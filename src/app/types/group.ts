@@ -1,5 +1,5 @@
-import { Control, ControlDto } from './control.types';
-import { Unit, UnitDto } from './unit.types';
+import { ControlDto, Controls } from './control';
+import { Unit, UnitDto } from './unit';
 
 export interface GroupDto {
   id: string;
@@ -10,5 +10,5 @@ export interface GroupDto {
 export interface Group {
   id?: string;
   units: Unit[];
-  controls: Control[];
+  controls: Controls;
 }

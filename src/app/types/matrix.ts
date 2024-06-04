@@ -1,5 +1,5 @@
-import { Control, ControlDto } from './control.types';
-import { Group, GroupDto } from './group.types';
+import { ControlDto, Controls } from './control';
+import { Group, GroupDto } from './group';
 
 export interface MatrixDto {
   id: string;
@@ -10,5 +10,5 @@ export interface MatrixDto {
 export interface Matrix {
   id?: string;
   groups: Group[];
-  controls: Control[];
+  controls: Controls;
 }

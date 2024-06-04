@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
-import { Tap } from '@types';
+import { ToolbarTap } from '@taps';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,7 +13,7 @@ import { Tap } from '@types';
   styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent implements OnInit {
-  taps: Tap[] = [];
+  taps: ToolbarTap[] = [];
 
   constructor(
     private tap: TapService,
@@ -22,20 +22,21 @@ export class ToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.taps = this.tap.data.Toolbar;
+    this.taps = this.tap.data.toolbar;
+    console.log('🚀 ~ ToolbarComponent ~ ngOnInit ~ this.taps:', this.taps);
   }
 
-  onClick(tap: Tap) {
-    if (tap.signal().icon === 'close') {
+  onClick(tap: ToolbarTap) {
+    this.tap.rec.toolbar.set(tap.name);
+    if (tap.state.icon() === 'close') {
       this.resetIcons();
       this.state.drawerOpened.set(false);
       return;
     } else {
       this.resetIcons();
-      tap.update({ icon: 'close' });
+      tap.setState({ icon: 'close' });
       this.state.drawerOpened.set(true);
     }
-    tap.navigate();
   }
 
   private resetIcons() {

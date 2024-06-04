@@ -31,6 +31,7 @@
       "@config": ["app/config/index.ts"],
       "@types": ["app/types/index.ts"],
       "@pipes": ["app/pipes/index.ts"],
+      "@taps": ["app/taps/index.ts"],
       "@mat": ["app/mat-angular.ts"]
     }
   },
