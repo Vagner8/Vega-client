@@ -1,12 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionTap, ActionTaps, PageTap, PageTaps, ToolbarTap, ToolbarTaps } from '@taps';
+import { drawerTaps, toolbarTaps } from '@taps';
 import {
-  TapPlaces,
-  Taps,
-  TapRec,
-  TapType,
-  Address,
+  RecTap,
+  PathTap,
+  DrawerTaps,
+  ToolbarTaps,
   TapServiceProps,
 } from '@types';
 
@@ -14,35 +13,45 @@ import {
   providedIn: 'root',
 })
 export class TapService {
-  data: Taps = {
-    pages: [],
-    actions: [],
-    toolbar: [],
-    settings: [],
-  };
-  rec: TapRec = {
-    pages: signal(null),
-    actions: signal(null),
-    toolbar: signal(null),
-    settings: signal(null),
-  };
-  address: Address = {
-    page: signal(null),
-    action: signal(null),
-  };
+  rec: RecTap;
+  path: PathTap;
+  drawer: DrawerTaps;
+  toolbar: ToolbarTaps;
 
   constructor(private router: Router) {
-    const sp: TapServiceProps = {
-      rec: this.rec,
-      router: this.router,
-      address: this.address,
-    };
-    this.data.pages = PageTaps.map((p) => new PageTap({ ...p, ...sp }));
-    this.data.actions = ActionTaps.map((p) => new ActionTap({ ...p, ...sp }));
-    this.data.toolbar = ToolbarTaps.map((p) => new ToolbarTap({ ...p, ...sp }));
+    this.rec = this.setRec();
+    this.path = this.setPath();
+    const sp = this.serviceProps();
+    this.drawer = drawerTaps(sp);
+    this.toolbar = toolbarTaps(sp);
   }
 
-  find(place: TapPlaces, name: string): TapType | undefined {
-    return this.data[place].find((t) => t.name === name);
+  private setRec(): RecTap {
+    return {
+      pages: signal(null),
+      toolbar: signal(null),
+      actions: signal(null),
+      settings: signal(null),
+    };
+  }
+
+  private setPath(): PathTap {
+    return {
+      page: computed(() => this.rec.pages()),
+      action: computed(() => {
+        let result = null;
+        result = this.rec.actions();
+        result = this.rec.settings();
+        return result;
+      }),
+    };
+  }
+
+  private serviceProps(): TapServiceProps {
+    return {
+      rec: this.rec,
+      path: this.path,
+      router: this.router,
+    };
   }
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
 import { ToolbarTap } from '@taps';
@@ -15,15 +14,10 @@ import { ToolbarTap } from '@taps';
 export class ToolbarComponent implements OnInit {
   taps: ToolbarTap[] = [];
 
-  constructor(
-    private tap: TapService,
-    private state: StateService,
-    private router: Router
-  ) {}
+  constructor(private tap: TapService, private state: StateService) {}
 
   ngOnInit() {
-    this.taps = this.tap.data.toolbar;
-    console.log('🚀 ~ ToolbarComponent ~ ngOnInit ~ this.taps:', this.taps);
+    this.taps = this.tap.toolbar.arr;
   }
 
   onClick(tap: ToolbarTap) {

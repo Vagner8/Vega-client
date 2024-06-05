@@ -13,7 +13,7 @@ import { TapService } from '@services';
 export class HeaderComponent {
   constructor(private tap: TapService) {}
 
-  get address() {
-    return this.tap.address;
+  get path() {
+    return this.tap.path;
   }
 }

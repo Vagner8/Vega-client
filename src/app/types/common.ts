@@ -1,4 +1,4 @@
-import { WritableSignal } from '@angular/core';
+import { Signal, WritableSignal } from '@angular/core';
 import { MatrixDto } from './matrix';
 
 export enum InputType {
@@ -9,15 +9,10 @@ export enum InputType {
 
 export type Visibility = 'hidden' | 'visible';
 
-export interface Address {
-  page: WritableSignal<string | null>;
-  action: WritableSignal<string | null>;
-}
-
 export interface ResponseDto {
   data: MatrixDto;
   success: boolean;
-  error: string;
+  error: string
 }
 
 export type MapWritableSignal<T> = {

@@ -5,35 +5,33 @@ import {
   TapInitialState,
   TapOptions,
   TapPlaces,
-  TapProps,
+  TapInitialProps,
   TapState,
   hasProperty,
-  Address,
-  TapRec,
+  RecTap,
   TapServiceProps,
+  PathTap,
 } from '@types';
 
 export abstract class Tap implements TapType {
   abstract place: TapPlaces;
   abstract onClick(): void;
 
-  rec: TapRec;
-  name: string;
+  rec: RecTap;
   router: Router;
-  address: Address;
+  path: PathTap;
   state: TapState = {
     icon: signal('apps'),
     disabled: signal(false),
     visibility: signal('visible'),
   };
-  options: TapOptions = { confirm: false, navigation: true };
+  options: TapOptions = { confirm: false };
 
-  constructor(public props: TapProps & TapServiceProps) {
-    const { rec, name, router, address, initialState, initialOptions } = props;
+  constructor(public props: TapInitialProps & TapServiceProps) {
+    const { rec, router, path, initialState, initialOptions } = props;
     this.rec = rec;
-    this.name = name;
     this.router = router;
-    this.address = address;
+    this.path = path;
     this.setState(initialState);
     this.setOptions(initialOptions);
   }
