@@ -1,63 +1,84 @@
 import { signal } from '@angular/core';
-import { Router } from '@angular/router';
 import {
-  TapType,
-  TapInitialState,
+  TapLocation,
+  RecTapSignals,
+  RecTapValue,
+  ITap,
+  TapSignals,
+  TapStateValue,
   TapOptions,
-  TapPlaces,
-  TapInitialProps,
-  TapState,
-  hasProperty,
-  RecTap,
-  TapServiceProps,
-  PathTap,
+  TapServices,
+  TapProps,
 } from '@types';
+import { setSignals } from '@utils';
 
-export abstract class Tap implements TapType {
-  abstract place: TapPlaces;
+export abstract class Tap implements ITap {
+  abstract location: TapLocation;
   abstract onClick(): void;
 
-  rec: RecTap;
-  router: Router;
-  path: PathTap;
-  state: TapState = {
-    icon: signal('apps'),
-    disabled: signal(false),
-    visibility: signal('visible'),
-  };
-  options: TapOptions = { confirm: false };
+  private _state: TapSignals;
+  private _initialState: TapStateValue;
+  private _options: TapOptions;
+  private _services: TapServices;
 
-  constructor(public props: TapInitialProps & TapServiceProps) {
-    const { rec, router, path, initialState, initialOptions } = props;
-    this.rec = rec;
-    this.router = router;
-    this.path = path;
-    this.setState(initialState);
-    this.setOptions(initialOptions);
+  constructor({ state, options, services }: TapProps) {
+    this._services = services;
+    this._options = this.createOptions(options);
+    this._initialState = this.createInitialState(state);
+    this._state = this.createState();
   }
 
-  setState(state?: TapInitialState): void {
-    if (!state) return;
-    Object.entries(state).forEach(([k, v]) => {
-      if (!hasProperty(this.state, k)) return;
-      this.state[k].set(v as never);
-    });
+  setState(value: Partial<TapStateValue>): void {
+    setSignals(value, this._state);
   }
 
-  reset(): void {
-    this.setState(this.props.initialState);
+  resetState(): void {
+    this.setState(this._initialState);
   }
 
-  restore(key: keyof TapState): void {
-    if (!this.props.initialState) return;
-    this.state[key].set(this.props.initialState[key] as never);
+  restoreState(key: keyof TapStateValue): void {
+    this._state[key].set(this._initialState[key] as never);
   }
 
-  private setOptions(options?: Partial<TapOptions>): void {
-    if (!options) return;
-    Object.entries(options).forEach(([k, v]) => {
-      if (!hasProperty(this.options, k)) return;
-      this.options[k] = v;
-    });
+  setRec(value: Partial<RecTapValue>): void {
+    setSignals(value, this._services.rec);
+  }
+
+  navigate(): void {
+    this._services.router.navigate([this.rec.page(), this.rec.action()]);
+  }
+
+  get rec(): RecTapSignals {
+    return this._services.rec;
+  }
+
+  get state(): TapSignals {
+    return this._state;
+  }
+
+  get options(): TapOptions {
+    return this._options;
+  }
+
+  private createState(): TapSignals {
+    const { icon, disabled, visibility } = this._initialState;
+    return {
+      icon: signal(icon),
+      disabled: signal(disabled),
+      visibility: signal(visibility),
+    };
+  }
+
+  private createInitialState(state?: Partial<TapStateValue>): TapStateValue {
+    return {
+      icon: 'apps',
+      disabled: false,
+      visibility: 'visible',
+      ...state,
+    };
+  }
+
+  private createOptions(options?: Partial<TapOptions>): TapOptions {
+    return { confirm: false, ...options };
   }
 }

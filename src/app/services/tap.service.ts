@@ -1,57 +1,27 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { drawerTaps, toolbarTaps } from '@taps';
-import {
-  RecTap,
-  PathTap,
-  DrawerTaps,
-  ToolbarTaps,
-  TapServiceProps,
-} from '@types';
+import { createModifierTaps, createToolbarTaps } from '@taps';
+import { ToolbarTaps, RecTapSignals, ModifierTaps } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  rec: RecTap;
-  path: PathTap;
-  drawer: DrawerTaps;
+  rec: RecTapSignals;
   toolbar: ToolbarTaps;
+  modifiers: ModifierTaps;
 
-  constructor(private router: Router) {
-    this.rec = this.setRec();
-    this.path = this.setPath();
-    const sp = this.serviceProps();
-    this.drawer = drawerTaps(sp);
-    this.toolbar = toolbarTaps(sp);
+  constructor(router: Router) {
+    this.rec = this.createRec();
+    this.modifiers = createModifierTaps({ rec: this.rec, router });
+    this.toolbar = createToolbarTaps({ rec: this.rec, router });
   }
 
-  private setRec(): RecTap {
+  private createRec(): RecTapSignals {
     return {
-      pages: signal(null),
+      page: signal(null),
+      action: signal(null),
       toolbar: signal(null),
-      actions: signal(null),
-      settings: signal(null),
-    };
-  }
-
-  private setPath(): PathTap {
-    return {
-      page: computed(() => this.rec.pages()),
-      action: computed(() => {
-        let result = null;
-        result = this.rec.actions();
-        result = this.rec.settings();
-        return result;
-      }),
-    };
-  }
-
-  private serviceProps(): TapServiceProps {
-    return {
-      rec: this.rec,
-      path: this.path,
-      router: this.router,
     };
   }
 }

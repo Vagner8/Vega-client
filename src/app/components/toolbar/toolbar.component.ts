@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
 import { ToolbarTap } from '@taps';
+import { IToolbarTap } from '@types';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,7 +13,7 @@ import { ToolbarTap } from '@taps';
   styleUrl: './toolbar.component.css',
 })
 export class ToolbarComponent implements OnInit {
-  taps: ToolbarTap[] = [];
+  taps: IToolbarTap[] = [];
 
   constructor(private tap: TapService, private state: StateService) {}
 
@@ -20,7 +21,7 @@ export class ToolbarComponent implements OnInit {
     this.taps = this.tap.toolbar.arr;
   }
 
-  onClick(tap: ToolbarTap) {
+  onClick(tap: IToolbarTap) {
     this.tap.rec.toolbar.set(tap.name);
     if (tap.state.icon() === 'close') {
       this.resetIcons();
@@ -34,6 +35,6 @@ export class ToolbarComponent implements OnInit {
   }
 
   private resetIcons() {
-    this.taps.forEach((tap) => tap.restore('icon'));
+    this.taps.forEach((tap) => tap.restoreState('icon'));
   }
 }

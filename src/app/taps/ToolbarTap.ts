@@ -1,17 +1,14 @@
-import { TapPlaces, ToolbarTapNames, ToolbarTapProps } from '@types';
+import { IToolbarTap, TapLocation, TapProps, ToolbarTapNames } from '@types';
 import { Tap } from './Tap';
 
-export class ToolbarTap extends Tap {
-  override place: TapPlaces = 'toolbar';
+export class ToolbarTap extends Tap implements IToolbarTap {
+  location: TapLocation = 'toolbar';
 
-  name: ToolbarTapNames;
-
-  constructor(props: ToolbarTapProps) {
+  constructor(public name: ToolbarTapNames, props: TapProps) {
     super(props);
-    this.name = props.name;
   }
 
   override onClick(): void {
-    this.rec.toolbar.set(this.name);
+    this.setRec({ toolbar: this.name });
   }
 }

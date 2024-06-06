@@ -19,6 +19,6 @@ export class AppComponent implements OnInit {
   constructor(private matrix: MatrixService) {}
 
   ngOnInit(): void {
-    this.matrix.fetch.subscribe(this.matrix.onInit);
+    this.matrix.onInit();
   }
 }

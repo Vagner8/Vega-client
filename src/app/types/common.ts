@@ -1,4 +1,4 @@
-import { Signal, WritableSignal } from '@angular/core';
+import { WritableSignal } from '@angular/core';
 import { MatrixDto } from './matrix';
 
 export enum InputType {

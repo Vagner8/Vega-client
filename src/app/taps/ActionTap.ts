@@ -1,18 +1,15 @@
-import { ActionTapNames, ActionTapProps, TapPlaces } from '@types';
+import { ActionTapNames, IActionTap, TapLocation, TapProps } from '@types';
 import { Tap } from './Tap';
 
-export class ActionTap extends Tap {
-  override place: TapPlaces = 'actions';
+export class ActionTap extends Tap implements IActionTap {
+  location: TapLocation = 'actions';
 
-  name: ActionTapNames;
-
-  constructor(props: ActionTapProps) {
+  constructor(public name: ActionTapNames, props: TapProps) {
     super(props);
-    this.name = props.name;
   }
 
-
-  override onClick(): void {
-    this.rec.actions.set(this.name);
-  }
+  onClick = (): void => {
+    this.setRec({ action: this.name });
+    this.navigate();
+  };
 }

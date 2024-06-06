@@ -9,13 +9,13 @@ import {
   Unit,
   UnitDto,
 } from '@types';
-import { ControlService, TapService } from '@services';
+import { Control } from '@controls';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private tap: TapService, private control: ControlService) {}
+  constructor() {}
 
   toMatrix = ({ id, groups, controls }: MatrixDto): Matrix => {
     return {
@@ -41,8 +41,8 @@ export class MapService {
   };
 
   toControls = (controls: ControlDto[]): Controls => {
-    return controls.reduce((acc, c) => {
-      acc[c.indicator] = this.control.create(c);
+    return controls.reduce((acc, control) => {
+      acc[control.indicator] = new Control({ dto: control });
       return acc;
     }, {} as Controls);
   };

@@ -1,13 +1,16 @@
-import { Signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MapWritableSignal } from './common';
 
-export type ControlIndicator =
-  | 'Matrix'
-  | 'Group'
-  | 'Act'
-  | 'Icon'
-  | 'Sort';
-export type ControlAct = 'None' | 'Add' | 'Update' | 'Remove';
+export type CommonIndicators = 'Icon' | 'Sort';
+export type MatrixIndicators = 'Matrix' | CommonIndicators;
+export type GroupIndicators = 'Group' | 'Act' | CommonIndicators;
+export type UnitIndicators = 'Name' | 'Email' | 'Act';
+export type ActData = 'None' | 'Add' | 'Update' | 'Remove';
+export type ControlSignals = MapWritableSignal<ControlStateValue>;
+
+export interface Controls {
+  [key: string]: IControl;
+}
 
 export interface ControlDto {
   id: string;
@@ -15,17 +18,18 @@ export interface ControlDto {
   data: string;
 }
 
-export interface Control {
-  id?: string;
-  indicator: FormControl;
-  data: FormControl;
-  signal: Signal<ControlState>;
-}
-
-export interface ControlState {
+export interface ControlStateValue {
   disabled: boolean;
 }
 
-export interface Controls {
-  [key: string]: Control;
+export interface ControlProps {
+  dto: ControlDto;
+  state?: Partial<ControlStateValue>;
+}
+
+export interface IControl {
+  data: FormControl<string | null>;
+  indicator: FormControl<string | null>;
+  get dto(): ControlDto;
+  setState(value: Partial<ControlStateValue>): void;
 }
