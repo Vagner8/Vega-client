@@ -4,13 +4,7 @@ import { Router } from '@angular/router';
 
 // ActionTap
 
-export type ActionTapNames =
-  | 'Add'
-  | 'Update'
-  | 'Remove'
-  | 'Send'
-  | 'Confirm'
-  | 'Cancel';
+export type ActionTapNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
 export type ActionTaps = ModifierTap<ActionTapNames, IActionTap>;
 
 export interface IActionTap extends ITap {

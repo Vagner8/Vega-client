@@ -1,12 +1,6 @@
 import { signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  ControlDto,
-  ControlProps,
-  ControlSignals,
-  ControlStateValue,
-  IControl,
-} from '@types';
+import { ControlDto, ControlProps, ControlSignals, ControlStateValue, IControl } from '@types';
 import { setSignals } from '@utils';
 
 export class Control implements IControl {
@@ -36,9 +30,7 @@ export class Control implements IControl {
 
   private onValuesChanges(): void {
     this.data.valueChanges.subscribe((v) => (this._dto.data = v || ''));
-    this.indicator.valueChanges.subscribe(
-      (v) => (this._dto.indicator = v || ''),
-    );
+    this.indicator.valueChanges.subscribe((v) => (this._dto.indicator = v || ''));
   }
 
   private createState(): ControlSignals {
@@ -48,9 +40,7 @@ export class Control implements IControl {
     };
   }
 
-  private createInitialState(
-    state?: Partial<ControlStateValue>,
-  ): ControlStateValue {
+  private createInitialState(state?: Partial<ControlStateValue>): ControlStateValue {
     return {
       disabled: false,
       ...state,

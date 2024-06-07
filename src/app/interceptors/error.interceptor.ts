@@ -13,10 +13,7 @@ import { StateService } from '@services';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private _state: StateService) {}
 
-  intercept(
-    request: HttpRequest<unknown>,
-    next: HttpHandler,
-  ): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(catchError(this._handleError));
   }
 

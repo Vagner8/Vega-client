@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DrawerComponent,
-  HeaderComponent,
-  ToolbarComponent,
-} from '@components';
+import { DrawerComponent, HeaderComponent, ToolbarComponent } from '@components';
 import { RouterOutlet } from '@angular/router';
 import { MatrixService } from '@services';
 

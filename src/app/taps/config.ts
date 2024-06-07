@@ -1,11 +1,4 @@
-import {
-  ActionTaps,
-  ModifierTaps,
-  PageTaps,
-  SettingTaps,
-  TapServices,
-  ToolbarTaps,
-} from '@types';
+import { ActionTaps, ModifierTaps, PageTaps, SettingTaps, TapServices, ToolbarTaps } from '@types';
 import { ToolbarTap } from './ToolbarTap';
 import { PageTap } from './PageTap';
 import { ActionTap } from './ActionTap';

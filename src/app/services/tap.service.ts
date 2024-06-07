@@ -1,13 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageTap, createModifierTaps, createToolbarTaps } from '@taps';
-import {
-  ToolbarTaps,
-  RecTapSignals,
-  ModifierTaps,
-  ControlDto,
-  TapServices,
-} from '@types';
+import { ToolbarTaps, RecTapSignals, ModifierTaps, ControlDto, TapServices } from '@types';
 
 @Injectable({
   providedIn: 'root',
