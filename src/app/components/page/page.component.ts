@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, map } from 'rxjs';
-import { ControlDto, MatrixDto } from '@types';
+import { Observable } from 'rxjs';
+import { MatrixDto } from '@types';
 import { ControlService, MatrixService } from '@services';
 import { MatTableModule } from '@mat';
 import { SortPipe } from 'app/pipes/sort.pipe';
@@ -21,8 +21,6 @@ export class PageComponent {
   constructor(
     private ar: ActivatedRoute,
     private matrix: MatrixService,
-    private control: ControlService
+    private control: ControlService,
   ) {}
-
-  ngOnInit(): void {}
 }

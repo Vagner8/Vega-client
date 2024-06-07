@@ -4,7 +4,10 @@ import { Tap } from './Tap';
 export class PageTap extends Tap implements IPageTap {
   location: TapLocation = 'pages';
 
-  constructor(public name: string, props: TapProps) {
+  constructor(
+    public name: string,
+    props: TapProps,
+  ) {
     super(props);
   }
 

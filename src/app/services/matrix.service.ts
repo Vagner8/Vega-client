@@ -15,7 +15,7 @@ export class MatrixService {
     private tap: TapService,
     private map: MapService,
     private http: HttpClient,
-    @Inject(TOKENS) private tokens: TOKENS_TYPE
+    @Inject(TOKENS) private tokens: TOKENS_TYPE,
   ) {}
 
   onInit(): void {

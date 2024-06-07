@@ -14,7 +14,10 @@ import { IToolbarTap } from '@types';
 export class ToolbarComponent implements OnInit {
   taps: IToolbarTap[] = [];
 
-  constructor(private tap: TapService, private state: StateService) {}
+  constructor(
+    private tap: TapService,
+    private state: StateService,
+  ) {}
 
   ngOnInit() {
     this.taps = this.tap.toolbar.list;

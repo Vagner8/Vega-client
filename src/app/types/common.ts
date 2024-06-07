@@ -12,9 +12,9 @@ export type Visibility = 'hidden' | 'visible';
 export interface ResponseDto {
   data: MatrixDto;
   success: boolean;
-  error: string
+  error: string;
 }
 
 export type MapWritableSignal<T> = {
-  [P in keyof T]: WritableSignal<T[P]>
-}
+  [P in keyof T]: WritableSignal<T[P]>;
+};

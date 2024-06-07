@@ -19,7 +19,7 @@ export class DrawerTapsComponent {
   }
 
   onClick(tap: ITap): void {
-    this._activateActionTaps()
+    this._activateActionTaps();
     tap.onClick();
   }
 

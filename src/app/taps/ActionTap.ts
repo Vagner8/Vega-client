@@ -4,7 +4,10 @@ import { Tap } from './Tap';
 export class ActionTap extends Tap implements IActionTap {
   location: TapLocation = 'actions';
 
-  constructor(public name: ActionTapNames, props: TapProps) {
+  constructor(
+    public name: ActionTapNames,
+    props: TapProps,
+  ) {
     super(props);
   }
 

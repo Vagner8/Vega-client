@@ -4,7 +4,10 @@ import { Tap } from './Tap';
 export class ToolbarTap extends Tap implements IToolbarTap {
   location: TapLocation = 'toolbar';
 
-  constructor(public name: ToolbarTapNames, props: TapProps) {
+  constructor(
+    public name: ToolbarTapNames,
+    props: TapProps,
+  ) {
     super(props);
   }
 

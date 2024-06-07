@@ -6,7 +6,6 @@ import { ControlComponent } from '@components';
   standalone: true,
   imports: [ControlComponent],
   templateUrl: './action.component.html',
-  styleUrl: './action.component.css'
+  styleUrl: './action.component.css',
 })
-export class ActionComponent {
-}
+export class ActionComponent {}

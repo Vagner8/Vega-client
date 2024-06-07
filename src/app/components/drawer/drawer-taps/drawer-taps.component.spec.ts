@@ -8,10 +8,9 @@ describe('DrawerTapsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DrawerTapsComponent]
-    })
-    .compileComponents();
-    
+      imports: [DrawerTapsComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DrawerTapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

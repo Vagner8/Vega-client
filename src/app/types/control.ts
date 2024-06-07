@@ -23,7 +23,7 @@ export enum ActData {
   None = 'None',
   Add = 'Add',
   Update = 'Update',
-  Remove = 'Remove'
+  Remove = 'Remove',
 }
 
 export type ControlSignals = MapWritableSignal<ControlStateValue>;

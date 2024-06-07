@@ -37,7 +37,7 @@ export class Control implements IControl {
   private onValuesChanges(): void {
     this.data.valueChanges.subscribe((v) => (this._dto.data = v || ''));
     this.indicator.valueChanges.subscribe(
-      (v) => (this._dto.indicator = v || '')
+      (v) => (this._dto.indicator = v || ''),
     );
   }
 
@@ -49,7 +49,7 @@ export class Control implements IControl {
   }
 
   private createInitialState(
-    state?: Partial<ControlStateValue>
+    state?: Partial<ControlStateValue>,
   ): ControlStateValue {
     return {
       disabled: false,

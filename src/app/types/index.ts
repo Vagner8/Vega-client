@@ -5,5 +5,4 @@ export * from './matrix';
 export * from './control';
 export * from './unit';
 export * from './group';
-export * from './guards';
 export * from './tap';
