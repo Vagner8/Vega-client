@@ -1,11 +1,31 @@
 import { FormControl } from '@angular/forms';
 import { MapWritableSignal } from './common';
 
-export type CommonIndicators = 'Icon' | 'Sort';
-export type MatrixIndicators = 'Matrix' | CommonIndicators;
-export type GroupIndicators = 'Group' | 'Act' | CommonIndicators;
-export type UnitIndicators = 'Name' | 'Email' | 'Act';
-export type ActData = 'None' | 'Add' | 'Update' | 'Remove';
+export enum MatrixIndicator {
+  Sort = 'Sort',
+  Matrix = 'Matrix',
+}
+
+export enum GroupIndicator {
+  Act = 'Act',
+  Sort = 'Sort',
+  Icon = 'Icon',
+  Group = 'Group',
+}
+
+export enum UnitIndicator {
+  Act = 'Act',
+  Name = 'Name',
+  Email = 'Email',
+}
+
+export enum ActData {
+  None = 'None',
+  Add = 'Add',
+  Update = 'Update',
+  Remove = 'Remove'
+}
+
 export type ControlSignals = MapWritableSignal<ControlStateValue>;
 
 export interface Controls {

@@ -94,7 +94,7 @@ export interface RecTapValue {
 
 export interface ModifierTap<N extends string, I extends ITap> {
   obj: Record<N, I>;
-  arr: I[];
+  list: I[];
 }
 
 export interface ModifierTaps {

@@ -4,18 +4,20 @@ import {
   Controls,
   Group,
   GroupDto,
+  GroupIndicator,
   Matrix,
   MatrixDto,
   Unit,
   UnitDto,
 } from '@types';
 import { Control } from '@controls';
+import { TapService } from './tap.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  constructor() {}
+  constructor(private _tap: TapService) {}
 
   toMatrix = ({ id, groups, controls }: MatrixDto): Matrix => {
     return {
@@ -41,8 +43,9 @@ export class MapService {
   };
 
   toControls = (controls: ControlDto[]): Controls => {
-    return controls.reduce((acc, control) => {
-      acc[control.indicator] = new Control({ dto: control });
+    return controls.reduce((acc, c) => {
+      if (c.indicator === GroupIndicator.Group) this._tap.addPage(c);
+      acc[c.indicator] = new Control({ dto: c });
       return acc;
     }, {} as Controls);
   };

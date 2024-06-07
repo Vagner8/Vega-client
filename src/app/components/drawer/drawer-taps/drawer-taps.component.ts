@@ -12,13 +12,20 @@ import { ITap } from '@types';
   styleUrl: './drawer-taps.component.css',
 })
 export class DrawerTapsComponent {
-  constructor(private tap: TapService) {}
+  constructor(private _tap: TapService) {}
 
   get taps() {
-    return this.tap.modifiers[this.tap.rec.toolbar()!].arr;
+    return this._tap.modifiers[this._tap.rec.toolbar()!].list;
   }
 
   onClick(tap: ITap): void {
+    this._activateActionTaps()
     tap.onClick();
+  }
+
+  private _activateActionTaps() {
+    const obj = this._tap.toolbar.obj;
+    obj.actions.setState({ disabled: false });
+    obj.settings.setState({ disabled: false });
   }
 }

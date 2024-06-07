@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
-import { ToolbarTap } from '@taps';
 import { IToolbarTap } from '@types';
 
 @Component({
@@ -18,7 +17,7 @@ export class ToolbarComponent implements OnInit {
   constructor(private tap: TapService, private state: StateService) {}
 
   ngOnInit() {
-    this.taps = this.tap.toolbar.arr;
+    this.taps = this.tap.toolbar.list;
   }
 
   onClick(tap: IToolbarTap) {

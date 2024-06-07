@@ -15,7 +15,7 @@ const pageTaps = (services: TapServices): PageTaps => {
   const obj = {
     Groups: new PageTap('Group', { services }),
   };
-  return { obj, arr: Object.values(obj) };
+  return { obj, list: Object.values(obj) };
 };
 
 const actionTaps = (services: TapServices): ActionTaps => {
@@ -48,14 +48,14 @@ const actionTaps = (services: TapServices): ActionTaps => {
       services,
     }),
   };
-  return { obj, arr: Object.values(obj) };
+  return { obj, list: Object.values(obj) };
 };
 
 const settingTaps = (services: TapServices): SettingTaps => {
   const obj = {
     Setting: new SettingTap('Setting', { services }),
   };
-  return { obj, arr: Object.values(obj) };
+  return { obj, list: Object.values(obj) };
 };
 
 export const createModifierTaps = (services: TapServices): ModifierTaps => {
@@ -81,5 +81,5 @@ export const createToolbarTaps = (services: TapServices): ToolbarTaps => {
       services,
     }),
   };
-  return { obj, arr: Object.values(obj) };
+  return { obj, list: Object.values(obj) };
 };
