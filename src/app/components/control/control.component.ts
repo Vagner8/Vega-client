@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 import { SelectComponent } from '../select/select.component';
-import { IControl } from '@types';
 
 @Component({
   selector: 'app-control',
@@ -11,7 +10,7 @@ import { IControl } from '@types';
   styleUrl: './control.component.css',
 })
 export class ControlComponent {
-  @Input() control!: IControl;
+  @Input() control!: object;
 
   get controls() {
     return this.control;

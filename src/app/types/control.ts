@@ -1,55 +1,29 @@
+import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MapWritableSignal } from './common';
 
-export enum MatrixIndicator {
-  Sort = 'Sort',
-  Matrix = 'Matrix',
+export interface ControlSignals {
+  disabled: WritableSignal<boolean>;
 }
 
-export enum GroupIndicator {
-  Act = 'Act',
-  Sort = 'Sort',
-  Icon = 'Icon',
-  Group = 'Group',
+export interface Control {
+  id?: string;
+  unitId: string;
+  indicator: FormControl<null | string>;
+  data: FormControl<null | string>;
+  state: ControlSignals;
 }
-
-export enum UnitIndicator {
-  Act = 'Act',
-  Name = 'Name',
-  Email = 'Email',
-}
-
-export enum ActData {
-  None = 'None',
-  Add = 'Add',
-  Update = 'Update',
-  Remove = 'Remove',
-}
-
-export type ControlSignals = MapWritableSignal<ControlStateValue>;
 
 export interface Controls {
-  [key: string]: IControl;
+  [key: string]: Control;
 }
 
 export interface ControlDto {
   id: string;
+  unitId: string;
   indicator: string;
   data: string;
 }
 
-export interface ControlStateValue {
-  disabled: boolean;
-}
-
-export interface ControlProps {
-  dto: ControlDto;
-  state?: Partial<ControlStateValue>;
-}
-
-export interface IControl {
-  data: FormControl<string | null>;
-  indicator: FormControl<string | null>;
-  get dto(): ControlDto;
-  setState(value: Partial<ControlStateValue>): void;
+export interface ControlsDto {
+  [key: string]: ControlDto;
 }

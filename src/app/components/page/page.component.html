@@ -1,8 +1,8 @@
-@if (matrixDto$ | async; as matrixDto) {
+<!-- @if (unit$ | async; as unit) {
   @if (displayedColumns$ | async; as displayedColumns) {
     <table
     mat-table
-    [dataSource]="matrixDto.groups"
+    [dataSource]="unit.units"
     class="mat-elevation-z0"
   >
     @for (column of displayedColumns; track column) {
@@ -16,4 +16,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   }
-}
+} -->
+
+<h1>Page</h1>

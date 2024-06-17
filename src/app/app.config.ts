@@ -4,11 +4,9 @@ import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { ErrorInterceptor } from '@interceptors';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideTokens } from '@utils';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideTokens(),
     provideHttpClient(),
     provideRouter(routes, withComponentInputBinding()),
     {

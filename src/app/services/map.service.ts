@@ -1,52 +1,61 @@
-import { Injectable } from '@angular/core';
-import {
-  ControlDto,
-  Controls,
-  Group,
-  GroupDto,
-  GroupIndicator,
-  Matrix,
-  MatrixDto,
-  Unit,
-  UnitDto,
-} from '@types';
-import { Control } from '@controls';
-import { TapService } from './tap.service';
+import { Injectable, signal } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Control, ControlDto, Controls, ControlsDto, UnitDto, Unit } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private _tap: TapService) {}
-
-  toMatrix = ({ id, groups, controls }: MatrixDto): Matrix => {
+  toUnit = ({ id, unitId, controls, units }: UnitDto): Unit => {
     return {
       id,
-      groups: this.toGroups(groups),
+      unitId,
       controls: this.toControls(controls),
+      units: units.length === 0 ? [] : units.map(this.toUnit),
     };
   };
 
-  toGroups = (groups: GroupDto[]): Group[] => {
-    return groups.map(({ id, units, controls }) => ({
-      id,
-      units: this.toUnits(units),
-      controls: this.toControls(controls),
-    }));
-  };
+  toControls(dto: ControlsDto): Controls {
+    const controls: Controls = {};
+    for (const key in dto) {
+      controls[key] = this.toControl(dto[key]);
+    }
+    return controls;
+  }
 
-  toUnits = (units: UnitDto[]): Unit[] => {
-    return units.map(({ id, controls }) => ({
+  toControl({ id, unitId, indicator, data }: ControlDto): Control {
+    return {
       id,
-      controls: this.toControls(controls),
-    }));
-  };
+      unitId,
+      indicator: new FormControl(indicator),
+      data: new FormControl(data),
+      state: { disabled: signal(false) },
+    };
+  }
 
-  toControls = (controls: ControlDto[]): Controls => {
-    return controls.reduce((acc, c) => {
-      if (c.indicator === GroupIndicator.Group) this._tap.addPage(c);
-      acc[c.indicator] = new Control({ dto: c });
-      return acc;
-    }, {} as Controls);
-  };
+  toUnitDto({ id, unitId, controls, units }: Unit): UnitDto {
+    return {
+      id,
+      unitId,
+      controls: this.toControlsDto(controls),
+      units: units.length === 0 ? [] : units.map(this.toUnitDto),
+    };
+  }
+
+  toControlsDto(control: Controls): ControlsDto {
+    const dto: ControlsDto = {};
+    for (const key in control) {
+      dto[key] = this.toControlDto(control[key]);
+    }
+    return dto;
+  }
+
+  toControlDto({ id, unitId, indicator, data }: Control): ControlDto {
+    return {
+      id: id || '',
+      unitId,
+      indicator: indicator.value || '',
+      data: data.value || '',
+    };
+  }
 }

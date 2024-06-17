@@ -45,7 +45,8 @@ export abstract class Tap implements ITap {
   }
 
   navigate(): void {
-    this._services.router.navigate([this.rec.page(), this.rec.action()]);
+    const { page, action } = this.rec;
+    this._services.router.navigate([page(), action()].filter(Boolean));
   }
 
   get rec(): RecTapSignals {

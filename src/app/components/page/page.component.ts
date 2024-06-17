@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MatrixDto } from '@types';
-import { ControlService, MatrixService } from '@services';
 import { MatTableModule } from '@mat';
 import { SortPipe } from 'app/pipes/sort.pipe';
+import { UnitDto } from '@types';
 
 @Component({
   selector: 'app-page',
@@ -15,12 +13,8 @@ import { SortPipe } from 'app/pipes/sort.pipe';
   styleUrl: './page.component.css',
 })
 export class PageComponent {
-  matrixDto$!: Observable<MatrixDto>;
+  unit$!: Observable<UnitDto>;
   displayedColumns$!: Observable<string[]>;
 
-  constructor(
-    private ar: ActivatedRoute,
-    private matrix: MatrixService,
-    private control: ControlService,
-  ) {}
+  constructor() {}
 }

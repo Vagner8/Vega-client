@@ -1,11 +1,15 @@
-import { ControlDto, Controls } from './control';
-
-export interface UnitDto {
-  id: string;
-  controls: ControlDto[];
-}
+import { Controls, ControlsDto } from '@types';
 
 export interface Unit {
-  id: string;
+  id?: string;
+  unitId: string;
+  units: Unit[];
   controls: Controls;
+}
+
+export interface UnitDto {
+  id?: string;
+  unitId: string;
+  units: UnitDto[];
+  controls: ControlsDto;
 }
