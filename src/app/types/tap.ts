@@ -1,98 +1,69 @@
-import { MapWritableSignal, Visibility } from './common';
-import { IconName } from './icon';
-import { Router } from '@angular/router';
+import { IconName, MapWritableSignal, Visibility } from '@types';
 
-// ActionTap
+export type TapActionNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
+export type TapLocation = TapToolbarNames | 'toolbar';
+export type TapSettingNames = 'Setting';
+export type TapToolbarNames = keyof TapActives;
+export type TapActive = TapAction | TapSetting | TapPage;
 
-export type ActionTapNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
-export type ActionTaps = ModifierTap<ActionTapNames, IActionTap>;
+export type TapPage = TapFields<string> & Tap;
+export type TapAction = TapFields<TapActionNames> & Tap;
+export type TapSetting = TapFields<TapSettingNames> & Tap;
+export type TapToolbar = TapFields<TapToolbarNames> & Tap;
 
-export interface IActionTap extends ITap {
-  name: ActionTapNames;
+export type TapSignals = MapWritableSignal<TapState>;
+export type TapsRecSignals = MapWritableSignal<TapRec>;
+
+export type TapToolbarConfig = TapConfig<TapToolbarNames>;
+export type TapActionConfig = TapConfig<TapActionNames>;
+export type TapSettingConfig = TapConfig<TapSettingNames>;
+export type TapPageConfig = TapConfig<string>;
+
+export interface TapFields<N> {
+  name: N;
+  onClick(): void;
 }
 
-// SettingTap
-
-export type SettingTapNames = 'Setting';
-export type SettingTaps = ModifierTap<SettingTapNames, ISettingTap>;
-
-export interface ISettingTap extends ITap {
-  name: SettingTapNames;
+export interface TapRec {
+  page: string | null;
+  action: string | null;
+  toolbar: TapToolbarNames | null;
 }
 
-// PageTap
-
-export type PageTaps = ModifierTap<string, IPageTap>;
-
-export interface IPageTap extends ITap {
-  name: string;
+export interface TapActives {
+  pages: TapPage[];
+  actions: TapAction[];
+  settings: TapSetting[];
 }
 
-// ToolbarTap
-
-export type ToolbarTapNames = keyof ModifierTaps;
-export type ToolbarTaps = ModifierTap<ToolbarTapNames, IToolbarTap>;
-
-export interface IToolbarTap extends ITap {
-  name: ToolbarTapNames;
-}
-
-// Tap
-
-export type TapSignals = MapWritableSignal<TapStateValue>;
-
-export interface TapOptions {
-  confirm: boolean;
-}
-
-export interface TapStateValue {
+export interface TapState {
   icon: IconName;
   disabled: boolean;
   visibility: Visibility;
 }
 
-export interface TapServices {
-  rec: RecTapSignals;
-  router: Router;
-}
-
-export interface ITap {
-  location: TapLocation;
-  get rec(): RecTapSignals;
-  get state(): TapSignals;
-  get options(): TapOptions;
-  onClick(): void;
-  setState(state: Partial<TapStateValue>): void;
-  resetState(): void;
-  restoreState(key: keyof TapStateValue): void;
-  setRec(value: Partial<RecTapValue>): void;
-  navigate(): void;
+export interface TapOptions {
+  confirm: boolean;
+  navigate: boolean;
 }
 
 export interface TapProps {
-  services: TapServices;
-  state?: Partial<TapStateValue>;
+  state?: Partial<TapState>;
   options?: Partial<TapOptions>;
 }
 
-// Common
-
-export type TapLocation = ToolbarTapNames | 'toolbar';
-export type RecTapSignals = MapWritableSignal<RecTapValue>;
-
-export interface RecTapValue {
-  page: string | null;
-  action: string | null;
-  toolbar: ToolbarTapNames | null;
+export interface Tap {
+  state: TapSignals;
+  options: TapOptions;
+  location: TapLocation;
+  initialState: TapState;
+  rec(value: Partial<TapRec>): void;
+  reset(): void;
+  resetOne(key: keyof TapState): void;
+  navigate(): void;
 }
 
-export interface ModifierTap<N extends string, I extends ITap> {
-  obj: Record<N, I>;
-  list: I[];
-}
-
-export interface ModifierTaps {
-  pages: PageTaps;
-  actions: ActionTaps;
-  settings: SettingTaps;
+export interface TapConfig<N> {
+  name: N;
+  props: TapProps;
 }

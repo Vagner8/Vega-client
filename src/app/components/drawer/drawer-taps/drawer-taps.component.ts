@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButton, MatIcon } from '@mat';
 import { TapService } from '@services';
-import { ITap } from '@types';
+import { TapActive } from '@types';
 
 @Component({
   selector: 'app-drawer-taps',
@@ -12,20 +12,18 @@ import { ITap } from '@types';
   styleUrl: './drawer-taps.component.css',
 })
 export class DrawerTapsComponent {
-  constructor(private _tap: TapService) {}
+  constructor(private ts: TapService) {}
 
   get taps() {
-    return this._tap.modifiers[this._tap.rec.toolbar()!].list;
+    return this.ts.performers[this.ts.rec.toolbar()!];
   }
 
-  onClick(tap: ITap): void {
+  onClick(tap: TapActive): void {
     this._activateActionTaps();
     tap.onClick();
   }
 
   private _activateActionTaps() {
-    const obj = this._tap.toolbar.obj;
-    obj.actions.setState({ disabled: false });
-    obj.settings.setState({ disabled: false });
+    this.ts.toolbars.forEach((t) => t.state.disabled.set(false));
   }
 }

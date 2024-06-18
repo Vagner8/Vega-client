@@ -12,9 +12,9 @@ import { DrawerTapsComponent } from './drawer-taps/drawer-taps.component';
   styleUrl: './drawer.component.css',
 })
 export class DrawerComponent {
-  constructor(private state: StateService) {}
+  constructor(private ss: StateService) {}
 
   get opened(): WritableSignal<boolean> {
-    return this.state.drawerOpened;
+    return this.ss.drawerOpened;
   }
 }
