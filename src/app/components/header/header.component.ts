@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { TapService } from '@services';
+import { Component, WritableSignal } from '@angular/core';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +11,13 @@ import { TapService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(private tap: TapService) {}
+  constructor(private ss: StateService) {}
 
-  get headers() {
-    return {
-      page: this.tap.rec.page,
-      action: this.tap.rec.action,
-    };
+  get page(): WritableSignal<string> {
+    return this.ss.page;
+  }
+
+  get active(): WritableSignal<string> {
+    return this.ss.active;
   }
 }

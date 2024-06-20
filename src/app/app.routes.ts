@@ -1,7 +1,12 @@
 import { Routes } from '@angular/router';
-import { ActionComponent, PageComponent } from '@components';
+import { ActiveComponent, PageComponent } from '@components';
+import { Param } from '@types';
 
 export const routes: Routes = [
-  { path: ':page', component: PageComponent },
-  { path: ':page/:action?', component: ActionComponent },
+  {
+    path: `:${Param.Page}`,
+    component: PageComponent,
+    children: [{ path: `:${Param.Active}`, component: ActiveComponent }],
+  },
+  { path: '**', redirectTo: 'Home' },
 ];

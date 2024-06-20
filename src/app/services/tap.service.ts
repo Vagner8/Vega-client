@@ -10,32 +10,32 @@ import {
   TapPage,
   TapPageConfig,
   TapProps,
-  TapRec,
   TapSetting,
   TapSettingConfig,
   TapSignals,
   TapState,
   TapToolbar,
   TapToolbarConfig,
-  TapsRecSignals,
+  TapActive,
 } from '@types';
 import { actions, pages, setSignals, settings, toolbars } from '@utils';
+import { BehaviorSubject } from 'rxjs';
+import { StateService } from '@services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  rec: TapsRecSignals;
-  performers: TapActives;
+  active$ = new BehaviorSubject<TapActive[] | null>(null);
+
+  actives: TapActives;
   toolbars: TapToolbar[];
 
-  constructor(private router: Router) {
-    this.rec = {
-      page: signal(null),
-      action: signal(null),
-      toolbar: signal(null),
-    };
-    this.performers = {
+  constructor(
+    private ss: StateService,
+    private router: Router,
+  ) {
+    this.actives = {
       pages: pages.map(this.page),
       actions: actions.map(this.acton),
       settings: settings.map(this.setting),
@@ -44,69 +44,66 @@ export class TapService {
   }
 
   toolbar = ({ name, props }: TapToolbarConfig): TapToolbar => {
+    const tap = this.create('pages', props);
     return {
       name,
-      onClick() {
-        this.rec({ toolbar: this.name });
+      onClick: () => {
+        this.active$.next(this.actives[name]);
       },
-      ...this.create('toolbar', props),
+      ...tap,
     };
   };
 
   page = ({ name, props }: TapPageConfig): TapPage => {
+    const tap = this.create('pages', props);
     return {
       name,
-      onClick() {
-        this.rec({ page: this.name, action: null });
-        this.navigate();
+      onClick: () => {
+        this.navigate(name, 'pages');
       },
-      ...this.create('pages', props),
+      ...tap,
     };
   };
 
   acton = ({ name, props }: TapActionConfig): TapAction => {
+    const tap = this.create('actions', props);
     return {
       name,
-      onClick() {
-        this.rec({ action: this.name });
-        this.navigate();
+      onClick: () => {
+        this.navigate(name);
       },
-      ...this.create('actions', props),
+      ...tap,
     };
   };
 
   setting = ({ name, props }: TapSettingConfig): TapSetting => {
+    const tap = this.create('settings', props);
     return {
       name,
-      onClick() {
-        this.rec({ action: this.name });
-        this.navigate();
+      onClick: () => {
+        this.navigate(name);
       },
-      ...this.create('actions', props),
+      ...tap,
     };
   };
 
-  private create(location: TapLocation, props: TapProps): Tap {
-    const { state = {}, options = {} } = props;
+  private create(location: TapLocation, { state = {}, options = {} }: TapProps): Tap {
     return {
       state: this.state(state),
       options: this.options(options),
       location,
       initialState: this.initialState(state),
-      rec: (value: Partial<TapRec>) => {
-        setSignals(value, this.rec);
-      },
       reset() {
         setSignals(this.initialState, this.state);
       },
       resetOne(key: keyof TapState) {
         this.state[key].set(this.initialState[key] as never);
       },
-      navigate: (): void => {
-        const { page, action } = this.rec;
-        this.router.navigate([page(), action()].filter(Boolean));
-      },
     };
+  }
+
+  private navigate(name: string, location?: TapLocation): void {
+    this.router.navigate(location ? [name] : [this.ss.page(), name]);
   }
 
   private state(state: Partial<TapState>): TapSignals {

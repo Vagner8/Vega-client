@@ -5,4 +5,4 @@ export * from './page/page.component';
 export * from './control/control.component';
 export * from './table/table.component';
 export * from './select/select.component';
-export * from './action/action.component';
+export * from './active/active.component';

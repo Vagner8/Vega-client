@@ -79,4 +79,10 @@ export const pages: TapPageConfig[] = [
       state: { icon: 'apps' },
     },
   },
+  {
+    name: 'Home',
+    props: {
+      state: { icon: 'home' },
+    },
+  },
 ];

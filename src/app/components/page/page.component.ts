@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { MatTableModule } from '@mat';
-import { UnitDto } from '@types';
+import { ActiveComponent } from '@components';
+import { RouterOutlet } from '@angular/router';
+import { StateService } from '@services';
+import { Param } from '@types';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [RouterOutlet, CommonModule, MatTableModule, ActiveComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })
-export class PageComponent implements OnInit {
-  unit$!: Observable<UnitDto>;
-  displayedColumns$!: Observable<string[]>;
+export class PageComponent implements OnChanges {
+  @Input() Page = '';
 
-  constructor() {}
+  constructor(private ss: StateService) {}
 
-  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ss.page.set(changes[Param.Page].currentValue);
+  }
 }
