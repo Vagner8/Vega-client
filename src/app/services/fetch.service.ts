@@ -2,17 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ControlDto, UnitDto } from '@types';
 import { Observable } from 'rxjs';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FetchService {
-  private id = '2b22ee97-76f6-48a3-a711-7f66c55e60a9';
+  private id = '3e8a1ec8-8fec-4dbb-917b-040d4b951e67';
   private api = 'https://localhost:7002/api/';
   private unitApi = `${this.api}unit`;
   private controlApi = `${this.api}control`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private ss: StateService,
+    private http: HttpClient,
+  ) {}
 
   get control() {
     return {

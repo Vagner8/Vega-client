@@ -1,13 +1,12 @@
-.buttons-app-toolbar {
+.buttons {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 200px;
 }
 
-.toolbar-app-toolbar {
+.toolbar {
   z-index: 1;
   height: var(--toolbar-height);
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }

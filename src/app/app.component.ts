@@ -17,6 +17,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fs.unit.get().subscribe(this.us.set);
+    this.fs.unit.get().subscribe(this.us.run);
   }
 }

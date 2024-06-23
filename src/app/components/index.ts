@@ -6,3 +6,4 @@ export * from './control/control.component';
 export * from './table/table.component';
 export * from './select/select.component';
 export * from './active/active.component';
+export * from './info/info.component';

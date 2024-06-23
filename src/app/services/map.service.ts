@@ -1,19 +1,30 @@
 import { Injectable, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Control, ControlDto, Controls, ControlsDto, UnitDto, Unit } from '@types';
+import { Control, ControlDto, Controls, ControlsDto, UnitDto, Unit, UnitsDto, Units } from '@types';
+import { TapService } from './tap.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  toUnit = ({ id, unitId, controls, units }: UnitDto): Unit => {
+  constructor(private ts: TapService) {}
+
+  toUnit = ({ id, parentId, controls, units }: UnitDto): Unit => {
     return {
       id,
-      unitId,
+      parentId,
       controls: this.toControls(controls),
-      units: units.length === 0 ? [] : units.map(this.toUnit),
+      units: this.toUnits(units),
     };
   };
+
+  toUnits(units: UnitsDto): Units {
+    const dto: Units = {};
+    for (const key in units) {
+      dto[key] = this.toUnit(units[key]);
+    }
+    return dto;
+  }
 
   toControls(dto: ControlsDto): Controls {
     const controls: Controls = {};
@@ -23,23 +34,31 @@ export class MapService {
     return controls;
   }
 
-  toControl({ id, unitId, indicator, data }: ControlDto): Control {
+  toControl({ id, parentId, indicator, data }: ControlDto): Control {
     return {
       id,
-      unitId,
+      parentId,
       indicator: new FormControl(indicator),
       data: new FormControl(data),
       state: { disabled: signal(false) },
     };
   }
 
-  toUnitDto({ id, unitId, controls, units }: Unit): UnitDto {
+  toUnitDto({ id, parentId, controls, units }: Unit): UnitDto {
     return {
       id,
-      unitId,
+      parentId,
       controls: this.toControlsDto(controls),
-      units: units.length === 0 ? [] : units.map(this.toUnitDto),
+      units: this.toUnitsDto(units),
     };
+  }
+
+  toUnitsDto(units: Units): UnitsDto {
+    const dto: UnitsDto = {};
+    for (const key in units) {
+      dto[key] = this.toUnitDto(units[key]);
+    }
+    return dto;
   }
 
   toControlsDto(control: Controls): ControlsDto {
@@ -50,10 +69,10 @@ export class MapService {
     return dto;
   }
 
-  toControlDto({ id, unitId, indicator, data }: Control): ControlDto {
+  toControlDto({ id, parentId, indicator, data }: Control): ControlDto {
     return {
-      id: id || '',
-      unitId,
+      id,
+      parentId,
       indicator: indicator.value || '',
       data: data.value || '',
     };

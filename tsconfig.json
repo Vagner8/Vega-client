@@ -27,6 +27,7 @@
       "@services": ["app/services/index.ts"],
       "@controls": ["app/controls/index.ts"],
       "@config": ["app/config/index.ts"],
+      "@guard": ["app/guard/index.ts"],
       "@types": ["app/types/index.ts"],
       "@pipes": ["app/pipes/index.ts"],
       "@utils": ["app/utils/index.ts"],

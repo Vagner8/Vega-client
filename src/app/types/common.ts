@@ -15,3 +15,19 @@ export enum Param {
   Page = 'Page',
   Active = 'Active',
 }
+
+export enum PagesDefault {
+  Home = 'Home',
+}
+
+export enum Pages {
+  Users = 'Users',
+  Products = 'Products',
+}
+
+export enum Indicator {
+  Unit = 'Unit',
+  Child = 'Name',
+  Icon = 'Icon',
+  Sort = 'Sort',
+}

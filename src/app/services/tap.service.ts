@@ -1,38 +1,22 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  TapActives,
-  Tap,
-  TapAction,
-  TapActionConfig,
-  TapLocation,
-  TapOptions,
-  TapPage,
-  TapPageConfig,
-  TapProps,
-  TapSetting,
-  TapSettingConfig,
-  TapSignals,
-  TapState,
-  TapToolbar,
-  TapToolbarConfig,
-  TapActive,
-} from '@types';
 import { actions, pages, setSignals, settings, toolbars } from '@utils';
 import { BehaviorSubject } from 'rxjs';
-import { StateService } from '@services';
+import { ControlService, StateService } from '@services';
+import type * as T from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  active$ = new BehaviorSubject<TapActive[] | null>(null);
+  active$ = new BehaviorSubject<T.TapActive[] | null>(null);
 
-  actives: TapActives;
-  toolbars: TapToolbar[];
+  actives: T.TapActives;
+  toolbars: T.TapToolbar[];
 
   constructor(
     private ss: StateService,
+    private cs: ControlService,
     private router: Router,
   ) {
     this.actives = {
@@ -43,7 +27,7 @@ export class TapService {
     this.toolbars = toolbars.map(this.toolbar);
   }
 
-  toolbar = ({ name, props }: TapToolbarConfig): TapToolbar => {
+  toolbar = ({ name, props }: T.TapToolbarConfig): T.TapToolbar => {
     const tap = this.create('pages', props);
     return {
       name,
@@ -54,7 +38,7 @@ export class TapService {
     };
   };
 
-  page = ({ name, props }: TapPageConfig): TapPage => {
+  page = ({ name, props }: T.TapPageConfig): T.TapPage => {
     const tap = this.create('pages', props);
     return {
       name,
@@ -65,7 +49,15 @@ export class TapService {
     };
   };
 
-  acton = ({ name, props }: TapActionConfig): TapAction => {
+  addPages({ units }: T.UnitDto): void {
+    for (const name in units) {
+      const icon = this.cs.icon(units[name].controls);
+      const page = this.page({ name, props: { state: { icon } } });
+      this.actives.pages = [page, ...this.actives.pages];
+    }
+  }
+
+  acton = ({ name, props }: T.TapActionConfig): T.TapAction => {
     const tap = this.create('actions', props);
     return {
       name,
@@ -76,7 +68,7 @@ export class TapService {
     };
   };
 
-  setting = ({ name, props }: TapSettingConfig): TapSetting => {
+  setting = ({ name, props }: T.TapSettingConfig): T.TapSetting => {
     const tap = this.create('settings', props);
     return {
       name,
@@ -87,7 +79,7 @@ export class TapService {
     };
   };
 
-  private create(location: TapLocation, { state = {}, options = {} }: TapProps): Tap {
+  private create(location: T.TapLocation, { state = {}, options = {} }: T.TapProps): T.Tap {
     return {
       state: this.state(state),
       options: this.options(options),
@@ -96,17 +88,17 @@ export class TapService {
       reset() {
         setSignals(this.initialState, this.state);
       },
-      resetOne(key: keyof TapState) {
+      resetOne(key: keyof T.TapState) {
         this.state[key].set(this.initialState[key] as never);
       },
     };
   }
 
-  private navigate(name: string, location?: TapLocation): void {
+  private navigate(name: string, location?: T.TapLocation): void {
     this.router.navigate(location ? [name] : [this.ss.page(), name]);
   }
 
-  private state(state: Partial<TapState>): TapSignals {
+  private state(state: Partial<T.TapState>): T.TapSignals {
     const { icon, disabled, visibility } = this.initialState(state);
     return {
       icon: signal(icon),
@@ -115,12 +107,12 @@ export class TapService {
     };
   }
 
-  private options(options: Partial<TapOptions>): TapOptions {
+  private options(options: Partial<T.TapOptions>): T.TapOptions {
     const { confirm = false, navigate = true } = options;
     return { confirm, navigate };
   }
 
-  private initialState(state: Partial<TapState>): TapState {
+  private initialState(state: Partial<T.TapState>): T.TapState {
     const { icon = 'apps', disabled = false, visibility = 'visible' } = state;
     return { icon, disabled, visibility };
   }

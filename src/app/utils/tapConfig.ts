@@ -74,12 +74,6 @@ export const settings: TapSettingConfig[] = [
 
 export const pages: TapPageConfig[] = [
   {
-    name: 'Group',
-    props: {
-      state: { icon: 'apps' },
-    },
-  },
-  {
     name: 'Home',
     props: {
       state: { icon: 'home' },

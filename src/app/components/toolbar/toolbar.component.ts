@@ -3,11 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
 import { TapService, StateService } from '@services';
 import { TapToolbar } from '@types';
+import { InfoComponent } from '../info/info.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [CommonModule, MatIcon, MatToolbar, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatIcon,
+    MatToolbar,
+    MatButtonModule,
+    InfoComponent,
+    MatProgressSpinnerModule,
+  ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })

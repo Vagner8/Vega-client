@@ -2,14 +2,22 @@ import { Controls, ControlsDto } from '@types';
 
 export interface Unit {
   id?: string;
-  unitId: string;
-  units: Unit[];
+  parentId: string;
+  units: Units;
   controls: Controls;
+}
+
+export interface Units {
+  [key: string]: Unit;
 }
 
 export interface UnitDto {
   id?: string;
-  unitId: string;
-  units: UnitDto[];
+  parentId: string;
+  units: UnitsDto;
   controls: ControlsDto;
+}
+
+export interface UnitsDto {
+  [key: string]: UnitDto;
 }

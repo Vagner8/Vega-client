@@ -4,8 +4,9 @@
   --size-large: 24px;
 
   --color-common: #fff;
-  --color-success: green;
-  --color-danger: red;
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107;
 
   --toolbar-height: calc(var(--size-large) * 3);
 }

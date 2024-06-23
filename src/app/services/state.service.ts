@@ -8,4 +8,5 @@ export class StateService {
   readonly drawerOpened = signal<boolean>(false);
   readonly page = signal<string>('');
   readonly active = signal<string>('');
+  readonly isFetching = signal<boolean>(false);
 }
