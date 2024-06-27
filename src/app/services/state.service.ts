@@ -4,9 +4,9 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class StateService {
-  readonly error = signal<string | null>(null);
-  readonly drawerOpened = signal<boolean>(false);
   readonly page = signal<string>('');
+  readonly error = signal<string | null>(null);
   readonly active = signal<string>('');
   readonly isFetching = signal<boolean>(false);
+  readonly drawerOpened = signal<boolean>(false);
 }

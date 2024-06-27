@@ -10,7 +10,7 @@ export const toolbars: TapToolbarConfig[] = [
   {
     name: 'pages',
     props: {
-      state: { icon: 'apps' },
+      state: { icon: 'apps', disabled: true },
     },
   },
   {

@@ -33,3 +33,20 @@ app-form {
     height: calc(-130px + 100vh);
   }
 }
+
+.snack-bar {
+  position: absolute;
+  bottom: var(--toolbar-height);
+}
+
+.snack-bar span.mdc-button__label {
+  color: var(--color-common);
+}
+
+.error-snack-bar div.mat-mdc-snackbar-surface {
+  background-color: var(--color-danger);
+}
+
+.success-snack-bar div.mat-mdc-snackbar-surface {
+  background-color: var(--color-success);
+}

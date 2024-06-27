@@ -1,22 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { MatIcon, MatToolbar, MatButtonModule } from '@mat';
+import { Component, OnInit, WritableSignal } from '@angular/core';
+import { MatToolbar } from '@mat';
 import { TapService, StateService } from '@services';
 import { TapToolbar } from '@types';
-import { InfoComponent } from '../info/info.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIcon,
-    MatToolbar,
-    MatButtonModule,
-    InfoComponent,
-    MatProgressSpinnerModule,
-  ],
+  imports: [CommonModule, MatToolbar, ToolbarButtonComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })
@@ -28,11 +20,15 @@ export class ToolbarComponent implements OnInit {
     private ss: StateService,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.taps = this.ts.toolbars;
   }
 
-  onClick(tap: TapToolbar) {
+  get isFetching(): WritableSignal<boolean> {
+    return this.ss.isFetching;
+  }
+
+  onClick(tap: TapToolbar): void {
     tap.onClick();
     if (tap.state.icon() === 'close') {
       this.resetIcons();
@@ -45,7 +41,7 @@ export class ToolbarComponent implements OnInit {
     }
   }
 
-  private resetIcons() {
+  private resetIcons(): void {
     this.taps.forEach((tap) => tap.resetOne('icon'));
   }
 }

@@ -18,6 +18,7 @@ export type TapPageConfig = TapConfig<string>;
 export interface TapFields<N> {
   name: N;
   onClick(): void;
+  hasName(name: N): boolean;
 }
 
 export interface TapActives {

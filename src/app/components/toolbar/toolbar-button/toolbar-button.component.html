@@ -1,0 +1,7 @@
+<button [class]="tap.name" mat-mini-fab [disabled]="this.tap.hasName('pages') ? isFetching : tap.state.disabled()"
+  [attr.aria-label]="tap.name" (click)="onClicked()">
+  @if (spinner()) {
+    <mat-spinner color="accent" class="spinner" diameter="40"></mat-spinner>
+  }
+  <mat-icon>{{tap.state.icon()}}</mat-icon>
+</button>

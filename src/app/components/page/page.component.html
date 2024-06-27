@@ -1,24 +1,27 @@
+@if (!isFetching()) {
 <!-- @if (unit$ | async; as unit) {
-  @if (displayedColumns$ | async; as displayedColumns) {
-    <table
-    mat-table
-    [dataSource]="unit.units"
-    class="mat-elevation-z0"
-  >
-    @for (column of displayedColumns; track column) {
-      <ng-container [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef>{{column}}</th>
-        <td mat-cell *matCellDef="let group">{{ "" }}</td>
-      </ng-container>
-    }
+    @if (displayedColumns$ | async; as displayedColumns) {
+      <table
+      mat-table
+      [dataSource]="unit.units"
+      class="mat-elevation-z0"
+    >
+      @for (column of displayedColumns; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+          <td mat-cell *matCellDef="let group">{{ "" }}</td>
+        </ng-container>
+      }
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  }
-} -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    }
+  } -->
 <h1>Page</h1>
+<h1>Error {{error()}}</h1>
 <!-- @if (unit) {
 
-} -->
+  } -->
 <router-outlet></router-outlet>
+}

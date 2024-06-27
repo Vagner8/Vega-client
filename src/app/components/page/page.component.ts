@@ -26,12 +26,11 @@ export class PageComponent {
     private us: UnitService,
   ) {}
 
-  // ngOnInit() {
-  //   console.log('🚀 ~ this.us.dto.units[this.name()]:', this.us.dto.units[this.name()]);
-  // }
+  get isFetching() {
+    return this.ss.isFetching;
+  }
 
-  // get unit(): UnitsDto {
-  //   console.log('🚀 ~ this.us.dto.units[this.name()]:', this.us.dto.units[this.name()]);
-  //   return this.us.dto.units[this.name()].units;
-  // }
+  get error() {
+    return this.ss.error;
+  }
 }

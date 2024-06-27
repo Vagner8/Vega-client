@@ -1,6 +1,7 @@
-.buttons {
+.btns {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 200px;
 }
 
@@ -8,5 +9,7 @@
   z-index: 1;
   height: var(--toolbar-height);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
+
+

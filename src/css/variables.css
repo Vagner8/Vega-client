@@ -9,4 +9,5 @@
   --color-warning: #ffc107;
 
   --toolbar-height: calc(var(--size-large) * 3);
+  --toolbar-tap-width: 40px;
 }

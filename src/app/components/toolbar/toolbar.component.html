@@ -1,10 +1,7 @@
 <mat-toolbar color="primary" class="toolbar">
-  <app-info></app-info>
-  <div class="buttons">
+  <div class="btns">
     @for (tap of taps; track tap.name) {
-      <button [disabled]="tap.state.disabled()" mat-fab [attr.aria-label]="tap.name" (click)="onClick(tap)">
-        <mat-icon>{{tap.state.icon()}}</mat-icon>
-      </button>
+    <app-toolbar-button [tap]="tap" [isFetching]="isFetching()" (onClick)="onClick($event)"></app-toolbar-button>
     }
   </div>
 </mat-toolbar>

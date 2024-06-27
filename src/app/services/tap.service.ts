@@ -31,9 +31,8 @@ export class TapService {
     const tap = this.create('pages', props);
     return {
       name,
-      onClick: () => {
-        this.active$.next(this.actives[name]);
-      },
+      onClick: () => this.active$.next(this.actives[name]),
+      hasName: (test) => test === name,
       ...tap,
     };
   };
@@ -42,9 +41,8 @@ export class TapService {
     const tap = this.create('pages', props);
     return {
       name,
-      onClick: () => {
-        this.navigate(name, 'pages');
-      },
+      onClick: () => this.navigate(name, 'pages'),
+      hasName: (test) => test === name,
       ...tap,
     };
   };
@@ -61,9 +59,8 @@ export class TapService {
     const tap = this.create('actions', props);
     return {
       name,
-      onClick: () => {
-        this.navigate(name);
-      },
+      onClick: () => this.navigate(name),
+      hasName: (test) => test === name,
       ...tap,
     };
   };
@@ -72,9 +69,8 @@ export class TapService {
     const tap = this.create('settings', props);
     return {
       name,
-      onClick: () => {
-        this.navigate(name);
-      },
+      onClick: () => this.navigate(name),
+      hasName: (test) => test === name,
       ...tap,
     };
   };
@@ -88,7 +84,7 @@ export class TapService {
       reset() {
         setSignals(this.initialState, this.state);
       },
-      resetOne(key: keyof T.TapState) {
+      resetOne(key) {
         this.state[key].set(this.initialState[key] as never);
       },
     };
