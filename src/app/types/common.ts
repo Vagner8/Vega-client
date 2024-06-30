@@ -5,6 +5,8 @@ export type MapWritableSignal<T> = {
   [P in keyof T]: WritableSignal<T[P]>;
 };
 
+export type SuccessMessages = 'Good to go!';
+
 export enum InputType {
   Text = 'text',
   Email = 'email',
@@ -30,4 +32,18 @@ export enum Indicator {
   Child = 'Name',
   Icon = 'Icon',
   Sort = 'Sort',
+}
+
+export interface Exception {
+  type: string;
+  title: string;
+  status: 500;
+  detail: string;
+  instance: string;
+}
+
+export interface SnackBarConfig {
+  duration: number;
+  panelClass: string;
+  announcementMessage: string;
 }

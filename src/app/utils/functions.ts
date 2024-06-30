@@ -1,5 +1,7 @@
 import { WritableSignal } from '@angular/core';
-import { isKeyof } from './guards';
+import { isException, isKeyof } from './guards';
+import { Exception } from '@types';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const setSignals = <T extends object, WS>(
   value: T,
@@ -9,4 +11,15 @@ export const setSignals = <T extends object, WS>(
     if (!isKeyof(signals, key)) return;
     signals[key].set(value);
   });
+};
+
+export const ex = (error: HttpErrorResponse): Exception => {
+  const ex: Exception = {
+    type: 'Node',
+    title: 'Node',
+    status: 500,
+    detail: error.message,
+    instance: 'Node',
+  };
+  return isException(error.error) ? error.error : ex;
 };

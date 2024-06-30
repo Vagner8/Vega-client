@@ -4,4 +4,3 @@ export * from './map.service';
 export * from './fetch.service';
 export * from './unit.service';
 export * from './control.service';
-export * from './snack-bar.service';
