@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { actions, pages, setSignals, settings, toolbars } from '@utils';
+import { actions, pages, setSignals, settings, manager } from '@utils';
 import { BehaviorSubject } from 'rxjs';
 import { ControlService, StateService } from '@services';
 import type * as T from '@types';
@@ -11,38 +11,50 @@ import type * as T from '@types';
 export class TapService {
   active$ = new BehaviorSubject<T.TapActive[] | null>(null);
 
-  actives: T.TapActives;
-  toolbars: T.TapToolbar[];
+  pages: T.TapPage[];
+  actions: T.TapAction[];
+  settings: T.TapSetting[];
+  manager: T.TapManager;
 
   constructor(
     private ss: StateService,
     private cs: ControlService,
     private router: Router,
   ) {
-    this.actives = {
-      pages: pages.map(this.page),
-      actions: actions.map(this.acton),
-      settings: settings.map(this.setting),
-    };
-    this.toolbars = toolbars.map(this.toolbar);
+    this.pages = pages.map(this.setPages);
+    this.actions = actions.map(this.setActions);
+    this.settings = settings.map(this.setSettings);
+    this.manager = this.setManager(manager);
   }
 
-  toolbar = ({ name, props }: T.TapToolbarConfig): T.TapToolbar => {
-    const tap = this.create('pages', props);
+  setManager = ({ name, props }: T.TapToolbarConfig): T.TapManager => {
+    const tap = this.create('manager', props);
     return {
       name,
-      onClick: () => this.active$.next(this.actives[name]),
       hasName: (test) => test === name,
+      onClick: () => {
+        this.active$.next(this.pages);
+        this.ss.sidenav.set(true);
+      },
+      onHoldClick: () => {
+        this.active$.next(this.settings);
+        this.ss.sidenav.set(true);
+      },
+      onDoubleClick: () => {
+        this.ss.sidenav.set(false);
+      },
       ...tap,
     };
   };
 
-  page = ({ name, props }: T.TapPageConfig): T.TapPage => {
+  setPages = ({ name, props }: T.TapPageConfig): T.TapPage => {
     const tap = this.create('pages', props);
     return {
       name,
-      onClick: () => this.navigate(name, 'pages'),
       hasName: (test) => test === name,
+      onClick: () => this.navigate(name, 'pages'),
+      onHoldClick() {},
+      onDoubleClick() {},
       ...tap,
     };
   };
@@ -50,27 +62,31 @@ export class TapService {
   addPages({ units }: T.UnitDto): void {
     for (const name in units) {
       const icon = this.cs.icon(units[name].controls);
-      const page = this.page({ name, props: { state: { icon } } });
-      this.actives.pages = [page, ...this.actives.pages];
+      const page = this.setPages({ name, props: { state: { icon } } });
+      this.pages = [page, ...this.pages];
     }
   }
 
-  acton = ({ name, props }: T.TapActionConfig): T.TapAction => {
+  setActions = ({ name, props }: T.TapActionConfig): T.TapAction => {
     const tap = this.create('actions', props);
     return {
       name,
-      onClick: () => this.navigate(name),
       hasName: (test) => test === name,
+      onClick: () => this.navigate(name),
+      onHoldClick() {},
+      onDoubleClick() {},
       ...tap,
     };
   };
 
-  setting = ({ name, props }: T.TapSettingConfig): T.TapSetting => {
+  setSettings = ({ name, props }: T.TapSettingConfig): T.TapSetting => {
     const tap = this.create('settings', props);
     return {
       name,
-      onClick: () => this.navigate(name),
       hasName: (test) => test === name,
+      onClick: () => this.navigate(name),
+      onHoldClick() {},
+      onDoubleClick() {},
       ...tap,
     };
   };

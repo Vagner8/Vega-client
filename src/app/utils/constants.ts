@@ -1,1 +1,0 @@
-export const PULSE_ANIMATION_FRAME = 1000;

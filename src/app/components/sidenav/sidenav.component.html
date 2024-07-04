@@ -1,0 +1,13 @@
+<mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
+  @if(opened()) {
+    <mat-drawer [opened]="opened()" [disableClose]="false" class="mat-drawer-app-sidenav" mode="side" position="end">
+      <mat-list class="mat-list-app-sidenav">
+        @for (tap of active$ | async; track tap.name) {
+          <button mat-flat-button [disabled]="tap.state.disabled()">
+            <mat-icon>{{tap.state.icon()}}</mat-icon>{{tap.name}}</button>
+        }
+      </mat-list>
+    </mat-drawer>
+  }
+  <router-outlet></router-outlet>
+</mat-drawer-container>

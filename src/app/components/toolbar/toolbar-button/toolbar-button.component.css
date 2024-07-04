@@ -1,8 +1,0 @@
-.pages mat-icon {
-  position: absolute;
-}
-
-.pages .mat-spinner circle,
-.custom-spinner .mat-progress-spinner circle {
-  stroke: var(--color-common);
-}

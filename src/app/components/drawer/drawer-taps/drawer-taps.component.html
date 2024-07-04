@@ -1,4 +1,0 @@
-@for (tap of active$ | async; track tap.name) {
-  <button mat-flat-button [disabled]="tap.state.disabled()" (click)="onClick(tap)">
-    <mat-icon>{{tap.state.icon()}}</mat-icon>{{tap.name}}</button>
-}

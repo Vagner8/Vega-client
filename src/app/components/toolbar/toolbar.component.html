@@ -1,7 +1,3 @@
 <mat-toolbar color="primary" class="toolbar">
-  <div class="btns">
-    @for (tap of taps; track tap.name) {
-    <app-toolbar-button [tap]="tap" [isFetching]="isFetching()" (onClick)="onClick($event)"></app-toolbar-button>
-    }
-  </div>
+  <app-manager></app-manager>
 </mat-toolbar>

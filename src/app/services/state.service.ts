@@ -9,5 +9,5 @@ export class StateService {
   readonly error = signal<Exception | null>(null);
   readonly active = signal<string>('');
   readonly isFetching = signal<boolean>(false);
-  readonly drawerOpened = signal<boolean>(false);
+  readonly sidenav = signal<boolean>(false);
 }

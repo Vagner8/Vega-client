@@ -1,25 +1,11 @@
 import { TapActionConfig, TapPageConfig, TapSettingConfig, TapToolbarConfig } from '@types';
 
-export const toolbars: TapToolbarConfig[] = [
-  {
-    name: 'settings',
-    props: {
-      state: { icon: 'settings', disabled: true },
-    },
+export const manager: TapToolbarConfig = {
+  name: 'manager',
+  props: {
+    state: { icon: 'apps', disabled: true },
   },
-  {
-    name: 'pages',
-    props: {
-      state: { icon: 'apps', disabled: true },
-    },
-  },
-  {
-    name: 'actions',
-    props: {
-      state: { icon: 'filter_list', disabled: true },
-    },
-  },
-];
+};
 
 export const actions: TapActionConfig[] = [
   {
