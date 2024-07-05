@@ -1,5 +1,6 @@
 import { WritableSignal } from '@angular/core';
 
+export type SidenavState = 'open' | 'close';
 export type Visibility = 'hidden' | 'visible';
 export type MapWritableSignal<T> = {
   [P in keyof T]: WritableSignal<T[P]>;

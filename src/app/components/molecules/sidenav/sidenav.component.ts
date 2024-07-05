@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { StateService, TapService } from '@services';
 import { ExecutorComponent } from '@components/atoms';
+import { SidenavState } from '@types';
 
 @Component({
   selector: 'app-sidenav',
@@ -18,7 +19,7 @@ export class SidenavComponent {
     private ts: TapService,
   ) {}
 
-  get opened(): WritableSignal<boolean> {
+  get state(): WritableSignal<SidenavState> {
     return this.ss.sidenav;
   }
 

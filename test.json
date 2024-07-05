@@ -1,0 +1,148 @@
+{
+  "id": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
+  "parentId": null,
+  "controls": {
+      "Sort": {
+          "id": "052392e0-617d-4cc5-ad1c-509f6c94592b",
+          "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
+          "indicator": "Sort",
+          "data": "Users:Products"
+      },
+      "Unit": {
+          "id": "f136c1d9-228c-48be-a5c7-b2a484b922c2",
+          "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
+          "indicator": "Unit",
+          "data": "Vega"
+      }
+  },
+  "units": {
+      "Products": {
+          "id": "502ac291-080b-4419-adad-47ef43f35880",
+          "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
+          "controls": {
+              "Sort": {
+                  "id": "458aa87e-5414-401a-a832-5e9fb42edc4e",
+                  "parentId": "502ac291-080b-4419-adad-47ef43f35880",
+                  "indicator": "Sort",
+                  "data": "Price:Name"
+              },
+              "Unit": {
+                  "id": "ed6d9b64-3268-4c77-bd44-8b6b7ed93671",
+                  "parentId": "502ac291-080b-4419-adad-47ef43f35880",
+                  "indicator": "Unit",
+                  "data": "Products"
+              },
+              "Icon": {
+                  "id": "49c694b4-3978-4749-bc49-beeb1161e330",
+                  "parentId": "502ac291-080b-4419-adad-47ef43f35880",
+                  "indicator": "Icon",
+                  "data": "widgets"
+              }
+          },
+          "units": {
+              "0": {
+                  "id": "a5d66cfd-1436-4443-8951-7332e8ac056a",
+                  "parentId": "502ac291-080b-4419-adad-47ef43f35880",
+                  "controls": {
+                      "Price": {
+                          "id": "bf1a4c49-e96e-4bb2-9da6-85e5196fcf96",
+                          "parentId": "a5d66cfd-1436-4443-8951-7332e8ac056a",
+                          "indicator": "Price",
+                          "data": "5000"
+                      },
+                      "Name": {
+                          "id": "c578153c-391c-46ee-bd61-b6788107245f",
+                          "parentId": "a5d66cfd-1436-4443-8951-7332e8ac056a",
+                          "indicator": "Name",
+                          "data": "Laptop"
+                      }
+                  },
+                  "units": null
+              },
+              "1": {
+                  "id": "94129d65-6ea7-4761-a2c4-d1c04c65448d",
+                  "parentId": "502ac291-080b-4419-adad-47ef43f35880",
+                  "controls": {
+                      "Price": {
+                          "id": "3cf86b07-fc64-4830-8ad4-75549a46a5e4",
+                          "parentId": "94129d65-6ea7-4761-a2c4-d1c04c65448d",
+                          "indicator": "Price",
+                          "data": "1000"
+                      },
+                      "Name": {
+                          "id": "a8c311f3-aa0f-4377-8bf2-8c56410223df",
+                          "parentId": "94129d65-6ea7-4761-a2c4-d1c04c65448d",
+                          "indicator": "Name",
+                          "data": "Phone"
+                      }
+                  },
+                  "units": null
+              }
+          }
+      },
+      "Users": {
+          "id": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+          "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
+          "controls": {
+              "Sort": {
+                  "id": "4a64e04c-d0b6-4f71-bce9-6b794633ff66",
+                  "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+                  "indicator": "Sort",
+                  "data": "Email:Name"
+              },
+              "Icon": {
+                  "id": "b200431e-7cd7-48aa-8179-cf7c49db4710",
+                  "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+                  "indicator": "Icon",
+                  "data": "group"
+              },
+              "Unit": {
+                  "id": "6eabc2ca-1b60-406a-8cf7-f0a7ca860153",
+                  "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+                  "indicator": "Unit",
+                  "data": "Users"
+              }
+          },
+          "units": {
+              "0": {
+                  "id": "e3f2c222-5fea-4857-bcb8-0891ab101c81",
+                  "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+                  "controls": {
+                      "Name": {
+                          "id": "b8060347-45b3-418e-a9ab-41ed3b43198c",
+                          "parentId": "e3f2c222-5fea-4857-bcb8-0891ab101c81",
+                          "indicator": "Name",
+                          "data": "Dima"
+                      },
+                      "Email": {
+                          "id": "d1c3080d-ff0e-44be-9437-885b363598b2",
+                          "parentId": "e3f2c222-5fea-4857-bcb8-0891ab101c81",
+                          "indicator": "Email",
+                          "data": "dima@mail.com"
+                      }
+                  },
+                  "units": null
+              },
+              "1": {
+                  "id": "a5131539-e6ff-4c15-8b8d-7d8e4c333227",
+                  "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
+                  "controls": {
+                      "Email": {
+                          "id": "96a8d948-82ec-484a-ba39-88f8fcda2da1",
+                          "parentId": "a5131539-e6ff-4c15-8b8d-7d8e4c333227",
+                          "indicator": "Email",
+                          "data": "anna@mail.com"
+                      },
+                      "Name": {
+                          "id": "f7bbbf56-ec70-49e3-8315-ba551a125246",
+                          "parentId": "a5131539-e6ff-4c15-8b8d-7d8e4c333227",
+                          "indicator": "Name",
+                          "data": "Anna"
+                      }
+                  },
+                  "units": null
+              }
+          }
+      }
+  }
+}

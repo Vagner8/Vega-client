@@ -33,14 +33,14 @@ export class TapService {
       ...tap,
       onClick: () => {
         this.executors$.next(this.pages);
-        this.ss.sidenav.set(true);
+        this.ss.sidenav.set('open');
       },
       onHoldClick: () => {
         this.executors$.next(this.settings);
-        this.ss.sidenav.set(true);
+        this.ss.sidenav.set('open');
       },
       onDoubleClick: () => {
-        this.ss.sidenav.set(false);
+        this.ss.sidenav.set('close');
       },
     };
   };

@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@mat';
 import { ActiveComponent } from '@components/molecules';
@@ -11,12 +11,11 @@ import { StateService, UnitService } from '@services';
   imports: [RouterOutlet, CommonModule, MatTableModule, ActiveComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent {
-  name = signal('');
-
   @Input() set Page(name: string) {
-    this.name.set(name);
+    // this.name.set(name);
     this.ss.page.set(name);
     this.ss.executer.set('');
   }
@@ -25,6 +24,10 @@ export class PageComponent {
     private ss: StateService,
     private us: UnitService,
   ) {}
+
+  ngAfterContentChecked() {
+    console.log('🚀 ~ us:', this.us.dto);
+  }
 
   get isFetching() {
     return this.ss.isFetching;

@@ -22,7 +22,7 @@ export class ClickDirective {
   }
 
   @HostListener('mousedown', ['$event'])
-  @HostListener('touchstart', ['$event'])
+  @HostListener('touchstart.passive', ['$event'])
   onMouseDown(): void {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
@@ -34,7 +34,6 @@ export class ClickDirective {
   }
 
   @HostListener('mouseup')
-  @HostListener('mouseleave')
   @HostListener('touchend', ['$event'])
   @HostListener('touchcancel')
   onMouseUp(): void {
