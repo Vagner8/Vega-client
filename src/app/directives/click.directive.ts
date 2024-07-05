@@ -1,13 +1,12 @@
-import { Directive, HostListener, output } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
+import { Tap } from '@types';
 
 @Directive({
   standalone: true,
   selector: '[appClick]',
 })
 export class ClickDirective {
-  singleClick = output<Event>();
-  doubleClick = output<Event>();
-  holdClick = output<Event>();
+  @Input({ required: true }) tap!: Tap<string>;
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -24,11 +23,11 @@ export class ClickDirective {
 
   @HostListener('mousedown', ['$event'])
   @HostListener('touchstart', ['$event'])
-  onMouseDown(event: Event): void {
+  onMouseDown(): void {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.holdClick.emit(event);
+      this.tap.onHoldClick();
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
@@ -45,7 +44,7 @@ export class ClickDirective {
   }
 
   @HostListener('click', ['$event'])
-  onClick(event: Event): void {
+  onClick(): void {
     if (this.holdTimeout) {
       clearTimeout(this.holdTimeout as number);
     }
@@ -59,7 +58,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.singleClick.emit(event);
+          this.tap.onClick();
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -67,7 +66,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.doubleClick.emit(event);
+      this.tap.onDoubleClick();
       this.reset();
     }
   }

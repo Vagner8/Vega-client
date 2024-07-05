@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { InputComponent } from '../input/input.component';
-import { SelectComponent } from '../select/select.component';
+import { InputComponent, SelectComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-control',

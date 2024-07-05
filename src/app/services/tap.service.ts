@@ -9,7 +9,7 @@ import type * as T from '@types';
   providedIn: 'root',
 })
 export class TapService {
-  active$ = new BehaviorSubject<T.TapActive[] | null>(null);
+  executors$ = new BehaviorSubject<T.TapExecutor[] | null>(null);
 
   pages: T.TapPage[];
   actions: T.TapAction[];
@@ -28,34 +28,32 @@ export class TapService {
   }
 
   setManager = ({ name, props }: T.TapToolbarConfig): T.TapManager => {
-    const tap = this.create('manager', props);
+    const tap = this.create(name, 'manager', props);
     return {
-      name,
-      hasName: (test) => test === name,
+      ...tap,
       onClick: () => {
-        this.active$.next(this.pages);
+        this.executors$.next(this.pages);
         this.ss.sidenav.set(true);
       },
       onHoldClick: () => {
-        this.active$.next(this.settings);
+        this.executors$.next(this.settings);
         this.ss.sidenav.set(true);
       },
       onDoubleClick: () => {
         this.ss.sidenav.set(false);
       },
-      ...tap,
     };
   };
 
   setPages = ({ name, props }: T.TapPageConfig): T.TapPage => {
-    const tap = this.create('pages', props);
+    const tap = this.create(name, 'pages', props);
     return {
-      name,
-      hasName: (test) => test === name,
-      onClick: () => this.navigate(name, 'pages'),
+      ...tap,
+      onClick: () => {
+        this.navigate(name, 'pages');
+      },
       onHoldClick() {},
       onDoubleClick() {},
-      ...tap,
     };
   };
 
@@ -68,41 +66,48 @@ export class TapService {
   }
 
   setActions = ({ name, props }: T.TapActionConfig): T.TapAction => {
-    const tap = this.create('actions', props);
+    const tap = this.create<T.TapActionNames>(name, 'actions', props);
     return {
-      name,
-      hasName: (test) => test === name,
+      ...tap,
       onClick: () => this.navigate(name),
       onHoldClick() {},
       onDoubleClick() {},
-      ...tap,
     };
   };
 
   setSettings = ({ name, props }: T.TapSettingConfig): T.TapSetting => {
-    const tap = this.create('settings', props);
+    const tap = this.create<T.TapSettingNames>(name, 'settings', props);
     return {
-      name,
-      hasName: (test) => test === name,
+      ...tap,
       onClick: () => this.navigate(name),
       onHoldClick() {},
       onDoubleClick() {},
-      ...tap,
     };
   };
 
-  private create(location: T.TapLocation, { state = {}, options = {} }: T.TapProps): T.Tap {
+  private create<N>(
+    name: N,
+    location: T.TapLocation,
+    { state = {}, options = {} }: T.TapProps,
+  ): T.Tap<N> {
     return {
+      name,
       state: this.state(state),
       options: this.options(options),
       location,
       initialState: this.initialState(state),
+      hasName: (test) => test === name,
+
       reset() {
         setSignals(this.initialState, this.state);
       },
       resetOne(key) {
         this.state[key].set(this.initialState[key] as never);
       },
+
+      onClick() {},
+      onHoldClick() {},
+      onDoubleClick() {},
     };
   }
 

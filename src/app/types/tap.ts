@@ -5,26 +5,18 @@ export type TapActionNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 
 export type TapSettingNames = 'Setting';
 
 export type TapLocation = 'pages' | 'actions' | 'settings' | 'manager';
-export type TapActive = TapAction | TapSetting | TapPage;
+export type TapExecutor = TapAction | TapSetting | TapPage;
 export type TapSignals = MapWritableSignal<TapState>;
 
-export type TapManager = TapFields<TapManagerName> & Tap;
-export type TapPage = TapFields<string> & Tap;
-export type TapAction = TapFields<TapActionNames> & Tap;
-export type TapSetting = TapFields<TapSettingNames> & Tap;
+export type TapManager = Tap<TapManagerName>;
+export type TapPage = Tap<string>;
+export type TapAction = Tap<TapActionNames>;
+export type TapSetting = Tap<TapSettingNames>;
 
 export type TapToolbarConfig = TapConfig<TapManagerName>;
 export type TapActionConfig = TapConfig<TapActionNames>;
 export type TapSettingConfig = TapConfig<TapSettingNames>;
 export type TapPageConfig = TapConfig<string>;
-
-export interface TapFields<N> {
-  name: N;
-  hasName(name: N): boolean;
-  onClick(): void;
-  onHoldClick(): void;
-  onDoubleClick(): void;
-}
 
 export interface TapState {
   icon: IconName;
@@ -42,13 +34,21 @@ export interface TapProps {
   options?: Partial<TapOptions>;
 }
 
-export interface Tap {
+export interface Tap<N> {
+  name: N;
   state: TapSignals;
   options: TapOptions;
   location: TapLocation;
   initialState: TapState;
+
+  hasName(test: N): boolean;
+
   reset(): void;
   resetOne(key: keyof TapState): void;
+
+  onClick(): void;
+  onHoldClick(): void;
+  onDoubleClick(): void;
 }
 
 export interface TapConfig<N> {

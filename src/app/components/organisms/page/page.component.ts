@@ -1,7 +1,7 @@
 import { Component, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@mat';
-import { ActiveComponent } from '@components';
+import { ActiveComponent } from '@components/molecules';
 import { RouterOutlet } from '@angular/router';
 import { StateService, UnitService } from '@services';
 
@@ -18,7 +18,7 @@ export class PageComponent {
   @Input() set Page(name: string) {
     this.name.set(name);
     this.ss.page.set(name);
-    this.ss.active.set('');
+    this.ss.executer.set('');
   }
 
   constructor(

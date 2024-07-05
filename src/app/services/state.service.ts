@@ -7,7 +7,7 @@ import { Exception } from '@types';
 export class StateService {
   readonly page = signal<string>('');
   readonly error = signal<Exception | null>(null);
-  readonly active = signal<string>('');
+  readonly executer = signal<string>('');
   readonly isFetching = signal<boolean>(false);
   readonly sidenav = signal<boolean>(false);
 }

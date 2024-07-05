@@ -17,7 +17,7 @@ export class HeaderComponent {
     return this.ss.page;
   }
 
-  get active(): WritableSignal<string> {
-    return this.ss.active;
+  get executer(): WritableSignal<string> {
+    return this.ss.executer;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SidenavComponent, HeaderComponent, ToolbarComponent } from '@components';
+import { SidenavComponent, ToolbarComponent } from '@components/molecules';
+import { HeaderComponent } from '@components/atoms';
 import { RouterOutlet } from '@angular/router';
 import { FetchService, UnitService } from '@services';
 

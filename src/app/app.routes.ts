@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
-import { ActiveComponent, PageComponent } from '@components';
 import { Param } from '@types';
 import { pageGuard } from '@guard';
+import { PageComponent } from '@components/organisms';
+import { ActiveComponent } from '@components/molecules';
 
 export const routes: Routes = [
   {

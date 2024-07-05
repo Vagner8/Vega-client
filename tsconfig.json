@@ -23,7 +23,9 @@
     "paths": {
       "@interceptors": ["app/interceptors/index.ts"],
       "@directives": ["app/directives/index.ts"],
-      "@components": ["app/components/index.ts"],
+      "@components/atoms": ["app/components/atoms/index.ts"],
+      "@components/molecules": ["app/components/molecules/index.ts"],
+      "@components/organisms": ["app/components/organisms/index.ts"],
       "@services": ["app/services/index.ts"],
       "@controls": ["app/controls/index.ts"],
       "@config": ["app/config/index.ts"],

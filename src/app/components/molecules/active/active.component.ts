@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ControlComponent } from '@components';
 import { StateService } from '@services';
 import { Param } from '@types';
+import { ControlComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-active',
@@ -16,6 +16,6 @@ export class ActiveComponent implements OnChanges {
   constructor(private ss: StateService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.ss.active.set(changes[Param.Active].currentValue);
+    this.ss.executer.set(changes[Param.Active].currentValue);
   }
 }
