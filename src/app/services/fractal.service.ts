@@ -7,7 +7,7 @@ import { MapService, TapService } from '@services';
 })
 export class FractalService {
   dto = signal<FractalDto | null>(null);
-  fractal!: Fractal;
+  fractal = signal<Fractal | null>(null);
 
   constructor(
     private ms: MapService,
@@ -16,7 +16,7 @@ export class FractalService {
 
   run = (dto: FractalDto): void => {
     this.dto.set(dto);
-    this.fractal = this.ms.toFractal(dto);
+    this.fractal.set(this.ms.toFractal(dto));
     this.ts.addPages(dto);
   };
 }

@@ -9,6 +9,7 @@ import {
   Fractal,
   FractalsDto,
   Fractals,
+  Indicator,
 } from '@types';
 
 @Injectable({
@@ -21,6 +22,16 @@ export class MapService {
       parentId,
       controls: this.toControls(controls),
       fractals: this.toFractals(fractals),
+
+      data(indicator) {
+        return this.controls[indicator].data.value;
+      },
+      childArr(name) {
+        return Object.values(this.fractals[name].fractals);
+      },
+      childSort(name) {
+        return this.fractals[name].controls[Indicator.Sort].data.value?.split(':');
+      },
     };
   };
 

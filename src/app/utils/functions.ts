@@ -23,7 +23,3 @@ export const ex = (error: HttpErrorResponse): Exception => {
   };
   return isException(error.error) ? error.error : ex;
 };
-
-export const sortIndicator = (controls: ControlsDto | undefined): string[] => {
-  return controls ? controls[Indicator.Sort].data.split(':') : [];
-};

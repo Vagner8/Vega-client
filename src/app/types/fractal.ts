@@ -5,6 +5,10 @@ export interface Fractal {
   parentId: string;
   fractals: Fractals;
   controls: Controls;
+
+  data(indicator: string): string | null;
+  childArr(name: string): Fractal[];
+  childSort(name: string): string[] | undefined;
 }
 
 export interface Fractals {

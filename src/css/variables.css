@@ -7,6 +7,7 @@
   --color-success: #28a745;
   --color-danger: #dc3545;
   --color-warning: #ffc107;
+  --color-secondary: #efefef;
 
   --toolbar-height: calc(var(--size-large) * 3);
   --toolbar-tap-width: 40px;

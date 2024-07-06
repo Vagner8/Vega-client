@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input, WritableSignal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@mat';
 import { ActiveComponent } from '@components/molecules';
 import { RouterOutlet } from '@angular/router';
 import { StateService, FractalService } from '@services';
-import { FractalDto } from '@types';
-import { sortIndicator } from '@utils';
+import { Exception, Fractal } from '@types';
+import { TableComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, MatTableModule, ActiveComponent],
+  imports: [RouterOutlet, ActiveComponent, TableComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +16,8 @@ import { sortIndicator } from '@utils';
 export class PageComponent {
   dataSource = computed(() => this.computedDataSource());
   displayedColumns = computed(() => this.computedDisplayedColumns());
+
+  selectedRows = new Set<Fractal>();
 
   @Input() set Page(name: string) {
     this.ss.page.set(name);
@@ -29,23 +29,33 @@ export class PageComponent {
     private fls: FractalService,
   ) {}
 
-  get dto(): WritableSignal<FractalDto | null> {
-    return this.fls.dto;
+  ngDoCheck() {
+    console.log('🚀 ~ clickedRows:', this.selectedRows);
   }
 
-  get isFetching() {
+  get fractal(): WritableSignal<Fractal | null> {
+    return this.fls.fractal;
+  }
+
+  get isFetching(): WritableSignal<boolean> {
     return this.ss.isFetching;
   }
 
-  get error() {
+  get error(): WritableSignal<Exception | null> {
     return this.ss.error;
   }
 
-  computedDataSource(): FractalDto[] {
-    return Object.values(this.dto()?.fractals[this.ss.page()].fractals || []);
+  onClickRow(row: Fractal) {
+    if (this.selectedRows.has(row)) this.selectedRows.delete(row);
+    else this.selectedRows.add(row);
+    if (this.selectedRows.size) this.ss.sidenav.set('open');
   }
 
-  computedDisplayedColumns(): string[] {
-    return sortIndicator(this.dto()?.fractals[this.ss.page()].controls);
+  private computedDataSource(): Fractal[] {
+    return this.fractal()?.childArr(this.ss.page()) || [];
+  }
+
+  private computedDisplayedColumns(): string[] {
+    return this.fractal()?.childSort(this.ss.page()) || [];
   }
 }
