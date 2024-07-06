@@ -15,7 +15,7 @@ export class TableComponent {
   //   return Boolean(this.matrix.data.size);
   // }
 
-  // cell(displayedColumn: string, unit: Unit) {
+  // cell(displayedColumn: string, unit: Fractal) {
   //   return unit.controls.find((c) => c.name.value === displayedColumn)?.data
   //     .value;
   // }
@@ -25,6 +25,6 @@ export class TableComponent {
   //   if (!matrix) return [];
   //   this.displayedColumns =
   //     this.control.find('Sort', matrix.controls)?.data.value?.split(':') || [];
-  //   return matrix.units;
+  //   return matrix.fractals;
   // }
 }

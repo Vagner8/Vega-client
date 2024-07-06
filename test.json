@@ -8,14 +8,14 @@
           "indicator": "Sort",
           "data": "Users:Products"
       },
-      "Unit": {
+      "Fractal": {
           "id": "f136c1d9-228c-48be-a5c7-b2a484b922c2",
           "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
-          "indicator": "Unit",
+          "indicator": "Fractal",
           "data": "Vega"
       }
   },
-  "units": {
+  "fractals": {
       "Products": {
           "id": "502ac291-080b-4419-adad-47ef43f35880",
           "parentId": "3e8a1ec8-8fec-4dbb-917b-040d4b951e67",
@@ -26,10 +26,10 @@
                   "indicator": "Sort",
                   "data": "Price:Name"
               },
-              "Unit": {
+              "Fractal": {
                   "id": "ed6d9b64-3268-4c77-bd44-8b6b7ed93671",
                   "parentId": "502ac291-080b-4419-adad-47ef43f35880",
-                  "indicator": "Unit",
+                  "indicator": "Fractal",
                   "data": "Products"
               },
               "Icon": {
@@ -39,7 +39,7 @@
                   "data": "widgets"
               }
           },
-          "units": {
+          "fractals": {
               "0": {
                   "id": "a5d66cfd-1436-4443-8951-7332e8ac056a",
                   "parentId": "502ac291-080b-4419-adad-47ef43f35880",
@@ -57,7 +57,7 @@
                           "data": "Laptop"
                       }
                   },
-                  "units": null
+                  "fractals": null
               },
               "1": {
                   "id": "94129d65-6ea7-4761-a2c4-d1c04c65448d",
@@ -76,7 +76,7 @@
                           "data": "Phone"
                       }
                   },
-                  "units": null
+                  "fractals": null
               }
           }
       },
@@ -96,14 +96,14 @@
                   "indicator": "Icon",
                   "data": "group"
               },
-              "Unit": {
+              "Fractal": {
                   "id": "6eabc2ca-1b60-406a-8cf7-f0a7ca860153",
                   "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
-                  "indicator": "Unit",
+                  "indicator": "Fractal",
                   "data": "Users"
               }
           },
-          "units": {
+          "fractals": {
               "0": {
                   "id": "e3f2c222-5fea-4857-bcb8-0891ab101c81",
                   "parentId": "f737f3ac-fda9-4891-a93f-6ee728e063d4",
@@ -121,7 +121,7 @@
                           "data": "dima@mail.com"
                       }
                   },
-                  "units": null
+                  "fractals": null
               },
               "1": {
                   "id": "a5131539-e6ff-4c15-8b8d-7d8e4c333227",
@@ -140,7 +140,7 @@
                           "data": "Anna"
                       }
                   },
-                  "units": null
+                  "fractals": null
               }
           }
       }

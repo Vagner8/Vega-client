@@ -57,9 +57,9 @@ export class TapService {
     };
   };
 
-  addPages({ units }: T.UnitDto): void {
-    for (const name in units) {
-      const icon = this.cs.icon(units[name].controls);
+  addPages({ fractals }: T.FractalDto): void {
+    for (const name in fractals) {
+      const icon = this.cs.icon(fractals[name].controls);
       const page = this.setPages({ name, props: { state: { icon } } });
       this.pages = [page, ...this.pages];
     }

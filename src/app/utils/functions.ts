@@ -1,6 +1,6 @@
 import { WritableSignal } from '@angular/core';
 import { isException, isKeyof } from './guards';
-import { Exception } from '@types';
+import { ControlsDto, Exception, Indicator } from '@types';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export const setSignals = <T extends object, WS>(
@@ -22,4 +22,8 @@ export const ex = (error: HttpErrorResponse): Exception => {
     instance: 'Node',
   };
   return isException(error.error) ? error.error : ex;
+};
+
+export const sortIndicator = (controls: ControlsDto | undefined): string[] => {
+  return controls ? controls[Indicator.Sort].data.split(':') : [];
 };

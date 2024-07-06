@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, WritableSignal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@mat';
 import { ActiveComponent } from '@components/molecules';
 import { RouterOutlet } from '@angular/router';
-import { StateService, UnitService } from '@services';
+import { StateService, FractalService } from '@services';
+import { FractalDto } from '@types';
+import { sortIndicator } from '@utils';
 
 @Component({
   selector: 'app-page',
@@ -14,19 +16,21 @@ import { StateService, UnitService } from '@services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent {
+  dataSource = computed(() => this.computedDataSource());
+  displayedColumns = computed(() => this.computedDisplayedColumns());
+
   @Input() set Page(name: string) {
-    // this.name.set(name);
     this.ss.page.set(name);
     this.ss.executer.set('');
   }
 
   constructor(
     private ss: StateService,
-    private us: UnitService,
+    private fls: FractalService,
   ) {}
 
-  ngAfterContentChecked() {
-    console.log('🚀 ~ us:', this.us.dto);
+  get dto(): WritableSignal<FractalDto | null> {
+    return this.fls.dto;
   }
 
   get isFetching() {
@@ -35,5 +39,13 @@ export class PageComponent {
 
   get error() {
     return this.ss.error;
+  }
+
+  computedDataSource(): FractalDto[] {
+    return Object.values(this.dto()?.fractals[this.ss.page()].fractals || []);
+  }
+
+  computedDisplayedColumns(): string[] {
+    return sortIndicator(this.dto()?.fractals[this.ss.page()].controls);
   }
 }

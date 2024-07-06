@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ControlDto, UnitDto } from '@types';
+import { ControlDto, FractalDto } from '@types';
 import { Observable } from 'rxjs';
 import { StateService } from './state.service';
 
@@ -8,9 +8,9 @@ import { StateService } from './state.service';
   providedIn: 'root',
 })
 export class FetchService {
-  private id = '3e8a1ec8-8fec-4dbb-917b-040d4b951e67';
+  private id = '927d3af1-3053-4bb4-84eb-258b74c2052a';
   private api = 'https://localhost:7002/api/';
-  private unitApi = `${this.api}unit`;
+  private fractalApi = `${this.api}fractal`;
   private controlApi = `${this.api}control`;
 
   constructor(
@@ -34,18 +34,18 @@ export class FetchService {
     };
   }
 
-  get unit() {
+  get fractal() {
     return {
-      get: (): Observable<UnitDto> => {
-        return this.http.get<UnitDto>(`${this.unitApi}?id=${this.id}`);
+      get: (): Observable<FractalDto> => {
+        return this.http.get<FractalDto>(`${this.fractalApi}?id=${this.id}`);
       },
 
-      add: (unit: UnitDto): Observable<UnitDto> => {
-        return this.http.post<UnitDto>(this.unitApi, unit);
+      add: (fractal: FractalDto): Observable<FractalDto> => {
+        return this.http.post<FractalDto>(this.fractalApi, fractal);
       },
 
-      delete: (id: string): Observable<UnitDto> => {
-        return this.http.delete<UnitDto>(`${this.unitApi}?id=${id}`);
+      delete: (id: string): Observable<FractalDto> => {
+        return this.http.delete<FractalDto>(`${this.fractalApi}?id=${id}`);
       },
     };
   }

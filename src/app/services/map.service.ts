@@ -1,27 +1,33 @@
 import { Injectable, signal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Control, ControlDto, Controls, ControlsDto, UnitDto, Unit, UnitsDto, Units } from '@types';
-import { TapService } from './tap.service';
+import {
+  Control,
+  ControlDto,
+  Controls,
+  ControlsDto,
+  FractalDto,
+  Fractal,
+  FractalsDto,
+  Fractals,
+} from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private ts: TapService) {}
-
-  toUnit = ({ id, parentId, controls, units }: UnitDto): Unit => {
+  toFractal = ({ id, parentId, controls, fractals }: FractalDto): Fractal => {
     return {
       id,
       parentId,
       controls: this.toControls(controls),
-      units: this.toUnits(units),
+      fractals: this.toFractals(fractals),
     };
   };
 
-  toUnits(units: UnitsDto): Units {
-    const dto: Units = {};
-    for (const key in units) {
-      dto[key] = this.toUnit(units[key]);
+  toFractals(fractals: FractalsDto): Fractals {
+    const dto: Fractals = {};
+    for (const key in fractals) {
+      dto[key] = this.toFractal(fractals[key]);
     }
     return dto;
   }
@@ -44,19 +50,19 @@ export class MapService {
     };
   }
 
-  toUnitDto({ id, parentId, controls, units }: Unit): UnitDto {
+  toFractalDto({ id, parentId, controls, fractals }: Fractal): FractalDto {
     return {
       id,
       parentId,
       controls: this.toControlsDto(controls),
-      units: this.toUnitsDto(units),
+      fractals: this.toFractalsDto(fractals),
     };
   }
 
-  toUnitsDto(units: Units): UnitsDto {
-    const dto: UnitsDto = {};
-    for (const key in units) {
-      dto[key] = this.toUnitDto(units[key]);
+  toFractalsDto(fractals: Fractals): FractalsDto {
+    const dto: FractalsDto = {};
+    for (const key in fractals) {
+      dto[key] = this.toFractalDto(fractals[key]);
     }
     return dto;
   }

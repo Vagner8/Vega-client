@@ -1,6 +1,15 @@
 import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+export type Indicators = `${Indicator}`;
+
+export enum Indicator {
+  Fractal = 'Fractal',
+  Child = 'Name',
+  Icon = 'Icon',
+  Sort = 'Sort',
+}
+
 export interface ControlSignals {
   disabled: WritableSignal<boolean>;
 }

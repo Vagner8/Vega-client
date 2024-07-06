@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavComponent, ToolbarComponent } from '@components/molecules';
 import { HeaderComponent } from '@components/atoms';
 import { RouterOutlet } from '@angular/router';
-import { FetchService, UnitService } from '@services';
+import { FetchService, FractalService } from '@services';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +13,11 @@ import { FetchService, UnitService } from '@services';
 })
 export class AppComponent implements OnInit {
   constructor(
-    private us: UnitService,
     private fs: FetchService,
+    private fls: FractalService,
   ) {}
 
   ngOnInit(): void {
-    this.fs.unit.get().subscribe(this.us.run);
+    this.fs.fractal.get().subscribe(this.fls.run);
   }
 }

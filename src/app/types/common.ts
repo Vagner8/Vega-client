@@ -19,20 +19,10 @@ export enum Param {
   Active = 'Active',
 }
 
-export enum PagesDefault {
+export enum PageName {
   Home = 'Home',
-}
-
-export enum Pages {
   Users = 'Users',
   Products = 'Products',
-}
-
-export enum Indicator {
-  Unit = 'Unit',
-  Child = 'Name',
-  Icon = 'Icon',
-  Sort = 'Sort',
 }
 
 export interface Exception {
