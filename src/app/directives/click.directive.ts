@@ -1,12 +1,12 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { Tap } from '@types';
+import { ClickMaster } from '@types';
 
 @Directive({
   standalone: true,
   selector: '[appClick]',
 })
 export class ClickDirective {
-  @Input({ required: true }) tap!: Tap<string>;
+  @Input({ required: true }) master!: ClickMaster;
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -27,7 +27,7 @@ export class ClickDirective {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.tap.onHoldClick();
+      this.master.onHoldClick();
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
@@ -57,7 +57,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.tap.onClick();
+          this.master.onClick();
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -65,7 +65,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.tap.onDoubleClick();
+      this.master.onDoubleClick();
       this.reset();
     }
   }

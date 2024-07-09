@@ -38,3 +38,9 @@ export interface SnackBarConfig {
   panelClass: string;
   announcementMessage: string;
 }
+
+export interface ClickMaster {
+  onClick(): void;
+  onHoldClick(): void;
+  onDoubleClick(): void;
+}

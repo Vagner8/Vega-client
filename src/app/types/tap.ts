@@ -1,4 +1,4 @@
-import { IconName, MapWritableSignal, Visibility } from '@types';
+import { ClickMaster, IconName, MapWritableSignal, Visibility } from '@types';
 
 export type TapManagerName = 'manager';
 export type TapActionNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
@@ -34,7 +34,7 @@ export interface TapProps {
   options?: Partial<TapOptions>;
 }
 
-export interface Tap<N> {
+export interface Tap<N> extends ClickMaster {
   name: N;
   state: TapSignals;
   options: TapOptions;
@@ -45,10 +45,6 @@ export interface Tap<N> {
 
   reset(): void;
   resetOne(key: keyof TapState): void;
-
-  onClick(): void;
-  onHoldClick(): void;
-  onDoubleClick(): void;
 }
 
 export interface TapConfig<N> {

@@ -19,6 +19,7 @@ import { TapService } from './tap.service';
 export class FractalService {
   dto = signal<FractalDto | null>(null);
   fractal = signal<Fractal | null>(null);
+  selected = signal<Fractal[]>([]);
 
   constructor(private ts: TapService) {}
 
@@ -29,7 +30,7 @@ export class FractalService {
   };
 
   private toFractal = ({ id, parentId, controls, fractals }: FractalDto): Fractal => {
-    return {
+    const fractal: Fractal = {
       id,
       parentId,
       controls: this.toControls(controls),
@@ -43,7 +44,14 @@ export class FractalService {
       childSort(name) {
         return this.fractals[name].controls[Indicator.Sort].data.value?.split(':');
       },
+      onClick: () =>
+        this.selected.update((state) =>
+          state.includes(fractal) ? state.filter((f) => f !== fractal) : [...state, fractal],
+        ),
+      onHoldClick: () => {},
+      onDoubleClick: () => {},
     };
+    return fractal;
   };
 
   private toFractals(fractals: FractalsDto): Fractals {
