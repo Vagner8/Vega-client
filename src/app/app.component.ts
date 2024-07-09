@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fs.fractal.get().subscribe(this.fls.run);
+    this.fs.fractal.get().subscribe(this.fls.onInit);
   }
 }

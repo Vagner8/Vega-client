@@ -1,6 +1,6 @@
 import { WritableSignal } from '@angular/core';
 import { isException, isKeyof } from './guards';
-import { ControlsDto, Exception, Indicator } from '@types';
+import { Exception } from '@types';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export const setSignals = <T extends object, WS>(

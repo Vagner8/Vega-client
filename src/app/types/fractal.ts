@@ -1,14 +1,16 @@
 import { Controls, ControlsDto } from '@types';
 
-export interface Fractal {
+export interface FractalFields {
+  data(indicator: string): string | null;
+  childArr(name: string): Fractal[];
+  childSort(name: string): string[] | undefined;
+}
+
+export interface Fractal extends FractalFields {
   id?: string;
   parentId: string;
   fractals: Fractals;
   controls: Controls;
-
-  data(indicator: string): string | null;
-  childArr(name: string): Fractal[];
-  childSort(name: string): string[] | undefined;
 }
 
 export interface Fractals {

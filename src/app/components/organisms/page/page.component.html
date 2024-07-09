@@ -1,5 +1,4 @@
-@if (!isFetching() && fractal()) {
-<app-table [dataSource]="dataSource()" [displayedColumns]="displayedColumns()"
-  [selectedRows]="selectedRows"></app-table>
-<router-outlet></router-outlet>
+@if (!ss.isFetching()) {
+  <app-table [fractal]="fls.fractal()"></app-table>
+  <router-outlet></router-outlet>
 }
