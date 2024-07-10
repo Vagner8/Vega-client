@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ClickDirective } from '@directives';
+import { ClickDirective, FractalDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { FractalService, StateService } from '@services';
 import { Fractal } from '@types';
@@ -7,7 +7,7 @@ import { Fractal } from '@types';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, ClickDirective],
+  imports: [MatTableModule, ClickDirective, FractalDirective],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })

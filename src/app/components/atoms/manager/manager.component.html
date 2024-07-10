@@ -1,4 +1,4 @@
-<button mat-mini-fab [disabled]="isFetching()" [attr.aria-label]="tap.name" appClick [master]="tap">
+<button mat-mini-fab [disabled]="isFetching()" [attr.aria-label]="tap.name" appClick [entity]="tap">
   @if (isFetching()) {
   <mat-spinner color="accent" class="spinner" diameter="40"></mat-spinner>
   }

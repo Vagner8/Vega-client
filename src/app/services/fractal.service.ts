@@ -12,6 +12,7 @@ import {
   Indicator,
 } from '@types';
 import { TapService } from './tap.service';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,10 @@ export class FractalService {
   fractal = signal<Fractal | null>(null);
   selected = signal<Fractal[]>([]);
 
-  constructor(private ts: TapService) {}
+  constructor(
+    private ts: TapService,
+    private ss: StateService,
+  ) {}
 
   onInit = (dto: FractalDto) => {
     this.dto.set(dto);
@@ -44,10 +48,13 @@ export class FractalService {
       childSort(name) {
         return this.fractals[name].controls[Indicator.Sort].data.value?.split(':');
       },
-      onClick: () =>
+      onClick: () => {
         this.selected.update((state) =>
           state.includes(fractal) ? state.filter((f) => f !== fractal) : [...state, fractal],
-        ),
+        );
+        this.ts.executors$.next(this.ts.actions);
+        this.ss.sidenav.set('open');
+      },
       onHoldClick: () => {},
       onDoubleClick: () => {},
     };

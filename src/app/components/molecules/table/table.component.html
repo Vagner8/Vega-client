@@ -8,8 +8,8 @@
   </ng-container>
   }
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row [class.row-is-clicked]="fls.selected().includes(row)"
-    *matRowDef="let row; columns: displayedColumns" appClick [master]="row"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" appFractal appClick [fractal]="row" [entity]="row"
+    [selected]="fls.selected()"></tr>
 </table>
 }
 }

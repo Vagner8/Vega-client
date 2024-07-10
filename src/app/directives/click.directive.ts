@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input, output } from '@angular/core';
 import { ClickMaster } from '@types';
 
 @Directive({
@@ -6,7 +6,10 @@ import { ClickMaster } from '@types';
   selector: '[appClick]',
 })
 export class ClickDirective {
-  @Input({ required: true }) master!: ClickMaster;
+  @Input({ required: true }) entity!: ClickMaster;
+  onClick = output();
+  onHoldClick = output();
+  onDoubleClick = output();
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -14,20 +17,20 @@ export class ClickDirective {
   private isHoldEvent = false;
 
   private static readonly HOLD_DURATION = 500;
-  private static readonly DOUBLE_CLICK_DELAY = 300;
+  private static readonly DOUBLE_CLICK_DELAY = 200;
 
   @HostListener('contextmenu', ['$event'])
-  onContextMenu(event: MouseEvent): void {
+  onContextMenuHostListener(event: MouseEvent): void {
     event.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
   @HostListener('touchstart.passive', ['$event'])
-  onMouseDown(): void {
+  onMouseDownHostListener(): void {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.master.onHoldClick();
+      this.onHoldClick.emit();
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
@@ -36,14 +39,14 @@ export class ClickDirective {
   @HostListener('mouseup')
   @HostListener('touchend', ['$event'])
   @HostListener('touchcancel')
-  onMouseUp(): void {
+  onMouseUpHostListener(): void {
     if (this.holdTimeout) {
       clearTimeout(this.holdTimeout as number);
     }
   }
 
   @HostListener('click', ['$event'])
-  onClick(): void {
+  onClickHostListener(): void {
     if (this.holdTimeout) {
       clearTimeout(this.holdTimeout as number);
     }
@@ -57,7 +60,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.master.onClick();
+          this.onClick.emit();
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -65,7 +68,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.master.onDoubleClick();
+      this.onDoubleClick.emit();
       this.reset();
     }
   }
