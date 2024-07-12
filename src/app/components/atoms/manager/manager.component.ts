@@ -1,30 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, WritableSignal } from '@angular/core';
-import { MatButtonModule, MatIcon, MatProgressSpinner } from '@mat';
-import { StateService, TapService } from '@services';
-import { TapManager } from '@types';
+import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
+import { MatProgressSpinner } from '@mat';
+import { StateService } from '@services';
+import { taps } from '@utils';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [CommonModule, MatIcon, MatProgressSpinner, MatButtonModule, ClickDirective],
+  imports: [MatIcon, MatButtonModule, MatProgressSpinner, ClickDirective],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css',
 })
-export class ManagerComponent implements OnInit {
-  tap!: TapManager;
+export class ManagerComponent {
+  constructor(public ss: StateService) {}
 
-  constructor(
-    private ts: TapService,
-    private ss: StateService,
-  ) {}
-
-  ngOnInit(): void {
-    this.tap = this.ts.manager;
+  onClick() {
+    this.ss.sidenav.set('open');
+    this.ss.taps.set(taps.Pages);
   }
 
-  get isFetching(): WritableSignal<boolean> {
-    return this.ss.isFetching;
+  onHoldClick() {
+    this.ss.sidenav.set('open');
+    this.ss.taps.set(taps.Settings);
+  }
+
+  onDoubleClick() {
+    this.ss.sidenav.set('close');
   }
 }

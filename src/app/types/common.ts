@@ -1,10 +1,6 @@
-import { WritableSignal } from '@angular/core';
-
+export type ClickType = 'Click' | 'HoldClick' | 'DoubleClick';
 export type SidenavState = 'open' | 'close';
 export type Visibility = 'hidden' | 'visible';
-export type MapWritableSignal<T> = {
-  [P in keyof T]: WritableSignal<T[P]>;
-};
 
 export type SuccessMessages = 'Good to go!';
 
@@ -16,7 +12,6 @@ export enum InputType {
 
 export enum Param {
   Page = 'Page',
-  Active = 'Active',
 }
 
 export enum PageName {
@@ -37,10 +32,4 @@ export interface SnackBarConfig {
   duration: number;
   panelClass: string;
   announcementMessage: string;
-}
-
-export interface ClickMaster {
-  onClick(): void;
-  onHoldClick(): void;
-  onDoubleClick(): void;
 }

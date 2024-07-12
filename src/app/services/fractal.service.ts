@@ -9,9 +9,7 @@ import {
   Fractal,
   FractalsDto,
   Fractals,
-  Indicator,
 } from '@types';
-import { TapService } from './tap.service';
 import { StateService } from './state.service';
 
 @Injectable({
@@ -22,43 +20,20 @@ export class FractalService {
   fractal = signal<Fractal | null>(null);
   selected = signal<Fractal[]>([]);
 
-  constructor(
-    private ts: TapService,
-    private ss: StateService,
-  ) {}
+  constructor(private ss: StateService) {}
 
   onInit = (dto: FractalDto) => {
     this.dto.set(dto);
     this.fractal.set(this.toFractal(dto));
-    this.ts.addPages(dto);
   };
 
   private toFractal = ({ id, parentId, controls, fractals }: FractalDto): Fractal => {
-    const fractal: Fractal = {
+    return {
       id,
       parentId,
       controls: this.toControls(controls),
       fractals: this.toFractals(fractals),
-      data(indicator) {
-        return this.controls[indicator].data.value;
-      },
-      childArr(name) {
-        return Object.values(this.fractals[name].fractals);
-      },
-      childSort(name) {
-        return this.fractals[name].controls[Indicator.Sort].data.value?.split(':');
-      },
-      onClick: () => {
-        this.selected.update((state) =>
-          state.includes(fractal) ? state.filter((f) => f !== fractal) : [...state, fractal],
-        );
-        this.ts.executors$.next(this.ts.actions);
-        this.ss.sidenav.set('open');
-      },
-      onHoldClick: () => {},
-      onDoubleClick: () => {},
     };
-    return fractal;
   };
 
   private toFractals(fractals: FractalsDto): Fractals {

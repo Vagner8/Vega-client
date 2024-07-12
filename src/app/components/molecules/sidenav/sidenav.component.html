@@ -1,8 +1,9 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
-  <mat-drawer [opened]="state() === 'open'" [disableClose]="false" class="mat-drawer-app-sidenav" mode="side" position="end">
+  <mat-drawer [opened]="ss.sidenav() === 'open'" [disableClose]="false" class="mat-drawer-app-sidenav" mode="side"
+    position="end">
     <mat-list class="mat-list-app-sidenav">
-      @for (tap of executors$ | async; track tap.name) {
-      <app-executor [tap]="tap"></app-executor>
+      @for (tap of ss.taps(); track tap.name) {
+        <app-tap [config]="tap"></app-tap>
       }
     </mat-list>
   </mat-drawer>

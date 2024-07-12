@@ -1,29 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TapComponent } from '@components/atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { StateService, TapService } from '@services';
-import { ExecutorComponent } from '@components/atoms';
-import { SidenavState } from '@types';
+import { StateService } from '@services';
+import { taps } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatListModule, MatSidenavModule, ExecutorComponent],
+  imports: [CommonModule, RouterOutlet, MatListModule, MatSidenavModule, TapComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent {
-  constructor(
-    private ss: StateService,
-    private ts: TapService,
-  ) {}
+  taps = taps;
 
-  get state(): WritableSignal<SidenavState> {
-    return this.ss.sidenav;
-  }
-
-  get executors$() {
-    return this.ts.executors$;
-  }
+  constructor(public ss: StateService) {}
 }

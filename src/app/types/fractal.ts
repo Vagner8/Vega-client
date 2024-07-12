@@ -1,12 +1,6 @@
-import { ClickMaster, Controls, ControlsDto } from '@types';
+import { Controls, ControlsDto } from '@types';
 
-export interface FractalFields extends ClickMaster {
-  data(indicator: string): string | null;
-  childArr(name: string): Fractal[];
-  childSort(name: string): string[] | undefined;
-}
-
-export interface Fractal extends FractalFields {
+export interface Fractal {
   id?: string;
   parentId: string;
   fractals: Fractals;

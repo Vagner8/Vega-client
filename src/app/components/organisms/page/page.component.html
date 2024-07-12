@@ -1,4 +1,6 @@
 @if (!ss.isFetching()) {
-  <app-table [fractal]="fls.fractal()"></app-table>
+  @if (fls.dto(); as dto) {
+    <app-fractal [data]="dto.fractals[name]"></app-fractal>
+  }
   <router-outlet></router-outlet>
 }

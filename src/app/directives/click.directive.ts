@@ -1,15 +1,16 @@
-import { Directive, HostListener, Input, output } from '@angular/core';
-import { ClickMaster } from '@types';
+import { Directive, HostListener, output } from '@angular/core';
+import { StateService } from '@services';
 
 @Directive({
   standalone: true,
   selector: '[appClick]',
 })
 export class ClickDirective {
-  @Input({ required: true }) entity!: ClickMaster;
-  onClick = output();
-  onHoldClick = output();
-  onDoubleClick = output();
+  onClick = output<Event>();
+  onHoldClick = output<Event>();
+  onDoubleClick = output<Event>();
+
+  constructor(private ss: StateService) {}
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -26,11 +27,11 @@ export class ClickDirective {
 
   @HostListener('mousedown', ['$event'])
   @HostListener('touchstart.passive', ['$event'])
-  onMouseDownHostListener(): void {
+  onMouseDownHostListener(event: Event): void {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.onHoldClick.emit();
+      this.onHoldClick.emit(event);
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
@@ -46,7 +47,7 @@ export class ClickDirective {
   }
 
   @HostListener('click', ['$event'])
-  onClickHostListener(): void {
+  onClickHostListener(event: Event): void {
     if (this.holdTimeout) {
       clearTimeout(this.holdTimeout as number);
     }
@@ -60,7 +61,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.onClick.emit();
+          this.onClick.emit(event);
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -68,7 +69,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.onDoubleClick.emit();
+      this.onDoubleClick.emit(event);
       this.reset();
     }
   }

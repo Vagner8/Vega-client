@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActiveComponent } from './active.component';
+import { TapComponent } from './tap.component';
 
-describe('ActiveComponent', () => {
-  let component: ActiveComponent;
-  let fixture: ComponentFixture<ActiveComponent>;
+describe('TapComponent', () => {
+  let component: TapComponent;
+  let fixture: ComponentFixture<TapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActiveComponent],
+      imports: [TapComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ActiveComponent);
+    fixture = TestBed.createComponent(TapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
