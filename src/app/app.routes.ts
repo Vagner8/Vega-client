@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { PageName, Param } from '@types';
+import { Param } from '@types';
 import { pageGuard } from '@guard';
 import { PageComponent } from '@components/organisms';
 
@@ -9,5 +9,5 @@ export const routes: Routes = [
     canActivate: [pageGuard],
     component: PageComponent,
   },
-  { path: '**', redirectTo: PageName.Home },
+  { path: '**', redirectTo: 'Home' },
 ];

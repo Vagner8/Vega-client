@@ -1,6 +1,8 @@
 @if (!ss.isFetching()) {
-  @if (fls.dto(); as dto) {
-    <app-fractal [data]="dto.fractals[name]"></app-fractal>
+  @if (ss.page() !== 'Home' && fls.dto(); as dto) {
+    <app-fractal [fractal]="dto.fractals[ss.page()]" [page]="ss.page()"></app-fractal>
   }
-  <router-outlet></router-outlet>
+  @else {
+    <h1>Home</h1>
+  }
 }

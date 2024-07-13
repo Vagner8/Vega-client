@@ -5,7 +5,6 @@ export type Indicators = `${Indicator}`;
 
 export enum Indicator {
   Fractal = 'Fractal',
-  Child = 'Name',
   Icon = 'Icon',
   Sort = 'Sort',
 }

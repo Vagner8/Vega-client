@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { StateService } from '@services';
-import { taps } from '@utils';
+import { StateService, TapService } from '@services';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,7 +13,8 @@ import { taps } from '@utils';
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent {
-  taps = taps;
-
-  constructor(public ss: StateService) {}
+  constructor(
+    public ts: TapService,
+    public ss: StateService,
+  ) {}
 }

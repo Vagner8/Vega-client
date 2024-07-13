@@ -3,8 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ClickDirective } from '@directives';
-import { StateService } from '@services';
-import { TapConfig } from '@types';
+import { TapConfig, TapNames } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -16,13 +15,14 @@ import { TapConfig } from '@types';
 export class TapComponent {
   @Input() config!: TapConfig;
 
-  constructor(
-    private ss: StateService,
-    private router: Router,
-  ) {}
+  constructor(private router: Router) {}
 
   onClick() {
     const { navigation, name } = this.config;
-    navigation && this.router.navigate([name]);
+    navigation && this.navigate(name);
+  }
+
+  private navigate(name: TapNames) {
+    this.router.navigate([name]);
   }
 }

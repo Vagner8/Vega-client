@@ -1,16 +1,10 @@
 import { IconName } from '@types';
 
-export type TapLocation = 'Pages' | 'Actions' | 'Settings';
-export type TapNames =
-  | 'Manager'
-  | 'Add'
-  | 'Update'
-  | 'Remove'
-  | 'Send'
-  | 'Confirm'
-  | 'Cancel'
-  | 'Home'
-  | 'Setting';
+export type TapLocation = 'Settings' | 'Pages' | 'Actions';
+export type TapPagesNames = 'Home' | 'Users' | 'Products';
+export type TapActionsNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
+export type TapSettingsNames = 'Settings';
+export type TapNames = TapPagesNames | TapActionsNames | TapSettingsNames;
 
 export interface TapInfo {
   name: TapNames;

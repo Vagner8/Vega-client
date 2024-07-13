@@ -1,23 +1,16 @@
-export type ClickType = 'Click' | 'HoldClick' | 'DoubleClick';
-export type SidenavState = 'open' | 'close';
-export type Visibility = 'hidden' | 'visible';
+export type SidenavState = 'Open' | 'Close';
+export type Visibility = 'Hidden' | 'Visible';
 
 export type SuccessMessages = 'Good to go!';
 
 export enum InputType {
-  Text = 'text',
-  Email = 'email',
-  Password = 'password',
+  Text = 'Text',
+  Email = 'Email',
+  Password = 'Password',
 }
 
 export enum Param {
   Page = 'Page',
-}
-
-export enum PageName {
-  Home = 'Home',
-  Users = 'Users',
-  Products = 'Products',
 }
 
 export interface Exception {

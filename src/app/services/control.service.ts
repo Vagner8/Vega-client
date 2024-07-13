@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ControlsDto, IconName, Indicator } from '@types';
+import { ControlsDto, IconName, Indicator, TapPagesNames } from '@types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,11 @@ export class ControlService {
     return controls[Indicator.Icon].data as IconName;
   }
 
-  parseSort(value: string): string[] {
-    return value.split(':');
+  pageName(controls: ControlsDto): TapPagesNames {
+    return controls[Indicator.Fractal].data as TapPagesNames;
+  }
+
+  sort(controls: ControlsDto): string[] {
+    return controls[Indicator.Sort].data.split(':');
   }
 }

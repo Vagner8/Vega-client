@@ -3,8 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { StateService } from '@services';
-import { taps } from '@utils';
+import { StateService, TapService } from '@services';
 
 @Component({
   selector: 'app-manager',
@@ -14,19 +13,22 @@ import { taps } from '@utils';
   styleUrl: './manager.component.css',
 })
 export class ManagerComponent {
-  constructor(public ss: StateService) {}
+  constructor(
+    public ss: StateService,
+    private ts: TapService,
+  ) {}
 
   onClick() {
-    this.ss.sidenav.set('open');
-    this.ss.taps.set(taps.Pages);
+    this.ss.sidenav.set('Open');
+    this.ts.setView('Pages');
   }
 
   onHoldClick() {
-    this.ss.sidenav.set('open');
-    this.ss.taps.set(taps.Settings);
+    this.ss.sidenav.set('Open');
+    this.ts.setView('Settings');
   }
 
   onDoubleClick() {
-    this.ss.sidenav.set('close');
+    this.ss.sidenav.set('Close');
   }
 }

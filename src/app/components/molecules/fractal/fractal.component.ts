@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { FractalDto, Indicator } from '@types';
+import { ControlService, FractalService, StateService } from '@services';
+import { FractalDto } from '@types';
 
 @Component({
   selector: 'app-fractal',
@@ -10,13 +11,28 @@ import { FractalDto, Indicator } from '@types';
   styleUrl: './fractal.component.css',
 })
 export class FractalComponent {
-  @Input() data!: FractalDto;
+  @Input() fractal!: FractalDto;
+  @Input() page!: string;
 
-  get displayedColumns(): string[] {
-    return this.data.controls[Indicator.Sort].data.split(':');
-  }
+  dataSource = computed(() => {
+    console.log(
+      '🚀 ~ Object.values(this.dto.fractals[this.page].fractals):',
+      Object.values(this.fractal.fractals),
+    );
+    return Object.values(this.fractal.fractals);
+  });
+  displayedColumns = computed(() => {
+    console.log(
+      '🚀 ~ this.cs.sort(this.dto.fractals[this.page].controls):',
+      this.cs.sort(this.fractal.controls),
+    );
 
-  get dataSource(): FractalDto[] {
-    return Object.values(this.data.fractals);
-  }
+    return this.cs.sort(this.fractal.controls);
+  });
+
+  constructor(
+    public fls: FractalService,
+    private cs: ControlService,
+    private ss: StateService,
+  ) {}
 }
