@@ -1,38 +1,44 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, Input, computed, signal } from '@angular/core';
+import { ControlComponent } from '@components/atoms';
+import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { ControlService, FractalService, StateService } from '@services';
-import { FractalDto } from '@types';
+import { ControlService, FractalService, SidenavService, TapService } from '@services';
+import { ClickType, ControlDto, FractalDto } from '@types';
 
 @Component({
   selector: 'app-fractal',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, ClickDirective, ControlComponent],
   templateUrl: './fractal.component.html',
   styleUrl: './fractal.component.css',
 })
 export class FractalComponent {
-  @Input() fractal!: FractalDto;
-  @Input() page!: string;
+  @Input({ required: true }) dto!: FractalDto;
 
-  dataSource = computed(() => {
-    console.log(
-      '🚀 ~ Object.values(this.dto.fractals[this.page].fractals):',
-      Object.values(this.fractal.fractals),
-    );
-    return Object.values(this.fractal.fractals);
-  });
-  displayedColumns = computed(() => {
-    console.log(
-      '🚀 ~ this.cs.sort(this.dto.fractals[this.page].controls):',
-      this.cs.sort(this.fractal.controls),
-    );
-
-    return this.cs.sort(this.fractal.controls);
-  });
+  sort = computed<string[]>(() => this.cs.sort(this.fractal().controls));
+  click = signal<ClickType | null>(null);
+  fractal = computed<FractalDto>(() => this.dto.fractals[this.fls.name()]);
+  fractals = computed<FractalDto[]>(() => Object.values(this.fractal().fractals));
+  controls = computed<ControlDto[]>(() => []);
 
   constructor(
-    public fls: FractalService,
     private cs: ControlService,
-    private ss: StateService,
+    private ts: TapService,
+    public fls: FractalService,
+    public svs: SidenavService,
   ) {}
+
+  onClick(dto: FractalDto): void {
+    if (this.fls.has(dto)) {
+      this.fls.delete(dto);
+    } else {
+      this.svs.state.set('Open');
+      this.ts.setView('Actions');
+      this.fls.add(dto);
+    }
+  }
+
+  areControls(): boolean {
+    return this.controls().length > 0;
+  }
 }

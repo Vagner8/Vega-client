@@ -2,7 +2,7 @@ import { IconName } from '@types';
 
 export type TapLocation = 'Settings' | 'Pages' | 'Actions';
 export type TapPagesNames = 'Home' | 'Users' | 'Products';
-export type TapActionsNames = 'Add' | 'Update' | 'Remove' | 'Send' | 'Confirm' | 'Cancel';
+export type TapActionsNames = 'Add' | 'Delete' | 'Save';
 export type TapSettingsNames = 'Settings';
 export type TapNames = TapPagesNames | TapActionsNames | TapSettingsNames;
 

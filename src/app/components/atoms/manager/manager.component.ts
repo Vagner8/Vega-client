@@ -3,7 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { StateService, TapService } from '@services';
+import { FractalService, SidenavService, StateService, TapService } from '@services';
+import { SidenavState } from '@types';
 
 @Component({
   selector: 'app-manager',
@@ -15,20 +16,28 @@ import { StateService, TapService } from '@services';
 export class ManagerComponent {
   constructor(
     public ss: StateService,
-    private ts: TapService,
+    public ts: TapService,
+    public svs: SidenavService,
+    public fls: FractalService,
   ) {}
 
   onClick() {
-    this.ss.sidenav.set('Open');
+    this.common('Open');
     this.ts.setView('Pages');
   }
 
   onHoldClick() {
-    this.ss.sidenav.set('Open');
+    this.common('Open');
     this.ts.setView('Settings');
   }
 
   onDoubleClick() {
-    this.ss.sidenav.set('Close');
+    this.common('Close');
+    this.ts.location.set(null);
+  }
+
+  private common(sidenavState: SidenavState) {
+    this.svs.state.set(sidenavState);
+    this.fls.clean();
   }
 }

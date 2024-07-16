@@ -18,4 +18,6 @@ export type IconName =
   | 'dataset'
   | 'diversity_2'
   | 'image'
-  | 'widgets';
+  | 'widgets'
+  | 'save'
+  | 'add_circle';

@@ -1,6 +1,6 @@
 export type SidenavState = 'Open' | 'Close';
 export type Visibility = 'Hidden' | 'Visible';
-
+export type ClickType = 'Click' | 'Double' | 'Hold';
 export type SuccessMessages = 'Good to go!';
 
 export enum InputType {

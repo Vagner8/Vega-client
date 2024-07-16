@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ClickDirective } from '@directives';
+import { TapService } from '@services';
 import { TapConfig, TapNames } from '@types';
 
 @Component({
@@ -15,10 +16,14 @@ import { TapConfig, TapNames } from '@types';
 export class TapComponent {
   @Input() config!: TapConfig;
 
-  constructor(private router: Router) {}
+  constructor(
+    private ts: TapService,
+    private router: Router,
+  ) {}
 
   onClick() {
     const { navigation, name } = this.config;
+    this.ts.activated.set(name);
     navigation && this.navigate(name);
   }
 

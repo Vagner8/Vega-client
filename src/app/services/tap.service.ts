@@ -1,12 +1,14 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto, TapConfig, TapLocation } from '@types';
+import { FractalDto, TapConfig, TapLocation, TapNames } from '@types';
 import { ControlService } from './control.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  view = signal<TapConfig[]>([]);
+  taps = signal<TapConfig[]>([]);
+  location = signal<TapLocation | null>(null);
+  activated = signal<TapNames | null>(null);
 
   private Pages: TapConfig[] = [
     {
@@ -17,28 +19,16 @@ export class TapService {
   ];
   private Actions: TapConfig[] = [
     {
-      name: 'Send',
-      icon: 'send',
-    },
-    {
-      name: 'Update',
-      icon: 'edit',
-    },
-    {
-      name: 'Remove',
+      name: 'Delete',
       icon: 'delete',
     },
     {
-      name: 'Confirm',
-      icon: 'task_alt',
-    },
-    {
-      name: 'Cancel',
-      icon: 'cancel',
+      name: 'Save',
+      icon: 'save',
     },
     {
       name: 'Add',
-      icon: 'add',
+      icon: 'add_circle',
     },
   ];
   private Settings: TapConfig[] = [
@@ -60,6 +50,7 @@ export class TapService {
   }
 
   setView(location: TapLocation) {
-    this.view.set(this[location]);
+    this.location.set(location);
+    this.taps.set(this[location]);
   }
 }

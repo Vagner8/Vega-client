@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, WritableSignal } from '@angular/core';
-import { StateService } from '@services';
+import { Component } from '@angular/core';
+import { FractalService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +11,5 @@ import { StateService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(private ss: StateService) {}
-
-  get page(): WritableSignal<string> {
-    return this.ss.page;
-  }
+  constructor(public fls: FractalService) {}
 }

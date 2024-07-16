@@ -12,7 +12,7 @@ import { FractalService, StateService } from '@services';
 })
 export class PageComponent {
   @Input() set Page(name: string) {
-    this.ss.page.set(name);
+    this.fls.name.set(name);
   }
 
   constructor(

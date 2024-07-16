@@ -6,11 +6,22 @@ import { FractalDto } from '@types';
 })
 export class FractalService {
   dto = signal<FractalDto | null>(null);
-  view = signal<FractalDto | null>(null);
+  name = signal<string>('');
+  selected = signal<FractalDto[]>([]);
 
-  setView(name: string): void {
-    const dto = this.dto();
-    console.log('🚀 ~ dto:', dto);
-    this.view.set(dto && dto.fractals[name]);
+  add(fractal: FractalDto): void {
+    this.selected.update((state) => [...state, fractal]);
+  }
+
+  delete(fractal: FractalDto): void {
+    this.selected.update((state) => state.filter((f) => f !== fractal));
+  }
+
+  has(fractal: FractalDto): boolean {
+    return this.selected().includes(fractal);
+  }
+
+  clean(): void {
+    this.selected.set([]);
   }
 }
