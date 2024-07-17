@@ -1,14 +1,17 @@
 import { Injectable, signal } from '@angular/core';
 import { FractalDto, TapConfig, TapLocation, TapNames } from '@types';
 import { ControlService } from './control.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
+  clicked$ = new BehaviorSubject<TapNames | null>(null);
+
   taps = signal<TapConfig[]>([]);
   location = signal<TapLocation | null>(null);
-  activated = signal<TapNames | null>(null);
+  clicked = signal<TapNames | null>(null);
 
   private Pages: TapConfig[] = [
     {
@@ -49,7 +52,12 @@ export class TapService {
     }
   }
 
-  setView(location: TapLocation) {
+  onClick(name: TapNames) {
+    this.clicked.set(name);
+    this.clicked$.next(name);
+  }
+
+  set(location: TapLocation) {
     this.location.set(location);
     this.taps.set(this[location]);
   }

@@ -1,4 +1,4 @@
-@if (areControls()) {
+@if (this.controls().length > 0) {
   @for(control of controls(); track control) {
     <app-control [dto]="control"></app-control>
   }
@@ -13,6 +13,6 @@
     }
     <tr mat-header-row *matHeaderRowDef="sort()"></tr>
     <tr mat-row *matRowDef="let row; columns: sort()" appClick (onClick)="onClick(row)"
-      [class.selected]="fls.has(row)"></tr>
+      [class.selected]="sts.has(row)"></tr>
   </table>
 }

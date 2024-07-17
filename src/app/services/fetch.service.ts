@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ControlDto, FractalDto } from '@types';
 import { Observable } from 'rxjs';
-import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +12,7 @@ export class FetchService {
   private fractalApi = `${this.api}fractal`;
   private controlApi = `${this.api}control`;
 
-  constructor(
-    private ss: StateService,
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   get control() {
     return {
@@ -44,8 +40,8 @@ export class FetchService {
         return this.http.post<FractalDto>(this.fractalApi, fractal);
       },
 
-      delete: (id: string): Observable<FractalDto> => {
-        return this.http.delete<FractalDto>(`${this.fractalApi}?id=${id}`);
+      delete: (fractals: FractalDto[]): Observable<FractalDto[]> => {
+        return this.http.delete<FractalDto[]>(this.fractalApi, { body: fractals });
       },
     };
   }

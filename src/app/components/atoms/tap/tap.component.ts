@@ -23,7 +23,7 @@ export class TapComponent {
 
   onClick() {
     const { navigation, name } = this.config;
-    this.ts.activated.set(name);
+    this.ts.onClick(name);
     navigation && this.navigate(name);
   }
 

@@ -14,10 +14,11 @@ export class ControlComponent implements OnInit {
   @Input({ required: true }) dto!: ControlDto;
 
   data = new FormControl('');
-  indicator = new FormControl('');
 
   ngOnInit(): void {
     this.data.setValue(this.dto.data);
-    this.indicator.setValue(this.dto.indicator);
+    this.data.valueChanges.subscribe((value) => {
+      this.dto.data = value || '';
+    });
   }
 }

@@ -1,7 +1,7 @@
-import { IconName } from '@types';
+import { FractalNames, IconName } from '@types';
 
 export type TapLocation = 'Settings' | 'Pages' | 'Actions';
-export type TapPagesNames = 'Home' | 'Users' | 'Products';
+export type TapPagesNames = 'Home' | FractalNames;
 export type TapActionsNames = 'Add' | 'Delete' | 'Save';
 export type TapSettingsNames = 'Settings';
 export type TapNames = TapPagesNames | TapActionsNames | TapSettingsNames;

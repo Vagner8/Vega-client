@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { FractalService, SidenavService, StateService, TapService } from '@services';
+import { FractalService, SelectService, SidenavService, StateService, TapService } from '@services';
 import { SidenavState } from '@types';
 
 @Component({
@@ -19,16 +19,17 @@ export class ManagerComponent {
     public ts: TapService,
     public svs: SidenavService,
     public fls: FractalService,
+    public sts: SelectService,
   ) {}
 
   onClick() {
     this.common('Open');
-    this.ts.setView('Pages');
+    this.ts.set('Pages');
   }
 
   onHoldClick() {
     this.common('Open');
-    this.ts.setView('Settings');
+    this.ts.set('Settings');
   }
 
   onDoubleClick() {
@@ -37,7 +38,7 @@ export class ManagerComponent {
   }
 
   private common(sidenavState: SidenavState) {
+    this.sts.clean();
     this.svs.state.set(sidenavState);
-    this.fls.clean();
   }
 }

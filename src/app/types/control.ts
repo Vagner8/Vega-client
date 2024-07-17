@@ -14,7 +14,7 @@ export interface ControlSignals {
 }
 
 export interface ControlBase<T> {
-  id: string | null;
+  id?: string;
   parentId: string | null;
   data: T;
   indicator: T;

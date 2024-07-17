@@ -1,27 +1,46 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto } from '@types';
+import { ControlDto, ControlsDto, FractalDto, FractalsDto } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
   dto = signal<FractalDto | null>(null);
-  name = signal<string>('');
-  selected = signal<FractalDto[]>([]);
+  key = signal<string>('');
 
-  add(fractal: FractalDto): void {
-    this.selected.update((state) => [...state, fractal]);
+  size(fractals: FractalsDto): number {
+    return Object.keys(fractals).length;
   }
 
-  delete(fractal: FractalDto): void {
-    this.selected.update((state) => state.filter((f) => f !== fractal));
+  copy({ parentId, controls, fractals }: FractalDto): FractalDto {
+    return {
+      parentId,
+      controls: this.copyControls(controls),
+      fractals: this.copyFractals(fractals),
+    };
   }
 
-  has(fractal: FractalDto): boolean {
-    return this.selected().includes(fractal);
+  private copyFractals(fractals: FractalsDto): FractalsDto {
+    const dto: FractalsDto = {};
+    for (const key in fractals) {
+      dto[key] = this.copy(fractals[key]);
+    }
+    return dto;
   }
 
-  clean(): void {
-    this.selected.set([]);
+  private copyControls(dto: ControlsDto): ControlsDto {
+    const controls: ControlsDto = {};
+    for (const key in dto) {
+      controls[key] = this.copyControl(dto[key]);
+    }
+    return controls;
+  }
+
+  private copyControl({ parentId, indicator }: ControlDto): ControlDto {
+    return {
+      parentId,
+      indicator,
+      data: '',
+    };
   }
 }
