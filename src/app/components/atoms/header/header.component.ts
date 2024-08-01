@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FractalService } from '@services';
+import { FractalService, TapService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -11,5 +11,8 @@ import { FractalService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(public fls: FractalService) {}
+  constructor(
+    public ts: TapService,
+    public fls: FractalService,
+  ) {}
 }

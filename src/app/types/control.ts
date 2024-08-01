@@ -1,5 +1,6 @@
 import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { TapsFractals, IconName } from '@types';
 
 export type Indicators = `${Indicator}`;
 
@@ -32,4 +33,10 @@ export interface ControlDto extends ControlBase<string> {}
 
 export interface ControlsDto {
   [key: string]: ControlDto;
+}
+
+export interface ParsedControl {
+  name: TapsFractals;
+  icon: IconName;
+  sort: string[];
 }

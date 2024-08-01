@@ -3,8 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ClickDirective } from '@directives';
-import { TapService } from '@services';
-import { TapConfig, TapNames } from '@types';
+import { FractalService, TapService } from '@services';
+import { TapsFractals, TapConfig } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -18,16 +18,23 @@ export class TapComponent {
 
   constructor(
     private ts: TapService,
+    private fls: FractalService,
     private router: Router,
   ) {}
 
   onClick() {
-    const { navigation, name } = this.config;
-    this.ts.onClick(name);
-    navigation && this.navigate(name);
-  }
-
-  private navigate(name: TapNames) {
-    this.router.navigate([name]);
+    const { name, type } = this.config;
+    switch (type) {
+      case 'Fractals':
+        this.fls.active.set(name as TapsFractals);
+        this.ts.active.set(null);
+        this.router.navigate([name]);
+        break;
+      case 'Actions':
+      case 'Settings':
+        this.ts.active.set(name);
+        this.router.navigate([this.fls.active(), name]);
+        break;
+    }
   }
 }

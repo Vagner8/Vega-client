@@ -1,16 +1,17 @@
-import { Directive, HostListener, output } from '@angular/core';
-import { StateService } from '@services';
+import { Directive, HostListener, Input, output } from '@angular/core';
+import { FractalService, TapService } from '@services';
+import { ClickInfo, TapInfo } from '@types';
 
 @Directive({
   standalone: true,
   selector: '[appClick]',
 })
 export class ClickDirective {
-  onClick = output<Event>();
-  onHoldClick = output<Event>();
-  onDoubleClick = output<Event>();
+  @Input() info!: TapInfo;
 
-  constructor(private ss: StateService) {}
+  onClick = output<ClickInfo>();
+  onHoldClick = output<ClickInfo>();
+  onDoubleClick = output<ClickInfo>();
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -19,6 +20,11 @@ export class ClickDirective {
 
   private static readonly HOLD_DURATION = 500;
   private static readonly DOUBLE_CLICK_DELAY = 200;
+
+  constructor(
+    public ts: TapService,
+    public fls: FractalService,
+  ) {}
 
   @HostListener('contextmenu', ['$event'])
   onContextMenuHostListener(event: MouseEvent): void {
@@ -31,7 +37,7 @@ export class ClickDirective {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.onHoldClick.emit(event);
+      this.onHoldClick.emit({ click: 'Hold', event, tap: this.info });
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
@@ -61,7 +67,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.onClick.emit(event);
+          this.onClick.emit({ click: 'Click', event, tap: this.info });
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -69,7 +75,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.onDoubleClick.emit(event);
+      this.onDoubleClick.emit({ click: 'Double', event, tap: this.info });
       this.reset();
     }
   }

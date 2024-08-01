@@ -20,8 +20,8 @@ export class FetchService {
         return this.http.post<ControlDto>(this.controlApi, dto);
       },
 
-      update: (dto: ControlDto): Observable<ControlDto> => {
-        return this.http.post<ControlDto>(this.controlApi, dto);
+      update: (dto: ControlDto[]): Observable<ControlDto[]> => {
+        return this.http.post<ControlDto[]>(this.controlApi, dto);
       },
 
       delete: (id: string): Observable<ControlDto> => {
@@ -38,6 +38,10 @@ export class FetchService {
 
       add: (fractal: FractalDto): Observable<FractalDto> => {
         return this.http.post<FractalDto>(this.fractalApi, fractal);
+      },
+
+      update: (dto: FractalDto): Observable<FractalDto> => {
+        return this.http.put<FractalDto>(this.fractalApi, dto);
       },
 
       delete: (fractals: FractalDto[]): Observable<FractalDto[]> => {

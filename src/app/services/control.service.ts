@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ControlsDto, FractalNames, IconName, Indicator } from '@types';
+import { ControlsDto, Indicator, ParsedControl } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ControlService {
-  constructor() {}
-
-  icon(controls: ControlsDto): IconName {
-    return controls[Indicator.Icon].data as IconName;
-  }
-
-  pageName(controls: ControlsDto): FractalNames {
-    return controls[Indicator.Fractal].data as FractalNames;
-  }
-
-  sort(controls: ControlsDto): string[] {
-    return controls[Indicator.Sort].data.split(':');
+  parse(controls: ControlsDto): ParsedControl {
+    return {
+      name: controls[Indicator.Fractal] ? controls[Indicator.Fractal].data : '',
+      icon: controls[Indicator.Icon] ? controls[Indicator.Icon].data : 'apps',
+      sort: controls[Indicator.Sort] ? controls[Indicator.Sort].data.split(':') : [],
+    } as ParsedControl;
   }
 }

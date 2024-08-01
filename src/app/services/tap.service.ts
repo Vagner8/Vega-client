@@ -1,64 +1,55 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto, TapConfig, TapLocation, TapNames } from '@types';
-import { ControlService } from './control.service';
-import { BehaviorSubject } from 'rxjs';
+import { ClickInfo, TapConfig, TapsNames, TapsSidenavs } from '@types';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  clicked$ = new BehaviorSubject<TapNames | null>(null);
+  active = signal<TapsNames | null>(null);
 
   taps = signal<TapConfig[]>([]);
-  location = signal<TapLocation | null>(null);
-  clicked = signal<TapNames | null>(null);
+  clicked = signal<ClickInfo | null>(null);
+  clicked$ = new Subject<ClickInfo>();
 
-  private Pages: TapConfig[] = [
+  private Fractals: TapConfig[] = [
     {
       name: 'Home',
       icon: 'home',
-      navigation: true,
+      type: 'Fractals',
     },
   ];
   private Actions: TapConfig[] = [
     {
       name: 'Delete',
       icon: 'delete',
+      type: 'Actions',
     },
     {
       name: 'Save',
       icon: 'save',
+      type: 'Actions',
     },
     {
       name: 'Add',
       icon: 'add_circle',
+      type: 'Actions',
     },
   ];
   private Settings: TapConfig[] = [
     {
       name: 'Settings',
       icon: 'settings',
+      type: 'Settings',
     },
   ];
 
-  constructor(private cs: ControlService) {}
-
-  addPages({ fractals }: FractalDto): void {
-    for (const fractalName in fractals) {
-      const controls = fractals[fractalName].controls;
-      const icon = this.cs.icon(controls);
-      const name = this.cs.pageName(controls);
-      this.Pages = [{ name, icon, navigation: true }, ...this.Pages];
-    }
+  addFractals(config: TapConfig): void {
+    this.Fractals.unshift(config);
   }
 
-  onClick(name: TapNames) {
-    this.clicked.set(name);
-    this.clicked$.next(name);
-  }
-
-  set(location: TapLocation) {
-    this.location.set(location);
-    this.taps.set(this[location]);
+  set(type: TapsSidenavs | null): void {
+    if (!type) this.taps.set([]);
+    else this.taps.set(this[type]);
   }
 }

@@ -1,18 +1,23 @@
-import { FractalNames, IconName } from '@types';
+import { IconName } from '@types';
+import { FRACTAL_NAMES, MODIFIERS_NAMES } from 'app/utils/constants';
 
-export type TapLocation = 'Settings' | 'Pages' | 'Actions';
-export type TapPagesNames = 'Home' | FractalNames;
-export type TapActionsNames = 'Add' | 'Delete' | 'Save';
-export type TapSettingsNames = 'Settings';
-export type TapNames = TapPagesNames | TapActionsNames | TapSettingsNames;
+export type TapsManagers = 'Manager';
+export type TapsSidenavs = 'Settings' | 'Fractals' | 'Actions';
+export type TapsFractals = (typeof FRACTAL_NAMES)[number];
+export type TapsPages = 'Home' | TapsFractals;
+export type TapsModifiers = (typeof MODIFIERS_NAMES)[number];
+export type TapsSettings = 'Settings';
+export type TapsNames = TapsPages | TapsModifiers | TapsSettings | TapsManagers;
 
-export interface TapInfo {
-  name: TapNames;
-  event: Event;
-}
+export type TapType = TapsSidenavs | TapsManagers;
 
 export interface TapConfig {
   icon: IconName;
-  name: TapNames;
-  navigation?: boolean;
+  name: TapsNames;
+  type: TapType;
+}
+
+export interface TapInfo {
+  type: TapType;
+  name: TapsNames | null;
 }

@@ -11,14 +11,14 @@ import { ControlDto } from '@types';
   styleUrl: './control.component.css',
 })
 export class ControlComponent implements OnInit {
-  @Input({ required: true }) dto!: ControlDto;
+  @Input({ required: true }) control!: ControlDto;
 
   data = new FormControl('');
 
   ngOnInit(): void {
-    this.data.setValue(this.dto.data);
+    this.data.setValue(this.control.data);
     this.data.valueChanges.subscribe((value) => {
-      this.dto.data = value || '';
+      this.control.data = value || '';
     });
   }
 }

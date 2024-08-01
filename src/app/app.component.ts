@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavComponent, ToolbarComponent } from '@components/molecules';
 import { HeaderComponent } from '@components/atoms';
 import { RouterOutlet } from '@angular/router';
-import { FetchService, FractalService, TapService } from '@services';
+import { ControlService, FetchService, FractalService, TapService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   constructor(
     private ts: TapService,
     private fs: FetchService,
+    private cs: ControlService,
     private fls: FractalService,
   ) {}
 
@@ -25,6 +26,14 @@ export class AppComponent implements OnInit {
 
   onInit = (dto: FractalDto): void => {
     this.fls.dto.set(dto);
-    this.ts.addPages(dto);
+    this.addPages(dto);
   };
+
+  addPages({ fractals }: FractalDto): void {
+    for (const fractalName in fractals) {
+      const controls = fractals[fractalName].controls;
+      const { name, icon } = this.cs.parse(controls);
+      this.ts.addFractals({ name, icon, type: 'Fractals' });
+    }
+  }
 }

@@ -1,7 +1,5 @@
 import { Controls, ControlsDto } from '@types';
 
-export type FractalNames = 'Users' | 'Products';
-
 export interface Fractal {
   id?: string;
   parentId: string;
@@ -22,4 +20,9 @@ export interface FractalDto {
 
 export interface FractalsDto {
   [key: string]: FractalDto;
+}
+
+export interface FractalData {
+  sort: string[];
+  dataSource: FractalDto[];
 }
