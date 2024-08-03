@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from '@angular/router';
 import { Param } from '@types';
-import { MODIFIERS_NAMES } from 'app/utils/constants';
+import { MODIFIERS_NAMES } from '@constants';
 
 export const modifierGuard: CanActivateFn = (next: ActivatedRouteSnapshot) => {
   const router = inject(Router);

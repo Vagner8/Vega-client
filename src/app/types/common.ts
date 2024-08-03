@@ -1,5 +1,3 @@
-import { TapInfo } from '@types';
-
 export type SidenavState = 'Open' | 'Close';
 export type Visibility = 'Hidden' | 'Visible';
 export type ClickType = 'Click' | 'Double' | 'Hold';
@@ -12,7 +10,7 @@ export enum InputType {
 }
 
 export enum Param {
-  Fractal = 'Fractal',
+  Page = 'Page',
   Modifier = 'Modifier',
 }
 
@@ -22,16 +20,4 @@ export interface Exception {
   status: 500;
   detail: string;
   instance: string;
-}
-
-export interface SnackBarConfig {
-  duration: number;
-  panelClass: string;
-  announcementMessage: string;
-}
-
-export interface ClickInfo {
-  tap: TapInfo;
-  event: Event;
-  click: ClickType;
 }

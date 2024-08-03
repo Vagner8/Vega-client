@@ -9,12 +9,12 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: `:${Param.Fractal}`,
+    path: `:${Param.Page}`,
     canActivate: [fractalGuard],
     component: FractalComponent,
   },
   {
-    path: `:${Param.Fractal}:${Param.Modifier}`,
+    path: `:${Param.Page}/:${Param.Modifier}`,
     canActivate: [modifierGuard],
     component: ModifierComponent,
   },

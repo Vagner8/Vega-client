@@ -1,3 +1,3 @@
-<button mat-flat-button appClick (onClick)="onClick()">
+<button mat-flat-button [disabled]="config.disabled" appClick (onClick)="onClick()">
   <mat-icon>{{config.icon}}</mat-icon>{{config.name}}
 </button>

@@ -1,4 +1,4 @@
-@if (data(fls.dto(), fls.active()); as data) {
+@if (data(fls.dto(), rs.fractal()); as data) {
   <table mat-table [dataSource]="data.dataSource">
     @for (column of data.sort; track column) {
     <ng-container [matColumnDef]="column">

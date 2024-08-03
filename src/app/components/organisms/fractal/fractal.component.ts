@@ -4,8 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import { ControlComponent } from '@components/atoms';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { ControlService, FractalService, StateService, TapService } from '@services';
-import { FractalData, FractalDto, TapsFractals } from '@types';
+import { ControlService, FractalService, RouterService, StateService, TapService } from '@services';
+import { FractalData, FractalDto, FractalsNames, TapModifiersNames } from '@types';
 
 @Component({
   selector: 'app-fractal',
@@ -23,10 +23,11 @@ export class FractalComponent {
     private ss: StateService,
     private cs: ControlService,
     private ts: TapService,
+    public rs: RouterService,
     public fls: FractalService,
   ) {}
 
-  data(dto: FractalDto | null, active: TapsFractals | null): FractalData | null {
+  data(dto: FractalDto | null, active: FractalsNames | null): FractalData | null {
     if (!dto || !active) return null;
     const fractal = dto.fractals[active];
     return {
@@ -36,17 +37,37 @@ export class FractalComponent {
   }
 
   onClick(dto: FractalDto): void {
+    this.openSidenav();
     if (this.selected.has(dto)) {
       this.selected.delete(dto);
     } else {
-      this.ts.set('Actions');
       this.selected.add(dto);
     }
+    this.activateModifiers();
   }
 
   onDoubleClick(dto: FractalDto): void {
-    this.ts.set('Actions');
-    this.ss.sidenav.set('Open');
+    this.openSidenav();
     this.toUpdate = dto;
+    this.activateModifiers();
+  }
+
+  private openSidenav(): void {
+    this.ss.sidenav.set('Open');
+    this.ts.set('modifiers');
+  }
+
+  private activateModifiers(): void {
+    let names: TapModifiersNames[] = [];
+    if (this.selected.size === 0) {
+      names = ['Add'];
+    }
+    if (this.selected.size === 1) {
+      names = ['Add', 'Edit', 'Delete'];
+    }
+    if (this.selected.size > 1) {
+      names = ['Add', 'Delete'];
+    }
+    this.ts.activateModifiers(names);
   }
 }

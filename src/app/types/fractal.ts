@@ -1,5 +1,7 @@
 import { Controls, ControlsDto } from '@types';
 
+export type FractalsNames = 'Products' | 'Users';
+
 export interface Fractal {
   id?: string;
   parentId: string;

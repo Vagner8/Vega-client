@@ -1,13 +1,12 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto, TapsFractals } from '@types';
+import { FractalDto } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
-  active = signal<TapsFractals | null>(null);
   dto = signal<FractalDto | null>(null);
-  // key = signal<TapsFractals | null>(null);
+  // key = signal<FractalsNames | null>(null);
   // clickType = signal<ClickType | null>(null);
 
   // size(fractals: FractalsDto): number {
