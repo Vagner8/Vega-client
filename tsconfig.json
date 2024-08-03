@@ -27,6 +27,7 @@
       "@components/molecules": ["app/components/molecules/index.ts"],
       "@components/organisms": ["app/components/organisms/index.ts"],
       "@services": ["app/services/index.ts"],
+      "@constants": ["app/constants/index.ts"],
       "@controls": ["app/controls/index.ts"],
       "@config": ["app/config/index.ts"],
       "@guard": ["app/guard/index.ts"],

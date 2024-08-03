@@ -1,6 +1,6 @@
 import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TapsFractals, IconName } from '@types';
+import { FractalsNames, IconName } from '@types';
 
 export type Indicators = `${Indicator}`;
 
@@ -36,7 +36,7 @@ export interface ControlsDto {
 }
 
 export interface ParsedControl {
-  name: TapsFractals;
+  name: FractalsNames;
   icon: IconName;
   sort: string[];
 }

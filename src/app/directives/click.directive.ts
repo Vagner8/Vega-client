@@ -1,17 +1,14 @@
-import { Directive, HostListener, Input, output } from '@angular/core';
+import { Directive, HostListener, output } from '@angular/core';
 import { FractalService, TapService } from '@services';
-import { ClickInfo, TapInfo } from '@types';
 
 @Directive({
   standalone: true,
   selector: '[appClick]',
 })
 export class ClickDirective {
-  @Input() info!: TapInfo;
-
-  onClick = output<ClickInfo>();
-  onHoldClick = output<ClickInfo>();
-  onDoubleClick = output<ClickInfo>();
+  onClick = output();
+  onHoldClick = output();
+  onDoubleClick = output();
 
   private clickTimeout: unknown;
   private holdTimeout: unknown;
@@ -26,25 +23,25 @@ export class ClickDirective {
     public fls: FractalService,
   ) {}
 
-  @HostListener('contextmenu', ['$event'])
+  @HostListener('contextmenu')
   onContextMenuHostListener(event: MouseEvent): void {
     event.preventDefault();
   }
 
-  @HostListener('mousedown', ['$event'])
-  @HostListener('touchstart.passive', ['$event'])
-  onMouseDownHostListener(event: Event): void {
+  @HostListener('mousedown')
+  @HostListener('touchstart.passive')
+  onMouseDownHostListener(): void {
     this.isHoldEvent = false;
     this.holdTimeout = setTimeout(() => {
       this.isHoldEvent = true;
-      this.onHoldClick.emit({ click: 'Hold', event, tap: this.info });
+      this.onHoldClick.emit();
       this.clearClickTimeout();
       this.reset();
     }, ClickDirective.HOLD_DURATION);
   }
 
   @HostListener('mouseup')
-  @HostListener('touchend', ['$event'])
+  @HostListener('touchend')
   @HostListener('touchcancel')
   onMouseUpHostListener(): void {
     if (this.holdTimeout) {
@@ -52,8 +49,8 @@ export class ClickDirective {
     }
   }
 
-  @HostListener('click', ['$event'])
-  onClickHostListener(event: Event): void {
+  @HostListener('click')
+  onClickHostListener(): void {
     if (this.holdTimeout) {
       clearTimeout(this.holdTimeout as number);
     }
@@ -67,7 +64,7 @@ export class ClickDirective {
     if (this.clickCount === 1) {
       this.clickTimeout = setTimeout(() => {
         if (this.clickCount === 1) {
-          this.onClick.emit({ click: 'Click', event, tap: this.info });
+          this.onClick.emit();
         }
         this.reset();
       }, ClickDirective.DOUBLE_CLICK_DELAY);
@@ -75,7 +72,7 @@ export class ClickDirective {
       if (this.clickTimeout) {
         clearTimeout(this.clickTimeout as number);
       }
-      this.onDoubleClick.emit({ click: 'Double', event, tap: this.info });
+      this.onDoubleClick.emit();
       this.reset();
     }
   }

@@ -1,55 +1,35 @@
 import { Injectable, signal } from '@angular/core';
-import { ClickInfo, TapConfig, TapsNames, TapsSidenavs } from '@types';
-import { Subject } from 'rxjs';
+import { MODIFIER_TAPS, PAGE_TAPS, SETTINGS_TAPS } from '@constants';
+import { TapConfigPage, TapConfigUnion, TapModifiersNames, TapTypes } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
-  active = signal<TapsNames | null>(null);
+  private configs: Record<TapTypes, TapConfigUnion[]> = {
+    pages: PAGE_TAPS,
+    modifiers: MODIFIER_TAPS,
+    settings: SETTINGS_TAPS,
+  };
 
-  taps = signal<TapConfig[]>([]);
-  clicked = signal<ClickInfo | null>(null);
-  clicked$ = new Subject<ClickInfo>();
+  taps = signal<TapConfigUnion[]>([]);
 
-  private Fractals: TapConfig[] = [
-    {
-      name: 'Home',
-      icon: 'home',
-      type: 'Fractals',
-    },
-  ];
-  private Actions: TapConfig[] = [
-    {
-      name: 'Delete',
-      icon: 'delete',
-      type: 'Actions',
-    },
-    {
-      name: 'Save',
-      icon: 'save',
-      type: 'Actions',
-    },
-    {
-      name: 'Add',
-      icon: 'add_circle',
-      type: 'Actions',
-    },
-  ];
-  private Settings: TapConfig[] = [
-    {
-      name: 'Settings',
-      icon: 'settings',
-      type: 'Settings',
-    },
-  ];
-
-  addFractals(config: TapConfig): void {
-    this.Fractals.unshift(config);
+  addPage(page: TapConfigPage): void {
+    this.configs.pages.unshift(page);
   }
 
-  set(type: TapsSidenavs | null): void {
-    if (!type) this.taps.set([]);
-    else this.taps.set(this[type]);
+  set(name: TapTypes): void {
+    this.taps.set(this.configs[name]);
+  }
+
+  onModifiers(names: TapModifiersNames[]) {
+    if (this.taps()[0].type !== 'modifiers') return;
+    this.taps.update((taps) =>
+      taps.map((tap) =>
+        names.some((name) => name === tap.name)
+          ? { ...tap, disabled: false }
+          : { ...tap, disabled: true },
+      ),
+    );
   }
 }
