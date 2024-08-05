@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   onInit = (dto: FractalDto): void => {
-    this.fls.dto.set(dto);
+    this.fls.data.set(dto);
     this.addPages(dto);
   };
 

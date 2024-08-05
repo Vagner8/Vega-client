@@ -14,7 +14,7 @@ export const routes: Routes = [
     component: FractalComponent,
   },
   {
-    path: `:${Param.Page}/:${Param.Modifier}`,
+    path: `:${Param.Page}/:${Param.Modifier}/:${Param.Ids}`,
     canActivate: [modifierGuard],
     component: ModifierComponent,
   },

@@ -21,6 +21,7 @@ import { InputType } from '@types';
 export class InputComponent {
   @ViewChild('inputElementRef')
   private _inputElementRef!: ElementRef<HTMLInputElement>;
+
   @Input() clearButton = true;
   @Input() label: string = '';
   @Input() formControl!: FormControl;

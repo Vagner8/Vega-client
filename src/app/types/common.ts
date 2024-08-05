@@ -1,3 +1,6 @@
+import { FractalsNames } from './fractal';
+import { TapModifiersNames } from './tap';
+
 export type SidenavState = 'Open' | 'Close';
 export type Visibility = 'Hidden' | 'Visible';
 export type ClickType = 'Click' | 'Double' | 'Hold';
@@ -10,6 +13,8 @@ export enum InputType {
 }
 
 export enum Param {
+  Ids = 'Ids',
+  type = 'Type',
   Page = 'Page',
   Modifier = 'Modifier',
 }
@@ -20,4 +25,10 @@ export interface Exception {
   status: 500;
   detail: string;
   instance: string;
+}
+
+export interface RsParams {
+  ids: string[] | undefined;
+  page: FractalsNames | undefined;
+  modifier: TapModifiersNames | undefined;
 }

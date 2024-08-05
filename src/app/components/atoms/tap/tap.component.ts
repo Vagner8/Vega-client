@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ClickDirective } from '@directives';
-import { RouterService } from '@services';
+import { FractalService, RouterService } from '@services';
 import { TapConfigUnion } from '@types';
 
 @Component({
@@ -18,6 +18,7 @@ export class TapComponent {
 
   constructor(
     private rs: RouterService,
+    private fls: FractalService,
     private router: Router,
   ) {}
 
@@ -28,9 +29,14 @@ export class TapComponent {
         this.router.navigate([name]);
         break;
       case 'modifiers':
-      case 'settings':
-        this.router.navigate([this.rs.fractal(), name]);
+        this.router.navigate([this.rs.params()?.page, name, this.ids()]);
         break;
     }
+  }
+
+  ids(): string {
+    return Array.from(this.fls.selected)
+      .map(({ id }) => id)
+      .join(':');
   }
 }

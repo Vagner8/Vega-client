@@ -12,20 +12,20 @@ export class TapService {
     settings: SETTINGS_TAPS,
   };
 
-  taps = signal<TapConfigUnion[]>([]);
+  data = signal<TapConfigUnion[]>([]);
 
   addPage(page: TapConfigPage): void {
     this.configs.pages.unshift(page);
   }
 
   set(name: TapTypes): void {
-    this.taps.set(this.configs[name]);
+    this.data.set(this.configs[name]);
   }
 
   activateModifiers(names: TapModifiersNames[]) {
-    if (this.taps()[0].type !== 'modifiers') return;
-    this.taps.update((taps) =>
-      taps.map((tap) =>
+    if (this.data()[0].type !== 'modifiers') return;
+    this.data.update((data) =>
+      data.map((tap) =>
         names.some((name) => name === tap.name)
           ? { ...tap, disabled: false }
           : { ...tap, disabled: true },

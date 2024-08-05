@@ -1,7 +1,7 @@
-<p>controls works!</p>
-
-<!-- @if (controls) {
-@for(control of controls; track control) {
-<app-control [control]="control"></app-control>
+@if (fractals(); as fractals) {
+  @if (rs.params()?.modifier === 'Edit') {
+    @for(fractal of fractals; track fractal.id) {
+      <app-controls [controls]="fractal.controls | array"></app-controls>
+    }
+  }
 }
-} -->

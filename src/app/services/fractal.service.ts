@@ -1,11 +1,25 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto } from '@types';
+import { FractalDto, RsParams } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
-  dto = signal<FractalDto | null>(null);
+  selected = new Set<FractalDto>();
+
+  data = signal<FractalDto | null>(null);
+
+  find(params: RsParams | null): FractalDto[] {
+    if (!params?.page || !params.ids?.length) return [];
+    const { ids, page } = params;
+    const idSet = new Set(ids);
+    const fractals = this.data()?.fractals[page]?.fractals;
+    if (!fractals) return [];
+    return Object.values(fractals).filter(
+      (fractal) => fractal.id !== undefined && idSet.has(fractal.id),
+    );
+  }
+
   // key = signal<FractalsNames | null>(null);
   // clickType = signal<ClickType | null>(null);
 
