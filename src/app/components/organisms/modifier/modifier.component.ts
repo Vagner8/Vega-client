@@ -21,6 +21,4 @@ export class ModifierComponent {
 
     private ss: StateService,
   ) {}
-
-  ngOnInit(): void {}
 }
