@@ -5,7 +5,7 @@ export type TapsSettingsNames = 'Settings';
 export type TapPagesNames = 'Home' | FractalsNames;
 export type TapsNames = TapPagesNames | TapsSettingsNames | TapModifiersNames;
 
-export type TapTypes = 'pages' | 'settings' | 'modifiers';
+export type TapTypes = keyof TapConfigs;
 
 export type TapConfigPage = TapConfig<TapPagesNames>;
 export type TapConfigSetting = TapConfig<TapsSettingsNames>;
@@ -17,4 +17,10 @@ export interface TapConfig<T> {
   icon: IconName;
   type: TapTypes;
   disabled?: boolean;
+}
+
+export interface TapConfigs {
+  Page: TapConfigPage[];
+  Modifier: TapConfigModifier[];
+  Setting: TapConfigSetting[];
 }

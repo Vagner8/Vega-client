@@ -4,7 +4,7 @@ export const PAGE_TAPS: TapConfigPage[] = [
   {
     name: 'Home',
     icon: 'home',
-    type: 'pages',
+    type: 'Page',
   },
 ];
 
@@ -12,22 +12,22 @@ export const MODIFIER_TAPS: TapConfigModifier[] = [
   {
     name: 'Delete',
     icon: 'delete',
-    type: 'modifiers',
+    type: 'Modifier',
   },
   {
     name: 'Save',
     icon: 'save',
-    type: 'modifiers',
+    type: 'Modifier',
   },
   {
     name: 'Add',
     icon: 'add_circle',
-    type: 'modifiers',
+    type: 'Modifier',
   },
   {
     name: 'Edit',
     icon: 'edit',
-    type: 'modifiers',
+    type: 'Modifier',
   },
 ];
 
@@ -35,6 +35,6 @@ export const SETTINGS_TAPS: TapConfigSetting[] = [
   {
     name: 'Settings',
     icon: 'settings',
-    type: 'settings',
+    type: 'Setting',
   },
 ];

@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { FractalService, StateService, TapService } from '@services';
+import { RouterService, StateService } from '@services';
 
 @Component({
   selector: 'app-manager',
@@ -15,21 +15,18 @@ import { FractalService, StateService, TapService } from '@services';
 export class ManagerComponent {
   constructor(
     public ss: StateService,
-    public ts: TapService,
-    public fls: FractalService,
+    private rs: RouterService,
   ) {}
 
   onClick(): void {
-    this.ss.sidenav.set('Open');
-    this.ts.set('pages');
+    this.rs.navigate('Page');
   }
 
   onHoldClick(): void {
-    this.ss.sidenav.set('Open');
-    this.ts.set('settings');
+    this.rs.navigate('Setting');
   }
 
   onDblclick(): void {
-    this.ss.sidenav.set('Close');
+    this.rs.navigate();
   }
 }

@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FractalComponent } from './fractal.component';
+import { PageComponent } from './page.component';
 
-describe('FractalComponent', () => {
-  let component: FractalComponent;
-  let fixture: ComponentFixture<FractalComponent>;
+describe('PageComponent', () => {
+  let component: PageComponent;
+  let fixture: ComponentFixture<PageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FractalComponent],
+      imports: [PageComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FractalComponent);
+    fixture = TestBed.createComponent(PageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

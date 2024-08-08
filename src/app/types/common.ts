@@ -1,5 +1,5 @@
-import { FractalsNames } from './fractal';
-import { TapModifiersNames } from './tap';
+import { FractalDto } from './fractal';
+import { TapModifiersNames, TapPagesNames, TapTypes } from './tap';
 
 export type SidenavState = 'Open' | 'Close';
 export type Visibility = 'Hidden' | 'Visible';
@@ -12,9 +12,9 @@ export enum InputType {
   Password = 'Password',
 }
 
-export enum Param {
+export enum PathParam {
   Ids = 'Ids',
-  type = 'Type',
+  Type = 'Type',
   Page = 'Page',
   Modifier = 'Modifier',
 }
@@ -27,8 +27,21 @@ export interface Exception {
   instance: string;
 }
 
-export interface RsParams {
-  ids: string[] | undefined;
-  page: FractalsNames | undefined;
-  modifier: TapModifiersNames | undefined;
+export type SegmentsTuple = [
+  Segments['type'],
+  Segments['page'],
+  Segments['modifier'],
+  Segments['ids'],
+];
+
+export interface Segments {
+  ids: string | null;
+  type: TapTypes | null;
+  page: TapPagesNames | null;
+  modifier: TapModifiersNames | null;
+}
+
+export interface TableData {
+  sort: string[];
+  dataSource: FractalDto[];
 }

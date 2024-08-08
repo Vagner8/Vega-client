@@ -23,8 +23,3 @@ export interface FractalDto {
 export interface FractalsDto {
   [key: string]: FractalDto;
 }
-
-export interface FractalData {
-  sort: string[];
-  dataSource: FractalDto[];
-}

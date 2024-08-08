@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavComponent, ToolbarComponent } from '@components/molecules';
 import { HeaderComponent } from '@components/atoms';
-import { RouterOutlet } from '@angular/router';
 import { ControlService, FetchService, FractalService, TapService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidenavComponent, ToolbarComponent, HeaderComponent],
+  imports: [SidenavComponent, ToolbarComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -33,7 +32,7 @@ export class AppComponent implements OnInit {
     for (const fractalName in fractals) {
       const controls = fractals[fractalName].controls;
       const { name, icon } = this.cs.parse(controls);
-      this.ts.addPage({ name, icon, type: 'pages' });
+      this.ts.addPage({ name, icon, type: 'Page' });
     }
   }
 }

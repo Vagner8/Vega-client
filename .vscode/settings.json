@@ -6,5 +6,7 @@
     "info",
     "Sidenavs",
     "Сache"
-  ]
+  ],
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

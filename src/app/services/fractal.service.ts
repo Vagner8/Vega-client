@@ -1,61 +1,22 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto, RsParams } from '@types';
+import { FractalDto } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
-  selected = new Set<FractalDto>();
-
   data = signal<FractalDto | null>(null);
+  selected = signal<FractalDto[]>([]);
 
-  find(params: RsParams | null): FractalDto[] {
-    if (!params?.page || !params.ids?.length) return [];
-    const { ids, page } = params;
-    const idSet = new Set(ids);
-    const fractals = this.data()?.fractals[page]?.fractals;
-    if (!fractals) return [];
-    return Object.values(fractals).filter(
-      (fractal) => fractal.id !== undefined && idSet.has(fractal.id),
-    );
+  add(fractal: FractalDto): void {
+    this.selected.update((state) => [...state, fractal]);
   }
 
-  // key = signal<FractalsNames | null>(null);
-  // clickType = signal<ClickType | null>(null);
+  delete(fractal: FractalDto): void {
+    this.selected.update((state) => state.filter((f) => f !== fractal));
+  }
 
-  // size(fractals: FractalsDto): number {
-  //   return Object.keys(fractals).length;
-  // }
-
-  // copy({ parentId, controls, fractals }: FractalDto): FractalDto {
-  //   return {
-  //     parentId,
-  //     controls: this.copyControls(controls),
-  //     fractals: this.copyFractals(fractals),
-  //   };
-  // }
-
-  // private copyFractals(fractals: FractalsDto): FractalsDto {
-  //   const dto: FractalsDto = {};
-  //   for (const key in fractals) {
-  //     dto[key] = this.copy(fractals[key]);
-  //   }
-  //   return dto;
-  // }
-
-  // private copyControls(dto: ControlsDto): ControlsDto {
-  //   const controls: ControlsDto = {};
-  //   for (const key in dto) {
-  //     controls[key] = this.copyControl(dto[key]);
-  //   }
-  //   return controls;
-  // }
-
-  // private copyControl({ parentId, indicator }: ControlDto): ControlDto {
-  //   return {
-  //     parentId,
-  //     indicator,
-  //     data: '',
-  //   };
-  // }
+  clear(): void {
+    this.selected.set([]);
+  }
 }

@@ -13,7 +13,7 @@ import { FractalDto } from '@types';
   styleUrl: './modifier.component.css',
 })
 export class ModifierComponent {
-  fractals = computed<FractalDto[]>(() => (this.fls.data() ? this.fls.find(this.rs.params()) : []));
+  fractals = computed<FractalDto[]>(() => []);
 
   constructor(
     public rs: RouterService,
