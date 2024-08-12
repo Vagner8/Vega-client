@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     for (const fractalName in fractals) {
       const controls = fractals[fractalName].controls;
       const { name, icon } = this.cs.parse(controls);
-      this.ts.addPage({ name, icon, type: 'Page' });
+      this.ts.addPage({ name, icon, type: 'pages' });
     }
   }
 }

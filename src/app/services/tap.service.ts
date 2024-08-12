@@ -1,18 +1,19 @@
 import { Injectable, signal } from '@angular/core';
-import { MODIFIER_TAPS, PAGE_TAPS, SETTINGS_TAPS } from '@constants';
-import { TapConfigPage, TapConfigs } from '@types';
+import { TAPS } from '@constants';
+import { TapConfigPage, TapConfigs, TapManagerTypeClick } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TapService {
   data = signal<TapConfigs>({
-    Page: PAGE_TAPS,
-    Modifier: MODIFIER_TAPS,
-    Setting: SETTINGS_TAPS,
+    pages: TAPS.PAGES,
+    modifiers: TAPS.MODIFIERS,
+    settings: TAPS.SETTINGS,
   });
+  manager = signal<TapManagerTypeClick>(3);
 
   addPage(page: TapConfigPage): void {
-    this.data.update((state) => ({ ...state, Page: [page, ...state.Page] }));
+    this.data.update((state) => ({ ...state, pages: [page, ...state.pages] }));
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { PAGES } from '@constants';
 import { ClickDirective } from '@directives';
 import { FractalService, RouterService } from '@services';
 import { TapConfigUnion, TapModifiersNames, TapPagesNames } from '@types';
@@ -22,14 +23,13 @@ export class TapComponent {
 
   onClick() {
     const { name, type } = this.config;
-    const { type: typePath, page } = this.rs.params();
+    const { page } = this.rs.segments();
     switch (type) {
-      case 'Page':
-        if (name === 'Home') this.rs.navigate('Page');
-        else this.rs.navigate(typePath, name as TapPagesNames);
+      case 'pages':
+        this.rs.navigate(name as TapPagesNames);
         break;
-      case 'Modifier':
-        this.rs.navigate(typePath, page, name as TapModifiersNames, this.ids());
+      case 'modifiers':
+        this.rs.navigate(page, name as TapModifiersNames);
         break;
     }
   }

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ControlsComponent } from '@components/atoms';
 import { ArrayPipe } from '@pipes';
-import { FractalService, RouterService, StateService } from '@services';
+import { FractalService, RouterService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
@@ -12,13 +12,19 @@ import { FractalDto } from '@types';
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.css',
 })
-export class ModifierComponent {
-  fractals = computed<FractalDto[]>(() => []);
+export class ModifierComponent implements OnInit {
+  fractals: FractalDto[] = [];
 
   constructor(
     public rs: RouterService,
-    public fls: FractalService,
-
-    private ss: StateService,
+    private fls: FractalService,
   ) {}
+
+  ngOnInit() {
+    if (!this.fls.hasSelected()) {
+      const fractals = this.fls.find(this.rs.queryParams().ids || '');
+      this.fls.selected.set(fractals);
+    }
+    this.fractals = this.fls.selected();
+  }
 }

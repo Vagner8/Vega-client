@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ENV } from '@constants';
 import { ControlDto, FractalDto } from '@types';
 import { Observable } from 'rxjs';
 
@@ -7,8 +8,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class FetchService {
-  private id = '927d3af1-3053-4bb4-84eb-258b74c2052a';
-  private api = 'https://localhost:7002/api/';
+  private id = ENV.ID;
+  private api = ENV.API;
   private fractalApi = `${this.api}fractal`;
   private controlApi = `${this.api}control`;
 

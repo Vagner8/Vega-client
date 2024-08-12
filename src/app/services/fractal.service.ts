@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto } from '@types';
+import { FractalDto, FractalsDto } from '@types';
 
 @Injectable({
   providedIn: 'root',
@@ -18,5 +18,34 @@ export class FractalService {
 
   clear(): void {
     this.selected.set([]);
+  }
+
+  hasSelected(): boolean {
+    return this.selected().length > 0;
+  }
+
+  find(ids: string | null): FractalDto[] {
+    if (!ids) return [];
+
+    const data = this.data();
+    if (!data?.fractals) return [];
+
+    const result: FractalDto[] = [];
+
+    const searchFractals = (id: string, fractals: FractalsDto) => {
+      for (const fractal of Object.values(fractals)) {
+        if (fractal.id === id) {
+          result.push(fractal);
+          return;
+        }
+        if (fractal.fractals) {
+          searchFractals(id, fractal.fractals);
+        }
+      }
+    };
+
+    ids.split(':').forEach((id) => searchFractals(id, data.fractals));
+
+    return result;
   }
 }

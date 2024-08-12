@@ -1,8 +1,10 @@
-import { FractalsNames, IconName } from '@types';
+import { MODIFIERS, PAGES } from '@constants';
+import { IconName } from '@types';
 
-export type TapModifiersNames = 'Add' | 'Delete' | 'Save' | 'Edit';
+export type TapManagerTypeClick = 1 | 2 | 3;
+export type TapModifiersNames = (typeof MODIFIERS)[keyof typeof MODIFIERS];
 export type TapsSettingsNames = 'Settings';
-export type TapPagesNames = 'Home' | FractalsNames;
+export type TapPagesNames = (typeof PAGES)[keyof typeof PAGES];
 export type TapsNames = TapPagesNames | TapsSettingsNames | TapModifiersNames;
 
 export type TapTypes = keyof TapConfigs;
@@ -20,7 +22,7 @@ export interface TapConfig<T> {
 }
 
 export interface TapConfigs {
-  Page: TapConfigPage[];
-  Modifier: TapConfigModifier[];
-  Setting: TapConfigSetting[];
+  pages: TapConfigPage[];
+  modifiers: TapConfigModifier[];
+  settings: TapConfigSetting[];
 }

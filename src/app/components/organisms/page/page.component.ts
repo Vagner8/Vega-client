@@ -35,7 +35,7 @@ export class PageComponent {
   }
 
   private computedData(): TableData | null {
-    const { page } = this.rs.params();
+    const { page } = this.rs.segments();
     const fractal = this.fls.data()?.fractals[page!];
     if (!fractal) return null;
     return {

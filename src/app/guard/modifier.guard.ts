@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { PathParam } from '@types';
-import { MODIFIERS_NAMES } from '@constants';
+import { PathParams } from '@types';
+import { MODIFIERS, PAGES } from '@constants';
 
 export const modifierGuard: CanActivateFn = (next) => {
   const router = inject(Router);
-  return MODIFIERS_NAMES.includes(next.params[PathParam.Modifier])
+  return Object.prototype.hasOwnProperty.call(MODIFIERS, next.params[PathParams.Modifier])
     ? true
-    : router.createUrlTree(['Home']);
+    : router.createUrlTree([PAGES.HOME]);
 };
