@@ -2,8 +2,8 @@ import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { INDICATORS } from '@constants';
 
-export type Indicators = (typeof INDICATORS)[number];
-export type ControlsData = Record<Indicators, string>;
+export type ControlsIndicators = (typeof INDICATORS)[number];
+export type ControlsData = Record<ControlsIndicators, string>;
 
 export interface ControlSignals {
   disabled: WritableSignal<boolean>;

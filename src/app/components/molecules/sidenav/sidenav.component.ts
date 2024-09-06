@@ -6,11 +6,19 @@ import { MatListModule, MatSidenavModule } from '@mat';
 import { FractalService, TapService } from '@services';
 import { ManagerService } from 'app/services/manager.service';
 import { FractalDto } from '@types';
+import { ControlsDataPipe } from '@pipes';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatListModule, MatSidenavModule, TapComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MatListModule,
+    MatSidenavModule,
+    TapComponent,
+    ControlsDataPipe,
+  ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
@@ -25,28 +33,11 @@ export class SidenavComponent {
   ) {}
 
   private computedOpen(): boolean {
-    return this.ms.clickType() !== 'double';
+    return this.ms.clickType() !== 'hold';
   }
 
   private computedTaps(): FractalDto[] | null {
     const taps = this.ms.clickType() === 'one' ? this.fs.Pages() : null;
     return taps && Object.values(taps.fractals);
   }
-
-  // private setModifiers(modifiers: TapConfigModifier[]): TapConfigModifier[] {
-  //   return modifiers.map((tap) => ({ ...tap, disabled: !this.shouldActivate(tap.name) }));
-  // }
-
-  // private shouldActivate(name: TapModifiersNames): boolean {
-  //   const length = this.fls.selected().length;
-  //   let names: TapModifiersNames[] = [];
-  //   if (length === 0) {
-  //     names = ['Add'];
-  //   } else if (length === 1) {
-  //     names = ['Add', 'Edit', 'Delete'];
-  //   } else {
-  //     names = ['Add', 'Delete'];
-  //   }
-  //   return names.includes(name);
-  // }
 }

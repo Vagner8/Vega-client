@@ -2,7 +2,7 @@
   <mat-drawer [opened]="open()" [disableClose]="false" class="mat-drawer-app-sidenav" mode="side" position="end">
     <mat-list class="mat-list-app-sidenav">
       @for (tap of taps(); track $index) {
-      <app-tap [tap]="tap"></app-tap>
+      <app-tap [data]="tap.controls| controlsData"></app-tap>
       }
     </mat-list>
   </mat-drawer>

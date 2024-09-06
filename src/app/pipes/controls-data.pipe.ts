@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { INDICATORS } from '@constants';
 import { ControlsData, ControlsDto } from '@types';
 
-@Injectable({
-  providedIn: 'root',
+@Pipe({
+  name: 'controlsData',
+  standalone: true,
 })
-export class ControlService {
-  parse(controls: ControlsDto): ControlsData {
+export class ControlsDataPipe implements PipeTransform {
+  transform(controls: ControlsDto): ControlsData {
     return INDICATORS.reduce((acc, indicator) => {
       const data = controls[indicator]?.data;
       if (data) {

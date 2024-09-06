@@ -5,5 +5,5 @@ import { ManagerClickType } from 'app/types/tap.types';
   providedIn: 'root',
 })
 export class ManagerService {
-  clickType = signal<ManagerClickType>('double');
+  clickType = signal<ManagerClickType>('hold');
 }

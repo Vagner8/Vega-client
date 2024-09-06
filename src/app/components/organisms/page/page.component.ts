@@ -2,20 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ControlsComponent } from '@components/atoms';
-import { ClickDirective, TableDirective } from '@directives';
+import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    MatTableModule,
-    ClickDirective,
-    ControlsComponent,
-    CommonModule,
-    TableDirective,
-  ],
+  imports: [RouterOutlet, MatTableModule, ClickDirective, ControlsComponent, CommonModule],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })

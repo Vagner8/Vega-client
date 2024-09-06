@@ -1,5 +1,4 @@
-<button mat-mini-fab [disabled]="ss.isFetching()" appClick (onClick)="onClick()" (onHoldClick)="onHoldClick()"
-  (onDoubleClick)="onDblclick()">
+<button mat-mini-fab [disabled]="ss.isFetching()" appClick (onClick)="onClick()" (onHoldClick)="onHoldClick()">
   @if (ss.isFetching()) {
   <mat-spinner color="accent" diameter="40"></mat-spinner>
   }
