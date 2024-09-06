@@ -15,6 +15,6 @@ export interface Exception {
 }
 
 export interface TableData {
-  sort: string[];
+  sort: string;
   dataSource: FractalDto[];
 }

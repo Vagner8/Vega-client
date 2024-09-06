@@ -1,3 +1,5 @@
-<button mat-flat-button [disabled]="config.disabled" appClick (onClick)="onClick()">
-  <mat-icon>{{config.icon}}</mat-icon>{{config.name}}
+@if (data) {
+<button mat-flat-button appClick (onClick)="onClick()">
+  <mat-icon>{{data.Icon}}</mat-icon>{{data.Fractal}}
 </button>
+}

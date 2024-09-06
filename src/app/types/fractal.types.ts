@@ -1,6 +1,14 @@
+import { Signal } from '@angular/core';
+import { FRACTALS, MODIFIERS, PAGES } from '@constants';
 import { Controls, ControlsDto } from '@types';
 
-export type FractalsNames = 'Products' | 'Users';
+export type FractalNames = (typeof FRACTALS)[number];
+export type FractalSignal = Signal<FractalDto | null>;
+export type FractalSignals = Record<FractalNames, FractalSignal>;
+export type FractalPagesNames = (typeof PAGES)[number];
+export type FractalModifiersNames = (typeof MODIFIERS)[keyof typeof MODIFIERS];
+
+export type FractalData = Record<FractalNames, FractalDto>;
 
 export interface Fractal {
   id?: string;

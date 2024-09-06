@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { QueryParams, Segments, TapModifiersNames, TapPagesNames } from '@types';
+import { QueryParams, Segments, FractalModifiersNames, FractalPagesNames } from '@types';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,10 @@ export class RouterService {
     });
   }
 
-  navigate(page: TapPagesNames | null = null, modifier: TapModifiersNames | null = null): void {
+  navigate(
+    page: FractalPagesNames | null = null,
+    modifier: FractalModifiersNames | null = null,
+  ): void {
     this.segments.set({ page, modifier });
     this.router.navigate([page, modifier].filter(Boolean));
   }

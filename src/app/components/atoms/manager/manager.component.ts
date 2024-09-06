@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { RouterService, StateService, TapService } from '@services';
+import { ManagerService, RouterService, StateService } from '@services';
 
 @Component({
   selector: 'app-manager',
@@ -15,20 +15,20 @@ import { RouterService, StateService, TapService } from '@services';
 export class ManagerComponent {
   constructor(
     public ss: StateService,
-    private ts: TapService,
     private rs: RouterService,
+    private ms: ManagerService,
   ) {}
 
   onClick(): void {
-    this.ts.manager.set(1);
+    this.ms.clickType.set('one');
   }
 
   onHoldClick(): void {
     if (this.rs.segments().page === 'Home') return;
-    this.ts.manager.set(2);
+    this.ms.clickType.set('hold');
   }
 
   onDblclick(): void {
-    this.ts.manager.set(3);
+    this.ms.clickType.set('double');
   }
 }

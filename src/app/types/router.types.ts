@@ -1,4 +1,4 @@
-import { TapModifiersNames, TapPagesNames } from './tap.types';
+import { FractalPagesNames, FractalModifiersNames } from '@types';
 
 export enum PathParams {
   Page = 'Page',
@@ -10,6 +10,6 @@ export interface QueryParams {
 }
 
 export interface Segments {
-  page: TapPagesNames | null;
-  modifier: TapModifiersNames | null;
+  page: FractalPagesNames | null;
+  modifier: FractalModifiersNames | null;
 }

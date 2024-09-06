@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { PAGES } from '@constants';
 import { ClickDirective } from '@directives';
-import { FractalService, RouterService } from '@services';
-import { TapConfigUnion, TapModifiersNames, TapPagesNames } from '@types';
+import { ControlService, RouterService } from '@services';
+import { ControlsData, FractalDto } from '@types';
+import { isFractalPagesNames } from '@utils';
 
 @Component({
   selector: 'app-tap',
@@ -13,31 +13,26 @@ import { TapConfigUnion, TapModifiersNames, TapPagesNames } from '@types';
   templateUrl: './tap.component.html',
   styleUrl: './tap.component.css',
 })
-export class TapComponent {
-  @Input() config!: TapConfigUnion;
+export class TapComponent implements OnInit {
+  @Input() tap!: FractalDto;
+
+  data!: ControlsData;
 
   constructor(
     private rs: RouterService,
-    private fls: FractalService,
+    private cs: ControlService,
   ) {}
 
-  onClick() {
-    const { name, type } = this.config;
-    const { page } = this.rs.segments();
-    switch (type) {
-      case 'pages':
-        this.rs.navigate(name as TapPagesNames);
-        break;
-      case 'modifiers':
-        this.rs.navigate(page, name as TapModifiersNames);
-        break;
-    }
+  ngOnInit(): void {
+    this.data = this.cs.parse(this.tap.controls);
+    console.log('🚀 ~ this.data:', this.data);
   }
 
-  ids(): string {
-    return this.fls
-      .selected()
-      .map(({ id }) => id)
-      .join(':');
+  onClick() {
+    const page = this.data.Fractal;
+    console.log('🚀 ~ page:', page);
+    console.log('🚀 ~ isFractalPagesNames(page):', isFractalPagesNames(page));
+
+    this.rs.navigate(isFractalPagesNames(page) ? page : null);
   }
 }

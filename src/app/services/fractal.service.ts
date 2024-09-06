@@ -1,51 +1,54 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalDto, FractalsDto } from '@types';
+import { FractalDto, FractalSignals } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FractalService {
-  data = signal<FractalDto | null>(null);
-  selected = signal<FractalDto[]>([]);
+export class FractalService implements FractalSignals {
+  Pages = signal<FractalDto | null>(null);
+  Manager = signal<FractalDto | null>(null);
+  Modifiers = signal<FractalDto | null>(null);
 
-  add(fractal: FractalDto): void {
-    this.selected.update((state) => [...state, fractal]);
-  }
+  // selected = signal<FractalDto[]>([]);
 
-  delete(fractal: FractalDto): void {
-    this.selected.update((state) => state.filter((f) => f !== fractal));
-  }
+  // add(fractal: FractalDto): void {
+  //   this.selected.update((state) => [...state, fractal]);
+  // }
 
-  clear(): void {
-    this.selected.set([]);
-  }
+  // delete(fractal: FractalDto): void {
+  //   this.selected.update((state) => state.filter((f) => f !== fractal));
+  // }
 
-  hasSelected(): boolean {
-    return this.selected().length > 0;
-  }
+  // clear(): void {
+  //   this.selected.set([]);
+  // }
 
-  find(ids: string | null): FractalDto[] {
-    if (!ids) return [];
+  // hasSelected(): boolean {
+  //   return this.selected().length > 0;
+  // }
 
-    const data = this.data();
-    if (!data?.fractals) return [];
+  // find(ids: string | null): FractalDto[] {
+  //   if (!ids) return [];
 
-    const result: FractalDto[] = [];
+  //   // const data = this.data();
+  //   if (!data?.fractals) return [];
 
-    const searchFractals = (id: string, fractals: FractalsDto) => {
-      for (const fractal of Object.values(fractals)) {
-        if (fractal.id === id) {
-          result.push(fractal);
-          return;
-        }
-        if (fractal.fractals) {
-          searchFractals(id, fractal.fractals);
-        }
-      }
-    };
+  //   const result: FractalDto[] = [];
 
-    ids.split(':').forEach((id) => searchFractals(id, data.fractals));
+  //   const searchFractals = (id: string, fractals: FractalsDto) => {
+  //     for (const fractal of Object.values(fractals)) {
+  //       if (fractal.id === id) {
+  //         result.push(fractal);
+  //         return;
+  //       }
+  //       if (fractal.fractals) {
+  //         searchFractals(id, fractal.fractals);
+  //       }
+  //     }
+  //   };
 
-    return result;
-  }
+  //   ids.split(':').forEach((id) => searchFractals(id, data.fractals));
+
+  //   return result;
+  // }
 }

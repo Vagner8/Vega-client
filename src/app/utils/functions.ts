@@ -12,3 +12,6 @@ export const ex = (error: HttpErrorResponse): Exception => {
   };
   return isException(error.error) ? error.error : ex;
 };
+
+export const hasOwnProperty = (obj: object, property: string): boolean =>
+  Object.prototype.hasOwnProperty.call(obj, property);

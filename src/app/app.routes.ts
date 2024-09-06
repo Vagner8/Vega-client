@@ -2,11 +2,10 @@ import { Routes } from '@angular/router';
 import { PathParams } from '@types';
 import { PageComponent, ModifierComponent, HomeComponent } from '@components/organisms';
 // import { fractalGuard, modifierGuard } from '@guard';
-import { PAGES } from './constants/pages.constants';
 
 export const routes: Routes = [
   {
-    path: PAGES.HOME,
+    path: 'Home',
     component: HomeComponent,
   },
   {
@@ -19,5 +18,5 @@ export const routes: Routes = [
     // canActivate: [modifierGuard],
     component: ModifierComponent,
   },
-  { path: '**', redirectTo: PAGES.HOME },
+  { path: '**', redirectTo: 'Home' },
 ];

@@ -6,3 +6,4 @@ export * from './fractal.service';
 export * from './tap.service';
 export * from './subscription.service';
 export * from './router.service';
+export * from './manager.service';

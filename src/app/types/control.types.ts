@@ -1,14 +1,9 @@
 import { WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { FractalsNames, IconName } from '@types';
+import { INDICATORS } from '@constants';
 
-export type Indicators = `${Indicator}`;
-
-export enum Indicator {
-  Fractal = 'Fractal',
-  Icon = 'Icon',
-  Sort = 'Sort',
-}
+export type Indicators = (typeof INDICATORS)[number];
+export type ControlsData = Record<Indicators, string>;
 
 export interface ControlSignals {
   disabled: WritableSignal<boolean>;
@@ -33,10 +28,4 @@ export interface ControlDto extends ControlBase<string> {}
 
 export interface ControlsDto {
   [key: string]: ControlDto;
-}
-
-export interface ParsedControl {
-  name: FractalsNames;
-  icon: IconName;
-  sort: string[];
 }
