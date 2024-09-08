@@ -4,7 +4,9 @@
       @switch (type) {
         @case ('Taps') {
           @for (name of sort; track name) {
-            <app-tap [fractal]="fractal.fractals[name]"></app-tap>
+            <app-tap
+              [fractal]="fractal.fractals[name]"
+              (onClick)="onClick.emit($event)"></app-tap>
           }
         }
         @case ('Table') {

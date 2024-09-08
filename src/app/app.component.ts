@@ -1,19 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { SidenavComponent, ToolbarComponent } from '@components/molecules';
+import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent } from '@components/atoms';
 import { FetchService, FractalService } from '@services';
-import { ArrayPipe, FractalPipe } from '@pipes';
+import { ToolbarComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    SidenavComponent,
-    ToolbarComponent,
-    HeaderComponent,
-    FractalPipe,
-    ArrayPipe,
-  ],
+  imports: [SidenavComponent, ToolbarComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

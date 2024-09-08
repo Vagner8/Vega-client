@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { FractalNames, RenderTypes } from '@types';
+import { Component, Input, output } from '@angular/core';
+import { FractalDto, FractalNames, RenderTypes } from '@types';
 import { ArrayPipe, FractalPipe, ControlsPipe } from '@pipes';
 import { TableComponent, TapComponent } from '@components/atoms';
 import { FractalService, RouterService } from '@services';
-import { isPagesNames } from '@utils';
 
 @Component({
   selector: 'app-render',
@@ -13,6 +12,7 @@ import { isPagesNames } from '@utils';
   styleUrl: './render.component.css',
 })
 export class RenderComponent {
+  onClick = output<FractalDto>();
   @Input({ required: true }) type!: RenderTypes;
   @Input({ required: true }) name!: FractalNames;
 
@@ -20,8 +20,4 @@ export class RenderComponent {
     public rs: RouterService,
     public fs: FractalService
   ) {}
-
-  onClick(name: string) {
-    this.rs.navigate(isPagesNames(name) ? name : null);
-  }
 }

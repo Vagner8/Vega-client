@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
 import { ControlsPipe, FractalPipe } from '@pipes';

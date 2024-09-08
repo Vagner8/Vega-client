@@ -6,7 +6,10 @@
     mode="side"
     position="end">
     <mat-list class="mat-list-app-sidenav">
-      <app-render type="Taps" name="Pages"></app-render>
+      <app-render
+        type="Taps"
+        name="Pages"
+        (onClick)="onClick($event)"></app-render>
     </mat-list>
   </mat-drawer>
   <router-outlet></router-outlet>
