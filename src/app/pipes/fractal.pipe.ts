@@ -3,6 +3,7 @@ import { FractalDto, FractalNames } from '@types';
 
 @Pipe({
   name: 'fp',
+  pure: true,
   standalone: true,
 })
 export class FractalPipe implements PipeTransform {

@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
 import { PathParams } from '@types';
-import { PageComponent, ModifierComponent, HomeComponent } from '@components/organisms';
+import {
+  PageComponent,
+  ModifierComponent,
+  HomeComponent,
+} from '@components/organisms';
 import { pageGuard, modifierGuard } from '@guard';
 import { PAGES } from '@constants';
 

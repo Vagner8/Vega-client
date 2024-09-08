@@ -7,17 +7,23 @@ import { ArrayPipe, FractalPipe } from '@pipes';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SidenavComponent, ToolbarComponent, HeaderComponent, FractalPipe, ArrayPipe],
+  imports: [
+    SidenavComponent,
+    ToolbarComponent,
+    HeaderComponent,
+    FractalPipe,
+    ArrayPipe,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   constructor(
     public fs: FractalService,
-    private fetch: FetchService,
+    private fetch: FetchService
   ) {}
 
   ngOnInit(): void {
-    this.fetch.fractal.get().subscribe((fractal) => this.fs.data.set(fractal));
+    this.fetch.fractal.get().subscribe(fractal => this.fs.data.set(fractal));
   }
 }

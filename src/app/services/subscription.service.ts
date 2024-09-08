@@ -2,9 +2,16 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-function AddSubscription(target: unknown, propertyKey: string, descriptor: PropertyDescriptor) {
+function AddSubscription(
+  target: unknown,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
   const originalMethod = descriptor.value;
-  descriptor.value = function (this: SubscriptionService, ...args: Subscription[]) {
+  descriptor.value = function (
+    this: SubscriptionService,
+    ...args: Subscription[]
+  ) {
     const className = this.constructor.name;
     if (!this.subscriptions[className]) {
       this.subscriptions[className] = [];
@@ -15,12 +22,18 @@ function AddSubscription(target: unknown, propertyKey: string, descriptor: Prope
   };
 }
 
-function CleanSubscription(target: unknown, propertyKey: string, descriptor: PropertyDescriptor) {
+function CleanSubscription(
+  target: unknown,
+  propertyKey: string,
+  descriptor: PropertyDescriptor
+) {
   const originalMethod = descriptor.value;
   descriptor.value = function (this: SubscriptionService) {
     const className = this.constructor.name;
     if (this.subscriptions && this.subscriptions[className]) {
-      this.subscriptions[className].forEach((s: Subscription) => s.unsubscribe());
+      this.subscriptions[className].forEach((s: Subscription) =>
+        s.unsubscribe()
+      );
     }
     return originalMethod.apply(this);
   };

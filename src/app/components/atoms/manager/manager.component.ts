@@ -24,7 +24,7 @@ export class ManagerComponent {
   constructor(
     public ss: StateService,
     public fs: FractalService,
-    private ms: ManagerService,
+    private ms: ManagerService
   ) {}
 
   onClick(): void {

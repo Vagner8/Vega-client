@@ -1,7 +1,11 @@
 @if (fs.data(); as data) {
-<button mat-mini-fab appClick (onClick)="onClick()" (onHoldClick)="onHoldClick()">
-  <mat-icon>{{(data | fp: 'Manager' | cp).Icon}}</mat-icon>
-</button>
+  <button
+    mat-mini-fab
+    appClick
+    (onClick)="onClick()"
+    (onHoldClick)="onHoldClick()">
+    <mat-icon>{{ (data | fp: 'Manager' | cp).Icon }}</mat-icon>
+  </button>
 } @else {
-<mat-spinner color="accent" diameter="40"></mat-spinner>
+  <mat-spinner color="accent" diameter="40"></mat-spinner>
 }

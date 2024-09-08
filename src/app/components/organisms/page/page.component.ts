@@ -26,7 +26,7 @@ export class PageComponent {
   constructor(
     public rs: RouterService,
     public fs: FractalService,
-    private cs: ControlService,
+    private cs: ControlService
   ) {}
   // onClick(fractal: FractalDto): void {
   //   if (this.fls.selected().includes(fractal)) this.fls.delete(fractal);

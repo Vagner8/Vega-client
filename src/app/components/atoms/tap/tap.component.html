@@ -1,5 +1,6 @@
-@if (data) {
-<button mat-flat-button appClick (onClick)="onClick()">
-  <mat-icon>{{data.Icon}}</mat-icon>{{data.Fractal}}
-</button>
+@if (fractal | cp; as controls) {
+  <button mat-flat-button appClick (onClick)="onClick(controls.Fractal)">
+    <mat-icon>{{ controls.Icon }}</mat-icon
+    >{{ controls.Fractal }}
+  </button>
 }

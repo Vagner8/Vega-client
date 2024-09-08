@@ -20,7 +20,7 @@ export class ClickDirective {
 
   constructor(
     public ts: TapService,
-    public fls: FractalService,
+    public fls: FractalService
   ) {}
 
   @HostListener('contextmenu')

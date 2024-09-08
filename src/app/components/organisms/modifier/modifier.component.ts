@@ -16,7 +16,7 @@ export class ModifierComponent {
 
   constructor(
     public rs: RouterService,
-    private fls: FractalService,
+    private fls: FractalService
   ) {}
 
   // ngOnInit() {

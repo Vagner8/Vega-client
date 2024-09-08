@@ -5,7 +5,10 @@ export type FractalTapNames = (typeof FRACTALS)[number];
 export type FractalPagesNames = (typeof PAGES)[number];
 export type FractalModifiersNames = (typeof MODIFIERS)[number];
 
-export type FractalNames = FractalTapNames | FractalPagesNames | FractalModifiersNames;
+export type FractalNames =
+  | FractalTapNames
+  | FractalPagesNames
+  | FractalModifiersNames;
 
 export interface Fractal {
   id?: string;

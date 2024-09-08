@@ -46,7 +46,9 @@ export class FetchService {
       },
 
       delete: (fractals: FractalDto[]): Observable<FractalDto[]> => {
-        return this.http.delete<FractalDto[]>(this.fractalApi, { body: fractals });
+        return this.http.delete<FractalDto[]>(this.fractalApi, {
+          body: fractals,
+        });
       },
     };
   }

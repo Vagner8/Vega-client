@@ -8,11 +8,11 @@ export class SelectService {
   selected = signal<FractalDto[]>([]);
 
   add(fractal: FractalDto): void {
-    this.selected.update((state) => [...state, fractal]);
+    this.selected.update(state => [...state, fractal]);
   }
 
   delete(fractal: FractalDto): void {
-    this.selected.update((state) => state.filter((f) => f !== fractal));
+    this.selected.update(state => state.filter(f => f !== fractal));
   }
 
   has(fractal: FractalDto): boolean {
