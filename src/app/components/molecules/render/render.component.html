@@ -1,17 +1,14 @@
 @if (fs.data(); as data) {
   @if (data | fp: name; as fractal) {
-    @for (name of (fractal | cp).Sort; track $index) {
+    @if ((fractal | cp).Sort; as sort) {
       @switch (type) {
         @case ('Taps') {
-          <app-tap [fractal]="fractal.fractals[name]"></app-tap>
+          @for (name of sort; track name) {
+            <app-tap [fractal]="fractal.fractals[name]"></app-tap>
+          }
         }
-        @case ('Rows') {
-          <ng-container [matColumnDef]="name">
-            <th mat-header-cell *matHeaderCellDef>{{ name }}</th>
-            <td mat-cell *matCellDef="let fractal">
-              {{ fractal.controls[name].data }}
-            </td>
-          </ng-container>
+        @case ('Table') {
+          <app-table [sort]="sort" [dataSource]="fractal | ap"></app-table>
         }
       }
     }

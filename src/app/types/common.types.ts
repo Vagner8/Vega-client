@@ -1,3 +1,5 @@
+export type RenderTypes = 'Taps' | 'Table';
+
 export enum InputType {
   Text = 'Text',
   Email = 'Email',

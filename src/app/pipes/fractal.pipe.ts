@@ -8,14 +8,19 @@ import { FractalDto, FractalNames } from '@types';
 })
 export class FractalPipe implements PipeTransform {
   transform(fractal: FractalDto, name: FractalNames): FractalDto {
-    return this.find(fractal, name);
+    const result = this.find(fractal, name);
+    if (!result) throw new Error(`No fractal with name: ${name}`);
+    return result;
   }
 
-  find(fractal: FractalDto, name: FractalNames): FractalDto {
-    for (const key in fractal.fractals) {
-      if (key === name) return fractal.fractals[name];
-      else this.find(fractal.fractals[key], name);
+  find(fractal: FractalDto, name: FractalNames): FractalDto | null {
+    if (name in fractal.fractals) {
+      return fractal.fractals[name];
     }
-    return fractal;
+    for (const fractalKey in fractal.fractals) {
+      const foundFractal = this.find(fractal.fractals[fractalKey], name);
+      if (foundFractal) return foundFractal;
+    }
+    return null;
   }
 }

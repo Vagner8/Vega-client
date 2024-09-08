@@ -1,20 +1,27 @@
 import { Component, Input } from '@angular/core';
-import { FractalNames } from '@types';
+import { FractalNames, RenderTypes } from '@types';
 import { ArrayPipe, FractalPipe, ControlsPipe } from '@pipes';
-import { TapComponent } from '@components/atoms';
-import { FractalService } from '@services';
-import { MatTableModule } from '@mat';
+import { TableComponent, TapComponent } from '@components/atoms';
+import { FractalService, RouterService } from '@services';
+import { isPagesNames } from '@utils';
 
 @Component({
   selector: 'app-render',
   standalone: true,
-  imports: [MatTableModule, TapComponent, ArrayPipe, FractalPipe, ControlsPipe],
+  imports: [TapComponent, TableComponent, ArrayPipe, FractalPipe, ControlsPipe],
   templateUrl: './render.component.html',
   styleUrl: './render.component.css',
 })
 export class RenderComponent {
-  @Input() name!: FractalNames;
-  @Input() type!: 'Taps' | 'Rows';
+  @Input({ required: true }) type!: RenderTypes;
+  @Input({ required: true }) name!: FractalNames;
 
-  constructor(public fs: FractalService) {}
+  constructor(
+    public rs: RouterService,
+    public fs: FractalService
+  ) {}
+
+  onClick(name: string) {
+    this.rs.navigate(isPagesNames(name) ? name : null);
+  }
 }
