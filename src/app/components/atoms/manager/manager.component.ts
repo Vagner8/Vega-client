@@ -3,18 +3,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { MatProgressSpinner } from '@mat';
-import { ManagerService, StateService } from '@services';
+import { ControlsPipe, FractalPipe } from '@pipes';
+import { FractalService, ManagerService, StateService } from '@services';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatIcon, MatButtonModule, MatProgressSpinner, ClickDirective],
+  imports: [
+    MatIcon,
+    FractalPipe,
+    ControlsPipe,
+    ClickDirective,
+    MatButtonModule,
+    MatProgressSpinner,
+  ],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css',
 })
 export class ManagerComponent {
   constructor(
     public ss: StateService,
+    public fs: FractalService,
     private ms: ManagerService,
   ) {}
 

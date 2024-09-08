@@ -1,2 +1,2 @@
-export * from './fractal.guard';
+export * from './page.guard';
 export * from './modifier.guard';

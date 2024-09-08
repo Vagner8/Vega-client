@@ -7,5 +7,5 @@ export const modifierGuard: CanActivateFn = (next) => {
   const router = inject(Router);
   return Object.prototype.hasOwnProperty.call(MODIFIERS, next.params[PathParams.Modifier])
     ? true
-    : router.createUrlTree([PAGES.HOME]);
+    : router.createUrlTree([PAGES[0]]);
 };

@@ -6,5 +6,4 @@ import { Exception } from '@types';
 })
 export class StateService {
   error = signal<Exception | null>(null);
-  isFetching = signal<boolean>(false);
 }

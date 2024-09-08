@@ -1,5 +1,3 @@
-import { FractalDto } from './fractal.types';
-
 export enum InputType {
   Text = 'Text',
   Email = 'Email',
@@ -12,9 +10,4 @@ export interface Exception {
   status: 500;
   detail: string;
   instance: string;
-}
-
-export interface TableData {
-  sort: string;
-  dataSource: FractalDto[];
 }

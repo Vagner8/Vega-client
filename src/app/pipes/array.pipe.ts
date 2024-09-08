@@ -1,12 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ControlDto, ControlsDto } from '@types';
+import { FractalDto } from '@types';
 
 @Pipe({
-  name: 'array',
+  name: 'ap',
   standalone: true,
 })
 export class ArrayPipe implements PipeTransform {
-  transform(value: ControlsDto): ControlDto[] {
-    return Object.values(value);
+  transform(fractal: FractalDto): FractalDto[] {
+    return Object.values(fractal.fractals);
   }
 }

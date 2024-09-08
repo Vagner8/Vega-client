@@ -4,7 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { ClickDirective } from '@directives';
 import { ControlService, RouterService } from '@services';
 import { ControlsData } from '@types';
-import { isFractalPagesNames } from '@utils';
+import { isPagesNames } from '@utils';
 
 @Component({
   selector: 'app-tap',
@@ -23,6 +23,6 @@ export class TapComponent {
 
   onClick() {
     const page = this.data.Fractal;
-    this.rs.navigate(isFractalPagesNames(page) ? page : null);
+    this.rs.navigate(isPagesNames(page) ? page : null);
   }
 }
