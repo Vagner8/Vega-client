@@ -1,11 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import {
-  QueryParams,
-  Segments,
-  FractalModifiersNames,
-  FractalPagesNames,
-} from '@types';
+import { QueryParams, Segments } from '@types';
+import { isModifierName, isPageName } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +24,17 @@ export class RouterService {
     });
   }
 
-  navigate(
-    page: FractalPagesNames | null = null,
-    modifier: FractalModifiersNames | null = null
-  ): void {
-    this.segments.set({ page, modifier });
-    this.router.navigate([page, modifier].filter(Boolean));
+  navigate(page: string, modifier: string = ''): void {
+    const segments = this.getSegments(page, modifier);
+    this.segments.set(segments);
+    this.router.navigate(Object.values(segments).filter(Boolean));
+  }
+
+  private getSegments(page: string, modifier: string): Segments {
+    return {
+      page: isPageName(page) ? page : null,
+      modifier: isModifierName(modifier) ? modifier : null,
+    };
   }
 
   private setSegments(pathname: string): void {

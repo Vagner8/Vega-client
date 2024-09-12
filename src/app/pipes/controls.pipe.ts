@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { INDICATORS } from '@constants';
-import { ControlsData, FractalDto } from '@types';
+import { FractalDto } from '@types';
 
 @Pipe({
   name: 'cp',
   standalone: true,
 })
 export class ControlsPipe implements PipeTransform {
-  transform({ controls }: FractalDto): ControlsData {
+  transform({ controls }: FractalDto): any {
     return INDICATORS.reduce((acc, indicator) => {
       const data = controls[indicator]?.data;
       if (data) {
@@ -18,6 +18,6 @@ export class ControlsPipe implements PipeTransform {
         }
       }
       return acc;
-    }, {} as ControlsData);
+    }, {} as any);
   }
 }

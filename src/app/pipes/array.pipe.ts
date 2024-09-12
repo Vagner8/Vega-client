@@ -7,6 +7,6 @@ import { FractalDto } from '@types';
 })
 export class ArrayPipe implements PipeTransform {
   transform(fractal: FractalDto): FractalDto[] {
-    return Object.values(fractal.fractals);
+    return Object.values(fractal.fractals || []);
   }
 }

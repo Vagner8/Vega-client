@@ -1,2 +1,3 @@
-export * from './functions';
-export * from './guards';
+export * from './functions.utils';
+export * from './guards.utils';
+export * from './fractal.utils';

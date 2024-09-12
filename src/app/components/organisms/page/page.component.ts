@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RenderComponent } from '@components/molecules';
 import { FractalService, RouterService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [RenderComponent, RouterOutlet],
+  imports: [RouterOutlet],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })

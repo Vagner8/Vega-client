@@ -1,5 +1,5 @@
 import { FRACTALS, MODIFIERS, PAGES } from '@constants';
-import { Controls, ControlsDto } from '@types';
+import { ControlsDto, ControlsIndicators } from '@types';
 
 export type FractalTapNames = (typeof FRACTALS)[number];
 export type FractalPagesNames = (typeof PAGES)[number];
@@ -10,24 +10,29 @@ export type FractalNames =
   | FractalPagesNames
   | FractalModifiersNames;
 
-export interface Fractal {
-  id?: string;
-  parentId: string;
-  fractals: Fractals;
-  controls: Controls;
-}
+export type FractalsDto = Record<string, FractalDto>;
+export type Fractals = Record<string, IFractal>;
 
-export interface Fractals {
-  [key: string]: Fractal;
-}
-
-export interface FractalDto {
-  id?: string;
+export interface FractalBase {
+  id: string;
   parentId: string;
-  fractals: FractalsDto;
   controls: ControlsDto;
 }
 
-export interface FractalsDto {
-  [key: string]: FractalDto;
+export interface FractalDto extends FractalBase {
+  fractals: FractalsDto | null;
+}
+
+export interface FractalProps extends FractalBase {
+  fractals: Fractals | null;
+}
+
+export interface IFractal extends FractalBase {
+  id: string;
+  parentId: string;
+  fractals: Fractals | null;
+  data(indicator: ControlsIndicators): string;
+  find(name: string, fractal?: IFractal): IFractal;
+  sort(): string[];
+  toArray(): IFractal[];
 }

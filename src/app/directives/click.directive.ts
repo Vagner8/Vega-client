@@ -1,5 +1,4 @@
 import { Directive, HostListener, output } from '@angular/core';
-import { FractalService, TapService } from '@services';
 
 @Directive({
   standalone: true,
@@ -17,11 +16,6 @@ export class ClickDirective {
 
   private static readonly HOLD_DURATION = 500;
   private static readonly DOUBLE_CLICK_DELAY = 200;
-
-  constructor(
-    public ts: TapService,
-    public fls: FractalService
-  ) {}
 
   @HostListener('contextmenu')
   onContextMenuHostListener(event: MouseEvent): void {

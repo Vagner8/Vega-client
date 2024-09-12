@@ -1,3 +1,5 @@
 <app-header></app-header>
-<app-sidenav></app-sidenav>
+@if (fs.data(); as data) {
+  <app-sidenav [fractal]="data.find('Pages')"></app-sidenav>
+}
 <app-toolbar></app-toolbar>

@@ -2,8 +2,7 @@ import { Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
 import { ControlsPipe } from '@pipes';
-import { ControlService } from '@services';
-import { FractalDto } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -13,8 +12,6 @@ import { FractalDto } from '@types';
   styleUrl: './tap.component.css',
 })
 export class TapComponent {
-  onClick = output<FractalDto>();
-  @Input() fractal!: FractalDto;
-
-  constructor(public cs: ControlService) {}
+  @Input({ required: true }) fractal!: IFractal;
+  onClick = output<IFractal>();
 }

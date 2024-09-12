@@ -14,6 +14,7 @@ export class FractalPipe implements PipeTransform {
   }
 
   find(fractal: FractalDto, name: FractalNames): FractalDto | null {
+    if (!fractal.fractals) return null;
     if (name in fractal.fractals) {
       return fractal.fractals[name];
     }

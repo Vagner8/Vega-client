@@ -1,4 +1,4 @@
-import { isException } from './guards';
+import { isException } from './guards.utils';
 import { Exception } from '@types';
 import { HttpErrorResponse } from '@angular/common/http';
 

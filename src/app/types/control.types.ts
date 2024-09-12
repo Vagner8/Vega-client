@@ -3,9 +3,6 @@ import { FormControl } from '@angular/forms';
 import { INDICATORS } from '@constants';
 
 export type ControlsIndicators = (typeof INDICATORS)[number];
-export type ControlsData = {
-  [K in ControlsIndicators]: K extends 'Sort' ? string[] : string;
-};
 
 export interface ControlSignals {
   disabled: WritableSignal<boolean>;

@@ -1,12 +1,12 @@
 import { PAGES } from '@constants';
 import { Exception, FractalModifiersNames, FractalPagesNames } from '@types';
-import { hasOwnProperty } from './functions';
+import { hasOwnProperty } from './functions.utils';
 
 export const isException = (test: object): test is Exception =>
   hasOwnProperty(test, 'detail');
 
-export const isPagesNames = (test: string): test is FractalPagesNames =>
+export const isPageName = (test: string): test is FractalPagesNames =>
   PAGES.some(page => page === test);
 
-export const isModifiersNames = (test: string): test is FractalModifiersNames =>
+export const isModifierName = (test: string): test is FractalModifiersNames =>
   PAGES.some(page => page === test);

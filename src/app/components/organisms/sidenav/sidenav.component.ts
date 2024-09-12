@@ -1,32 +1,29 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, Input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { RouterService, TapService, ManagerService } from '@services';
-import { isPagesNames } from '@utils';
+import { RouterService, ManagerService } from '@services';
 import { ControlsPipe } from '@pipes';
-import { FractalDto } from '@types';
-import { RenderComponent } from '@components/molecules';
+import { IFractal } from '@types';
+import { TapComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatListModule, MatSidenavModule, RenderComponent, RouterOutlet],
+  imports: [MatListModule, MatSidenavModule, TapComponent, RouterOutlet],
   providers: [ControlsPipe],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent {
+  @Input({ required: true }) fractal!: IFractal;
   open = computed(() => this.ms.clickType() !== 'hold');
 
   constructor(
-    public ts: TapService,
     private ms: ManagerService,
-    private rs: RouterService,
-    private cp: ControlsPipe
+    private rs: RouterService
   ) {}
 
-  onClick(fractal: FractalDto) {
-    const name = this.cp.transform(fractal).Fractal;
-    this.rs.navigate(isPagesNames(name) ? name : null);
+  onClick(fractal: IFractal) {
+    this.rs.navigate(fractal.data('Fractal'));
   }
 }

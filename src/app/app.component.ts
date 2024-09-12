@@ -3,6 +3,7 @@ import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent } from '@components/atoms';
 import { FetchService, FractalService } from '@services';
 import { ToolbarComponent } from '@components/molecules';
+import { FractalFactory } from './utils/fractal-factory.utils';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetch.fractal.get().subscribe(fractal => this.fs.data.set(fractal));
+    this.fetch.fractal
+      .get()
+      .subscribe(fractal => this.fs.data.set(FractalFactory.create(fractal)));
   }
 }

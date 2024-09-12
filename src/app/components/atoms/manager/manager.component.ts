@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { MatProgressSpinner } from '@mat';
 import { ControlsPipe, FractalPipe } from '@pipes';
-import { FractalService, ManagerService, StateService } from '@services';
+import { ManagerService } from '@services';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-manager',
@@ -14,17 +14,14 @@ import { FractalService, ManagerService, StateService } from '@services';
     ControlsPipe,
     ClickDirective,
     MatButtonModule,
-    MatProgressSpinner,
   ],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css',
 })
 export class ManagerComponent {
-  constructor(
-    public ss: StateService,
-    public fs: FractalService,
-    private ms: ManagerService
-  ) {}
+  @Input({ required: true }) fractal!: IFractal;
+
+  constructor(private ms: ManagerService) {}
 
   onClick(): void {
     this.ms.clickType.set('one');

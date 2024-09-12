@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { MatToolbar } from '@mat';
+import { MatProgressSpinner, MatToolbar } from '@mat';
 import { ManagerComponent } from '@components/atoms';
+import { FractalService } from '@services';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MatToolbar, ManagerComponent],
+  imports: [MatToolbar, ManagerComponent, MatProgressSpinner],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
 })
-export class ToolbarComponent {}
+export class ToolbarComponent {
+  constructor(public fs: FractalService) {}
+}
