@@ -1,29 +1,27 @@
-import { Component, computed, Input } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { RouterService, ManagerService } from '@services';
-import { ControlsPipe } from '@pipes';
-import { IFractal } from '@types';
+import { RouterService, ManagerService, FractalService } from '@services';
+import { FractalTapsNames, IFractal } from '@types';
 import { TapComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
   imports: [MatListModule, MatSidenavModule, TapComponent, RouterOutlet],
-  providers: [ControlsPipe],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent {
-  @Input({ required: true }) fractal!: IFractal;
-  open = computed(() => this.ms.clickType() !== 'hold');
+  fractal = computed(() => this.fs.root()?.find(FractalTapsNames.Pages));
 
   constructor(
-    private ms: ManagerService,
-    private rs: RouterService
+    public ms: ManagerService,
+    private rs: RouterService,
+    private fs: FractalService
   ) {}
 
-  onClick(fractal: IFractal) {
-    this.rs.navigate(fractal.data('Fractal'));
+  onClick({ controls }: IFractal) {
+    this.rs.navigate([controls.name]);
   }
 }

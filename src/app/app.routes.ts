@@ -1,16 +1,15 @@
 import { Routes } from '@angular/router';
-import { PathParams } from '@types';
+import { FractalPagesNames, PathParams } from '@types';
 import {
   PageComponent,
   ModifierComponent,
   HomeComponent,
 } from '@components/organisms';
 import { pageGuard, modifierGuard } from '@guard';
-import { PAGES } from '@constants';
 
 export const routes: Routes = [
   {
-    path: PAGES[0],
+    path: FractalPagesNames.Home,
     component: HomeComponent,
   },
   {
@@ -23,5 +22,5 @@ export const routes: Routes = [
     canActivate: [modifierGuard],
     component: ModifierComponent,
   },
-  { path: '**', redirectTo: PAGES[0] },
+  { path: '**', redirectTo: FractalPagesNames.Home },
 ];

@@ -1,4 +1,4 @@
 <button mat-flat-button (click)="onClick.emit(fractal)">
-  <mat-icon>{{ fractal.data('Icon') }}</mat-icon>
-  {{ fractal.data('Fractal') }}
+  <mat-icon>{{ fractal.controls.icon }}</mat-icon>
+  {{ fractal.controls.name }}
 </button>

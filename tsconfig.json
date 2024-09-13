@@ -21,20 +21,17 @@
     "lib": ["ES2022", "dom"],
     "baseUrl": "./src",
     "paths": {
-      "@interceptors": ["app/interceptors/index.ts"],
-      "@directives": ["app/directives/index.ts"],
       "@components/atoms": ["app/components/atoms/index.ts"],
       "@components/molecules": ["app/components/molecules/index.ts"],
       "@components/organisms": ["app/components/organisms/index.ts"],
-      "@services": ["app/services/index.ts"],
+
+      "@interceptors": ["app/interceptors/index.ts"],
+      "@directives": ["app/directives/index.ts"],
       "@constants": ["app/constants/index.ts"],
-      "@controls": ["app/controls/index.ts"],
-      "@config": ["app/config/index.ts"],
+      "@services": ["app/services/index.ts"],
       "@guard": ["app/guard/index.ts"],
       "@types": ["app/types/index.ts"],
-      "@pipes": ["app/pipes/index.ts"],
       "@utils": ["app/utils/index.ts"],
-      "@taps": ["app/taps/index.ts"],
       "@mat": ["app/mat-angular.ts"]
     }
   },

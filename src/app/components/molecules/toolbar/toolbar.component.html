@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="toolbar">
-  @if (fs.data(); as data) {
-    <app-manager [fractal]="data.find('Manager')"></app-manager>
+  @if (fs.root()?.find('Manager'); as fractal) {
+    <app-manager [fractal]="fractal"></app-manager>
   } @else {
     <mat-spinner color="accent" diameter="40"></mat-spinner>
   }

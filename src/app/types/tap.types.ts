@@ -1,3 +1,5 @@
-import { MANAGER_CLICK_TYPE } from '@constants';
-
-export type ManagerClickType = (typeof MANAGER_CLICK_TYPE)[number];
+export enum ClickType {
+  One = 'one',
+  Hold = 'hold',
+  Double = 'double',
+}
