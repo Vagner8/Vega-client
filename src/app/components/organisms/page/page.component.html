@@ -1,3 +1,3 @@
 @if (fractal(); as fractal) {
-  <app-table [fractal]="fractal" (onClick)="onClick($event)"></app-table>
+  <app-table [fractal]="fractal" [clickedRows]="rs.ids()" (onClick)="onClick($event)"></app-table>
 }

@@ -1,19 +1,13 @@
-import {
-  Exception,
-  FractalModifiersNames,
-  FractalPagesNames,
-  PathParams,
-} from '@types';
+import { Exception, Modifiers, Pages, Roots } from '@types';
 import { hasOwnProperty } from './functions.utils';
 
-export const isException = (test: object): test is Exception =>
-  hasOwnProperty(test, 'detail');
+export const isException = (test: object): test is Exception => hasOwnProperty(test, 'detail');
 
-export const isPageName = (test: string): test is FractalPagesNames =>
-  Object.values(FractalPagesNames).some(page => page === test);
+export const isPageName = (test: string): test is Pages => isEnum(test, Pages);
 
-export const isModifierName = (test: string): test is FractalModifiersNames =>
-  Object.values(FractalModifiersNames).some(page => page === test);
+export const isModifierName = (test: string): test is Modifiers => isEnum(test, Modifiers);
 
-export const isPathParam = (test: string): test is PathParams =>
-  Object.values(PathParams).some(param => param === test);
+export const isRoots = (test: string): test is Roots => isEnum(test, Roots);
+
+export const isEnum = (test: string, obj: object): boolean =>
+  Object.values(obj).some(param => param === test);

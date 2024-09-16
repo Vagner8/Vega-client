@@ -4,7 +4,7 @@
       <ng-container [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
         <td mat-cell *matCellDef="let fractal">
-          {{ fractal.controls.data(column) }}
+          {{ fractal.data(column) }}
         </td>
       </ng-container>
     }
@@ -12,6 +12,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: sort"
+      [class.row-is-clicked]="clickedRows.includes(row.id)"
       appClick
       (onClick)="onClick.emit(row)"></tr>
   </table>

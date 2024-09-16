@@ -1,7 +1,7 @@
 import { Component, Input, output } from '@angular/core';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { FractalDto, IFractal } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -12,9 +12,10 @@ import { FractalDto, IFractal } from '@types';
 })
 export class TableComponent {
   @Input({ required: true }) fractal!: IFractal;
-  onClick = output<FractalDto>();
+  @Input({ required: true }) clickedRows!: string[];
+  onClick = output<IFractal>();
 
   get sort(): string[] {
-    return this.fractal.controls.sort;
+    return this.fractal.sort;
   }
 }

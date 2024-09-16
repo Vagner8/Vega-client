@@ -1,17 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatButtonModule,
-  MatFormFieldModule,
-  MatIcon,
-  MatInputModule,
-} from '@mat';
+import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
 import { InputType } from '@types';
 
 @Component({
@@ -39,8 +28,7 @@ export class InputComponent {
 
   toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;
-    input.type =
-      input.type === InputType.Text ? InputType.Password : InputType.Text;
+    input.type = input.type === InputType.Text ? InputType.Password : InputType.Text;
   }
 
   toggleVisibilityIcon(): string {

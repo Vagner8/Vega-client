@@ -1,9 +1,13 @@
-export type RenderTypes = 'Taps' | 'Table';
-
 export enum InputType {
   Text = 'Text',
   Email = 'Email',
   Password = 'Password',
+}
+
+export enum ClickType {
+  One = 'one',
+  Hold = 'hold',
+  Double = 'double',
 }
 
 export interface Exception {

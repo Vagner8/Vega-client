@@ -1,13 +1,13 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="!ms.isHold()"
+    [opened]="open()"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
     <mat-list class="mat-list-app-sidenav">
       @if (fractal(); as fractal) {
-        @for (name of fractal.controls.sort; track $index) {
+        @for (name of fractal.sort; track $index) {
           @if (fractal.find(name); as fractal) {
             <app-tap [fractal]="fractal" (onClick)="onClick($event)"></app-tap>
           }

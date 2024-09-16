@@ -15,3 +15,5 @@ export const ex = (error: HttpErrorResponse): Exception => {
 
 export const hasOwnProperty = (obj: object, property: string): boolean =>
   Object.prototype.hasOwnProperty.call(obj, property);
+
+export const isEmpty = (arr: unknown[]): boolean => arr.length === 0;

@@ -1,8 +1,11 @@
-export enum PathParams {
-  Page = 'Page',
-  Modifier = 'Modifier',
+export enum QueryParams {
+  Ids = 'ids',
+  Manager = 'manager',
 }
 
-export interface QueryParams {
-  ids: string | null;
+export type Segments = Record<QueryParams | 'params', string[]>;
+
+export interface IdSet {
+  str: string | null;
+  arr: string[];
 }

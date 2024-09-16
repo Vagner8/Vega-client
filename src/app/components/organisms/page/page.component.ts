@@ -2,7 +2,7 @@ import { Component, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 import { FractalService, RouterService } from '@services';
-import { FractalDto } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-page',
@@ -12,16 +12,14 @@ import { FractalDto } from '@types';
   styleUrl: './page.component.css',
 })
 export class PageComponent {
-  fractal = computed(() => {
-    const [page] = this.rs.params();
-    return page && this.fs.root()?.find(page);
-  });
+  fractal = computed(() => this.fs.fractal()?.find(this.rs.params()[0]));
+
   constructor(
-    private rs: RouterService,
+    public rs: RouterService,
     private fs: FractalService
   ) {}
 
-  onClick(fractal: FractalDto): void {
-    console.log('🚀 ~ fractal:', fractal);
+  onClick({ id }: IFractal): void {
+    this.rs.navigateById(id);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { ManagerService } from '@services';
 import { ClickType, IFractal } from '@types';
+import { RouterService } from '@services';
 
 @Component({
   selector: 'app-manager',
@@ -14,13 +14,13 @@ import { ClickType, IFractal } from '@types';
 export class ManagerComponent {
   @Input({ required: true }) fractal!: IFractal;
 
-  constructor(private ms: ManagerService) {}
+  constructor(private rs: RouterService) {}
 
   onClick(): void {
-    this.ms.clickType.set(ClickType.One);
+    this.rs.navigateByManager(ClickType.One);
   }
 
   onHoldClick(): void {
-    this.ms.clickType.set(ClickType.Hold);
+    this.rs.navigateByManager(ClickType.Hold);
   }
 }

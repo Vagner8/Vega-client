@@ -1,9 +1,4 @@
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandlerFn,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { StateService } from '@services';
@@ -17,10 +12,7 @@ export const fetchInterceptor = (
   return next(req).pipe(catchError(error => handleError(ss, error)));
 };
 
-export const handleError = (
-  ss: StateService,
-  error: HttpErrorResponse
-): Observable<never> => {
+export const handleError = (ss: StateService, error: HttpErrorResponse): Observable<never> => {
   ss.error.set(ex(error));
   console.error('🚀 ~ Error:', error.error);
   return throwError(() => new Error(error.error));

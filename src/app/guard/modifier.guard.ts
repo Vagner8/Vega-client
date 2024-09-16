@@ -1,11 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { FractalPagesNames, PathParams } from '@types';
+import { Pages, Roots } from '@types';
 import { isModifierName } from '@utils';
 
 export const modifierGuard: CanActivateFn = next => {
   const router = inject(Router);
-  return isModifierName(next.params[PathParams.Modifier])
-    ? true
-    : router.createUrlTree([FractalPagesNames.Home]);
+  return isModifierName(next.params[Roots.Modifiers]) ? true : router.createUrlTree([Pages.Home]);
 };
