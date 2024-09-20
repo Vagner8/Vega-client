@@ -1,5 +1,5 @@
 <!-- @if (fractals) {
-@if (rs.segments().modifier === 'Edit') {
+@if (ns.segments().modifier === 'Edit') {
 @for(fractal of fractals; track fractal.id) {
 <app-controls [controls]="fractal.controls | array"></app-controls>
 }

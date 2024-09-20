@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterService } from '@services';
+import { NavigateService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +10,5 @@ import { RouterService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(public rs: RouterService) {}
+  constructor(public ns: NavigateService) {}
 }

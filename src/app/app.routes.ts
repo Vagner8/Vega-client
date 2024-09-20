@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { Pages, Roots } from '@types';
-import { PageComponent, ModifierComponent, HomeComponent } from '@components/organisms';
-import { pageGuard, modifierGuard } from '@guard';
+import { PageComponent, HomeComponent } from '@components/organisms';
 
 export const routes: Routes = [
   {
@@ -10,13 +9,11 @@ export const routes: Routes = [
   },
   {
     path: `:${Roots.Pages}`,
-    canActivate: [pageGuard],
     component: PageComponent,
   },
   {
     path: `:${Roots.Pages}/:${Roots.Modifiers}`,
-    canActivate: [modifierGuard],
-    component: ModifierComponent,
+    component: PageComponent,
   },
   { path: '**', redirectTo: Pages.Home },
 ];

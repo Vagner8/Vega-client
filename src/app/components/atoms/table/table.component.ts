@@ -12,7 +12,7 @@ import { IFractal } from '@types';
 })
 export class TableComponent {
   @Input({ required: true }) fractal!: IFractal;
-  @Input({ required: true }) clickedRows!: string[];
+  @Input({ required: true }) clickedRows!: Set<string>;
   onClick = output<IFractal>();
 
   get sort(): string[] {

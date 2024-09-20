@@ -2,10 +2,6 @@
   cursor: pointer;
 }
 
-.mat-mdc-row:hover .mat-mdc-cell {
-  background-color: var(--color-secondary);
-}
-
 .row-is-clicked {
   background-color: var(--color-secondary);
 }

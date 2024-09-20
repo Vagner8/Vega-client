@@ -1,8 +1,8 @@
 import { Component, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { RouterService, FractalService } from '@services';
-import { Roots, IFractal, ClickType } from '@types';
+import { NavigateService, FractalService } from '@services';
+import { IFractal, Click, Roots } from '@types';
 import { TapComponent } from '@components/atoms';
 
 @Component({
@@ -13,19 +13,22 @@ import { TapComponent } from '@components/atoms';
   styleUrl: './sidenav.component.css',
 })
 export class SidenavComponent {
-  open = computed(() => this.rs.manager() === ClickType.One);
-  fractal = computed(() => this.fractalComputed());
+  open = computed(() => this.ns.Manager() === Click.One);
+  fractal = computed(() => this.fs.fractal()?.find(this.ns.Taps() || ''));
 
   constructor(
-    private rs: RouterService,
+    public ns: NavigateService,
     private fs: FractalService
   ) {}
 
   onClick({ name, type }: IFractal) {
-    this.rs.navigateByParam(name, type);
-  }
-
-  private fractalComputed(): IFractal | undefined {
-    return this.fs.fractal()?.find(Roots[this.rs.ids().length ? 'Modifiers' : 'Pages']);
+    switch (type) {
+      case Roots.Pages:
+        this.ns.toPage(name);
+        break;
+      case Roots.Modifiers:
+        this.ns.toModifier(name);
+        break;
+    }
   }
 }

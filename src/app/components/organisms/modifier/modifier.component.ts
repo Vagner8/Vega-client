@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ControlsComponent } from '@components/atoms';
-import { FractalService, RouterService } from '@services';
+import { FractalService, NavigateService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
@@ -15,13 +15,13 @@ export class ModifierComponent {
   fractals: FractalDto[] = [];
 
   constructor(
-    public rs: RouterService,
+    public ns: NavigateService,
     private fls: FractalService
   ) {}
 
   // ngOnInit() {
   //   if (!this.fls.hasSelected()) {
-  //     const fractals = this.fls.find(this.rs.queryParams().ids || '');
+  //     const fractals = this.fls.find(this.ns.queryParams().ids || '');
   //     this.fls.selected.set(fractals);
   //   }
   //   this.fractals = this.fls.selected();

@@ -1,12 +1,7 @@
 import { ControlsDto } from '@types';
 
-export enum FractalType {
-  None = 'None',
-  Pages = 'Pages',
-  Modifiers = 'Modifier',
-}
-
 export enum Roots {
+  None = 'None',
   Pages = 'Pages',
   Manager = 'Manager',
   Modifiers = 'Modifiers',
@@ -44,7 +39,7 @@ export interface FractalProps extends FractalBase {
 
 export interface IFractal extends FractalProps {
   name: string;
-  type: FractalType;
+  type: Roots;
   icon: string;
   sort: string[];
   get array(): IFractal[];

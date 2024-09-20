@@ -12,7 +12,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: sort"
-      [class.row-is-clicked]="clickedRows.includes(row.id)"
+      [class.row-is-clicked]="clickedRows.has(row.id)"
       appClick
       (onClick)="onClick.emit(row)"></tr>
   </table>

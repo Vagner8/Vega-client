@@ -1,13 +1,15 @@
+import { WritableSignal } from '@angular/core';
+
 export enum InputType {
   Text = 'Text',
   Email = 'Email',
   Password = 'Password',
 }
 
-export enum ClickType {
-  One = 'one',
-  Hold = 'hold',
-  Double = 'double',
+export enum Click {
+  One = 'One',
+  Hold = 'Hold',
+  Double = 'Double',
 }
 
 export interface Exception {
@@ -17,3 +19,6 @@ export interface Exception {
   detail: string;
   instance: string;
 }
+
+export type WSS = WritableSignal<string | null>;
+export type WSA = WritableSignal<string[]>;

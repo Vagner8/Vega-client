@@ -5,14 +5,14 @@ import {
   Indicators,
   ControlsData,
   ControlsDto,
-  FractalType,
+  Roots,
 } from '@types';
 import { hasOwnProperty, isModifierName, isPageName } from '@utils';
 
 export class Fractal implements IFractal {
   readonly id: string;
   readonly name: string;
-  readonly type: FractalType;
+  readonly type: Roots;
   readonly icon: string;
   readonly sort: string[];
   readonly parentId: string;
@@ -57,9 +57,9 @@ export class Fractal implements IFractal {
     }, {} as ControlsData);
   }
 
-  private get setType(): FractalType {
-    if (isPageName(this.name)) return FractalType.Pages;
-    if (isModifierName(this.name)) return FractalType.Modifiers;
-    return FractalType.None;
+  private get setType(): Roots {
+    if (isPageName(this.name)) return Roots.Pages;
+    if (isModifierName(this.name)) return Roots.Modifiers;
+    return Roots.None;
   }
 }
