@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { NavigateService } from '@services';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +9,6 @@ import { NavigateService } from '@services';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  constructor(public ns: NavigateService) {}
+  @Input() first? = '';
+  @Input() second? = '';
 }

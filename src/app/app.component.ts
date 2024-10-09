@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent } from '@components/atoms';
-import { FetchService, FractalService } from '@services';
 import { ToolbarComponent } from '@components/molecules';
+import { FetchService, FractalService, StoreService } from '@services';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +13,12 @@ import { ToolbarComponent } from '@components/molecules';
 })
 export class AppComponent implements OnInit {
   constructor(
-    public fs: FractalService,
+    public ss: StoreService,
+    private fs: FractalService,
     private fetch: FetchService
   ) {}
 
   ngOnInit(): void {
-    this.fetch.fractal.get().subscribe(this.fs.onInit);
+    this.fetch.fractal.get().subscribe(dto => this.ss.root.add(this.fs.toFractal(dto)));
   }
 }

@@ -1,34 +1,37 @@
-import { Component, computed } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { NavigateService, FractalService } from '@services';
-import { IFractal, Click, Roots } from '@types';
+import { Click, FractalType, IFractal, Roots } from '@types';
 import { TapComponent } from '@components/atoms';
+import { CommonModule } from '@angular/common';
+import { map, Observable } from 'rxjs';
+import { StoreService } from '@services';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatListModule, MatSidenavModule, TapComponent, RouterOutlet],
+  imports: [CommonModule, MatListModule, MatSidenavModule, TapComponent, RouterOutlet],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
-export class SidenavComponent {
-  open = computed(() => this.ns.Manager() === Click.One);
-  fractal = computed(() => this.fs.fractal()?.find(this.ns.Taps() || ''));
+export class SidenavComponent implements OnInit {
+  open$!: Observable<boolean>;
+  prevTaps: Roots | null = null;
+  taps$!: Observable<FractalType>;
 
-  constructor(
-    public ns: NavigateService,
-    private fs: FractalService
-  ) {}
+  constructor(public ss: StoreService) {}
 
-  onClick({ name, type }: IFractal) {
-    switch (type) {
-      case Roots.Pages:
-        this.ns.toPage(name);
-        break;
-      case Roots.Modifiers:
-        this.ns.toModifier(name);
-        break;
-    }
+  ngOnInit(): void {
+    this.open$ = this.ss.manager.observable$.pipe(
+      map(() => {
+        console.log('🚀 ~ manager.observable$:', this.ss.manager.acts.click);
+
+        return this.ss.manager.acts.click?.is(Click.One);
+      })
+    );
+  }
+
+  onClick(fractal: IFractal) {
+    this.ss.taps.add(fractal);
   }
 }

@@ -1,19 +1,21 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="open()"
+    [opened]="open$ | async"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
     <mat-list class="mat-list-app-sidenav">
-      @if (fractal(); as fractal) {
-        @for (name of fractal.sort; track $index) {
-          @if (fractal.find(name); as fractal) {
-            <app-tap [fractal]="fractal" (onClick)="onClick($event)"></app-tap>
+      @if (taps$ | async; as taps) {
+        @for (name of taps.sort; track $index) {
+          @if (taps.find(name); as tap) {
+            <app-tap [fractal]="tap" (onClick)="onClick($event)"></app-tap>
           }
         }
       }
     </mat-list>
   </mat-drawer>
-  <router-outlet></router-outlet>
+  @if (ss.root.signal()) {
+    <router-outlet></router-outlet>
+  }
 </mat-drawer-container>

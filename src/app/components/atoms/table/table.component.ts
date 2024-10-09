@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { IFractal } from '@types';
@@ -9,10 +9,11 @@ import { IFractal } from '@types';
   imports: [MatTableModule, ClickDirective],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
   @Input({ required: true }) fractal!: IFractal;
-  @Input({ required: true }) clickedRows!: Set<string>;
+  @Input({ required: true }) clickedRows!: Set<IFractal>;
   onClick = output<IFractal>();
 
   get sort(): string[] {

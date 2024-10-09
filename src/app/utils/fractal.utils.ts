@@ -1,18 +1,9 @@
-import {
-  FractalProps,
-  Fractals,
-  IFractal,
-  Indicators,
-  ControlsData,
-  ControlsDto,
-  Roots,
-} from '@types';
-import { hasOwnProperty, isModifierName, isPageName } from '@utils';
+import { FractalProps, Fractals, IFractal, Indicators, ControlsData, ControlsDto } from '@types';
+import { hasOwnProperty } from '@utils';
 
 export class Fractal implements IFractal {
   readonly id: string;
   readonly name: string;
-  readonly type: Roots;
   readonly icon: string;
   readonly sort: string[];
   readonly parentId: string;
@@ -24,12 +15,25 @@ export class Fractal implements IFractal {
     const { Icon, Sort, Fractal } = this.controlsData(controls);
     this.id = id;
     this.name = Fractal;
-    this.type = this.setType;
     this.icon = Icon;
     this.sort = Sort.split(':').filter(Boolean);
     this.parentId = parentId;
     this.controls = controls || {};
     this.fractals = fractals;
+  }
+
+  is(test: string | object, callback?: (fractal: IFractal) => void): boolean {
+    let result = false;
+    switch (typeof test) {
+      case 'string':
+        result = this.name === test;
+        break;
+      case 'object':
+        result = Object.values(test).some(item => this.name === item);
+        break;
+    }
+    result && callback && callback(this);
+    return result;
   }
 
   find(name: string, { fractals }: IFractal = this): IFractal {
@@ -55,11 +59,5 @@ export class Fractal implements IFractal {
       acc[indicator] = controls?.[indicator]?.data || '';
       return acc;
     }, {} as ControlsData);
-  }
-
-  private get setType(): Roots {
-    if (isPageName(this.name)) return Roots.Pages;
-    if (isModifierName(this.name)) return Roots.Modifiers;
-    return Roots.None;
   }
 }

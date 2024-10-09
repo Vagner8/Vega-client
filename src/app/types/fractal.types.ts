@@ -1,7 +1,7 @@
 import { ControlsDto } from '@types';
 
 export enum Roots {
-  None = 'None',
+  Items = 'Items',
   Pages = 'Pages',
   Manager = 'Manager',
   Modifiers = 'Modifiers',
@@ -22,6 +22,7 @@ export enum Modifiers {
 
 export type FractalsDto = Record<string, FractalDto>;
 export type Fractals = Record<string, IFractal>;
+export type FractalType = IFractal | null | undefined;
 
 export interface FractalBase {
   id: string;
@@ -39,10 +40,10 @@ export interface FractalProps extends FractalBase {
 
 export interface IFractal extends FractalProps {
   name: string;
-  type: Roots;
   icon: string;
   sort: string[];
   get array(): IFractal[];
+  is(test: string | object, callback?: (fractal: IFractal) => void): boolean;
   data(indicator: string): string;
   find(name: string, fractal?: IFractal): IFractal;
 }

@@ -1,5 +1,3 @@
-import { WSS } from '@types';
-
 export enum Queries {
   Taps = 'Taps',
   Page = 'Page',
@@ -8,12 +6,4 @@ export enum Queries {
   Modifier = 'Modifier',
 }
 
-export type Params = Record<Queries, WSS>;
-
-// export interface Params {
-//   rows: WSA;
-//   taps: WSS;
-//   page: WSS;
-//   manager: WSS;
-//   modifier: WSS;
-// }
+export const QUERIES = Object.values(Queries);

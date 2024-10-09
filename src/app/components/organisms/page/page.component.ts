@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, ParamMap, RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
-import { FractalService, NavigateService, UnsubscribeService } from '@services';
+import { FractalService } from '@services';
 import { IFractal } from '@types';
-import { isEmpty, setToString } from '@utils';
+import { StoreService } from '@services';
 
 @Component({
   selector: 'app-page',
@@ -15,26 +15,21 @@ import { isEmpty, setToString } from '@utils';
 export class PageComponent implements OnInit {
   @Input() Pages = '';
   @Input() Modifiers = '';
-  uid = this.us.register();
-  items = new Set<string>();
+  set = new Set<IFractal>();
 
   constructor(
     public fs: FractalService,
-    private ns: NavigateService,
-    private us: UnsubscribeService
+    public ss: StoreService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.items = new Set(this.ns.itemList());
+    this.route.queryParamMap.subscribe(this.start);
   }
 
-  onClick({ id }: IFractal): void {
-    this.ns.toItems(this.getItems(id));
+  onClick(fractal: IFractal): void {
+    this.set.add(fractal);
   }
 
-  private getItems(id: string): string | null {
-    if (this.items.has(id)) this.items.delete(id);
-    else this.items.add(id);
-    return !isEmpty(this.items) ? setToString(this.items) : null;
-  }
+  private start = (params: ParamMap) => {};
 }
