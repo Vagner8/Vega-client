@@ -1,26 +1,36 @@
-import { Component, Input } from '@angular/core';
-import { MatButtonModule, MatIcon } from '@mat';
+import { Component } from '@angular/core';
+import { MatButtonModule, MatIcon, MatProgressSpinner } from '@mat';
 import { ClickDirective } from '@directives';
-import { Click, IFractal } from '@types';
-import { StoreService } from '@services';
+import { Click, Fractal, Roots } from '@types';
+import { StateService } from '@services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatIcon, ClickDirective, MatButtonModule],
+  imports: [MatIcon, ClickDirective, MatButtonModule, MatProgressSpinner],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.css',
 })
 export class ManagerComponent {
-  @Input({ required: true }) fractal!: IFractal;
+  constructor(
+    public ss: StateService,
+    private router: Router
+  ) {}
 
-  constructor(private ss: StoreService) {}
-
-  onClick(): void {
-    this.ss.manager.add(this.fractal, Click.One);
+  onClick(fractal: Fractal): void {
+    this.handleClick(fractal, Click.One);
   }
 
-  onHoldClick(): void {
-    this.ss.manager.add(this.fractal, Click.Hold);
+  onHoldClick(fractal: Fractal): void {
+    this.handleClick(fractal, Click.Hold);
+  }
+
+  private handleClick(fractal: Fractal, clicked: Click): void {
+    this.ss.managerTap.set(fractal, { clicked });
+    this.router.navigate([], {
+      queryParams: { [Roots.Manager]: clicked },
+      queryParamsHandling: 'merge',
+    });
   }
 }

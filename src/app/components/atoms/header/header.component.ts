@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  @Input() first? = '';
-  @Input() second? = '';
+  constructor(public ss: StateService) {}
 }

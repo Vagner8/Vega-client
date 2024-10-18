@@ -1,3 +1,3 @@
-@if (ss.root.signal()?.find(this.Pages); as fractal) {
-  <app-table [fractal]="fractal" [clickedRows]="set" (onClick)="onClick($event)"></app-table>
+@if (ss.root.$fractal()?.find(this.Pages); as fractal) {
+  <app-table [dataSource]="fractal.arr" [columns]="fractal.sort"></app-table>
 }

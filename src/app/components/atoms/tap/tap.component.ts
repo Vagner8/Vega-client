@@ -1,7 +1,7 @@
 import { Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -11,6 +11,6 @@ import { IFractal } from '@types';
   styleUrl: './tap.component.css',
 })
 export class TapComponent {
-  @Input({ required: true }) fractal!: IFractal;
-  onClick = output<IFractal>();
+  @Input() fractal!: Fractal;
+  onClick = output<Fractal>();
 }

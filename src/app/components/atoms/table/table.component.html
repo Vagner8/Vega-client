@@ -1,6 +1,6 @@
-@if (sort.length) {
-  <table mat-table [dataSource]="fractal.array">
-    @for (column of sort; track column) {
+@if (dataSource.length > 0) {
+  <table mat-table [dataSource]="dataSource">
+    @for (column of columns; track column) {
       <ng-container [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef>
           {{ column }}
@@ -10,12 +10,12 @@
         </td>
       </ng-container>
     }
-    <tr mat-header-row *matHeaderRowDef="sort"></tr>
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr
       mat-row
-      *matRowDef="let row; columns: sort"
-      [class.row-is-clicked]="clickedRows.has(row)"
+      *matRowDef="let row; columns: columns"
       appClick
-      (onClick)="onClick.emit(row)"></tr>
+      [class.row-is-clicked]="clickedRows.has(row)"
+      (onClick)="onClick(row)"></tr>
   </table>
 }

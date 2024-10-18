@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ControlsComponent } from '@components/atoms';
-import { StateService } from '@services';
+import { ErrorService } from '@services';
 import { FractalDto } from '@types';
 
 @Component({
@@ -14,7 +14,7 @@ import { FractalDto } from '@types';
 export class ModifierComponent {
   fractals: FractalDto[] = [];
 
-  constructor(public ss: StateService) {}
+  constructor(public es: ErrorService) {}
 
   // ngOnInit() {
   //   if (!this.fls.hasSelected()) {

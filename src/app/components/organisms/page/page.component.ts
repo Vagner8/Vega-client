@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, RouterOutlet } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
-import { FractalService } from '@services';
-import { IFractal } from '@types';
-import { StoreService } from '@services';
+import { StateService } from '@services';
 
 @Component({
   selector: 'app-page',
@@ -12,24 +10,20 @@ import { StoreService } from '@services';
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
 })
-export class PageComponent implements OnInit {
+export class PageComponent {
   @Input() Pages = '';
   @Input() Modifiers = '';
-  set = new Set<IFractal>();
 
-  constructor(
-    public fs: FractalService,
-    public ss: StoreService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(public ss: StateService) {}
 
-  ngOnInit(): void {
-    this.route.queryParamMap.subscribe(this.start);
-  }
+  // ngOnInit(): void {
+  //   console.log('🚀 ~ Pages:', this.Pages);
+  //   console.log('🚀 ~ fs.root.find(this.Pages):', this.ss.root.find(this.Pages));
+  // }
 
-  onClick(fractal: IFractal): void {
-    this.set.add(fractal);
-  }
+  // onClick(fractal: IFractal): void {
+  //   this.set.add(fractal);
+  // }
 
-  private start = (params: ParamMap) => {};
+  // private start = (params: ParamMap) => {};
 }

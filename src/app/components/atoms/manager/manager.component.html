@@ -1,3 +1,7 @@
-<button mat-mini-fab appClick (onClick)="onClick()" (onHoldClick)="onHoldClick()">
-  <mat-icon>{{ fractal.icon }}</mat-icon>
-</button>
+@if (ss.managerTap.$fractal(); as fractal) {
+  <button mat-mini-fab appClick (onClick)="onClick(fractal)" (onHoldClick)="onHoldClick(fractal)">
+    <mat-icon>{{ fractal.icon }}</mat-icon>
+  </button>
+} @else {
+  <mat-spinner color="accent" diameter="40"></mat-spinner>
+}

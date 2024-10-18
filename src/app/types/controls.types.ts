@@ -1,18 +1,11 @@
 export enum Indicators {
   Icon = 'Icon',
   Sort = 'Sort',
-  Fractal = 'Fractal',
+  FractalName = 'FractalName',
 }
-
-export type ControlsData = Record<Indicators, string>;
 
 export interface ControlDto {
-  id?: string;
-  parentId: string | null;
-  data: string;
+  id: string;
   indicator: string;
-}
-
-export interface ControlsDto {
-  [key: string]: ControlDto;
+  data: string;
 }

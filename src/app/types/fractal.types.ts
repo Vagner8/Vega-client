@@ -1,4 +1,4 @@
-import { ControlsDto } from '@types';
+import { Click, ControlDto } from '@types';
 
 export enum Roots {
   Items = 'Items',
@@ -20,30 +20,47 @@ export enum Modifiers {
   Delete = 'Delete',
 }
 
-export type FractalsDto = Record<string, FractalDto>;
-export type Fractals = Record<string, IFractal>;
-export type FractalType = IFractal | null | undefined;
+export enum Queries {
+  Taps = 'Taps',
+  Page = 'Page',
+  Items = 'Items',
+  Manager = 'Manager',
+  Modifier = 'Modifier',
+}
 
-export interface FractalBase {
+export interface FractalDto {
   id: string;
-  parentId: string;
-  controls?: ControlsDto;
+  fractals: FractalDto[] | null;
+  controls: ControlDto[];
 }
 
-export interface FractalDto extends FractalBase {
-  fractals: FractalsDto | null;
+export type FractalNull = Fractal | null;
+
+export interface YesNo {
+  yes?(): void;
+  no?(): void;
 }
 
-export interface FractalProps extends FractalBase {
-  fractals: Fractals | null;
+interface FractalMethods {
+  get arr(): Fractal[];
+  is(type: object, yesNo?: YesNo): boolean;
+  was(fields: Partial<FractalToCheckFields>, yesNo?: YesNo): boolean;
+  find(name: string, fractals?: Fractal[] | null): FractalNull;
+  data(indicator: string): string;
 }
 
-export interface IFractal extends FractalProps {
-  name: string;
+type FractalFields = {
   icon: string;
   sort: string[];
-  get array(): IFractal[];
-  is(test: string | object, callback?: (fractal: IFractal) => void): boolean;
-  data(indicator: string): string;
-  find(name: string, fractal?: IFractal): IFractal;
+  fractals: Fractal[] | null;
+} & FractalToCheckFields;
+
+export interface FractalActionFields {
+  clicked: Click | null;
 }
+
+export type FractalToCheckFields = {
+  name: string;
+} & FractalActionFields;
+
+export type Fractal = FractalFields & FractalMethods & FractalDto;

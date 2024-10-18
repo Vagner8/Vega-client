@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class FetchService {
+export class DataService {
   private id = ENV.ID;
   private api = ENV.API;
   private fractalApi = `${this.api}fractal`;

@@ -1,7 +1,7 @@
-import { Component, Input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -12,11 +12,13 @@ import { IFractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
-  @Input({ required: true }) fractal!: IFractal;
-  @Input({ required: true }) clickedRows!: Set<IFractal>;
-  onClick = output<IFractal>();
+  @Input() columns!: string[];
+  @Input() dataSource!: Fractal[];
+  fractal = output<Fractal>();
+  clickedRows = new Set<Fractal>();
 
-  get sort(): string[] {
-    return this.fractal.sort;
+  onClick(fractal: Fractal): void {
+    this.clickedRows[this.clickedRows.has(fractal) ? 'delete' : 'add'](fractal);
+    this.fractal.emit(fractal);
   }
 }
