@@ -1,7 +1,14 @@
-<!-- @if (fractals) {
-@if (ns.segments().modifier === 'Edit') {
-@for(fractal of fractals; track fractal.id) {
-<app-controls [controls]="fractal.controls | array"></app-controls>
+@switch (modifiers) {
+  @case ('Add') {
+    <h1>Add</h1>
+  }
+  @case ('Edit') {
+    <h1>Edit</h1>
+  }
+  @case ('Save') {
+    <h1>Save</h1>
+  }
+  @case ('Delete') {
+    <h1>Delete</h1>
+  }
 }
-}
-} -->

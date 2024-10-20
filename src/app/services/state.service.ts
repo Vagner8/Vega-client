@@ -1,5 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal, FractalActionFields, FractalNull, State } from '@types';
+import { Router } from '@angular/router';
+import { Fractal, FractalActionFields, FractalNull, Modifiers, Pages, Roots, State } from '@types';
 import { isKeyof } from '@utils';
 import { Subject } from 'rxjs';
 
@@ -8,10 +9,15 @@ import { Subject } from 'rxjs';
 })
 export class StateService {
   root = this.create();
+  rowTap = this.create();
   pageTap = this.create();
   managerTap = this.create();
   sidenavTaps = this.create();
   modifierTap = this.create();
+
+  clickedRows = new Set<Fractal>();
+
+  constructor(private router: Router) {}
 
   private create(): State {
     return new (class implements State {
@@ -24,11 +30,30 @@ export class StateService {
       }
 
       set(fractal: FractalNull, actions?: Partial<FractalActionFields>): State {
-        if (actions && fractal) {
-          Object.entries(actions).forEach(([key, value]) => {
-            if (isKeyof<FractalActionFields>(fractal, key)) {
-              fractal[key] = value;
-            }
+        if (fractal) {
+          if (actions) {
+            Object.entries(actions).forEach(([key, value]) => {
+              if (isKeyof<FractalActionFields>(fractal, key)) fractal[key] = value;
+            });
+          }
+
+          fractal.is(Pages).yes(() => {
+            this.ss.router.navigate([fractal.name], {
+              queryParams: { [Roots.Manager]: this.ss.managerTap.fractal.clicked },
+            });
+          });
+
+          fractal.is(Modifiers).yes(() => {
+            this.ss.router.navigate([this.ss.pageTap.fractal.name, fractal.name], {
+              queryParamsHandling: 'merge',
+            });
+          });
+
+          fractal.is(Roots.Manager).yes(() => {
+            this.ss.router.navigate([], {
+              queryParams: { [Roots.Manager]: fractal.clicked },
+              queryParamsHandling: 'merge',
+            });
           });
         }
         if (fractal) this.fractal = fractal;

@@ -5,15 +5,7 @@
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    <mat-list class="mat-list-app-sidenav">
-      @if (ss.sidenavTaps.$fractal(); as taps) {
-        @for (key of taps.sort; track key) {
-          @if (ss.sidenavTaps.fractal.find(key); as tap) {
-            <app-tap [fractal]="tap" (onClick)="onClick($event)"></app-tap>
-          }
-        }
-      }
-    </mat-list>
+    <app-sidenav-taps></app-sidenav-taps>
   </mat-drawer>
   <router-outlet></router-outlet>
 </mat-drawer-container>

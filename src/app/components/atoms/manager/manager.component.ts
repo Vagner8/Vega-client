@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { MatButtonModule, MatIcon, MatProgressSpinner } from '@mat';
 import { ClickDirective } from '@directives';
-import { Click, Fractal, Roots } from '@types';
+import { Click, Fractal } from '@types';
 import { StateService } from '@services';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manager',
@@ -13,10 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './manager.component.css',
 })
 export class ManagerComponent {
-  constructor(
-    public ss: StateService,
-    private router: Router
-  ) {}
+  constructor(public ss: StateService) {}
 
   onClick(fractal: Fractal): void {
     this.handleClick(fractal, Click.One);
@@ -28,9 +24,5 @@ export class ManagerComponent {
 
   private handleClick(fractal: Fractal, clicked: Click): void {
     this.ss.managerTap.set(fractal, { clicked });
-    this.router.navigate([], {
-      queryParams: { [Roots.Manager]: clicked },
-      queryParamsHandling: 'merge',
-    });
   }
 }

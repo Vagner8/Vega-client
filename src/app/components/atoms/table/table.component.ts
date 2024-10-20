@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, output, OnDestroy } from '@angular/core';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { Fractal } from '@types';
@@ -11,14 +11,22 @@ import { Fractal } from '@types';
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent {
+export class TableComponent implements OnDestroy {
   @Input() columns!: string[];
   @Input() dataSource!: Fractal[];
-  fractal = output<Fractal>();
-  clickedRows = new Set<Fractal>();
+  @Input() clickedRows!: Set<Fractal>;
+  row = output<Fractal>();
+
+  ngOnDestroy(): void {
+    this.clickedRows.clear();
+  }
 
   onClick(fractal: Fractal): void {
-    this.clickedRows[this.clickedRows.has(fractal) ? 'delete' : 'add'](fractal);
-    this.fractal.emit(fractal);
+    if (this.clickedRows.has(fractal)) {
+      this.clickedRows.delete(fractal);
+    } else {
+      this.clickedRows.add(fractal);
+      this.row.emit(fractal);
+    }
   }
 }

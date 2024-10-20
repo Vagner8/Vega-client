@@ -1,4 +1,4 @@
-<button mat-flat-button (click)="onClick.emit(fractal)">
+<button [disabled]="disabled" mat-flat-button (click)="onClick.emit(fractal)">
   <mat-icon>{{ fractal.icon }}</mat-icon>
   {{ fractal.name }}
 </button>

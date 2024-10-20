@@ -13,9 +13,9 @@
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr
       mat-row
-      *matRowDef="let row; columns: columns"
+      *matRowDef="let fractal; columns: columns"
       appClick
-      [class.row-is-clicked]="clickedRows.has(row)"
-      (onClick)="onClick(row)"></tr>
+      [class.row-is-clicked]="clickedRows.has(fractal)"
+      (onClick)="onClick(fractal)"></tr>
   </table>
 }

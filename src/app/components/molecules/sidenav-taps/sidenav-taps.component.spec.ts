@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import { SidenavTapsComponent } from './sidenav-taps.component';
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+describe('SidenavTapsComponent', () => {
+  let component: SidenavTapsComponent;
+  let fixture: ComponentFixture<SidenavTapsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [SidenavTapsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomeComponent);
+    fixture = TestBed.createComponent(SidenavTapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

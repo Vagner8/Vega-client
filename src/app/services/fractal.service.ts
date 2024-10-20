@@ -4,6 +4,7 @@ import {
   ControlDto,
   Fractal,
   FractalDto,
+  FractalResult,
   FractalToCheckFields,
   Indicators,
   YesNo,
@@ -58,13 +59,13 @@ export class FractalService {
         return this.fractals ? Object.values(this.fractals) : [];
       }
 
-      is(type: object, { yes, no }: YesNo): boolean {
-        const result = hasOwnProperty(type, this.name);
-        result ? yes?.() : no?.();
-        return result;
+      is(test: object | string): FractalResult {
+        return this.result(
+          typeof test === 'object' ? hasOwnProperty(test, this.name) : test === this.name
+        );
       }
 
-      was(fields: Partial<FractalToCheckFields>, { yes, no }: YesNo): boolean {
+      was(fields: Partial<FractalToCheckFields>): FractalResult {
         let result = false;
         for (const key in fields) {
           if (isKeyof(fields, key)) {
@@ -73,8 +74,7 @@ export class FractalService {
           }
         }
 
-        result ? yes?.() : no?.();
-        return result;
+        return this.result(result);
       }
 
       find(name: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
@@ -91,6 +91,21 @@ export class FractalService {
       data(indicator: string): string {
         const control = this.controls.find(control => control.indicator === indicator);
         return control ? control.data : 'default';
+      }
+
+      private result(result: boolean): FractalResult {
+        const instance: FractalResult = {
+          yes: (callback: YesNo): FractalResult => {
+            result && callback(this);
+            return instance;
+          },
+          no: (callback: YesNo): FractalResult => {
+            !result && callback(this);
+            return instance;
+          },
+          result,
+        };
+        return instance;
       }
     })(dto, fractals);
   }

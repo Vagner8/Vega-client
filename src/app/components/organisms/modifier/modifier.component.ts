@@ -1,26 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ControlsComponent } from '@components/atoms';
-import { ErrorService } from '@services';
-import { FractalDto } from '@types';
+import { Component, Input } from '@angular/core';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [CommonModule, ControlsComponent],
+  imports: [],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.css',
 })
 export class ModifierComponent {
-  fractals: FractalDto[] = [];
-
-  constructor(public es: ErrorService) {}
-
-  // ngOnInit() {
-  //   if (!this.fls.hasSelected()) {
-  //     const fractals = this.fls.find(this.ns.queryParams().ids || '');
-  //     this.fls.selected.set(fractals);
-  //   }
-  //   this.fractals = this.fls.selected();
-  // }
+  @Input() fractal!: Fractal;
+  @Input() modifiers!: string;
 }

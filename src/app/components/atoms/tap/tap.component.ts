@@ -12,5 +12,6 @@ import { Fractal } from '@types';
 })
 export class TapComponent {
   @Input() fractal!: Fractal;
+  @Input() disabled = false;
   onClick = output<Fractal>();
 }

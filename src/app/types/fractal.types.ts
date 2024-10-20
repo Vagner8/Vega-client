@@ -1,4 +1,4 @@
-import { Click, ControlDto } from '@types';
+import { ControlDto } from '@types';
 
 export enum Roots {
   Items = 'Items',
@@ -35,16 +35,18 @@ export interface FractalDto {
 }
 
 export type FractalNull = Fractal | null;
+export type YesNo = (fractal: Fractal) => void;
 
-export interface YesNo {
-  yes?(): void;
-  no?(): void;
+export interface FractalResult {
+  yes: (callback: YesNo) => FractalResult;
+  no: (callback: YesNo) => FractalResult;
+  result: boolean;
 }
 
 interface FractalMethods {
   get arr(): Fractal[];
-  is(type: object, yesNo?: YesNo): boolean;
-  was(fields: Partial<FractalToCheckFields>, yesNo?: YesNo): boolean;
+  is(type: object | string): FractalResult;
+  was(fields: Partial<FractalToCheckFields>): FractalResult;
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
 }
@@ -56,7 +58,7 @@ type FractalFields = {
 } & FractalToCheckFields;
 
 export interface FractalActionFields {
-  clicked: Click | null;
+  clicked: string | null;
 }
 
 export type FractalToCheckFields = {
