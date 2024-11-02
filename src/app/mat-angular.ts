@@ -11,3 +11,4 @@ export * from '@angular/material/form-field';
 export * from '@angular/material/select';
 export * from '@angular/material/snack-bar';
 export * from '@angular/material/progress-spinner';
+export * from '@angular/material/card';

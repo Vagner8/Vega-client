@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import {
   Click,
   ControlDto,
   Fractal,
   FractalDto,
+  FractalFormControl,
+  FractalFormControls,
   FractalResult,
   FractalToCheckFields,
   Indicators,
@@ -43,6 +46,8 @@ export class FractalService {
 
       clicked: Click | null;
 
+      formGroup: FormGroup<FractalFormControls>;
+
       constructor({ id, controls }: FractalDto, fractals: Fractal[] | null) {
         this.id = id;
         this.controls = controls;
@@ -53,10 +58,19 @@ export class FractalService {
         this.sort = this.data(Indicators.Sort).split(':');
 
         this.clicked = null;
+
+        this.formGroup = new FormGroup<FractalFormControls>(this.createFormGroup());
+        this.formGroup.valueChanges.subscribe(valueChanges => {
+          console.log('🚀 ~ valueChanges:', valueChanges);
+        });
       }
 
-      get arr(): Fractal[] {
+      get fractalsList(): Fractal[] {
         return this.fractals ? Object.values(this.fractals) : [];
+      }
+
+      get controlsList(): ControlDto[] {
+        return Object.values(this.controls);
       }
 
       is(test: object | string): FractalResult {
@@ -90,7 +104,18 @@ export class FractalService {
 
       data(indicator: string): string {
         const control = this.controls.find(control => control.indicator === indicator);
-        return control ? control.data : 'default';
+        return control ? control.data : '';
+      }
+
+      getFormControl(indicator: string): FractalFormControl {
+        return this.formGroup.get(indicator) as FractalFormControl;
+      }
+
+      private createFormGroup(): FractalFormControls {
+        return this.controlsList.reduce((acc, control) => {
+          acc[control.indicator] = new FormControl(control.data);
+          return acc;
+        }, {} as FractalFormControls);
       }
 
       private result(result: boolean): FractalResult {

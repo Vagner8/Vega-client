@@ -25,23 +25,25 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.ds.fractal.get(), this.route.queryParamMap]).subscribe(([dto, params]) => {
-      if (this.ss.root.fractal) return;
-      const { fractal } = this.ss.root.set(this.fs.toFractal(dto));
-      this.ss.managerTap.set(fractal.find(Roots.Manager), {
-        clicked: params.get(Roots.Manager) || Click.One,
-      });
-      this.ss.pageTap.set(fractal.find(this.Pages));
-      this.ss.sidenavTaps.set(fractal.find(Roots.Pages));
-      this.Modifiers && this.ss.modifierTap.set(fractal.find(this.Modifiers));
-    });
+    combineLatest([this.ds.fractal.get(), this.route.queryParamMap]).subscribe(
+      ([dto, queryParam]) => {
+        if (this.ss.root.$fractal()) return;
+        const { fractal } = this.ss.root.set(this.fs.toFractal(dto));
+        this.ss.manager.set(fractal.find(Roots.Manager), {
+          clicked: queryParam.get(Roots.Manager) || Click.One,
+        });
+        this.ss.page.set(fractal.find(this.Pages));
+        this.ss.sidenavs.set(fractal.find(Roots.Pages));
+        this.Modifiers && this.ss.modifier.set(fractal.find(this.Modifiers));
+      }
+    );
   }
 
   onRowClick(row: Fractal): void {
-    this.ss.sidenavTaps.set(this.ss.root.fractal.find(Roots.Modifiers));
-    this.ss.managerTap.fractal
+    this.ss.row.set(row);
+    this.ss.sidenavs.set(this.ss.root.fractal.find(Roots.Modifiers));
+    this.ss.manager.fractal
       .was({ clicked: Click.Hold })
-      .yes(fractal => this.ss.managerTap.set(fractal, { clicked: Click.One }));
-    this.ss.rowTap.set(row);
+      .yes(fractal => this.ss.manager.set(fractal, { clicked: Click.One }));
   }
 }

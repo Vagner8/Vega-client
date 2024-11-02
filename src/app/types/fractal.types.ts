@@ -1,7 +1,7 @@
+import { FormControl, FormGroup } from '@angular/forms';
 import { ControlDto } from '@types';
 
 export enum Roots {
-  Items = 'Items',
   Pages = 'Pages',
   Manager = 'Manager',
   Modifiers = 'Modifiers',
@@ -21,11 +21,8 @@ export enum Modifiers {
 }
 
 export enum Queries {
-  Taps = 'Taps',
-  Page = 'Page',
-  Items = 'Items',
+  Rows = 'Rows',
   Manager = 'Manager',
-  Modifier = 'Modifier',
 }
 
 export interface FractalDto {
@@ -36,6 +33,8 @@ export interface FractalDto {
 
 export type FractalNull = Fractal | null;
 export type YesNo = (fractal: Fractal) => void;
+export type FractalFormControl = FormControl<string | null>;
+export type FractalFormControls = Record<string, FractalFormControl>;
 
 export interface FractalResult {
   yes: (callback: YesNo) => FractalResult;
@@ -44,17 +43,20 @@ export interface FractalResult {
 }
 
 interface FractalMethods {
-  get arr(): Fractal[];
+  get fractalsList(): Fractal[];
+  get controlsList(): ControlDto[];
   is(type: object | string): FractalResult;
   was(fields: Partial<FractalToCheckFields>): FractalResult;
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
+  getFormControl(indicator: string): FractalFormControl;
 }
 
 type FractalFields = {
   icon: string;
   sort: string[];
   fractals: Fractal[] | null;
+  formGroup: FormGroup<FractalFormControls>;
 } & FractalToCheckFields;
 
 export interface FractalActionFields {

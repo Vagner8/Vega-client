@@ -5,12 +5,12 @@ import { CommonModule } from '@angular/common';
 import { map, Observable } from 'rxjs';
 import { StateService } from '@services';
 import { Click, Roots } from '@types';
-import { SidenavTapsComponent } from '@components/molecules';
+import { SidenavsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, SidenavTapsComponent, RouterOutlet],
+  imports: [CommonModule, MatSidenavModule, SidenavsComponent, RouterOutlet],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
@@ -21,13 +21,13 @@ export class SidenavComponent implements OnInit {
   constructor(public ss: StateService) {}
 
   ngOnInit(): void {
-    this.opened$ = this.ss.managerTap.fractal$.pipe(
+    this.opened$ = this.ss.manager.fractal$.pipe(
       map(() => {
-        return (this.opened = this.ss.managerTap.fractal.was({ clicked: Click.One }).yes(() => {
+        return (this.opened = this.ss.manager.fractal.was({ clicked: Click.One }).yes(() => {
           if (!this.opened) return;
-          const { name } = this.ss.sidenavTaps.fractal;
+          const { name } = this.ss.sidenavs.fractal;
           const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
-          this.ss.sidenavTaps.set(this.ss.root.fractal.find(toggleTaps));
+          this.ss.sidenavs.set(this.ss.root.fractal?.find(toggleTaps));
         }).result);
       })
     );

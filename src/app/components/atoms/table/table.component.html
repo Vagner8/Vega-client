@@ -15,7 +15,7 @@
       mat-row
       *matRowDef="let fractal; columns: columns"
       appClick
-      [class.row-is-clicked]="clickedRows.has(fractal)"
-      (onClick)="onClick(fractal)"></tr>
+      [class.row-is-clicked]="clickedRows.includes(fractal)"
+      (onClick)="this.row.emit(fractal)"></tr>
   </table>
 }

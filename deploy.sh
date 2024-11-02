@@ -8,8 +8,8 @@ sudo yum install -y nodejs
 eco $(node --version)
 eco $(npm --version)
 
-git clone https://github.com/Vagner8/Vega-client.git
-cd ./Vega-client
+git clone https://github.com/Vagner8/fractal-client.git
+cd ./Fractal-client
 
 npm i
 npm install -g @angular/cli

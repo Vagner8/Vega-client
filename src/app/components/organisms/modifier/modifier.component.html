@@ -1,14 +1,30 @@
-@switch (modifiers) {
-  @case ('Add') {
-    <h1>Add</h1>
+@if (fractals[0]; as fractal) {
+  @if (modifiers === 'Edit') {
+    <form>
+      @for (indicator of sort; track indicator) {
+        <app-input [label]="indicator" [control]="fractal.getFormControl(indicator)"></app-input>
+      }
+    </form>
   }
-  @case ('Edit') {
-    <h1>Edit</h1>
-  }
-  @case ('Save') {
-    <h1>Save</h1>
-  }
-  @case ('Delete') {
-    <h1>Delete</h1>
+  @if (modifiers === 'Save') {
+    <mat-list role="list" class="list">
+      <div mat-subheader>Your changes</div>
+      @for (indicator of sort; track indicator) {
+        @if (fractal.getFormControl(indicator); as formControl) {
+          @if (formControl.dirty) {
+            <mat-list-item role="listitem" class="list-item">
+              <mat-card appearance="outlined">
+                <mat-card-header class="card-header">
+                  <mat-card-title>{{ indicator }}</mat-card-title>
+                  <mat-card-subtitle>{{
+                    fractal.getFormControl(indicator).value
+                  }}</mat-card-subtitle>
+                </mat-card-header>
+              </mat-card>
+            </mat-list-item>
+          }
+        }
+      }
+    </mat-list>
   }
 }

@@ -23,6 +23,6 @@ export class ManagerComponent {
   }
 
   private handleClick(fractal: Fractal, clicked: Click): void {
-    this.ss.managerTap.set(fractal, { clicked });
+    this.ss.manager.set(fractal, { clicked });
   }
 }

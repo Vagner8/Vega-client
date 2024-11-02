@@ -1,6 +1,15 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Fractal, FractalActionFields, FractalNull, Modifiers, Pages, Roots, State } from '@types';
+import {
+  Fractal,
+  FractalActionFields,
+  FractalNull,
+  Modifiers,
+  Pages,
+  Queries,
+  Roots,
+  State,
+} from '@types';
 import { isKeyof } from '@utils';
 import { Subject } from 'rxjs';
 
@@ -8,25 +17,27 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class StateService {
+  row = this.create();
   root = this.create();
-  rowTap = this.create();
-  pageTap = this.create();
-  managerTap = this.create();
-  sidenavTaps = this.create();
-  modifierTap = this.create();
-
-  clickedRows = new Set<Fractal>();
+  page = this.create();
+  manager = this.create();
+  sidenavs = this.create();
+  modifier = this.create();
 
   constructor(private router: Router) {}
 
   private create(): State {
     return new (class implements State {
+      $fractals = signal<Fractal[]>([]);
       $fractal = signal<FractalNull>(null);
       fractal$ = new Subject<FractalNull>();
-      fractal!: Fractal;
 
-      constructor(private ss: StateService) {
-        if (this.ss?.root) this.fractal = this.ss.root.fractal;
+      constructor(private ss: StateService) {}
+
+      get fractal(): Fractal {
+        const result = this.$fractal();
+        if (!result) throw new Error('No fractal');
+        return result;
       }
 
       set(fractal: FractalNull, actions?: Partial<FractalActionFields>): State {
@@ -37,14 +48,30 @@ export class StateService {
             });
           }
 
+          fractal.is('').yes(() => {
+            this.$fractals.update(fractals => {
+              const set = new Set(fractals);
+              set[set.has(fractal) ? 'delete' : 'add'](fractal);
+              return Array.from(set);
+            });
+            this.ss.router.navigate([], {
+              queryParams: {
+                [Queries.Rows]: this.$fractals()
+                  .map(fractal => fractal.id)
+                  .join(':'),
+              },
+              queryParamsHandling: 'merge',
+            });
+          });
+
           fractal.is(Pages).yes(() => {
             this.ss.router.navigate([fractal.name], {
-              queryParams: { [Roots.Manager]: this.ss.managerTap.fractal.clicked },
+              queryParams: { [Roots.Manager]: this.ss.manager.fractal?.clicked },
             });
           });
 
           fractal.is(Modifiers).yes(() => {
-            this.ss.router.navigate([this.ss.pageTap.fractal.name, fractal.name], {
+            this.ss.router.navigate([this.ss.page.fractal?.name, fractal.name], {
               queryParamsHandling: 'merge',
             });
           });
@@ -55,8 +82,9 @@ export class StateService {
               queryParamsHandling: 'merge',
             });
           });
+        } else {
+          this.$fractals.set([]);
         }
-        if (fractal) this.fractal = fractal;
         this.$fractal.set(fractal);
         this.fractal$.next(fractal);
         return this;

@@ -5,20 +5,25 @@ import { StateService } from '@services';
 import { Fractal, Modifiers, Pages } from '@types';
 
 @Component({
-  selector: 'app-sidenav-taps',
+  selector: 'app-sidenavs',
   standalone: true,
   imports: [TapComponent, MatListModule],
-  templateUrl: './sidenav-taps.component.html',
-  styleUrl: './sidenav-taps.component.css',
+  templateUrl: './sidenavs.component.html',
+  styleUrl: './sidenavs.component.css',
 })
-export class SidenavTapsComponent {
+export class SidenavsComponent {
   constructor(public ss: StateService) {}
 
   disabled(tap: Fractal): boolean {
+    const { length } = this.ss.row.$fractals();
+    const one = this.ss.row.$fractals()[0];
     switch (tap.name) {
+      case Modifiers.Save:
+        return !one.formGroup.dirty;
       case Modifiers.Delete:
+        return length === 0;
       case Modifiers.Edit:
-        return this.ss.clickedRows.size === 0;
+        return length !== 1;
       default:
         return false;
     }
@@ -28,9 +33,10 @@ export class SidenavTapsComponent {
     tap
       .is(Pages)
       .yes(() => {
-        this.ss.pageTap.set(tap);
-        this.ss.modifierTap.set(null);
+        this.ss.page.set(tap);
+        this.ss.row.set(null);
+        this.ss.modifier.set(null);
       })
-      .no(() => this.ss.modifierTap.set(tap));
+      .no(() => this.ss.modifier.set(tap));
   }
 }

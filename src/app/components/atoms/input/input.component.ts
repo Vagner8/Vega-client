@@ -21,10 +21,14 @@ import { InputType } from '@types';
 export class InputComponent {
   @ViewChild('inputElementRef')
   private _inputElementRef!: ElementRef<HTMLInputElement>;
-
-  @Input() clearButton = true;
   @Input() label: string = '';
-  @Input() formControl!: FormControl;
+  @Input() control!: FormControl;
+  @Input() clearButton = true;
+
+  clearControl(): void {
+    this.control.setValue('');
+    this.control.markAsDirty();
+  }
 
   toggleInputType(): void {
     const input = this._inputElementRef.nativeElement;

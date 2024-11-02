@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vega-client": {
+    "fractal-client": {
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
@@ -21,19 +21,13 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "localize": ["en-US"],
-            "outputPath": "dist/vega-client",
+            "outputPath": "dist/fractal-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/css/styles.css",
-              "@angular/material/prebuilt-themes/indigo-pink.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/css/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": []
           },
           "configurations": {
@@ -64,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "vega-client:build:production"
+              "buildTarget": "fractal-client:build:production"
             },
             "development": {
-              "buildTarget": "vega-client:build:development"
+              "buildTarget": "fractal-client:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "vega-client:build"
+            "buildTarget": "fractal-client:build"
           }
         },
         "test": {
@@ -83,33 +77,22 @@
           "options": {
             "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/css/styles.css",
-              "@angular/material/prebuilt-themes/indigo-pink.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/css/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ],
+    "schematicCollections": ["@angular-eslint/schematics"],
     "analytics": false
   }
 }

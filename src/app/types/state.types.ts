@@ -3,8 +3,9 @@ import { Fractal, FractalActionFields, FractalNull } from '@types';
 import { Subject } from 'rxjs';
 
 export interface State {
+  $fractals: WritableSignal<Fractal[]>;
   $fractal: WritableSignal<FractalNull>;
   fractal$: Subject<FractalNull>;
-  fractal: Fractal;
+  get fractal(): Fractal;
   set(fractal: FractalNull, actions?: Partial<FractalActionFields>): State;
 }

@@ -1,0 +1,13 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-medium);
+}
+
+.list-item {
+  height: 100%;
+}
+
+.card-header {
+  padding: var(--size-medium);
+}

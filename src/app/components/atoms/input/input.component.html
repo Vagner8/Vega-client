@@ -1,18 +1,18 @@
 <mat-form-field class="mat-form-field-app-input">
   <mat-label i18n>{{ label }}</mat-label>
-  <input #inputElementRef [type]="label" matInput [formControl]="formControl" />
-  @if (formControl.value && clearButton) {
+  <input #inputElementRef [type]="label" matInput [formControl]="control" />
+  @if (control.value && clearButton) {
     <button
       type="button"
       matSuffix
       mat-icon-button
       i18n-aria-label
       aria-label="Clear input"
-      (click)="formControl.setValue('')">
+      (click)="clearControl()">
       <mat-icon>close</mat-icon>
     </button>
   }
-  @if (formControl.value && label === 'password') {
+  @if (control.value && label === 'password') {
     <button
       type="button"
       matSuffix
@@ -23,10 +23,10 @@
       <mat-icon>{{ toggleVisibilityIcon() }}</mat-icon>
     </button>
   }
-  @if (formControl.hasError(label) && !formControl.hasError('required')) {
+  @if (control.hasError(label) && !control.hasError('required')) {
     <mat-error>{{ messages.valid }} {{ label }}</mat-error>
   }
-  @if (formControl.hasError('required')) {
+  @if (control.hasError('required')) {
     <mat-error>{{ label }} {{ messages.required }}</mat-error>
   }
 </mat-form-field>
