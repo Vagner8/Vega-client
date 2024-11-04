@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
 import { Fractal } from '@types';
@@ -9,6 +9,7 @@ import { Fractal } from '@types';
   imports: [MatIcon, MatButtonModule, ClickDirective],
   templateUrl: './tap.component.html',
   styleUrl: './tap.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TapComponent {
   @Input() fractal!: Fractal;

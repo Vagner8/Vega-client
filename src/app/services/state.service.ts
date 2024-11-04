@@ -48,7 +48,7 @@ export class StateService {
             });
           }
 
-          fractal.is('').yes(() => {
+          fractal.check('').yes(() => {
             this.$fractals.update(fractals => {
               const set = new Set(fractals);
               set[set.has(fractal) ? 'delete' : 'add'](fractal);
@@ -64,19 +64,19 @@ export class StateService {
             });
           });
 
-          fractal.is(Pages).yes(() => {
+          fractal.check(Pages).yes(() => {
             this.ss.router.navigate([fractal.name], {
               queryParams: { [Roots.Manager]: this.ss.manager.fractal?.clicked },
             });
           });
 
-          fractal.is(Modifiers).yes(() => {
+          fractal.check(Modifiers).yes(() => {
             this.ss.router.navigate([this.ss.page.fractal?.name, fractal.name], {
               queryParamsHandling: 'merge',
             });
           });
 
-          fractal.is(Roots.Manager).yes(() => {
+          fractal.check(Roots.Manager).yes(() => {
             this.ss.router.navigate([], {
               queryParams: { [Roots.Manager]: fractal.clicked },
               queryParamsHandling: 'merge',

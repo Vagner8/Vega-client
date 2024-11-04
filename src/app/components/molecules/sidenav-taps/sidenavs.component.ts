@@ -16,10 +16,10 @@ export class SidenavsComponent {
 
   disabled(tap: Fractal): boolean {
     const { length } = this.ss.row.$fractals();
-    const one = this.ss.row.$fractals()[0];
+    const fractals = this.ss.row.$fractals();
     switch (tap.name) {
       case Modifiers.Save:
-        return !one.formGroup.dirty;
+        return fractals[0] ? !fractals[0].formGroup.dirty : true;
       case Modifiers.Delete:
         return length === 0;
       case Modifiers.Edit:
@@ -31,7 +31,7 @@ export class SidenavsComponent {
 
   onClick(tap: Fractal): void {
     tap
-      .is(Pages)
+      .check(Pages)
       .yes(() => {
         this.ss.page.set(tap);
         this.ss.row.set(null);

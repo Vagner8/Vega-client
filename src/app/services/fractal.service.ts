@@ -8,11 +8,11 @@ import {
   FractalFormControl,
   FractalFormControls,
   FractalResult,
-  FractalToCheckFields,
+  FractalActionFields,
   Indicators,
   YesNo,
 } from '@types';
-import { hasOwnProperty, isKeyof } from '@utils';
+import { isKeyof, isTypeof } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -73,22 +73,25 @@ export class FractalService {
         return Object.values(this.controls);
       }
 
-      is(test: object | string): FractalResult {
-        return this.result(
-          typeof test === 'object' ? hasOwnProperty(test, this.name) : test === this.name
-        );
-      }
-
-      was(fields: Partial<FractalToCheckFields>): FractalResult {
-        let result = false;
-        for (const key in fields) {
-          if (isKeyof(fields, key)) {
-            result = this[key] === fields[key];
-            if (!result) break;
+      check(test: string | object): FractalResult {
+        if (typeof test === 'string') {
+          return this.result(this.name === test);
+        }
+        if (typeof test === 'object') {
+          if (isTypeof<FractalActionFields>(test, 'clicked')) {
+            let result = false;
+            for (const key in test) {
+              if (isKeyof(test, key)) {
+                result = this[key] === test[key];
+                if (!result) break;
+              }
+            }
+            return this.result(result);
           }
+          return this.result(isTypeof(test, this.name));
         }
 
-        return this.result(result);
+        return this.result(false);
       }
 
       find(nameOrId: string, fractals: Fractal[] | null = this.fractals): Fractal | null {

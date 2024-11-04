@@ -42,29 +42,31 @@ export interface FractalResult {
   result: boolean;
 }
 
+export interface FractalCheckProps {
+  name?: string;
+  type?: object;
+  action?: Partial<FractalActionFields>;
+}
+
 interface FractalMethods {
   get fractalsList(): Fractal[];
   get controlsList(): ControlDto[];
-  is(type: object | string): FractalResult;
-  was(fields: Partial<FractalToCheckFields>): FractalResult;
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
+  check(test: string | object): FractalResult;
   getFormControl(indicator: string): FractalFormControl;
 }
 
 type FractalFields = {
+  name: string;
   icon: string;
   sort: string[];
   fractals: Fractal[] | null;
   formGroup: FormGroup<FractalFormControls>;
-} & FractalToCheckFields;
+} & FractalActionFields;
 
 export interface FractalActionFields {
   clicked: string | null;
 }
-
-export type FractalToCheckFields = {
-  name: string;
-} & FractalActionFields;
 
 export type Fractal = FractalFields & FractalMethods & FractalDto;

@@ -23,7 +23,7 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     this.opened$ = this.ss.manager.fractal$.pipe(
       map(() => {
-        return (this.opened = this.ss.manager.fractal.was({ clicked: Click.One }).yes(() => {
+        return (this.opened = this.ss.manager.fractal.check({ clicked: Click.One }).yes(() => {
           if (!this.opened) return;
           const { name } = this.ss.sidenavs.fractal;
           const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
