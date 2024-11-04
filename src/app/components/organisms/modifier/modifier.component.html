@@ -1,28 +1,28 @@
 @if (fractals[0]; as fractal) {
-  @if (modifiers === 'Edit') {
+  @if (modifier === 'Edit') {
     <form>
-      @for (indicator of sort; track indicator) {
-        <app-input [label]="indicator" [control]="fractal.getFormControl(indicator)"></app-input>
-      }
+      <mat-list role="list" class="input-list">
+        @for (indicator of sort; track indicator) {
+          <mat-list-item role="listitem" class="list-item">
+            <app-input
+              [label]="indicator"
+              [control]="fractal.getFormControl(indicator)"></app-input>
+          </mat-list-item>
+        }
+      </mat-list>
     </form>
   }
-  @if (modifiers === 'Save') {
+  @if (modifier === 'Save') {
     <mat-list role="list" class="list">
-      <div mat-subheader>Your changes</div>
       @for (indicator of sort; track indicator) {
         @if (fractal.getFormControl(indicator); as formControl) {
-          @if (formControl.dirty) {
-            <mat-list-item role="listitem" class="list-item">
-              <mat-card appearance="outlined">
-                <mat-card-header class="card-header">
-                  <mat-card-title>{{ indicator }}</mat-card-title>
-                  <mat-card-subtitle>{{
-                    fractal.getFormControl(indicator).value
-                  }}</mat-card-subtitle>
-                </mat-card-header>
-              </mat-card>
-            </mat-list-item>
-          }
+          <mat-list-item role="listitem" class="list-item">
+            <mat-card appearance="outlined">
+              <mat-card-content
+                >{{ indicator }}: {{ fractal.getFormControl(indicator).value }}</mat-card-content
+              >
+            </mat-card>
+          </mat-list-item>
         }
       }
     </mat-list>

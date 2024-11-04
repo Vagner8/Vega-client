@@ -91,11 +91,11 @@ export class FractalService {
         return this.result(result);
       }
 
-      find(name: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
+      find(nameOrId: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
         if (fractals) {
           for (const fractal of fractals) {
-            if (fractal.name === name) return fractal;
-            const found = this.find(name, fractal.fractals);
+            if (fractal.name === nameOrId || fractal.id === nameOrId) return fractal;
+            const found = this.find(nameOrId, fractal.fractals);
             if (found) return found;
           }
         }

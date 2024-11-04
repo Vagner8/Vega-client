@@ -14,5 +14,5 @@ import { FractalNull } from '@types';
 export class ModifierComponent {
   @Input() sort: string[] = [];
   @Input() fractals: FractalNull[] = [];
-  @Input() modifiers!: string;
+  @Input() modifier!: string;
 }

@@ -12,5 +12,8 @@ export const isPageTap = (test: string): test is Pages => isEnum(test, Pages);
 
 export const isModifierTap = (test: string): test is Modifiers => isEnum(test, Modifiers);
 
+export const isTypeof = <T extends object>(obj: T, key: PropertyKey): obj is T =>
+  hasOwnProperty(obj, key);
+
 export const isKeyof = <T extends object>(obj: T, key: PropertyKey): key is keyof T =>
   hasOwnProperty(obj, key);

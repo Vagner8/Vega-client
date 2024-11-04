@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 import { DataService, FractalService, StateService } from '@services';
-import { Click, Fractal, Roots } from '@types';
+import { Click, Fractal, Queries, Roots } from '@types';
 import { combineLatest } from 'rxjs';
 import { ModifierComponent } from '../modifier/modifier.component';
 
@@ -30,11 +30,16 @@ export class PageComponent implements OnInit {
         if (this.ss.root.$fractal()) return;
         const { fractal } = this.ss.root.set(this.fs.toFractal(dto));
         this.ss.manager.set(fractal.find(Roots.Manager), {
-          clicked: queryParam.get(Roots.Manager) || Click.One,
+          clicked: queryParam.get(Queries.Manager) || Click.One,
         });
         this.ss.page.set(fractal.find(this.Pages));
         this.ss.sidenavs.set(fractal.find(Roots.Pages));
-        this.Modifiers && this.ss.modifier.set(fractal.find(this.Modifiers));
+        if (this.Modifiers) this.ss.modifier.set(fractal.find(this.Modifiers));
+        const rows = queryParam.get(Queries.Rows);
+        if (rows) {
+          rows.split(':').forEach(id => this.ss.row.set(fractal.find(id)));
+          this.ss.sidenavs.set(fractal.find(Roots.Modifiers));
+        }
       }
     );
   }

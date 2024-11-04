@@ -1,7 +1,7 @@
 @if (ss.page.$fractal(); as fractal) {
   @if (Modifiers) {
     <app-modifier
-      [modifiers]="Modifiers"
+      [modifier]="Modifiers"
       [fractals]="ss.row.$fractals()"
       [sort]="fractal.sort"></app-modifier>
   } @else {
