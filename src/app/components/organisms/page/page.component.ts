@@ -47,7 +47,7 @@ export class PageComponent implements OnInit {
   onRowClick(row: Fractal): void {
     this.ss.row.set(row);
     this.ss.sidenavs.set(this.ss.root.fractal.find(Roots.Modifiers));
-    this.ss.manager.fractal.isActions({ clicked: Click.Hold }) &&
+    this.ss.manager.fractal.checkActions({ clicked: Click.Hold }) &&
       this.ss.manager.set(this.ss.manager.fractal, { clicked: Click.One });
   }
 }

@@ -79,7 +79,7 @@ export class FractalService {
         return Object.values(type).some(name => this.name === name);
       }
 
-      isActions(actions: Partial<FractalActionFields>): boolean {
+      checkActions(actions: Partial<FractalActionFields>): boolean {
         let result = false;
         for (const key in actions) {
           if (isKeyof(actions, key)) {

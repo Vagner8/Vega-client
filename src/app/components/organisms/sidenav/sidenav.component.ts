@@ -16,31 +16,22 @@ import { SidenavsComponent } from '@components/molecules';
 })
 export class SidenavComponent implements OnInit {
   isOpen = false;
-  opened$!: Observable<boolean>;
+  isOpen$!: Observable<boolean>;
 
   constructor(public ss: StateService) {}
 
   ngOnInit(): void {
-    this.opened$ = this.ss.manager.fractal$.pipe(
-      map(() => this.shouldOpenSidenav()),
+    this.isOpen$ = this.ss.manager.fractal$.pipe(
+      map(() => this.ss.manager.fractal.checkActions({ clicked: Click.One })),
       tap(isOpen => {
+        if (this.isOpen && isOpen) {
+          const { name } = this.ss.sidenavs.fractal;
+          const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
+          const targetSidenav = this.ss.root.fractal?.find(toggleTaps);
+          targetSidenav && this.ss.sidenavs.set(targetSidenav);
+        }
         this.isOpen = isOpen;
-        isOpen && this.toggleSidenav();
       })
     );
-  }
-
-  shouldOpenSidenav() {
-    return this.ss.manager.fractal.isActions({ clicked: Click.One });
-  }
-
-  toggleSidenav() {
-    const { name } = this.ss.sidenavs.fractal;
-    const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
-    const targetSidenav = this.ss.root.fractal?.find(toggleTaps);
-
-    if (targetSidenav) {
-      this.ss.sidenavs.set(targetSidenav);
-    }
   }
 }

@@ -48,7 +48,7 @@ interface FractalMethods {
   data(indicator: string): string;
   checkName(test: string): boolean;
   checkType(type: object): boolean;
-  isActions(actions: Partial<FractalActionFields>): boolean;
+  checkActions(actions: Partial<FractalActionFields>): boolean;
   getFormControl(indicator: string): FractalFormControl;
 }
 
