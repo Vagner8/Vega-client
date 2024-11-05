@@ -29,11 +29,11 @@ export class PageComponent implements OnInit {
       ([dto, queryParam]) => {
         if (this.ss.root.$fractal()) return;
         const { fractal } = this.ss.root.set(this.fs.toFractal(dto));
+        this.ss.sidenavs.set(fractal.find(Roots.Pages));
         this.ss.manager.set(fractal.find(Roots.Manager), {
           clicked: queryParam.get(Queries.Manager) || Click.One,
         });
         this.ss.page.set(fractal.find(this.Pages));
-        this.ss.sidenavs.set(fractal.find(Roots.Pages));
         if (this.Modifiers) this.ss.modifier.set(fractal.find(this.Modifiers));
         const rows = queryParam.get(Queries.Rows);
         if (rows) {
@@ -47,8 +47,7 @@ export class PageComponent implements OnInit {
   onRowClick(row: Fractal): void {
     this.ss.row.set(row);
     this.ss.sidenavs.set(this.ss.root.fractal.find(Roots.Modifiers));
-    this.ss.manager.fractal
-      .check({ clicked: Click.Hold })
-      .yes(fractal => this.ss.manager.set(fractal, { clicked: Click.One }));
+    this.ss.manager.fractal.isActions({ clicked: Click.Hold }) &&
+      this.ss.manager.set(this.ss.manager.fractal, { clicked: Click.One });
   }
 }

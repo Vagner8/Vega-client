@@ -7,12 +7,10 @@ import {
   FractalDto,
   FractalFormControl,
   FractalFormControls,
-  FractalResult,
   FractalActionFields,
   Indicators,
-  YesNo,
 } from '@types';
-import { isKeyof, isTypeof } from '@utils';
+import { isKeyof } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -73,25 +71,23 @@ export class FractalService {
         return Object.values(this.controls);
       }
 
-      check(test: string | object): FractalResult {
-        if (typeof test === 'string') {
-          return this.result(this.name === test);
-        }
-        if (typeof test === 'object') {
-          if (isTypeof<FractalActionFields>(test, 'clicked')) {
-            let result = false;
-            for (const key in test) {
-              if (isKeyof(test, key)) {
-                result = this[key] === test[key];
-                if (!result) break;
-              }
-            }
-            return this.result(result);
-          }
-          return this.result(isTypeof(test, this.name));
-        }
+      checkName(test: string): boolean {
+        return this.name === test;
+      }
 
-        return this.result(false);
+      checkType(type: object): boolean {
+        return Object.values(type).some(name => this.name === name);
+      }
+
+      isActions(actions: Partial<FractalActionFields>): boolean {
+        let result = false;
+        for (const key in actions) {
+          if (isKeyof(actions, key)) {
+            result = this[key] === actions[key];
+            if (!result) break;
+          }
+        }
+        return result;
       }
 
       find(nameOrId: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
@@ -119,21 +115,6 @@ export class FractalService {
           acc[control.indicator] = new FormControl(control.data);
           return acc;
         }, {} as FractalFormControls);
-      }
-
-      private result(result: boolean): FractalResult {
-        const instance: FractalResult = {
-          yes: (callback: YesNo): FractalResult => {
-            result && callback(this);
-            return instance;
-          },
-          no: (callback: YesNo): FractalResult => {
-            !result && callback(this);
-            return instance;
-          },
-          result,
-        };
-        return instance;
       }
     })(dto, fractals);
   }

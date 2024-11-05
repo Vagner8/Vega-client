@@ -48,12 +48,13 @@ export class StateService {
             });
           }
 
-          fractal.check('').yes(() => {
-            this.$fractals.update(fractals => {
-              const set = new Set(fractals);
-              set[set.has(fractal) ? 'delete' : 'add'](fractal);
-              return Array.from(set);
-            });
+          this.$fractals.update(fractals => {
+            const set = new Set(fractals);
+            set[set.has(fractal) ? 'delete' : 'add'](fractal);
+            return Array.from(set);
+          });
+
+          fractal.checkName('') &&
             this.ss.router.navigate([], {
               queryParams: {
                 [Queries.Rows]: this.$fractals()
@@ -62,26 +63,22 @@ export class StateService {
               },
               queryParamsHandling: 'merge',
             });
-          });
 
-          fractal.check(Pages).yes(() => {
+          fractal.checkType(Pages) &&
             this.ss.router.navigate([fractal.name], {
               queryParams: { [Roots.Manager]: this.ss.manager.fractal?.clicked },
             });
-          });
 
-          fractal.check(Modifiers).yes(() => {
+          fractal.checkType(Modifiers) &&
             this.ss.router.navigate([this.ss.page.fractal?.name, fractal.name], {
               queryParamsHandling: 'merge',
             });
-          });
 
-          fractal.check(Roots.Manager).yes(() => {
+          fractal.checkName(Roots.Manager) &&
             this.ss.router.navigate([], {
               queryParams: { [Roots.Manager]: fractal.clicked },
               queryParamsHandling: 'merge',
             });
-          });
         } else {
           this.$fractals.set([]);
         }

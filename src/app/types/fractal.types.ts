@@ -32,15 +32,8 @@ export interface FractalDto {
 }
 
 export type FractalNull = Fractal | null;
-export type YesNo = (fractal: Fractal) => void;
 export type FractalFormControl = FormControl<string | null>;
 export type FractalFormControls = Record<string, FractalFormControl>;
-
-export interface FractalResult {
-  yes: (callback: YesNo) => FractalResult;
-  no: (callback: YesNo) => FractalResult;
-  result: boolean;
-}
 
 export interface FractalCheckProps {
   name?: string;
@@ -53,7 +46,9 @@ interface FractalMethods {
   get controlsList(): ControlDto[];
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
-  check(test: string | object): FractalResult;
+  checkName(test: string): boolean;
+  checkType(type: object): boolean;
+  isActions(actions: Partial<FractalActionFields>): boolean;
   getFormControl(indicator: string): FractalFormControl;
 }
 

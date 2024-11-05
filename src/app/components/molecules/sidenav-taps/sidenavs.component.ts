@@ -30,13 +30,12 @@ export class SidenavsComponent {
   }
 
   onClick(tap: Fractal): void {
-    tap
-      .check(Pages)
-      .yes(() => {
-        this.ss.page.set(tap);
-        this.ss.row.set(null);
-        this.ss.modifier.set(null);
-      })
-      .no(() => this.ss.modifier.set(tap));
+    if (tap.checkType(Pages)) {
+      this.ss.page.set(tap);
+      this.ss.row.set(null);
+      this.ss.modifier.set(null);
+    } else {
+      this.ss.modifier.set(tap);
+    }
   }
 }
