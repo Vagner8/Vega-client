@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
-import { DataService, StateService } from '@services';
+import { StateService } from '@services';
 import { Fractal, Modifiers, Pages } from '@types';
 
 @Component({
@@ -12,14 +12,12 @@ import { Fractal, Modifiers, Pages } from '@types';
   styleUrl: './sidenav-taps.component.css',
 })
 export class SidenavTapsComponent {
-  constructor(
-    public ss: StateService,
-    private ds: DataService
-  ) {}
+  constructor(public ss: StateService) {}
 
   isSet(fractal: Fractal): boolean {
     return (
-      fractal.checkName(Modifiers.Save) && !!this.ss.modifier.$fractal()?.checkName(Modifiers.Save)
+      fractal.checkName(Modifiers.Save) &&
+      Boolean(this.ss.modifier.$fractal()?.checkName(Modifiers.Save))
     );
   }
 
@@ -44,6 +42,8 @@ export class SidenavTapsComponent {
       this.ss.modifier.set(null);
     } else {
       this.ss.modifier.set(tap);
+      // if (tap.checkName(Modifiers.Add)) {
+      // }
     }
   }
 

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 import { DataService, FractalService, StateService } from '@services';
-import { Click, Fractal, Queries, Roots } from '@types';
+import { Click, Fractal, Roots } from '@types';
 import { combineLatest } from 'rxjs';
 import { ModifierComponent } from '../modifier/modifier.component';
 
@@ -14,7 +14,9 @@ import { ModifierComponent } from '../modifier/modifier.component';
   styleUrl: './page.component.css',
 })
 export class PageComponent implements OnInit {
+  @Input() Rows = '';
   @Input() Pages = '';
+  @Input() Manager = '';
   @Input() Modifiers = '';
 
   constructor(
@@ -25,19 +27,22 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.ss.root.$fractal()) return;
-    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(([dto, queryParam]) => {
-      const { fractal } = this.ss.root.set(this.fs.toFractal(dto));
-      this.ss.sidenavTaps.set(fractal.find(Roots.Pages));
-      this.ss.manager.set(fractal.find(Roots.Manager), {
-        clicked: queryParam.get(Queries.Manager) || Click.One,
+    console.log('🚀 ~ Rows:', this.Rows);
+    console.log('🚀 ~ Manager:', this.Manager);
+
+    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(([dto]) => {
+      if (this.ss.root.$fractal()) return;
+      const root = this.ss.root.set(this.fs.toFractal(dto));
+      this.ss.manager.set(root.fractal.find(Roots.Manager), {
+        clicked: this.Manager || Click.One,
       });
-      this.ss.page.set(fractal.find(this.Pages));
-      if (this.Modifiers) this.ss.modifier.set(fractal.find(this.Modifiers));
-      const rows = queryParam.get(Queries.Rows);
-      if (rows) {
-        rows.split(':').forEach(id => this.ss.row.set(fractal.find(id)));
-        this.ss.sidenavTaps.set(fractal.find(Roots.Modifiers));
+      this.ss.page.set(root.fractal.find(this.Pages));
+      if (this.Modifiers && this.Rows) {
+        this.ss.modifier.set(root.fractal.find(this.Modifiers));
+        this.Rows.split(':').forEach(id => this.ss.row.set(root.fractal.find(id)));
+        this.ss.sidenavTaps.set(root.fractal.find(Roots.Modifiers));
+      } else {
+        this.ss.sidenavTaps.set(root.fractal.find(Roots.Pages));
       }
     });
   }
