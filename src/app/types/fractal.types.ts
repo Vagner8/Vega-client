@@ -46,6 +46,7 @@ interface FractalMethods {
   get controlsList(): ControlDto[];
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
+  update(): void;
   checkName(test: string): boolean;
   checkType(type: object): boolean;
   checkActions(actions: Partial<FractalActionFields>): boolean;

@@ -1,0 +1,15 @@
+<mat-list class="mat-list-app-sidenav">
+  @if (ss.sidenavTaps.$fractal(); as taps) {
+    @for (key of taps.sort; track key) {
+      @if (ss.sidenavTaps.fractal.find(key); as tap) {
+        <app-tap
+          [isSet]="isSet(tap)"
+          [disabled]="disabled(tap)"
+          [fractal]="tap"
+          (onClick)="onClick($event)"
+          (onHoldClick)="onHoldClick($event)">
+        </app-tap>
+      }
+    }
+  }
+</mat-list>

@@ -1,4 +1,13 @@
-<button [disabled]="disabled" mat-flat-button (click)="onClick.emit(fractal)">
+<button
+  [disabled]="disabled"
+  mat-flat-button
+  appClick
+  (onClick)="onClick.emit(fractal)"
+  (onHoldClick)="onHoldClick.emit(fractal)">
   <mat-icon>{{ fractal.icon }}</mat-icon>
-  {{ fractal.name }}
+  @if (isSet && !disabled) {
+    Hold to {{ fractal.name }}
+  } @else {
+    {{ fractal.name }}
+  }
 </button>

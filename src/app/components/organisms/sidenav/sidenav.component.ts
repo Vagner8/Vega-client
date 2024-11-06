@@ -5,12 +5,12 @@ import { CommonModule } from '@angular/common';
 import { map, Observable, tap } from 'rxjs';
 import { StateService } from '@services';
 import { Click, Roots } from '@types';
-import { SidenavsComponent } from '@components/molecules';
+import { SidenavTapsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, SidenavsComponent, RouterOutlet],
+  imports: [CommonModule, MatSidenavModule, SidenavTapsComponent, RouterOutlet],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css',
 })
@@ -25,10 +25,10 @@ export class SidenavComponent implements OnInit {
       map(() => this.ss.manager.fractal.checkActions({ clicked: Click.One })),
       tap(isOpen => {
         if (this.isOpen && isOpen) {
-          const { name } = this.ss.sidenavs.fractal;
+          const { name } = this.ss.sidenavTaps.fractal;
           const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
           const targetSidenav = this.ss.root.fractal?.find(toggleTaps);
-          targetSidenav && this.ss.sidenavs.set(targetSidenav);
+          targetSidenav && this.ss.sidenavTaps.set(targetSidenav);
         }
         this.isOpen = isOpen;
       })

@@ -21,8 +21,8 @@ export class StateService {
   root = this.create();
   page = this.create();
   manager = this.create();
-  sidenavs = this.create();
   modifier = this.create();
+  sidenavTaps = this.create();
 
   constructor(private router: Router) {}
 

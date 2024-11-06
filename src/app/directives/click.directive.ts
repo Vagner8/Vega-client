@@ -14,7 +14,7 @@ export class ClickDirective {
   private clickCount = 0;
   private isHoldEvent = false;
 
-  private static readonly HOLD_DURATION = 500;
+  private static readonly HOLD_DURATION = 750;
   private static readonly DOUBLE_CLICK_DELAY = 150;
 
   @HostListener('contextmenu')

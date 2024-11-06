@@ -1,2 +1,2 @@
 export * from './toolbar/toolbar.component';
-export * from './sidenavs/sidenavs.component';
+export * from './sidenav-taps/sidenav-taps.component';

@@ -11,12 +11,15 @@ import {
   Indicators,
 } from '@types';
 import { isKeyof } from '@utils';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
   root!: FractalDto;
+
+  constructor(private ds: DataService) {}
 
   toFractal(dto: FractalDto): Fractal {
     this.root = dto;
@@ -46,9 +49,13 @@ export class FractalService {
 
       formGroup: FormGroup<FractalFormControls>;
 
-      constructor({ id, controls }: FractalDto, fractals: Fractal[] | null) {
-        this.id = id;
-        this.controls = controls;
+      constructor(
+        private dto: FractalDto,
+        fractals: Fractal[] | null,
+        private ds: DataService
+      ) {
+        this.id = dto.id;
+        this.controls = dto.controls;
         this.fractals = fractals;
 
         this.name = this.data(Indicators.FractalName);
@@ -69,6 +76,17 @@ export class FractalService {
 
       get controlsList(): ControlDto[] {
         return Object.values(this.controls);
+      }
+
+      update(): void {
+        Object.entries(this.formGroup.value).forEach(([indicator, value]) => {
+          this.controls.forEach(control => {
+            if (control.indicator === indicator) control.data = value || '';
+          });
+        });
+        this.ds.update(this.dto).subscribe(data => {
+          console.log('🚀 ~ data:', data);
+        });
       }
 
       checkName(test: string): boolean {
@@ -116,6 +134,6 @@ export class FractalService {
           return acc;
         }, {} as FractalFormControls);
       }
-    })(dto, fractals);
+    })(dto, fractals, this.ds);
   }
 }
