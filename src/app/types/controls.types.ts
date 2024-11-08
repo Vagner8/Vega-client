@@ -6,6 +6,7 @@ export enum Indicators {
 
 export interface ControlDto {
   id: string;
+  parentId: string;
   indicator: string;
   data: string;
 }

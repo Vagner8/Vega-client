@@ -7,5 +7,5 @@ export interface State {
   $fractal: WritableSignal<FractalNull>;
   fractal$: Subject<FractalNull>;
   get fractal(): Fractal;
-  set(fractal: FractalNull, actions?: Partial<FractalActionFields>): State;
+  set(fractal: FractalNull, actions?: Partial<FractalActionFields>): Promise<State>;
 }

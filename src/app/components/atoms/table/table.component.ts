@@ -12,8 +12,8 @@ import { Fractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
+  @Input() rows!: Fractal[];
   @Input() columns!: string[];
   @Input() dataSource!: Fractal[];
-  @Input() clickedRows!: Fractal[];
   row = output<Fractal>();
 }

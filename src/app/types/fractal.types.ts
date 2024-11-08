@@ -1,6 +1,10 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { ControlDto } from '@types';
 
+export enum Data {
+  Shape = 'Shape',
+}
+
 export enum Roots {
   Pages = 'Pages',
   Manager = 'Manager',
@@ -14,7 +18,7 @@ export enum Pages {
 }
 
 export enum Modifiers {
-  Add = 'Add',
+  New = 'New',
   Edit = 'Edit',
   Save = 'Save',
   Delete = 'Delete',
@@ -27,6 +31,7 @@ export enum Queries {
 
 export interface FractalDto {
   id: string;
+  parentId: string;
   fractals: FractalDto[] | null;
   controls: ControlDto[];
 }
@@ -35,6 +40,11 @@ export type FractalNull = Fractal | null;
 export type FractalFormControl = FormControl<string | null>;
 export type FractalFormControls = Record<string, FractalFormControl>;
 
+export interface FractalFilterProps {
+  list: Fractal[];
+  shape: Fractal | null;
+}
+
 export interface FractalCheckProps {
   name?: string;
   type?: object;
@@ -42,21 +52,21 @@ export interface FractalCheckProps {
 }
 
 interface FractalMethods {
-  get fractalsList(): Fractal[];
-  get controlsList(): ControlDto[];
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
-  update(): void;
   checkName(test: string): boolean;
   checkType(type: object): boolean;
   checkActions(actions: Partial<FractalActionFields>): boolean;
-  getFormControl(indicator: string): FractalFormControl;
+  formControl(indicator: string): FractalFormControl;
 }
 
 type FractalFields = {
+  dto: FractalDto;
+  list: Fractal[];
   name: string;
   icon: string;
   sort: string[];
+  shape: Fractal | null;
   fractals: Fractal[] | null;
   formGroup: FormGroup<FractalFormControls>;
 } & FractalActionFields;
@@ -65,4 +75,4 @@ export interface FractalActionFields {
   clicked: string | null;
 }
 
-export type Fractal = FractalFields & FractalMethods & FractalDto;
+export type Fractal = FractalFields & FractalMethods;

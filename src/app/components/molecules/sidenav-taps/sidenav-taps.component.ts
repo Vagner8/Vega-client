@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { StateService } from '@services';
-import { Fractal, Modifiers, Pages } from '@types';
+import { Data, Fractal, Modifiers, Pages } from '@types';
 
 @Component({
   selector: 'app-sidenav-taps',
@@ -35,20 +35,25 @@ export class SidenavTapsComponent {
     }
   }
 
-  onClick(tap: Fractal): void {
+  async onClick(tap: Fractal): Promise<void> {
     if (tap.checkType(Pages)) {
-      this.ss.page.set(tap);
-      this.ss.row.set(null);
+      await this.ss.page.set(tap);
+      await this.ss.row.set(null);
       this.ss.modifier.set(null);
     } else {
-      this.ss.modifier.set(tap);
-      // if (tap.checkName(Modifiers.Add)) {
-      // }
+      await this.ss.modifier.set(tap);
+      if (tap.checkName(Modifiers.New)) {
+        this.ss.row.set(this.ss.page.fractal.find(Data.Shape));
+      }
     }
   }
 
   onHoldClick(tap: Fractal): void {
-    this.ss.row.fractal.update();
-    console.log('🚀 ~ this.ss.row.fractal:', tap);
+    if (tap.checkName(Modifiers.Save)) {
+      this.ss.update();
+    }
+    if (tap.checkName(Modifiers.Delete)) {
+      this.ss.delete();
+    }
   }
 }

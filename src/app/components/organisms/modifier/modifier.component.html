@@ -1,44 +1,41 @@
-@if (fractals[0]; as fractal) {
-  @if (modifier === 'Add') {
-    <form>
-      <mat-list role="list" class="input-list">
-        @for (indicator of sort; track indicator) {
-          <mat-list-item role="listitem" class="list-item">
-            <app-input
-              [label]="indicator"
-              [control]="fractal.getFormControl(indicator)"></app-input>
-          </mat-list-item>
-        }
-      </mat-list>
-    </form>
-  }
-
-  @if (modifier === 'Edit') {
-    <form>
-      <mat-list role="list" class="input-list">
-        @for (indicator of sort; track indicator) {
-          <mat-list-item role="listitem" class="list-item">
-            <app-input
-              [label]="indicator"
-              [control]="fractal.getFormControl(indicator)"></app-input>
-          </mat-list-item>
-        }
-      </mat-list>
-    </form>
-  }
-  @if (modifier === 'Save') {
-    <mat-list role="list" class="list">
+@if (modifier === 'New' && shape) {
+  <form>
+    <mat-list role="list" class="input-list">
       @for (indicator of sort; track indicator) {
-        @if (fractal.getFormControl(indicator); as formControl) {
-          <mat-list-item role="listitem" class="list-item">
-            <mat-card appearance="outlined">
-              <mat-card-content
-                >{{ indicator }}: {{ fractal.getFormControl(indicator).value }}</mat-card-content
-              >
-            </mat-card>
-          </mat-list-item>
-        }
+        <mat-list-item role="listitem" class="list-item">
+          <app-input [label]="indicator" [control]="shape.formControl(indicator)"></app-input>
+        </mat-list-item>
       }
     </mat-list>
-  }
+  </form>
+}
+
+@if (modifier === 'Edit') {
+  <form>
+    <mat-list role="list" class="input-list">
+      @for (indicator of sort; track indicator) {
+        <mat-list-item role="listitem" class="list-item">
+          <app-input [label]="indicator" [control]="firstRow.formControl(indicator)"></app-input>
+        </mat-list-item>
+      }
+    </mat-list>
+  </form>
+}
+
+@if (modifier === 'Save') {
+  <mat-list role="list" class="list">
+    @for (indicator of sort; track indicator) {
+      @if (firstRow.formControl(indicator); as formControl) {
+        <mat-list-item role="listitem" class="list-item">
+          <mat-card appearance="outlined">
+            <mat-card-content>{{ indicator }}: {{ formControl.value }}</mat-card-content>
+          </mat-card>
+        </mat-list-item>
+      }
+    }
+  </mat-list>
+}
+
+@if (modifier === 'Delete') {
+  <app-table [rows]="rows" [columns]="sort" [dataSource]="rows"></app-table>
 }

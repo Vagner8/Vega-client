@@ -1,14 +1,15 @@
-@if (ss.page.$fractal(); as fractal) {
+@if (ss.page.$fractal(); as page) {
   @if (Modifiers) {
     <app-modifier
-      [modifier]="Modifiers"
-      [fractals]="ss.row.$fractals()"
-      [sort]="fractal.sort"></app-modifier>
+      [sort]="page.sort"
+      [rows]="ss.row.$fractals()"
+      [shape]="page.shape"
+      [modifier]="Modifiers"></app-modifier>
   } @else {
     <app-table
-      [columns]="fractal.sort"
-      [dataSource]="fractal.fractalsList"
-      [clickedRows]="ss.row.$fractals()"
+      [rows]="ss.row.$fractals()"
+      [columns]="page.sort"
+      [dataSource]="page.list"
       (row)="onRowClick($event)"></app-table>
   }
 }

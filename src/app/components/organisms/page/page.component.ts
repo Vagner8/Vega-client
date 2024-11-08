@@ -27,16 +27,13 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('🚀 ~ Rows:', this.Rows);
-    console.log('🚀 ~ Manager:', this.Manager);
-
-    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(([dto]) => {
+    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(async ([dto]) => {
       if (this.ss.root.$fractal()) return;
-      const root = this.ss.root.set(this.fs.toFractal(dto));
-      this.ss.manager.set(root.fractal.find(Roots.Manager), {
+      const root = await this.ss.root.set(this.fs.toFractal(dto));
+      await this.ss.manager.set(root.fractal.find(Roots.Manager), {
         clicked: this.Manager || Click.One,
       });
-      this.ss.page.set(root.fractal.find(this.Pages));
+      await this.ss.page.set(root.fractal.find(this.Pages));
       if (this.Modifiers && this.Rows) {
         this.ss.modifier.set(root.fractal.find(this.Modifiers));
         this.Rows.split(':').forEach(id => this.ss.row.set(root.fractal.find(id)));
@@ -47,9 +44,9 @@ export class PageComponent implements OnInit {
     });
   }
 
-  onRowClick(row: Fractal): void {
-    this.ss.row.set(row);
-    this.ss.sidenavTaps.set(this.ss.root.fractal.find(Roots.Modifiers));
+  async onRowClick(row: Fractal): Promise<void> {
+    await this.ss.row.set(row);
+    await this.ss.sidenavTaps.set(this.ss.root.fractal.find(Roots.Modifiers));
     this.ss.manager.fractal.checkActions({ clicked: Click.Hold }) &&
       this.ss.manager.set(this.ss.manager.fractal, { clicked: Click.One });
   }
