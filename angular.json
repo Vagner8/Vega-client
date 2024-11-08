@@ -27,7 +27,7 @@
             "polyfills": [],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/css/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
+            "styles": ["src/css/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": []
           },
           "configurations": {
@@ -78,7 +78,7 @@
             "polyfills": [],
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/css/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
+            "styles": ["src/css/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": []
           }
         },

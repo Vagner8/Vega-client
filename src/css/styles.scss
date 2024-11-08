@@ -1,4 +1,7 @@
-@import './variables.css';
+@use './variables.scss';
+@use '@angular/material' as mat;
+
+$theme: mat.define-theme();
 
 body {
   margin: 0;
@@ -22,31 +25,12 @@ body {
   }
 }
 
-app-form {
-  .mat-mdc-form-field-icon-suffix {
-    display: flex;
-  }
-}
-
 .mat-drawer-container-app-sidenav {
   mat-drawer-content {
     height: calc(-130px + 100vh);
   }
 }
 
-.snack-bar {
-  position: absolute;
-  bottom: var(--toolbar-height);
-}
-
-.snack-bar span.mdc-button__label {
-  color: var(--color-common);
-}
-
-.error-snack-bar div.mat-mdc-snackbar-surface {
-  background-color: var(--color-danger);
-}
-
-.success-snack-bar div.mat-mdc-snackbar-surface {
-  background-color: var(--color-success);
+.progress-spinner {
+  @include mat.progress-spinner-color($theme, $color-variant: primary);
 }

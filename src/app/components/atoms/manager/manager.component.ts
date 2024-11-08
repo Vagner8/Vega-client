@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatButtonModule, MatIcon, MatProgressSpinner } from '@mat';
+import { MatButtonModule, MatIcon, MatProgressSpinnerModule } from '@mat';
 import { ClickDirective } from '@directives';
 import { Click, Fractal } from '@types';
 import { StateService } from '@services';
@@ -7,9 +7,9 @@ import { StateService } from '@services';
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatIcon, ClickDirective, MatButtonModule, MatProgressSpinner],
+  imports: [MatIcon, ClickDirective, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './manager.component.html',
-  styleUrl: './manager.component.css',
+  styleUrl: './manager.component.scss',
 })
 export class ManagerComponent {
   constructor(public ss: StateService) {}

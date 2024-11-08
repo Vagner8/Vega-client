@@ -14,10 +14,9 @@ import { Data, Fractal, Modifiers, Pages } from '@types';
 export class SidenavTapsComponent {
   constructor(public ss: StateService) {}
 
-  isSet(fractal: Fractal): boolean {
-    return (
-      fractal.checkName(Modifiers.Save) &&
-      Boolean(this.ss.modifier.$fractal()?.checkName(Modifiers.Save))
+  isSet(tap: Fractal): boolean {
+    return [Modifiers.Save, Modifiers.Delete].some(
+      name => tap.checkName(name) && Boolean(this.ss.modifier.$fractal()?.checkName(name))
     );
   }
 

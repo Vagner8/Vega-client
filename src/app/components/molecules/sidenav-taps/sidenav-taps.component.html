@@ -7,7 +7,9 @@
           [disabled]="disabled(tap)"
           (onClick)="onClick($event)"
           (onHoldClick)="onHoldClick($event)">
-          <span before-tap-name>Hold to</span>
+          @if (isSet(tap)) {
+            <span before-tap-name>Hold to</span>
+          }
         </app-tap>
       }
     }

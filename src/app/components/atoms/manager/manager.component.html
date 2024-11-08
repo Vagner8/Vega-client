@@ -1,7 +1,19 @@
-@if (ss.manager.$fractal(); as fractal) {
+<!-- @if (ss.manager.$fractal(); as fractal) {
   <button mat-mini-fab appClick (onClick)="onClick(fractal)" (onHoldClick)="onHoldClick(fractal)">
     <mat-icon>{{ fractal.icon }}</mat-icon>
   </button>
 } @else {
   <mat-spinner color="accent" diameter="40"></mat-spinner>
-}
+} -->
+<!-- @if (ss.manager.$fractal(); as fractal) {
+  <button mat-mini-fab appClick (onClick)="onClick(fractal)" (onHoldClick)="onHoldClick(fractal)">
+    <mat-icon>{{ fractal.icon }}</mat-icon>
+  </button>
+} @else {
+  <button mat-mini-fab><mat-icon>material-symbols-outlined</mat-icon></button>
+  <mat-spinner color="accent" diameter="50" />
+} -->
+
+<button class="button" mat-mini-fab>
+  <mat-progress-spinner class="progress-spinner" mode="indeterminate" diameter="42" />
+</button>
