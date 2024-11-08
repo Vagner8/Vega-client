@@ -32,11 +32,13 @@ export class StateService {
       });
     });
     if (name === Data.Shape) {
-      this.ds.add(dto).subscribe(console.log);
+      this.ds.add(dto).subscribe(() => this.row.set(null));
     } else {
-      this.ds.update(dto).subscribe(console.log);
+      this.ds.update(dto).subscribe(() => this.row.set(null));
     }
   }
 
-  delete(): void {}
+  delete(): void {
+    this.ds.delete(this.row.$fractals().map(({ dto }) => dto)).subscribe(() => this.row.set(null));
+  }
 }

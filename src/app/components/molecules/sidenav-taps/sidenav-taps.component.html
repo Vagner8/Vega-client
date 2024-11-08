@@ -3,11 +3,11 @@
     @for (key of taps.sort; track key) {
       @if (ss.sidenavTaps.fractal.find(key); as tap) {
         <app-tap
-          [isSet]="isSet(tap)"
+          [tap]="tap"
           [disabled]="disabled(tap)"
-          [fractal]="tap"
           (onClick)="onClick($event)"
           (onHoldClick)="onHoldClick($event)">
+          <span before-tap-name>Hold to</span>
         </app-tap>
       }
     }

@@ -1,13 +1,9 @@
 <button
-  [disabled]="disabled"
   mat-flat-button
+  [disabled]="disabled"
   appClick
-  (onClick)="onClick.emit(fractal)"
-  (onHoldClick)="onHoldClick.emit(fractal)">
-  <mat-icon>{{ fractal.icon }}</mat-icon>
-  @if (isSet && !disabled) {
-    Hold to {{ fractal.name }}
-  } @else {
-    {{ fractal.name }}
-  }
+  (onClick)="onClick.emit(tap)"
+  (onHoldClick)="onHoldClick.emit(tap)">
+  <mat-icon>{{ tap.icon }}</mat-icon>
+  <ng-content select="[before-tap-name]"></ng-content> {{ tap.name }}
 </button>

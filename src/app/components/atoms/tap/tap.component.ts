@@ -12,8 +12,8 @@ import { Fractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TapComponent {
-  @Input() isSet = false;
-  @Input() fractal!: Fractal;
+  @Input() tip = '';
+  @Input() tap!: Fractal;
   @Input() disabled = false;
   onClick = output<Fractal>();
   onHoldClick = output<Fractal>();
