@@ -8,7 +8,7 @@ import { Fractal } from '@types';
   standalone: true,
   imports: [MatIcon, MatButtonModule, ClickDirective],
   templateUrl: './tap.component.html',
-  styleUrl: './tap.component.css',
+  styleUrl: './tap.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TapComponent {

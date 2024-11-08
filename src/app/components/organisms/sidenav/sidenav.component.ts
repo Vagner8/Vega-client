@@ -12,7 +12,7 @@ import { SidenavTapsComponent } from '@components/molecules';
   standalone: true,
   imports: [CommonModule, MatSidenavModule, SidenavTapsComponent, RouterOutlet],
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.css',
+  styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent implements OnInit {
   isOpen = false;

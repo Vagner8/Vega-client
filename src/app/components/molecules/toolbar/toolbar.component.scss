@@ -1,8 +1,8 @@
+@use 'variables.scss' as *;
+
 .toolbar {
   z-index: 1;
-  height: var(--toolbar-height);
+  height: $toolbar-height;
   display: flex;
   justify-content: flex-end;
 }
-
-

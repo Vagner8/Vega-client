@@ -8,7 +8,7 @@ import { Fractal } from '@types';
   standalone: true,
   imports: [MatTableModule, ClickDirective],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.css',
+  styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {

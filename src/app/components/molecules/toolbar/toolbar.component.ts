@@ -7,6 +7,6 @@ import { ManagerComponent } from '@components/atoms';
   standalone: true,
   imports: [MatToolbar, ManagerComponent],
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css',
+  styleUrl: './toolbar.component.scss',
 })
 export class ToolbarComponent {}

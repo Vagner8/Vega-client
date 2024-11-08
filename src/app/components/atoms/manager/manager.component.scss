@@ -1,8 +1,9 @@
-.button {
-  position: relative;
+@use 'variables.scss' as *;
+
+::ng-deep .mat-mdc-progress-spinner circle {
+  stroke: $color-secondary;
 }
 
-.spinner {
-  position: absolute;
-  inset: 0;
+:host {
+  display: flex;
 }

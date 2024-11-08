@@ -1,7 +1,9 @@
+@use 'variables.scss' as *;
+
 .mat-mdc-row .mat-mdc-cell {
   cursor: pointer;
 }
 
 .row-is-clicked {
-  background-color: var(--color-secondary);
+  background-color: $color-secondary;
 }
