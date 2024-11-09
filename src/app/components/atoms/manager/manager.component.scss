@@ -1,7 +1,7 @@
 @use 'variables.scss' as *;
 
 ::ng-deep .mat-mdc-progress-spinner circle {
-  stroke: $color-secondary;
+  stroke: $color-secondary !important;
 }
 
 :host {

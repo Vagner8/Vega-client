@@ -47,7 +47,7 @@ export class SidenavTapsComponent {
     }
   }
 
-  onHoldClick(tap: Fractal): void {
+  onHold(tap: Fractal): void {
     if (tap.checkName(Modifiers.Save)) {
       this.ss.update();
     }

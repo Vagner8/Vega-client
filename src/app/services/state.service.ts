@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Data, State } from '@types';
 import { StateClass } from '@utils';
@@ -14,6 +14,8 @@ export class StateService {
   manager = this.create();
   modifier = this.create();
   sidenavTaps = this.create();
+
+  downTime = signal(0);
 
   constructor(
     public ds: DataService,

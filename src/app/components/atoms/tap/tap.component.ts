@@ -16,5 +16,5 @@ export class TapComponent {
   @Input() tap!: Fractal;
   @Input() disabled = false;
   onClick = output<Fractal>();
-  onHoldClick = output<Fractal>();
+  onHold = output<Fractal>();
 }

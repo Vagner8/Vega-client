@@ -3,7 +3,7 @@
   [disabled]="disabled"
   appClick
   (onClick)="onClick.emit(tap)"
-  (onHoldClick)="onHoldClick.emit(tap)">
+  (onHold)="onHold.emit(tap)">
   <mat-icon>{{ tap.icon }}</mat-icon>
   <ng-content select="[before-tap-name]"></ng-content> {{ tap.name }}
 </button>

@@ -5,24 +5,17 @@ import { Subscription } from 'rxjs';
   providedIn: 'root',
 })
 export class UnsubscribeService {
-  counter = 0;
-  subscriptions: Record<number, Subscription[]> = {};
+  subscriptions: Record<string, Subscription[]> = {};
 
-  constructor() {}
-
-  register(): number {
-    return ++this.counter;
-  }
-
-  set(subscription: Subscription, key: number): void {
-    if (this.subscriptions[key]) {
-      this.subscriptions[key].push(subscription);
+  set(uniqueKey: string, subscription: Subscription): void {
+    if (this.subscriptions[uniqueKey]) {
+      this.subscriptions[uniqueKey].push(subscription);
     } else {
-      this.subscriptions[key] = [subscription];
+      this.subscriptions[uniqueKey] = [subscription];
     }
   }
 
-  unsubscribe(key: number): void {
-    this.subscriptions[key].forEach(subscription => subscription.unsubscribe());
+  remove(uniqueKey: string): void {
+    this.subscriptions[uniqueKey].forEach(subscription => subscription.unsubscribe());
   }
 }

@@ -1,84 +1,47 @@
 import { Directive, HostListener, output } from '@angular/core';
 
 @Directive({
-  standalone: true,
   selector: '[appClick]',
+  standalone: true,
 })
 export class ClickDirective {
+  onHold = output();
   onClick = output();
-  onHoldClick = output();
-  onDoubleClick = output();
+  onHoldStart = output();
 
-  private clickTimeout: unknown;
-  private holdTimeout: unknown;
-  private clickCount = 0;
-  private isHoldEvent = false;
-
-  private static readonly HOLD_DURATION = 750;
-  private static readonly DOUBLE_CLICK_DELAY = 150;
-
-  @HostListener('contextmenu')
-  onContextMenuHostListener(event: MouseEvent): void {
-    event.preventDefault();
-  }
+  isHold = false;
+  timeout: ReturnType<typeof setTimeout> | null = null;
+  startHold!: number;
 
   @HostListener('mousedown')
-  @HostListener('touchstart.passive')
-  onMouseDownHostListener(): void {
-    this.isHoldEvent = false;
-    this.holdTimeout = setTimeout(() => {
-      this.isHoldEvent = true;
-      this.onHoldClick.emit();
-      this.clearClickTimeout();
-      this.reset();
-    }, ClickDirective.HOLD_DURATION);
+  onMouseDown() {
+    this.isHold = true;
+    this.startHold = Date.now();
+    this.onHoldStart.emit();
+    this.timeout = setTimeout(() => {
+      if (this.isHold) {
+        this.onHold.emit();
+      }
+    }, 500);
   }
 
   @HostListener('mouseup')
-  @HostListener('touchend')
-  @HostListener('touchcancel')
-  onMouseUpHostListener(): void {
-    if (this.holdTimeout) {
-      clearTimeout(this.holdTimeout as number);
+  onMouseUp() {
+    if (Date.now() - this.startHold < 200) {
+      this.onClick.emit();
     }
+    this.reset();
   }
 
-  @HostListener('click')
-  onClickHostListener(): void {
-    if (this.holdTimeout) {
-      clearTimeout(this.holdTimeout as number);
-    }
-
-    if (this.isHoldEvent) {
-      return;
-    }
-
-    this.clickCount++;
-
-    if (this.clickCount === 1) {
-      this.clickTimeout = setTimeout(() => {
-        if (this.clickCount === 1) {
-          this.onClick.emit();
-        }
-        this.reset();
-      }, ClickDirective.DOUBLE_CLICK_DELAY);
-    } else if (this.clickCount === 2) {
-      if (this.clickTimeout) {
-        clearTimeout(this.clickTimeout as number);
-      }
-      this.onDoubleClick.emit();
-      this.reset();
-    }
-  }
-
-  private clearClickTimeout(): void {
-    if (this.clickTimeout) {
-      clearTimeout(this.clickTimeout as number);
-    }
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.reset();
   }
 
   private reset(): void {
-    this.clickCount = 0;
-    this.clearClickTimeout();
+    this.isHold = false;
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 }
