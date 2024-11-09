@@ -1,5 +1,7 @@
+@use 'variables.scss' as *;
+
 .list {
-  gap: var(--size-medium);
+  gap: $size-medium;
 }
 
 .input-list,

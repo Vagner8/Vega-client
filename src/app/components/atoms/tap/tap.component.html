@@ -2,8 +2,9 @@
   mat-flat-button
   [disabled]="disabled"
   appClick
-  (onClick)="onClick.emit(tap)"
-  (onHold)="onHold.emit(tap)">
+  [withOnHold]="tap.name === 'Save'"
+  (onHold)="onHold.emit(tap)"
+  (onClick)="onClick.emit(tap)">
   <mat-icon>{{ tap.icon }}</mat-icon>
   <ng-content select="[before-tap-name]"></ng-content> {{ tap.name }}
 </button>

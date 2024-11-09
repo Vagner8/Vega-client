@@ -15,7 +15,8 @@ export class StateService {
   modifier = this.create();
   sidenavTaps = this.create();
 
-  downTime = signal(0);
+  isHoldAnimationStarted = signal(false);
+  isHoldAnimationSucceed = signal(false);
 
   constructor(
     public ds: DataService,

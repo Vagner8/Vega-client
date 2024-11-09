@@ -1,13 +1,18 @@
 @if (ss.manager.$fractal(); as fractal) {
-  <button mat-mini-fab appClick (onClick)="onClick(fractal)" (onHold)="onHold(fractal)">
-    @if (ss.downTime() === 0) {
-      <mat-icon>{{ fractal.icon }}</mat-icon>
-    } @else {
+  <button
+    mat-mini-fab
+    appClick
+    [withOnHold]="true"
+    (onClick)="onClick(fractal)"
+    (onHold)="onHold(fractal)">
+    @if (ss.isHoldAnimationStarted() && !ss.isHoldAnimationSucceed()) {
       <mat-progress-spinner
         mode="determinate"
-        [value]="ss.downTime()"
+        [value]="timeout$ | async"
         diameter="42"
         strokeWidth="3" />
+    } @else {
+      <mat-icon>{{ fractal.icon }}</mat-icon>
     }
   </button>
 } @else {

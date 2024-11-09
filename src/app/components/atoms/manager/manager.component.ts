@@ -3,19 +3,22 @@ import { MatButtonModule, MatIcon, MatProgressSpinnerModule } from '@mat';
 import { ClickDirective } from '@directives';
 import { Click, Fractal } from '@types';
 import { StateService } from '@services';
+import { interval, map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatIcon, ClickDirective, MatProgressSpinnerModule, MatButtonModule],
+  imports: [MatIcon, AsyncPipe, ClickDirective, MatProgressSpinnerModule, MatButtonModule],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
 })
 export class ManagerComponent {
+  timeout$ = interval().pipe(map(num => num * 100));
+
   constructor(public ss: StateService) {}
 
   onClick(fractal: Fractal): void {
-    console.log('🚀 ~ onClick:');
     this.handleClick(fractal, Click.One);
   }
 

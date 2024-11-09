@@ -8,7 +8,7 @@ import { Fractal } from '@types';
   standalone: true,
   imports: [InputComponent, MatListModule, MatCardModule, TableComponent],
   templateUrl: './modifier.component.html',
-  styleUrl: './modifier.component.css',
+  styleUrl: './modifier.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModifierComponent {
@@ -16,8 +16,4 @@ export class ModifierComponent {
   @Input() rows: Fractal[] = [];
   @Input() shape: Fractal | null = null;
   @Input() modifier!: string;
-
-  get firstRow(): Fractal {
-    return this.rows[0];
-  }
 }

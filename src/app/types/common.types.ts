@@ -10,6 +10,8 @@ export enum Click {
   Double = 'double',
 }
 
+export type Timeout = ReturnType<typeof setTimeout>;
+
 export interface Exception {
   type: string;
   title: string;
