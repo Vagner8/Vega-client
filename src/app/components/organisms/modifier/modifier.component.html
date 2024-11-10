@@ -4,7 +4,7 @@
       <mat-list role="list" class="input-list">
         @for (indicator of sort; track indicator) {
           <mat-list-item role="listitem" class="list-item">
-            <app-input [label]="indicator" [control]="shape.formControl(indicator)"></app-input>
+            <app-input [label]="indicator" [control]="firstRow.formControl(indicator)"></app-input>
           </mat-list-item>
         }
       </mat-list>

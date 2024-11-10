@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { StateService } from '@services';
-import { Data, Fractal, Modifiers, Pages } from '@types';
+import { Fractal, Modifiers, Pages } from '@types';
 
 @Component({
   selector: 'app-sidenav-taps',
@@ -13,12 +13,6 @@ import { Data, Fractal, Modifiers, Pages } from '@types';
 })
 export class SidenavTapsComponent {
   constructor(public ss: StateService) {}
-
-  isSet(tap: Fractal): boolean {
-    return [Modifiers.Save, Modifiers.Delete].some(
-      name => tap.checkName(name) && Boolean(this.ss.modifier.$fractal()?.checkName(name))
-    );
-  }
 
   disabled(tap: Fractal): boolean {
     const fractals = this.ss.row.$fractals();
@@ -42,7 +36,8 @@ export class SidenavTapsComponent {
     } else {
       await this.ss.modifier.set(tap);
       if (tap.checkName(Modifiers.New)) {
-        this.ss.row.set(this.ss.page.fractal.find(Data.Shape));
+        const fractals = this.ss.page.fractal.fractals;
+        fractals && this.ss.row.set(fractals[0].clone());
       }
     }
   }

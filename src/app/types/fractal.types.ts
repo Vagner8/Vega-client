@@ -54,6 +54,7 @@ export interface FractalCheckProps {
 interface FractalMethods {
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
+  clone(): Fractal;
   checkName(test: string): boolean;
   checkType(type: object): boolean;
   checkActions(actions: Partial<FractalActionFields>): boolean;
@@ -69,6 +70,7 @@ type FractalFields = {
   shape: Fractal | null;
   fractals: Fractal[] | null;
   formGroup: FormGroup<FractalFormControls>;
+  confirmation: boolean;
 } & FractalActionFields;
 
 export interface FractalActionFields {

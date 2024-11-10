@@ -28,20 +28,23 @@ export class StateService {
   }
 
   update(): void {
-    const { dto, name, formGroup } = this.row.$fractals()[0];
-    Object.entries(formGroup.value).forEach(([indicator, value]) => {
-      dto.controls.forEach(control => {
-        if (control.indicator === indicator) control.data = value || '';
-      });
-    });
-    if (name === Data.Shape) {
-      this.ds.add(dto).subscribe(() => this.row.set(null));
+    const toUpdate = this.row.$fractals()[0];
+    const { dto, formGroup } = toUpdate;
+    if (toUpdate.checkName(Data.Shape)) {
+      this.ds.add(dto).subscribe(console.log);
     } else {
-      this.ds.update(dto).subscribe(() => this.row.set(null));
+      Object.entries(formGroup.value).forEach(([indicator, value]) => {
+        dto.controls.forEach(control => {
+          if (control.indicator === indicator) control.data = value || '';
+        });
+      });
+      this.ds.update(dto).subscribe(console.log);
     }
+    this.page.set(this.page.fractal);
   }
 
   delete(): void {
     this.ds.delete(this.row.$fractals().map(({ dto }) => dto)).subscribe(() => this.row.set(null));
+    this.page.set(this.page.fractal);
   }
 }

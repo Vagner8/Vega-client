@@ -10,8 +10,10 @@ import {
   FractalFormControl,
   FractalFormControls,
   Indicators,
+  Modifiers,
 } from '@types';
 import { isKeyof } from '@utils';
+import { v4 } from 'uuid';
 
 export class FractalClass implements Fractal {
   name: string;
@@ -21,6 +23,7 @@ export class FractalClass implements Fractal {
   list: Fractal[];
   shape: Fractal | null;
   formGroup: FormGroup<FractalFormControls>;
+  confirmation: boolean;
 
   clicked: Click | null;
 
@@ -39,6 +42,25 @@ export class FractalClass implements Fractal {
     this.list = list;
     this.shape = shape;
     this.formGroup = new FormGroup<FractalFormControls>(this.createFormGroup());
+    this.confirmation = [Modifiers.Delete, Modifiers.Save].some(name => name === this.name);
+  }
+
+  clone(): Fractal {
+    return new FractalClass(
+      {
+        id: v4(),
+        parentId: this.dto.parentId,
+        controls: this.dto.controls.map(({ parentId, indicator }) => ({
+          id: v4(),
+          parentId,
+          indicator,
+          data: '',
+        })),
+        fractals: null,
+      },
+      [],
+      this.fs
+    );
   }
 
   checkName(test: string): boolean {

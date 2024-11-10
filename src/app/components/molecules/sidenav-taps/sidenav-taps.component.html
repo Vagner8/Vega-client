@@ -7,7 +7,7 @@
           [disabled]="disabled(tap)"
           (onClick)="onClick($event)"
           (onHold)="onHold($event)">
-          @if (isSet(tap)) {
+          @if (tap.confirmation && ss.modifier.$fractal()?.checkName(tap.name)) {
             <span before-tap-name>Hold to</span>
           }
         </app-tap>
