@@ -28,13 +28,15 @@ export class StateService {
   }
 
   async update(): Promise<void> {
-    const { dto, formGroup, isClone } = this.row.$fractals()[0];
+    const row = this.row.$fractals()[0];
+    const { dto, formGroup, isClone } = row;
     Object.entries(formGroup.value).forEach(([indicator, value]) => {
       dto.controls.forEach(control => {
         if (control.indicator === indicator) control.data = value || '';
       });
     });
     if (isClone) {
+      this.page.fractal.fractals.push(row);
       this.ds.add(dto).subscribe(console.log);
     } else {
       this.ds.update(dto).subscribe(console.log);

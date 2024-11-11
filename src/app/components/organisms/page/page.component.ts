@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 import { DataService, FractalService, StateService } from '@services';
-import { Click, Fractal, Roots } from '@types';
+import { Click, Fractal, Modifiers, Roots } from '@types';
 import { combineLatest } from 'rxjs';
 import { ModifierComponent } from '../modifier/modifier.component';
 
@@ -36,7 +36,13 @@ export class PageComponent implements OnInit {
       await this.ss.page.set(root.fractal.find(this.Pages));
       if (this.Modifiers && this.Rows) {
         this.ss.modifier.set(root.fractal.find(this.Modifiers));
-        this.Rows.split(':').forEach(id => this.ss.row.set(root.fractal.find(id)));
+        this.Rows.split(':').forEach(id => {
+          if (this.Modifiers === Modifiers.New) {
+            this.ss.row.set(this.ss.page.fractal.clone());
+          } else {
+            this.ss.row.set(root.fractal.find(id));
+          }
+        });
         this.ss.sidenavTaps.set(root.fractal.find(Roots.Modifiers));
       } else {
         this.ss.sidenavTaps.set(root.fractal.find(Roots.Pages));

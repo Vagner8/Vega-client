@@ -1,7 +1,7 @@
 <mat-list class="mat-list-app-sidenav">
   @if (ss.sidenavTaps.$fractal(); as taps) {
-    @for (key of taps.sort; track key) {
-      @if (ss.sidenavTaps.fractal.find(key); as tap) {
+    @for (indicator of taps.sort; track indicator) {
+      @if (ss.sidenavTaps.fractal.find(indicator); as tap) {
         <app-tap
           [tap]="tap"
           [disabled]="disabled(tap)"

@@ -57,7 +57,6 @@ export class FractalClass implements Fractal {
       [],
       this.fs
     );
-    this.fractals.push(newFractal);
     newFractal.isClone = true;
     return newFractal;
   }
