@@ -1,10 +1,6 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { ControlDto } from '@types';
 
-export enum Data {
-  Shape = 'Shape',
-}
-
 export enum Roots {
   Pages = 'Pages',
   Manager = 'Manager',

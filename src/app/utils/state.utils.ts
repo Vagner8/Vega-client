@@ -1,7 +1,6 @@
 import { signal } from '@angular/core';
 import { StateService } from '@services';
 import {
-  Data,
   Fractal,
   FractalActionFields,
   FractalNull,
@@ -32,18 +31,6 @@ export class StateClass implements State {
       if (actions) {
         Object.entries(actions).forEach(([key, value]) => {
           if (isKeyof<FractalActionFields>(fractal, key)) fractal[key] = value;
-        });
-      }
-
-      if (fractal.checkName(Data.Shape)) {
-        this.$fractals.set([fractal]);
-        await this.ss.router.navigate([], {
-          queryParams: {
-            [Queries.Rows]: this.$fractals()
-              .map(fractal => fractal.dto.id)
-              .join(':'),
-          },
-          queryParamsHandling: 'merge',
         });
       }
 

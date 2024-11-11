@@ -28,14 +28,13 @@ export class StateService {
   }
 
   async update(): Promise<void> {
-    const fractal = this.row.$fractals()[0];
-    const { dto, formGroup } = fractal;
+    const { dto, formGroup, isClone } = this.row.$fractals()[0];
     Object.entries(formGroup.value).forEach(([indicator, value]) => {
       dto.controls.forEach(control => {
         if (control.indicator === indicator) control.data = value || '';
       });
     });
-    if (fractal.isClone) {
+    if (isClone) {
       this.ds.add(dto).subscribe(console.log);
     } else {
       this.ds.update(dto).subscribe(console.log);
@@ -44,7 +43,11 @@ export class StateService {
   }
 
   delete(): void {
-    this.ds.delete(this.row.$fractals().map(({ dto }) => dto)).subscribe(() => this.row.set(null));
+    const rowsDtoToDelete = this.row.$fractals().map(({ dto }) => dto);
+    this.ds.delete(rowsDtoToDelete).subscribe(console.log);
+    this.page.fractal.fractals = this.page.fractal.fractals.filter(
+      ({ dto }) => !rowsDtoToDelete.includes(dto)
+    );
     this.page.set(this.page.fractal);
   }
 }

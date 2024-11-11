@@ -37,8 +37,8 @@ export class SidenavTapsComponent {
       await this.ss.modifier.set(tap);
       if (tap.checkName(Modifiers.New)) {
         const { fractal } = this.ss.page;
-        this.ss.row.$fractals.set([]);
-        fractal.fractals && this.ss.row.set(fractal.clone());
+        this.ss.row.set(null);
+        this.ss.row.set(fractal.clone());
       }
     }
   }
