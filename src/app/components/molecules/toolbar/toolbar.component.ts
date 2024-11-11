@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatToolbar } from '@mat';
-import { ManagerComponent } from '@components/atoms';
+import { ManagerComponent } from '../manager/manager.component';
 
 @Component({
   selector: 'app-toolbar',

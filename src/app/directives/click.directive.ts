@@ -45,11 +45,6 @@ export class ClickDirective {
     this.reset();
   }
 
-  @HostListener('mouseleave')
-  onMouseLeave() {
-    this.reset();
-  }
-
   private reset(): void {
     if (this.timeoutOnHold) {
       clearTimeout(this.timeoutOnHold);

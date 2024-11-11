@@ -2,11 +2,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { FractalService } from '@services';
 import {
   Click,
-  Data,
   Fractal,
   FractalActionFields,
   FractalDto,
-  FractalFilterProps,
   FractalFormControl,
   FractalFormControls,
   Indicators,
@@ -20,8 +18,7 @@ export class FractalClass implements Fractal {
   icon: string;
   sort: string[];
 
-  list: Fractal[];
-  shape: Fractal | null;
+  isClone: boolean;
   formGroup: FormGroup<FractalFormControls>;
   confirmation: boolean;
 
@@ -29,7 +26,7 @@ export class FractalClass implements Fractal {
 
   constructor(
     public dto: FractalDto,
-    public fractals: Fractal[] | null,
+    public fractals: Fractal[],
     private fs: FractalService
   ) {
     this.name = this.data(Indicators.FractalName);
@@ -38,29 +35,32 @@ export class FractalClass implements Fractal {
 
     this.clicked = null;
 
-    const { list, shape } = this.filter();
-    this.list = list;
-    this.shape = shape;
+    this.isClone = false;
     this.formGroup = new FormGroup<FractalFormControls>(this.createFormGroup());
     this.confirmation = [Modifiers.Delete, Modifiers.Save].some(name => name === this.name);
   }
 
   clone(): Fractal {
-    return new FractalClass(
+    const fractalId = v4();
+    const newFractal = new FractalClass(
       {
-        id: v4(),
-        parentId: this.dto.parentId,
-        controls: this.dto.controls.map(({ parentId, indicator }) => ({
+        id: fractalId,
+        parentId: this.dto.id,
+        controls: this.sort.map(indicator => ({
           id: v4(),
-          parentId,
+          parentId: fractalId,
           indicator,
           data: '',
         })),
-        fractals: null,
+        fractals: [],
       },
       [],
       this.fs
     );
+
+    newFractal.isClone = true;
+    this.fs.ss.page.fractal.fractals?.push(newFractal);
+    return newFractal;
   }
 
   checkName(test: string): boolean {
@@ -107,17 +107,5 @@ export class FractalClass implements Fractal {
       acc[control.indicator] = new FormControl(control.data);
       return acc;
     }, {} as FractalFormControls);
-  }
-
-  private filter(): FractalFilterProps {
-    if (!this.fractals) return { list: [], shape: null };
-    return this.fractals.reduce(
-      (acc, fractal) => {
-        if (fractal.data(Indicators.FractalName) === Data.Shape) acc.shape = fractal;
-        else acc.list.push(fractal);
-        return acc;
-      },
-      { list: [], shape: null } as FractalFilterProps
-    );
   }
 }

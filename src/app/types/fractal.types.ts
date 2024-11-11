@@ -32,18 +32,13 @@ export enum Queries {
 export interface FractalDto {
   id: string;
   parentId: string;
-  fractals: FractalDto[] | null;
+  fractals: FractalDto[];
   controls: ControlDto[];
 }
 
 export type FractalNull = Fractal | null;
 export type FractalFormControl = FormControl<string | null>;
 export type FractalFormControls = Record<string, FractalFormControl>;
-
-export interface FractalFilterProps {
-  list: Fractal[];
-  shape: Fractal | null;
-}
 
 export interface FractalCheckProps {
   name?: string;
@@ -63,12 +58,11 @@ interface FractalMethods {
 
 type FractalFields = {
   dto: FractalDto;
-  list: Fractal[];
   name: string;
   icon: string;
   sort: string[];
-  shape: Fractal | null;
-  fractals: Fractal[] | null;
+  isClone: boolean;
+  fractals: Fractal[];
   formGroup: FormGroup<FractalFormControls>;
   confirmation: boolean;
 } & FractalActionFields;

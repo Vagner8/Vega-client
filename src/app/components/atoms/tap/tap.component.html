@@ -2,7 +2,7 @@
   mat-flat-button
   [disabled]="disabled"
   appClick
-  [withOnHold]="tap.name === 'Save'"
+  [withOnHold]="tap.confirmation"
   (onHold)="onHold.emit(tap)"
   (onClick)="onClick.emit(tap)">
   <mat-icon>{{ tap.icon }}</mat-icon>

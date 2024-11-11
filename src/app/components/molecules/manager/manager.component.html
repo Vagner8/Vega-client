@@ -6,17 +6,13 @@
     (onClick)="onClick(fractal)"
     (onHold)="onHold(fractal)">
     @if (ss.isHoldAnimationStarted() && !ss.isHoldAnimationSucceed()) {
-      <mat-progress-spinner
-        mode="determinate"
-        [value]="timeout$ | async"
-        diameter="42"
-        strokeWidth="3" />
+      <app-spinner mode="determinate" />
     } @else {
       <mat-icon>{{ fractal.icon }}</mat-icon>
     }
   </button>
 } @else {
   <button mat-mini-fab>
-    <mat-progress-spinner mode="indeterminate" diameter="42" strokeWidth="3" />
+    <app-spinner />
   </button>
 }

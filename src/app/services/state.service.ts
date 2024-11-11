@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Data, State } from '@types';
+import { State } from '@types';
 import { StateClass } from '@utils';
 import { DataService } from './data.service';
 
@@ -27,17 +27,17 @@ export class StateService {
     return new StateClass(this);
   }
 
-  update(): void {
-    const toUpdate = this.row.$fractals()[0];
-    const { dto, formGroup } = toUpdate;
-    if (toUpdate.checkName(Data.Shape)) {
+  async update(): Promise<void> {
+    const fractal = this.row.$fractals()[0];
+    const { dto, formGroup } = fractal;
+    Object.entries(formGroup.value).forEach(([indicator, value]) => {
+      dto.controls.forEach(control => {
+        if (control.indicator === indicator) control.data = value || '';
+      });
+    });
+    if (fractal.isClone) {
       this.ds.add(dto).subscribe(console.log);
     } else {
-      Object.entries(formGroup.value).forEach(([indicator, value]) => {
-        dto.controls.forEach(control => {
-          if (control.indicator === indicator) control.data = value || '';
-        });
-      });
       this.ds.update(dto).subscribe(console.log);
     }
     this.page.set(this.page.fractal);

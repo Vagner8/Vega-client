@@ -1,17 +1,5 @@
 @if (this.rows[0]; as firstRow) {
-  @if (modifier === 'New' && shape) {
-    <form>
-      <mat-list role="list" class="input-list">
-        @for (indicator of sort; track indicator) {
-          <mat-list-item role="listitem" class="list-item">
-            <app-input [label]="indicator" [control]="firstRow.formControl(indicator)"></app-input>
-          </mat-list-item>
-        }
-      </mat-list>
-    </form>
-  }
-
-  @if (modifier === 'Edit') {
+  @if (modifier === 'New' || modifier === 'Edit') {
     <form>
       <mat-list role="list" class="input-list">
         @for (indicator of sort; track indicator) {
