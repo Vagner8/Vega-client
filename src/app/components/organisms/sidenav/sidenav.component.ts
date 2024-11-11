@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@mat';
 import { CommonModule } from '@angular/common';
 import { map, Observable, tap } from 'rxjs';
-import { StateService } from '@services';
+import { FractalService } from '@services';
 import { Click, Pages, Roots } from '@types';
 import { SidenavTapsComponent } from '@components/molecules';
 
@@ -18,17 +18,17 @@ export class SidenavComponent implements OnInit {
   isOpen = false;
   isOpen$!: Observable<boolean>;
 
-  constructor(public ss: StateService) {}
+  constructor(public fs: FractalService) {}
 
   ngOnInit(): void {
-    this.isOpen$ = this.ss.manager.fractal$.pipe(
-      map(() => this.ss.manager.fractal.checkActions({ clicked: Click.One })),
+    this.isOpen$ = this.fs.manager.fractal$.pipe(
+      map(() => this.fs.manager.fractal.checkActions({ clicked: Click.One })),
       tap(isOpen => {
-        if (this.ss.page.$fractal()?.checkName(Pages.Home)) return;
+        if (this.fs.page.$fractal()?.checkName(Pages.Home)) return;
         if (this.isOpen && isOpen) {
-          const { name } = this.ss.sidenavTaps.fractal;
+          const { name } = this.fs.sidenavTaps.fractal;
           const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
-          this.ss.sidenavTaps.set(this.ss.root.fractal?.find(toggleTaps));
+          this.fs.sidenavTaps.set(this.fs.root.fractal?.find(toggleTaps));
         }
         this.isOpen = isOpen;
       })

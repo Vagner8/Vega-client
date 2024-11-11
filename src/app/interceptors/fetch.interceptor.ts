@@ -8,8 +8,8 @@ export const fetchInterceptor = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  const ss = inject(ErrorService);
-  return next(req).pipe(catchError(error => handleError(ss, error)));
+  const fs = inject(ErrorService);
+  return next(req).pipe(catchError(error => handleError(fs, error)));
 };
 
 export const handleError = (es: ErrorService, error: HttpErrorResponse): Observable<never> => {

@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input, output } from '@angular/core';
-import { StateService } from '@services';
+import { FractalService } from '@services';
 import { Timeout } from '@types';
 
 @Directive({
@@ -20,7 +20,7 @@ export class ClickDirective {
   holdTime = 600;
   clickTime = 200;
 
-  constructor(private ss: StateService) {}
+  constructor(private fs: FractalService) {}
 
   @HostListener('mousedown')
   onMouseDown() {
@@ -28,12 +28,12 @@ export class ClickDirective {
     if (!this.withOnHold) return;
     this.timeoutOnHoldStart = setTimeout(() => {
       this.onHoldStart.emit();
-      this.ss.isHoldAnimationStarted.set(true);
+      this.fs.isHoldAnimationStarted.set(true);
     }, this.clickTime);
 
     this.timeoutOnHold = setTimeout(() => {
       this.onHold.emit();
-      this.ss.isHoldAnimationSucceed.set(true);
+      this.fs.isHoldAnimationSucceed.set(true);
     }, this.holdTime);
   }
 
@@ -52,7 +52,7 @@ export class ClickDirective {
     if (this.timeoutOnHoldStart) {
       clearTimeout(this.timeoutOnHoldStart);
     }
-    this.ss.isHoldAnimationStarted.set(false);
-    this.ss.isHoldAnimationSucceed.set(false);
+    this.fs.isHoldAnimationStarted.set(false);
+    this.fs.isHoldAnimationSucceed.set(false);
   }
 }

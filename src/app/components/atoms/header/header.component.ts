@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StateService } from '@services';
+import { FractalService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +10,5 @@ import { StateService } from '@services';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(public ss: StateService) {}
+  constructor(public fs: FractalService) {}
 }

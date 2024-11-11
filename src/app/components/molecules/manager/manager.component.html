@@ -1,11 +1,11 @@
-@if (ss.manager.$fractal(); as fractal) {
+@if (fs.manager.$fractal(); as fractal) {
   <button
     mat-mini-fab
     appClick
     [withOnHold]="true"
     (onClick)="onClick(fractal)"
     (onHold)="onHold(fractal)">
-    @if (ss.isHoldAnimationStarted() && !ss.isHoldAnimationSucceed()) {
+    @if (fs.isHoldAnimationStarted() && !fs.isHoldAnimationSucceed()) {
       <app-spinner mode="determinate" />
     } @else {
       <mat-icon>{{ fractal.icon }}</mat-icon>

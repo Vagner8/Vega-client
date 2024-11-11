@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TableComponent } from '@components/atoms';
-import { DataService, FractalService, StateService } from '@services';
+import { DataService, FractalService } from '@services';
 import { Click, Fractal, Modifiers, Roots } from '@types';
 import { combineLatest } from 'rxjs';
 import { ModifierComponent } from '../modifier/modifier.component';
@@ -20,40 +20,39 @@ export class PageComponent implements OnInit {
   @Input() Modifiers = '';
 
   constructor(
-    public ss: StateService,
-    private fs: FractalService,
+    public fs: FractalService,
     private ds: DataService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(async ([dto]) => {
-      if (this.ss.root.$fractal()) return;
-      const root = await this.ss.root.set(this.fs.toFractal(dto));
-      await this.ss.manager.set(root.fractal.find(Roots.Manager), {
+      if (this.fs.root.$fractal()) return;
+      const root = await this.fs.root.set(this.fs.toFractal(dto));
+      await this.fs.manager.set(root.fractal.find(Roots.Manager), {
         clicked: this.Manager || Click.One,
       });
-      await this.ss.page.set(root.fractal.find(this.Pages));
+      await this.fs.page.set(root.fractal.find(this.Pages));
       if (this.Modifiers && this.Rows) {
-        this.ss.modifier.set(root.fractal.find(this.Modifiers));
+        this.fs.modifier.set(root.fractal.find(this.Modifiers));
         this.Rows.split(':').forEach(id => {
           if (this.Modifiers === Modifiers.New) {
-            this.ss.row.set(this.ss.page.fractal.clone());
+            this.fs.row.set(this.fs.clone());
           } else {
-            this.ss.row.set(root.fractal.find(id));
+            this.fs.row.set(root.fractal.find(id));
           }
         });
-        this.ss.sidenavTaps.set(root.fractal.find(Roots.Modifiers));
+        this.fs.sidenavTaps.set(root.fractal.find(Roots.Modifiers));
       } else {
-        this.ss.sidenavTaps.set(root.fractal.find(Roots.Pages));
+        this.fs.sidenavTaps.set(root.fractal.find(Roots.Pages));
       }
     });
   }
 
   async onRowClick(row: Fractal): Promise<void> {
-    await this.ss.row.set(row);
-    await this.ss.sidenavTaps.set(this.ss.root.fractal.find(Roots.Modifiers));
-    this.ss.manager.fractal.checkActions({ clicked: Click.Hold }) &&
-      this.ss.manager.set(this.ss.manager.fractal, { clicked: Click.One });
+    await this.fs.row.set(row);
+    await this.fs.sidenavTaps.set(this.fs.root.fractal.find(Roots.Modifiers));
+    this.fs.manager.fractal.checkActions({ clicked: Click.Hold }) &&
+      this.fs.manager.set(this.fs.manager.fractal, { clicked: Click.One });
   }
 }

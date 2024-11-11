@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
-import { StateService } from '@services';
+import { FractalService } from '@services';
 import { Fractal, Modifiers, Pages } from '@types';
 
 @Component({
@@ -12,10 +12,10 @@ import { Fractal, Modifiers, Pages } from '@types';
   styleUrl: './sidenav-taps.component.css',
 })
 export class SidenavTapsComponent {
-  constructor(public ss: StateService) {}
+  constructor(public fs: FractalService) {}
 
   disabled(tap: Fractal): boolean {
-    const fractals = this.ss.row.$fractals();
+    const fractals = this.fs.row.$fractals();
     switch (tap.name) {
       case Modifiers.Save:
         return fractals[0] ? !fractals[0].formGroup.dirty : true;
@@ -30,25 +30,24 @@ export class SidenavTapsComponent {
 
   async onClick(tap: Fractal): Promise<void> {
     if (tap.checkType(Pages)) {
-      await this.ss.page.set(tap);
-      await this.ss.row.set(null);
-      this.ss.modifier.set(null);
+      await this.fs.page.set(tap);
+      await this.fs.row.set(null);
+      this.fs.modifier.set(null);
     } else {
-      await this.ss.modifier.set(tap);
+      await this.fs.modifier.set(tap);
       if (tap.checkName(Modifiers.New)) {
-        const { fractal } = this.ss.page;
-        this.ss.row.set(null);
-        this.ss.row.set(fractal.clone());
+        this.fs.row.set(null);
+        this.fs.row.set(this.fs.clone());
       }
     }
   }
 
   onHold(tap: Fractal): void {
     if (tap.checkName(Modifiers.Save)) {
-      this.ss.update();
+      this.fs.update();
     }
     if (tap.checkName(Modifiers.Delete)) {
-      this.ss.delete();
+      this.fs.delete();
     }
   }
 }

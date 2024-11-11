@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
 import { Click, Fractal } from '@types';
-import { StateService } from '@services';
+import { FractalService } from '@services';
 import { SpinnerComponent } from '@components/atoms';
 
 @Component({
@@ -13,7 +13,7 @@ import { SpinnerComponent } from '@components/atoms';
   styleUrl: './manager.component.scss',
 })
 export class ManagerComponent {
-  constructor(public ss: StateService) {}
+  constructor(public fs: FractalService) {}
 
   onClick(fractal: Fractal): void {
     this.handleClick(fractal, Click.One);
@@ -24,6 +24,6 @@ export class ManagerComponent {
   }
 
   private handleClick(fractal: Fractal, clicked: Click): void {
-    this.ss.manager.set(fractal, { clicked });
+    this.fs.manager.set(fractal, { clicked });
   }
 }

@@ -1,13 +1,13 @@
 <mat-list class="mat-list-app-sidenav">
-  @if (ss.sidenavTaps.$fractal(); as taps) {
+  @if (fs.sidenavTaps.$fractal(); as taps) {
     @for (indicator of taps.sort; track indicator) {
-      @if (ss.sidenavTaps.fractal.find(indicator); as tap) {
+      @if (fs.sidenavTaps.fractal.find(indicator); as tap) {
         <app-tap
           [tap]="tap"
           [disabled]="disabled(tap)"
           (onClick)="onClick($event)"
           (onHold)="onHold($event)">
-          @if (tap.confirmation && ss.modifier.$fractal()?.checkName(tap.name)) {
+          @if (tap.confirmation && fs.modifier.$fractal()?.checkName(tap.name)) {
             <span before-tap-name>Hold to</span>
           }
         </app-tap>

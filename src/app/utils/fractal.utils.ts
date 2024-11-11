@@ -1,5 +1,4 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FractalService } from '@services';
 import {
   Click,
   Fractal,
@@ -11,7 +10,6 @@ import {
   Modifiers,
 } from '@types';
 import { isKeyof } from '@utils';
-import { v4 } from 'uuid';
 
 export class FractalClass implements Fractal {
   name: string;
@@ -26,8 +24,7 @@ export class FractalClass implements Fractal {
 
   constructor(
     public dto: FractalDto,
-    public fractals: Fractal[],
-    private fs: FractalService
+    public fractals: Fractal[]
   ) {
     this.name = this.data(Indicators.FractalName);
     this.icon = this.data(Indicators.Icon);
@@ -38,27 +35,6 @@ export class FractalClass implements Fractal {
     this.isClone = false;
     this.formGroup = new FormGroup<FractalFormControls>(this.createFormGroup());
     this.confirmation = [Modifiers.Delete, Modifiers.Save].some(name => name === this.name);
-  }
-
-  clone(): Fractal {
-    const fractalId = v4();
-    const newFractal = new FractalClass(
-      {
-        id: fractalId,
-        parentId: this.dto.id,
-        controls: this.sort.map(indicator => ({
-          id: v4(),
-          parentId: fractalId,
-          indicator,
-          data: '',
-        })),
-        fractals: [],
-      },
-      [],
-      this.fs
-    );
-    newFractal.isClone = true;
-    return newFractal;
   }
 
   checkName(test: string): boolean {
