@@ -1,7 +1,8 @@
 export enum Indicators {
   Icon = 'Icon',
   Sort = 'Sort',
-  FractalName = 'FractalName',
+  Cursor = 'Cursor',
+  Confirmation = 'Confirmation',
 }
 
 export interface ControlDto {

@@ -24,10 +24,10 @@ export class SidenavComponent implements OnInit {
     this.isOpen$ = this.fs.manager.fractal$.pipe(
       map(() => this.fs.manager.fractal.checkActions({ clicked: Click.One })),
       tap(isOpen => {
-        if (this.fs.page.$fractal()?.checkName(Pages.Home)) return;
+        if (this.fs.page.$fractal()?.checkCursor(Pages.Home)) return;
         if (this.isOpen && isOpen) {
-          const { name } = this.fs.sidenavTaps.fractal;
-          const toggleTaps = Roots[name === 'Pages' ? 'Modifiers' : 'Pages'];
+          const { cursor } = this.fs.sidenavTaps.fractal;
+          const toggleTaps = Roots[cursor === 'Pages' ? 'Modifiers' : 'Pages'];
           this.fs.sidenavTaps.set(this.fs.root.fractal?.find(toggleTaps));
         }
         this.isOpen = isOpen;

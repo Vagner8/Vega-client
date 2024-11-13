@@ -1,5 +1,5 @@
 export const ENV = {
-  ID: 'bc835357-df70-417d-a428-ad1eea477ba4',
+  ID: '388834d9-c81d-40ac-a452-9afa2bc6fb47',
   API: 'https://localhost:7002/api/',
   BASE_API: 'http://localhost:4200',
 };

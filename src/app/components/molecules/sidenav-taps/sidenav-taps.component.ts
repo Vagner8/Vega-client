@@ -16,7 +16,7 @@ export class SidenavTapsComponent {
 
   disabled(tap: Fractal): boolean {
     const fractals = this.fs.row.$fractals();
-    switch (tap.name) {
+    switch (tap.cursor) {
       case Modifiers.Save:
         return fractals[0] ? !fractals[0].formGroup.dirty : true;
       case Modifiers.Delete:
@@ -35,7 +35,7 @@ export class SidenavTapsComponent {
       this.fs.modifier.set(null);
     } else {
       await this.fs.modifier.set(tap);
-      if (tap.checkName(Modifiers.New)) {
+      if (tap.checkCursor(Modifiers.New)) {
         this.fs.row.set(null);
         this.fs.row.set(this.fs.clone());
       }
@@ -43,10 +43,10 @@ export class SidenavTapsComponent {
   }
 
   onHold(tap: Fractal): void {
-    if (tap.checkName(Modifiers.Save)) {
+    if (tap.checkCursor(Modifiers.Save)) {
       this.fs.update();
     }
-    if (tap.checkName(Modifiers.Delete)) {
+    if (tap.checkCursor(Modifiers.Delete)) {
       this.fs.delete();
     }
   }

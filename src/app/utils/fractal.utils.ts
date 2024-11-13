@@ -1,66 +1,66 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import {
-  Click,
   Fractal,
-  FractalActionFields,
+  FractalActions,
   FractalDto,
   FractalFormControl,
   FractalFormControls,
   Indicators,
-  Modifiers,
 } from '@types';
 import { isKeyof } from '@utils';
 
 export class FractalClass implements Fractal {
-  name: string;
   icon: string;
   sort: string[];
+  cursor: string;
+  confirmation: boolean;
 
   isClone: boolean;
   formGroup: FormGroup<FractalFormControls>;
-  confirmation: boolean;
 
-  clicked: Click | null;
+  actions: FractalActions;
 
   constructor(
     public dto: FractalDto,
     public fractals: Fractal[]
   ) {
-    this.name = this.data(Indicators.FractalName);
     this.icon = this.data(Indicators.Icon);
     this.sort = this.data(Indicators.Sort).split(':');
+    this.cursor = this.data(Indicators.Cursor);
+    this.confirmation = Boolean(this.data(Indicators.Confirmation));
 
-    this.clicked = null;
+    this.actions = {
+      clicked: null,
+    };
 
     this.isClone = false;
-    this.formGroup = new FormGroup<FractalFormControls>(this.createFormGroup());
-    this.confirmation = [Modifiers.Delete, Modifiers.Save].some(name => name === this.name);
+    this.formGroup = this.createFormGroup();
   }
 
-  checkName(test: string): boolean {
-    return this.name === test;
+  checkCursor(test: string): boolean {
+    return this.cursor === test;
   }
 
   checkType(type: object): boolean {
-    return Object.values(type).some(name => this.name === name);
+    return Object.values(type).some(name => this.cursor === name);
   }
 
-  checkActions(actions: Partial<FractalActionFields>): boolean {
+  checkActions(actions: Partial<FractalActions>): boolean {
     let result = false;
     for (const key in actions) {
       if (isKeyof(actions, key)) {
-        result = this[key] === actions[key];
+        result = this.actions[key] === actions[key];
         if (!result) break;
       }
     }
     return result;
   }
 
-  find(nameOrId: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
+  find(test: string, fractals: Fractal[] | null = this.fractals): Fractal | null {
     if (fractals) {
       for (const fractal of fractals) {
-        if (fractal.name === nameOrId || fractal.dto.id === nameOrId) return fractal;
-        const found = this.find(nameOrId, fractal.fractals);
+        if (fractal.checkCursor(test) || fractal.dto.id === test) return fractal;
+        const found = this.find(test, fractal.fractals);
         if (found) return found;
       }
     }
@@ -76,10 +76,12 @@ export class FractalClass implements Fractal {
     return this.formGroup.get(indicator) as FractalFormControl;
   }
 
-  private createFormGroup(): FractalFormControls {
-    return Object.values(this.dto.controls).reduce((acc, control) => {
-      acc[control.indicator] = new FormControl(control.data);
-      return acc;
-    }, {} as FractalFormControls);
+  private createFormGroup(): FormGroup<FractalFormControls> {
+    return new FormGroup<FractalFormControls>(
+      Object.values(this.dto.controls).reduce((acc, control) => {
+        acc[control.indicator] = new FormControl(control.data);
+        return acc;
+      }, {} as FractalFormControls)
+    );
   }
 }

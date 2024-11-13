@@ -2,7 +2,7 @@
   <button
     mat-mini-fab
     appClick
-    [withOnHold]="true"
+    [withOnHold]="fractal.confirmation"
     (onClick)="onClick(fractal)"
     (onHold)="onHold(fractal)">
     @if (fs.isHoldAnimationStarted() && !fs.isHoldAnimationSucceed()) {

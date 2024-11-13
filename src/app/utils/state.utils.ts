@@ -2,7 +2,7 @@ import { signal } from '@angular/core';
 import { FractalService } from '@services';
 import {
   Fractal,
-  FractalActionFields,
+  FractalActions,
   FractalNull,
   Modifiers,
   Pages,
@@ -11,7 +11,6 @@ import {
   State,
 } from '@types';
 import { Subject } from 'rxjs';
-import { isKeyof } from './guards.utils';
 
 export class StateClass implements State {
   $fractals = signal<Fractal[]>([]);
@@ -26,15 +25,13 @@ export class StateClass implements State {
     return result;
   }
 
-  async set(fractal: FractalNull, actions?: Partial<FractalActionFields>): Promise<State> {
+  async set(fractal: FractalNull, actions?: Partial<FractalActions>): Promise<State> {
     if (fractal) {
       if (actions) {
-        Object.entries(actions).forEach(([key, value]) => {
-          if (isKeyof<FractalActionFields>(fractal, key)) fractal[key] = value;
-        });
+        fractal.actions = { ...fractal.actions, ...actions };
       }
 
-      if (fractal.checkName('')) {
+      if (fractal.checkCursor('')) {
         this.$fractals.update(fractals => {
           const set = new Set(fractals);
           set[set.has(fractal) ? 'delete' : 'add'](fractal);
@@ -56,22 +53,22 @@ export class StateClass implements State {
           this.fs.row.set(null);
           this.fs.modifier.set(null);
         }
-        await this.fs.router.navigate([fractal.name], {
-          queryParams: { [Roots.Manager]: this.fs.manager.fractal.clicked },
+        await this.fs.router.navigate([fractal.cursor], {
+          queryParams: { [Roots.Manager]: this.fs.manager.fractal.actions.clicked },
           queryParamsHandling: shouldReset ? null : 'merge',
         });
       }
 
       if (fractal.checkType(Modifiers)) {
         await this.fs.router.navigate([], {
-          queryParams: { [Roots.Modifiers]: fractal.name },
+          queryParams: { [Roots.Modifiers]: fractal.cursor },
           queryParamsHandling: 'merge',
         });
       }
 
-      if (fractal.checkName(Roots.Manager)) {
+      if (fractal.checkCursor(Roots.Manager)) {
         await this.fs.router.navigate([], {
-          queryParams: { [Roots.Manager]: fractal.clicked },
+          queryParams: { [Roots.Manager]: fractal.actions.clicked },
           queryParamsHandling: 'merge',
         });
       }

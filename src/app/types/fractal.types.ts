@@ -39,30 +39,31 @@ export type FractalFormControls = Record<string, FractalFormControl>;
 export interface FractalCheckProps {
   name?: string;
   type?: object;
-  action?: Partial<FractalActionFields>;
+  action?: Partial<FractalActions>;
 }
 
 interface FractalMethods {
   find(name: string, fractals?: Fractal[] | null): FractalNull;
   data(indicator: string): string;
-  checkName(test: string): boolean;
+  checkCursor(test: string): boolean;
   checkType(type: object): boolean;
-  checkActions(actions: Partial<FractalActionFields>): boolean;
+  checkActions(actions: Partial<FractalActions>): boolean;
   formControl(indicator: string): FractalFormControl;
 }
 
 type FractalFields = {
   dto: FractalDto;
-  name: string;
   icon: string;
   sort: string[];
+  cursor: string;
+  actions: FractalActions;
   isClone: boolean;
   fractals: Fractal[];
   formGroup: FormGroup<FractalFormControls>;
   confirmation: boolean;
-} & FractalActionFields;
+};
 
-export interface FractalActionFields {
+export interface FractalActions {
   clicked: string | null;
 }
 

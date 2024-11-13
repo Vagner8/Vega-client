@@ -6,5 +6,5 @@
   (onHold)="onHold.emit(tap)"
   (onClick)="onClick.emit(tap)">
   <mat-icon>{{ tap.icon }}</mat-icon>
-  <ng-content select="[before-tap-name]"></ng-content> {{ tap.name }}
+  <ng-content select="[before-tap-name]"></ng-content> {{ tap.cursor }}
 </button>
