@@ -1,7 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core';
 import { ClickDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -12,8 +12,8 @@ import { Fractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent {
-  @Input() rows!: Fractal[];
+  @Input() rows!: IFractal[];
   @Input() columns!: string[];
-  @Input() dataSource!: Fractal[];
-  row = output<Fractal>();
+  @Input() dataSource!: IFractal[];
+  row = output<IFractal>();
 }

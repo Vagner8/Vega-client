@@ -4,18 +4,28 @@ export enum InputType {
   Password = 'Password',
 }
 
-export enum Click {
-  One = 'one',
-  Hold = 'hold',
-  Double = 'double',
-}
-
 export type Timeout = ReturnType<typeof setTimeout>;
 
-export interface Exception {
-  type: string;
-  title: string;
-  status: 500;
-  detail: string;
-  instance: string;
-}
+export type IconName =
+  | 'add'
+  | 'edit'
+  | 'delete'
+  | 'home'
+  | 'group'
+  | 'close'
+  | 'visibility'
+  | 'visibility_off'
+  | 'view_cozy'
+  | 'task_alt'
+  | 'send'
+  | 'cancel'
+  | 'settings'
+  | 'apps'
+  | 'filter_list'
+  | 'category'
+  | 'dataset'
+  | 'diversity_2'
+  | 'image'
+  | 'widgets'
+  | 'save'
+  | 'add_circle';

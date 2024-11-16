@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { Click, Fractal } from '@types';
-import { FractalService } from '@services';
 import { SpinnerComponent } from '@components/atoms';
+import { FractalService } from '@services';
+import { Events, Types } from '@types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manager',
@@ -13,17 +14,26 @@ import { SpinnerComponent } from '@components/atoms';
   styleUrl: './manager.component.scss',
 })
 export class ManagerComponent {
-  constructor(public fs: FractalService) {}
+  constructor(
+    public fs: FractalService,
+    private router: Router
+  ) {}
 
-  onClick(fractal: Fractal): void {
-    this.handleClick(fractal, Click.One);
+  onClick(): void {
+    const taps = this.fs[this.fs.taps()?.isCursor(Types.Pages) ? 'modifiers' : 'pages'];
+    this.fs.managerEvent() === Events.Click && this.fs.taps.set(taps);
+    this.set(Events.Click);
   }
 
-  onHold(fractal: Fractal): void {
-    this.handleClick(fractal, Click.Hold);
+  onHold(): void {
+    this.set(Events.Hold);
   }
 
-  private handleClick(fractal: Fractal, clicked: Click): void {
-    this.fs.manager.set(fractal, { clicked });
+  private set(event: Events) {
+    this.fs.managerEvent.set(event);
+    this.router.navigate([], {
+      queryParams: { [Types.Manager]: event },
+      queryParamsHandling: 'merge',
+    });
   }
 }

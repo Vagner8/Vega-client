@@ -1,14 +1,14 @@
-@if (fs.manager.$fractal(); as fractal) {
+@if (this.fs.manager; as manager) {
   <button
     mat-mini-fab
     appClick
-    [withOnHold]="fractal.confirmation"
-    (onClick)="onClick(fractal)"
-    (onHold)="onHold(fractal)">
-    @if (fs.isHoldAnimationStarted() && !fs.isHoldAnimationSucceed()) {
+    [disabledOnHold]="fs.managerEvent() === 'Hold'"
+    (onClick)="onClick()"
+    (onHold)="onHold()">
+    @if (fs.holding.go() && !fs.holding.end()) {
       <app-spinner mode="determinate" />
     } @else {
-      <mat-icon>{{ fractal.icon }}</mat-icon>
+      <mat-icon>{{ manager.data('Icon') }}</mat-icon>
     }
   </button>
 } @else {

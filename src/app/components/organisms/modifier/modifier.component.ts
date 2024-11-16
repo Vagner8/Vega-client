@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { InputComponent, TableComponent } from '@components/atoms';
 import { MatCardModule, MatListModule } from '@mat';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-modifier',
@@ -13,6 +13,6 @@ import { Fractal } from '@types';
 })
 export class ModifierComponent {
   @Input() sort: string[] = [];
-  @Input() rows: Fractal[] = [];
+  @Input() rows: IFractal[] = [];
   @Input() modifier!: string;
 }

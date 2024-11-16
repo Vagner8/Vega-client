@@ -1,10 +1,25 @@
+import { WritableSignal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ControlDto } from '@types';
+import { Subject } from 'rxjs';
 
-export enum Roots {
+export enum Types {
+  Root = 'Root',
+  Rows = 'Rows',
   Pages = 'Pages',
   Manager = 'Manager',
   Modifiers = 'Modifiers',
+}
+
+export enum Events {
+  Hold = 'Hold',
+  Click = 'Click',
+}
+
+export enum Indicators {
+  Icon = 'Icon',
+  Sort = 'Sort',
+  Cursor = 'Cursor',
+  Options = 'Options',
 }
 
 export enum Pages {
@@ -20,51 +35,51 @@ export enum Modifiers {
   Delete = 'Delete',
 }
 
-export enum Queries {
-  Rows = 'Rows',
-  Manager = 'Manager',
+export type ControlsDto = Record<string, ControlDto>;
+export type FractalsDto = Record<string, FractalDto>;
+export type IFractals = Record<string, IFractal>;
+
+export interface ControlDto {
+  id: string;
+  data: string;
+  parentId: string;
+  indicator: string;
 }
 
 export interface FractalDto {
   id: string;
   parentId: string;
-  fractals: FractalDto[];
-  controls: ControlDto[];
+  fractals: FractalsDto | null;
+  controls: ControlsDto;
 }
 
-export type FractalNull = Fractal | null;
-export type FractalFormControl = FormControl<string | null>;
-export type FractalFormControls = Record<string, FractalFormControl>;
-
-export interface FractalCheckProps {
-  name?: string;
-  type?: object;
-  action?: Partial<FractalActions>;
+export interface FractalFormGroup {
+  data: FormGroup;
+  get(indicator: string): FormControl;
 }
 
-interface FractalMethods {
-  find(name: string, fractals?: Fractal[] | null): FractalNull;
-  data(indicator: string): string;
-  checkCursor(test: string): boolean;
-  checkType(type: object): boolean;
-  checkActions(actions: Partial<FractalActions>): boolean;
-  formControl(indicator: string): FractalFormControl;
-}
-
-type FractalFields = {
+export interface IFractal {
   dto: FractalDto;
-  icon: string;
-  sort: string[];
-  cursor: string;
-  actions: FractalActions;
-  isClone: boolean;
-  fractals: Fractal[];
-  formGroup: FormGroup<FractalFormControls>;
-  confirmation: boolean;
-};
+  fractals: IFractals | null;
+  formGroup: FractalFormGroup;
+  isClone?: boolean;
 
-export interface FractalActions {
-  clicked: string | null;
+  data(indicator: string): string;
+  list(): IFractal[];
+  find(test: string, fractals?: IFractals | null): IFractal | null;
+  split<T extends []>(indicator: string): T;
+  isType(type: object): boolean;
+  isCursor(data: string): boolean;
 }
 
-export type Fractal = FractalFields & FractalMethods;
+export interface IState {
+  fractal: IFractal | null;
+  $fractal: WritableSignal<IFractal | null>;
+  fractal$: Subject<IFractal | null>;
+  set(fractal: IFractal | null, event?: string): void;
+}
+
+export interface IStates {
+  $fractals: WritableSignal<IFractal[]>;
+  set(fractal: IFractal | null, event?: string): void;
+}

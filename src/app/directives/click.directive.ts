@@ -7,16 +7,13 @@ import { Timeout } from '@types';
   standalone: true,
 })
 export class ClickDirective {
-  @Input() withOnHold = false;
-
+  @Input() disabledOnHold = true;
   onHold = output();
   onClick = output();
   onHoldStart = output();
-
   startHoldTime!: number;
   timeoutOnHold: Timeout | null = null;
   timeoutOnHoldStart: Timeout | null = null;
-
   holdTime = 600;
   clickTime = 200;
 
@@ -25,15 +22,15 @@ export class ClickDirective {
   @HostListener('mousedown')
   onMouseDown() {
     this.startHoldTime = Date.now();
-    if (!this.withOnHold) return;
+    if (this.disabledOnHold) return;
     this.timeoutOnHoldStart = setTimeout(() => {
       this.onHoldStart.emit();
-      this.fs.isHoldAnimationStarted.set(true);
+      this.fs.holding.go.set(true);
     }, this.clickTime);
-
     this.timeoutOnHold = setTimeout(() => {
       this.onHold.emit();
-      this.fs.isHoldAnimationSucceed.set(true);
+      this.fs.holding.end.set(true);
+      this.fs.holding.reset();
     }, this.holdTime);
   }
 
@@ -52,7 +49,6 @@ export class ClickDirective {
     if (this.timeoutOnHoldStart) {
       clearTimeout(this.timeoutOnHoldStart);
     }
-    this.fs.isHoldAnimationStarted.set(false);
-    this.fs.isHoldAnimationSucceed.set(false);
+    this.fs.holding.reset();
   }
 }

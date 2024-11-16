@@ -2,9 +2,9 @@
   mat-flat-button
   [disabled]="disabled"
   appClick
-  [withOnHold]="tap.confirmation"
+  [disabledOnHold]="disabledOnHold(tap)"
   (onHold)="onHold.emit(tap)"
   (onClick)="onClick.emit(tap)">
-  <mat-icon>{{ tap.icon }}</mat-icon>
-  <ng-content select="[before-tap-name]"></ng-content> {{ tap.cursor }}
+  <mat-icon>{{ tap.data('Icon') }}</mat-icon>
+  <ng-content select="[before-tap-name]"></ng-content> {{ tap.data('Cursor') }}
 </button>

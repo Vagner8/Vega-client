@@ -4,7 +4,7 @@
       <mat-list role="list" class="input-list">
         @for (indicator of sort; track indicator) {
           <mat-list-item role="listitem" class="list-item">
-            <app-input [label]="indicator" [control]="firstRow.formControl(indicator)"></app-input>
+            <app-input [label]="indicator" [control]="firstRow.formGroup.get(indicator)" />
           </mat-list-item>
         }
       </mat-list>
@@ -14,7 +14,7 @@
   @if (modifier === 'Save') {
     <mat-list role="list" class="list">
       @for (indicator of sort; track indicator) {
-        @if (firstRow.formControl(indicator); as formControl) {
+        @if (firstRow.formGroup.get(indicator); as formControl) {
           <mat-list-item role="listitem" class="list-item">
             <mat-card appearance="outlined">
               <mat-card-content>{{ indicator }}: {{ formControl.value }}</mat-card-content>

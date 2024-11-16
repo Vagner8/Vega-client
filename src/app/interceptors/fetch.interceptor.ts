@@ -1,19 +1,14 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ErrorService } from '@services';
-import { ex } from '@utils';
 
 export const fetchInterceptor = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-  const fs = inject(ErrorService);
-  return next(req).pipe(catchError(error => handleError(fs, error)));
+  return next(req).pipe(catchError(error => handleError(error)));
 };
 
-export const handleError = (es: ErrorService, error: HttpErrorResponse): Observable<never> => {
-  es.error.set(ex(error));
+export const handleError = (error: HttpErrorResponse): Observable<never> => {
   console.error('🚀 ~ Error:', error.error);
   return throwError(() => new Error(error.error));
 };

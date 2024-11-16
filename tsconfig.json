@@ -29,10 +29,8 @@
       "@directives": ["app/directives/index.ts"],
       "@constants": ["app/constants/index.ts"],
       "@services": ["app/services/index.ts"],
-      "@guard": ["app/guard/index.ts"],
       "@types": ["app/types/index.ts"],
       "@utils": ["app/utils/index.ts"],
-      "@pipes": ["app/pipes/index.ts"],
       "@mat": ["app/mat-angular.ts"]
     }
   },

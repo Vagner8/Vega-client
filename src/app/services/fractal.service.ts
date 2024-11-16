@@ -1,7 +1,15 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal, FractalDto, State } from '@types';
-import { FractalClass, StateClass } from '@utils';
-import { DataService } from '@services';
+import {
+  ControlsDto,
+  FractalDto,
+  FractalsDto,
+  IFractal,
+  IFractals,
+  Indicators,
+  Types,
+} from '@types';
+import { Fractal } from '@utils';
+import { DataService } from './data.service';
 import { Router } from '@angular/router';
 import { v4 } from 'uuid';
 
@@ -9,82 +17,95 @@ import { v4 } from 'uuid';
   providedIn: 'root',
 })
 export class FractalService {
-  row = this.state();
-  root = this.state();
-  page = this.state();
-  manager = this.state();
-  modifier = this.state();
-  sidenavTaps = this.state();
+  pages: IFractal | null = null;
+  manager: IFractal | null = null;
+  modifiers: IFractal | null = null;
 
-  isHoldAnimationStarted = signal(false);
-  isHoldAnimationSucceed = signal(false);
+  root = signal<IFractal | null>(null);
+  page = signal<IFractal | null>(null);
+  taps = signal<IFractal | null>(null);
+  modifier = signal<IFractal | null>(null);
+  managerEvent = signal('');
+
+  holding = {
+    go: signal(false),
+    end: signal(false),
+    reset() {
+      this.go.set(false);
+      this.end.set(false);
+    },
+  };
+
+  rows = {
+    fractals: signal<IFractal[]>([]),
+    set(fractal: IFractal) {
+      const set = new Set(this.fractals());
+      set[set.has(fractal) ? 'delete' : 'add'](fractal);
+      this.fractals.set(Array.from(set));
+    },
+  };
 
   constructor(
     public ds: DataService,
     public router: Router
   ) {}
 
-  toFractal(dto: FractalDto): Fractal {
-    return this.create(dto, this.toFractals(dto.fractals));
+  clone(parent: IFractal | null): void {
+    if (!parent || !parent.fractals) return;
+    const cloneId = v4();
+    const clone = new Fractal(
+      {
+        id: cloneId,
+        parentId: parent.dto.id,
+        controls: parent.split(Indicators.Sort).reduce((acc, indicator) => {
+          acc[indicator] = {
+            id: v4(),
+            parentId: cloneId,
+            indicator,
+            data: '',
+          };
+          return acc;
+        }, {} as ControlsDto),
+        fractals: null,
+      },
+      null
+    );
+    clone.isClone = true;
+    parent.fractals[parent.list().length + 1] = clone;
+    this.rows.fractals.set([clone]);
   }
 
   update(): void {
-    const row = this.row.$fractals()[0];
-    const { dto, formGroup, isClone } = row;
-    Object.entries(formGroup.value).forEach(([indicator, value]) => {
-      dto.controls.forEach(control => {
-        if (control.indicator === indicator) control.data = value || '';
-      });
+    const toUpdate = this.rows.fractals()[0];
+    const { dto, formGroup } = toUpdate;
+    Object.entries(formGroup.data.getRawValue()).forEach(([indicator, data]) => {
+      dto.controls[indicator].data = data as string;
     });
-    if (isClone) {
-      this.page.fractal.fractals.push(row);
-      this.ds.add(dto).subscribe(console.log);
+    if (toUpdate.isClone) {
+      this.ds.add(dto).subscribe(data => console.log('🚀 ~ add:', data));
     } else {
-      this.ds.update(dto).subscribe(console.log);
+      this.ds.update(dto).subscribe(data => console.log('🚀 ~ update:', data));
     }
-    this.page.set(this.page.fractal);
+    this.rows.fractals.set([]);
+    this.modifier.set(null);
+    this.router.navigate([this.page()?.data(Indicators.Cursor)], {
+      queryParams: { [Types.Manager]: this.managerEvent() },
+    });
   }
 
-  delete(): void {
-    const rowsDtoToDelete = this.row.$fractals().map(({ dto }) => dto);
-    this.ds.delete(rowsDtoToDelete).subscribe(console.log);
-    this.page.fractal.fractals = this.page.fractal.fractals.filter(
-      ({ dto }) => !rowsDtoToDelete.includes(dto)
-    );
-    this.page.set(this.page.fractal);
+  toFractal(dto: FractalDto) {
+    return new Fractal(dto, this.toFractals(dto.fractals));
   }
 
-  clone(): Fractal {
-    const fractalId = v4();
-    const { dto, sort } = this.page.fractal;
-    const newFractal = new FractalClass(
-      {
-        id: fractalId,
-        parentId: dto.id,
-        controls: sort.map(indicator => ({
-          id: v4(),
-          parentId: fractalId,
-          indicator,
-          data: '',
-        })),
-        fractals: [],
-      },
-      []
-    );
-    newFractal.isClone = true;
-    return newFractal;
-  }
-
-  private toFractals(fractals: FractalDto[]): Fractal[] {
-    if (!fractals) return [];
-    return fractals.map(dto => this.create(dto, this.toFractals(dto.fractals)));
-  }
-
-  private create(dto: FractalDto, fractals: Fractal[]): Fractal {
-    return new FractalClass(dto, fractals);
-  }
-
-  private state(): State {
-    return new StateClass(this);
+  private toFractals(fractals: FractalsDto | null) {
+    if (!fractals) return null;
+    const result: IFractals = {};
+    for (const indicator in fractals) {
+      result[indicator] = new Fractal(
+        fractals[indicator],
+        this.toFractals(fractals[indicator].fractals)
+      );
+    }
+    return result;
   }
 }

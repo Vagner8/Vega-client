@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { Fractal } from '@types';
+import { IFractal, Modifiers } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -13,8 +13,13 @@ import { Fractal } from '@types';
 })
 export class TapComponent {
   @Input() tip = '';
-  @Input() tap!: Fractal;
+  @Input() tap!: IFractal;
   @Input() disabled = false;
-  onClick = output<Fractal>();
-  onHold = output<Fractal>();
+  onClick = output<IFractal>();
+  onHold = output<IFractal>();
+
+  disabledOnHold(tap: IFractal): boolean {
+    return ![Modifiers.Save, Modifiers.Save].some(cursor => tap.isCursor(cursor));
+    // return true;
+  }
 }
