@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { FractalService } from '@services';
-import { IFractal, Indicators, Modifiers, Pages, Types } from '@types';
+import { IFractal, Modifiers, Pages, Types } from '@types';
 
 @Component({
   selector: 'app-sidenav-taps',
@@ -40,7 +40,7 @@ export class SidenavTapsComponent {
     } else {
       this.fs.modifier.set(tap);
       if (tap.isCursor(Modifiers.New)) {
-        this.fs.clone(this.fs.page());
+        this.fs.cloneRow(this.fs.page());
       }
     }
     this.navigation(tap, isPages);
@@ -51,15 +51,15 @@ export class SidenavTapsComponent {
       this.fs.update();
     }
     if (tap.isCursor(Modifiers.Delete)) {
-      // this.fs.delete();
+      this.fs.delete();
     }
   }
 
   private navigation(tap: IFractal, isPages: boolean): void {
-    this.router.navigate(isPages ? [tap.data(Indicators.Cursor)] : [], {
+    this.router.navigate(isPages ? [tap.cursor] : [], {
       queryParams: isPages
         ? { [Types.Manager]: this.fs.managerEvent() }
-        : { [Types.Modifiers]: tap.data(Indicators.Cursor) },
+        : { [Types.Modifiers]: tap.cursor },
       queryParamsHandling: isPages ? null : 'merge',
     });
   }

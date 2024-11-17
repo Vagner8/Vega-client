@@ -27,7 +27,7 @@ export class PageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(([dto]) => {
+    combineLatest([this.ds.get(), this.route.queryParamMap]).subscribe(async ([dto]) => {
       if (this.fs.page()) return;
       const root = this.fs.toFractal(dto);
       this.fs.pages = root.find(Types.Pages);
@@ -35,10 +35,12 @@ export class PageComponent implements OnInit {
       this.fs.modifiers = root.find(Types.Modifiers);
 
       this.fs.root.set(root);
-      this.fs.page.set(root.find(this.Pages));
-      this.fs.taps.set(this.fs[this.Rows || this.Modifiers ? 'modifiers' : 'pages']);
+      setTimeout(() => this.fs.page.set(root.find(this.Pages)));
       this.Rows && this.fs.rows.fractals.set(this.Rows.split(':').map(id => root.find(id)!));
-      this.fs.managerEvent.set(this.Manager ? this.Manager : Events.Hold);
+      setTimeout(() =>
+        this.fs.taps.set(this.fs[this.Rows || this.Modifiers ? 'modifiers' : 'pages'])
+      );
+      setTimeout(() => this.fs.managerEvent.set(this.Manager ? this.Manager : Events.Hold));
     });
   }
 

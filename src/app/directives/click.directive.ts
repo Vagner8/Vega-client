@@ -7,7 +7,7 @@ import { Timeout } from '@types';
   standalone: true,
 })
 export class ClickDirective {
-  @Input() disabledOnHold = true;
+  @Input() activateOnHold = false;
   onHold = output();
   onClick = output();
   onHoldStart = output();
@@ -22,7 +22,7 @@ export class ClickDirective {
   @HostListener('mousedown')
   onMouseDown() {
     this.startHoldTime = Date.now();
-    if (this.disabledOnHold) return;
+    if (!this.activateOnHold) return;
     this.timeoutOnHoldStart = setTimeout(() => {
       this.onHoldStart.emit();
       this.fs.holding.go.set(true);

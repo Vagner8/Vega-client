@@ -15,3 +15,16 @@
   flex-direction: column;
   width: 100%;
 }
+
+::ng-deep .mat-drawer-app-sidenav {
+  .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+::ng-deep .mat-drawer-container-app-sidenav {
+  mat-drawer-content {
+    height: calc(-130px + 100vh);
+  }
+}

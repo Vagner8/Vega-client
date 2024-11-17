@@ -18,8 +18,7 @@ export class TapComponent {
   onClick = output<IFractal>();
   onHold = output<IFractal>();
 
-  disabledOnHold(tap: IFractal): boolean {
-    return ![Modifiers.Save, Modifiers.Save].some(cursor => tap.isCursor(cursor));
-    // return true;
+  activateOnHold(tap: IFractal): boolean {
+    return [Modifiers.Save, Modifiers.Delete].some(cursor => tap.isCursor(cursor));
   }
 }

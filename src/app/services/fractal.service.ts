@@ -50,10 +50,10 @@ export class FractalService {
     public router: Router
   ) {}
 
-  clone(parent: IFractal | null): void {
-    if (!parent || !parent.fractals) return;
+  cloneRow(parent: IFractal | null): void {
+    if (!parent) return;
     const cloneId = v4();
-    const clone = new Fractal(
+    const row = new Fractal(
       {
         id: cloneId,
         parentId: parent.dto.id,
@@ -70,9 +70,15 @@ export class FractalService {
       },
       null
     );
-    clone.isClone = true;
-    parent.fractals[parent.list().length + 1] = clone;
-    this.rows.fractals.set([clone]);
+    const cursor = parent.list().length.toString();
+    row.cursor = parent.fractals ? cursor : '0';
+    row.isClone = true;
+    if (parent.fractals) {
+      parent.fractals[cursor] = row;
+    } else {
+      parent.fractals = { 0: row };
+    }
+    this.rows.fractals.set([row]);
   }
 
   update(): void {
@@ -86,25 +92,43 @@ export class FractalService {
     } else {
       this.ds.update(dto).subscribe(data => console.log('🚀 ~ update:', data));
     }
-    this.rows.fractals.set([]);
-    this.modifier.set(null);
-    this.router.navigate([this.page()?.data(Indicators.Cursor)], {
-      queryParams: { [Types.Manager]: this.managerEvent() },
-    });
+    this.afterRequest();
+  }
+
+  delete(): void {
+    const toDelete: FractalDto[] = [];
+    const fractals = this.page()?.fractals;
+    if (!fractals) return;
+    for (const row of this.rows.fractals()) {
+      toDelete.push(row.dto);
+      delete fractals[row.cursor];
+    }
+    this.ds.delete(toDelete).subscribe(data => console.log('🚀 ~ delete:', data));
+    this.afterRequest();
   }
 
   toFractal(dto: FractalDto) {
     return new Fractal(dto, this.toFractals(dto.fractals));
   }
 
+  private afterRequest(): void {
+    this.rows.fractals.set([]);
+    this.modifier.set(null);
+    this.router.navigate([this.page()?.cursor], {
+      queryParams: { [Types.Manager]: this.managerEvent() },
+    });
+  }
+
   private toFractals(fractals: FractalsDto | null) {
     if (!fractals) return null;
     const result: IFractals = {};
     for (const indicator in fractals) {
-      result[indicator] = new Fractal(
+      const fractal = new Fractal(
         fractals[indicator],
         this.toFractals(fractals[indicator].fractals)
       );
+      fractal.cursor = indicator;
+      result[indicator] = fractal;
     }
     return result;
   }

@@ -60,6 +60,7 @@ export interface FractalFormGroup {
 
 export interface IFractal {
   dto: FractalDto;
+  cursor: string;
   fractals: IFractals | null;
   formGroup: FractalFormGroup;
   isClone?: boolean;

@@ -4,7 +4,7 @@
       @if (taps.find(indicator); as tap) {
         <app-tap
           [tap]="tap"
-          [disabled]="disabled(tap.data('Cursor'))"
+          [disabled]="disabled(tap.cursor)"
           (onClick)="onClick($event)"
           (onHold)="onHold($event)" />
       }

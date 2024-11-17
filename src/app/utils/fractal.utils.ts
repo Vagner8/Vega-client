@@ -1,7 +1,8 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FractalDto, IFractals, IFractal, Indicators, FractalFormGroup } from '@types';
+import { FractalDto, IFractals, IFractal, FractalFormGroup } from '@types';
 
 export class Fractal implements IFractal {
+  cursor!: string;
   isClone?: boolean;
   formGroup: FractalFormGroup;
 
@@ -36,11 +37,11 @@ export class Fractal implements IFractal {
   }
 
   isType(type: object): boolean {
-    return Object.values(type).some(name => this.data(Indicators.Cursor) === name);
+    return Object.values(type).some(name => this.cursor === name);
   }
 
   isCursor(data: string): boolean {
-    return this.data(Indicators.Cursor) === data;
+    return this.cursor === data;
   }
 
   private getFormGroup(): FractalFormGroup {

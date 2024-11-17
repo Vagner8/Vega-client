@@ -2,7 +2,7 @@
   <button
     mat-mini-fab
     appClick
-    [disabledOnHold]="fs.managerEvent() === 'Hold'"
+    [activateOnHold]="fs.managerEvent() === 'Click'"
     (onClick)="onClick()"
     (onHold)="onHold()">
     @if (fs.holding.go() && !fs.holding.end()) {
