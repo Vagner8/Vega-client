@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FractalService } from '@services';
 
 @Component({
@@ -8,6 +8,7 @@ import { FractalService } from '@services';
   providers: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   constructor(public fs: FractalService) {}

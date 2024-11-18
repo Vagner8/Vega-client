@@ -9,10 +9,11 @@ import { v4 } from 'uuid';
 })
 export class FractalService {
   pages: IFractal | null = null;
-  manager: IFractal | null = null;
   modifiers: IFractal | null = null;
 
   root = signal<IFractal | null>(null);
+  manager = signal<IFractal | null>(null);
+
   page = new PageState();
   taps = new TapsState();
   rows = new RowsState();

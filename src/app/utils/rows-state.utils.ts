@@ -6,9 +6,8 @@ export class RowsState {
   protected router = inject(Router);
   signal = signal<IFractal[]>([]);
 
-  async set(row: IFractal | null): Promise<void> {
-    if (!row) return;
-    if (row.isClone && !this.signal().every(row => row.isClone)) this.signal.set([]);
+  async set(row: IFractal): Promise<void> {
+    if (row.isClone && this.signal().some(row => !row.isClone)) this.signal.set([]);
     const set = new Set(this.signal());
     set[set.has(row) ? 'delete' : 'add'](row);
     this.signal.set(Array.from(set));
@@ -16,7 +15,7 @@ export class RowsState {
   }
 
   delete(rowToDelete: IFractal) {
-    this.signal.update(prev => (prev ? prev.filter(row => row !== rowToDelete) : []));
+    this.signal.update(prev => prev.filter(row => row !== rowToDelete));
     this.navigate();
   }
 

@@ -14,7 +14,7 @@ export class ClickDirective {
   startHoldTime!: number;
   timeoutOnHold: Timeout | null = null;
   timeoutOnHoldStart: Timeout | null = null;
-  holdTime = 600;
+  holdTime = 830;
   clickTime = 200;
 
   constructor(private fs: FractalService) {}

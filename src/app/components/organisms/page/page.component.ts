@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 import { DataService, FractalService } from '@services';
-import { combineLatest, tap } from 'rxjs';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { Events, IFractal, Types } from '@types';
 
@@ -21,36 +19,29 @@ export class PageComponent implements OnInit {
 
   constructor(
     public fs: FractalService,
-    private ds: DataService,
-    private route: ActivatedRoute
+    private ds: DataService
   ) {}
 
   ngOnInit(): void {
-    combineLatest([this.ds.get(), this.route.queryParamMap])
-      .pipe(
-        tap(([dto]) => {
-          if (!this.fs.page.signal()) {
-            const root = this.fs.toFractal(dto);
-            this.fs.pages = root.find(Types.Pages);
-            this.fs.manager = root.find(Types.Manager);
-            this.fs.modifiers = root.find(Types.Modifiers);
-            this.fs.root.set(root);
+    this.ds.get().subscribe(dto => {
+      const root = this.fs.toFractal(dto);
+      this.fs.pages = root.find(Types.Pages);
+      this.fs.modifiers = root.find(Types.Modifiers);
 
-            this.fs.taps.signal.set(this.fs[this.Rows || this.Modifier ? 'modifiers' : 'pages']);
-            this.fs.modifier.signal.set(root.find(this.Modifier));
-            if (this.Rows) {
-              const rows = this.Rows.split(':').map(id => {
-                const row = root.find(id);
-                return row ? row : this.fs.clone();
-              });
-              this.fs.rows.signal.set(rows);
-            }
-            this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
-            this.fs.page.signal.set(root.find(this.Pages));
-          }
-        })
-      )
-      .subscribe();
+      this.fs.root.set(root);
+      this.fs.manager.set(root.find(Types.Manager));
+      this.fs.page.signal.set(root.find(this.Pages));
+      this.fs.taps.signal.set(this.fs[this.Rows || this.Modifier ? 'modifiers' : 'pages']);
+      this.fs.modifier.signal.set(root.find(this.Modifier));
+      if (this.Rows) {
+        const rows = this.Rows.split(':').map(id => {
+          const row = root.find(id);
+          return row ? row : this.fs.clone();
+        });
+        this.fs.rows.signal.set(rows);
+      }
+      this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
+    });
   }
 
   async onRowClick(row: IFractal): Promise<void> {
