@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators } from '@types';
-import { Fractal, PageState, ModifierState, TapsState, ManagerState, FractalsState } from '@utils';
+import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState } from '@utils';
 import { DataService } from './data.service';
 import { v4 } from 'uuid';
 
@@ -15,7 +15,7 @@ export class FractalService {
   root = signal<IFractal | null>(null);
   page = new PageState();
   taps = new TapsState();
-  rows = new FractalsState();
+  rows = new RowsState();
   modifier = new ModifierState();
   managerEvent = new ManagerState();
 
@@ -93,10 +93,10 @@ export class FractalService {
     return new Fractal(dto, this.toFractals(dto.fractals));
   }
 
-  private reset(): void {
+  async reset(page?: IFractal | null): Promise<void> {
+    await this.page.set(page || this.page.signal());
+    await this.modifier.set(null);
     this.rows.signal.set([]);
-    this.modifier.set(null);
-    this.page.set(this.page.signal());
   }
 
   private toFractals(fractals: FractalsDto | null) {

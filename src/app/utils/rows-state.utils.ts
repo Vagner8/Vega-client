@@ -1,15 +1,16 @@
 import { IFractal, Types } from '@types';
-import { State } from './state.utils';
-import { signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 
-export class FractalsState extends State<IFractal[], IFractal> {
-  override signal = signal<IFractal[]>([]);
+export class RowsState {
+  protected router = inject(Router);
+  signal = signal<IFractal[]>([]);
 
-  async set(fractal: IFractal | null): Promise<void> {
-    if (!fractal) return;
-    if (fractal.isClone && !this.signal().every(row => row.isClone)) this.signal.set([]);
+  async set(row: IFractal | null): Promise<void> {
+    if (!row) return;
+    if (row.isClone && !this.signal().every(row => row.isClone)) this.signal.set([]);
     const set = new Set(this.signal());
-    set[set.has(fractal) ? 'delete' : 'add'](fractal);
+    set[set.has(row) ? 'delete' : 'add'](row);
     this.signal.set(Array.from(set));
     this.navigate();
   }
@@ -19,7 +20,7 @@ export class FractalsState extends State<IFractal[], IFractal> {
     this.navigate();
   }
 
-  override async navigate(): Promise<void> {
+  async navigate(): Promise<void> {
     await this.router.navigate([], {
       queryParams: {
         [Types.Rows]: this.signal()

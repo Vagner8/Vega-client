@@ -34,8 +34,7 @@ export class SidenavTapsComponent {
   async onClick(tap: IFractal): Promise<void> {
     const isPages = tap.is(Pages);
     if (isPages) {
-      this.fs.page.set(tap);
-      this.fs.rows.signal.set([]);
+      this.fs.reset(tap);
     } else {
       await this.fs.modifier.set(tap);
       if (tap.is(Modifiers.New)) this.fs.rows.set(this.fs.clone());

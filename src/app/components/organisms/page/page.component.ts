@@ -36,17 +36,17 @@ export class PageComponent implements OnInit {
             this.fs.modifiers = root.find(Types.Modifiers);
             this.fs.root.set(root);
 
-            this.fs.page.signal.set(root.find(this.Pages));
-            this.fs.modifier.signal.set(root.find(this.Modifier));
-            if (this.Rows)
-              this.fs.rows.signal.set(
-                this.Rows.split(':').map(id => {
-                  const row = root.find(id);
-                  return row ? row : this.fs.clone();
-                })
-              );
             this.fs.taps.signal.set(this.fs[this.Rows || this.Modifier ? 'modifiers' : 'pages']);
+            this.fs.modifier.signal.set(root.find(this.Modifier));
+            if (this.Rows) {
+              const rows = this.Rows.split(':').map(id => {
+                const row = root.find(id);
+                return row ? row : this.fs.clone();
+              });
+              this.fs.rows.signal.set(rows);
+            }
             this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
+            this.fs.page.signal.set(root.find(this.Pages));
           }
         })
       )

@@ -1,7 +1,7 @@
 import { IFractal, Types } from '@types';
-import { FractalState } from './fractal-state.utils';
+import { State } from './state.utils';
 
-export class ModifierState extends FractalState {
+export class ModifierState extends State<IFractal> {
   override async navigate(fractal: IFractal | null): Promise<void> {
     await this.router.navigate([], {
       queryParams: { [Types.Modifier]: fractal?.cursor },
