@@ -1,15 +1,42 @@
 @use 'variables.scss' as *;
 
 .list {
+  display: flex;
+  flex-wrap: wrap;
   gap: $size-medium;
 }
 
-.input-list,
-.list {
-  display: flex;
-  flex-direction: column;
+.item {
+  flex: 1 1 100%;
+  box-sizing: border-box;
 }
 
-.list-item {
-  height: 100%;
+.list.two-items > .item {
+  flex: 1 1 calc(50% - $size-medium);
+}
+
+.list.three-or-more-items > .item {
+  flex: 1 1 calc(30.33% - $size-medium);
+}
+
+.touched,
+.untouched {
+  color: $color-common;
+  padding: 0 $size-medium;
+  border-radius: $size-extra-small;
+  margin-bottom: $size-extra-small;
+}
+
+.touched {
+  background-color: $color-success;
+}
+
+.untouched {
+  background-color: $color-warning;
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex: 1 1 100%;
+  }
 }

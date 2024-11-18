@@ -1,12 +1,12 @@
-import { WritableSignal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
 
 export enum Types {
   Root = 'Root',
   Rows = 'Rows',
+  Taps = 'Taps',
   Pages = 'Pages',
   Manager = 'Manager',
+  Modifier = 'Modifier',
   Modifiers = 'Modifiers',
 }
 
@@ -65,22 +65,10 @@ export interface IFractal {
   formGroup: FractalFormGroup;
   isClone?: boolean;
 
+  is(test: string | object): boolean;
   data(indicator: string): string;
   list(): IFractal[];
   find(test: string, fractals?: IFractals | null): IFractal | null;
   split<T extends []>(indicator: string): T;
-  isType(type: object): boolean;
-  isCursor(data: string): boolean;
-}
-
-export interface IState {
-  fractal: IFractal | null;
-  $fractal: WritableSignal<IFractal | null>;
-  fractal$: Subject<IFractal | null>;
-  set(fractal: IFractal | null, event?: string): void;
-}
-
-export interface IStates {
-  $fractals: WritableSignal<IFractal[]>;
-  set(fractal: IFractal | null, event?: string): void;
+  update(): FractalDto;
 }

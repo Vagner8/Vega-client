@@ -1,5 +1,5 @@
 <mat-list class="mat-list-app-sidenav">
-  @if (fs.taps(); as taps) {
+  @if (fs.taps.signal(); as taps) {
     @for (indicator of taps.split('Sort'); track indicator) {
       @if (taps.find(indicator); as tap) {
         <app-tap

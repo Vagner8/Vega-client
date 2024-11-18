@@ -1,9 +1,9 @@
-@if (fs.page(); as page) {
-  @if (Modifiers) {
-    <app-modifier [sort]="page.split('Sort')" [rows]="fs.rows.fractals()" [modifier]="Modifiers" />
+@if (fs.page.signal(); as page) {
+  @if (Modifier) {
+    <app-modifier [sort]="page.split('Sort')" [rows]="fs.rows.signal()" [modifier]="Modifier" />
   } @else {
     <app-table
-      [rows]="fs.rows.fractals()"
+      [rows]="fs.rows.signal()"
       [columns]="page.split('Sort')"
       [dataSource]="page.list()"
       (row)="onRowClick($event)" />

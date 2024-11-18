@@ -1,30 +1,41 @@
-@if (this.rows[0]; as firstRow) {
-  @if (modifier === 'New' || modifier === 'Edit') {
-    <form>
-      <mat-list role="list" class="input-list">
-        @for (indicator of sort; track indicator) {
-          <mat-list-item role="listitem" class="list-item">
-            <app-input [label]="indicator" [control]="firstRow.formGroup.get(indicator)" />
-          </mat-list-item>
-        }
-      </mat-list>
-    </form>
+<ul
+  class="list"
+  [class.two-items]="rows.length === 2"
+  [class.three-or-more-items]="rows.length >= 3">
+  @for (row of rows; track row.cursor) {
+    <li class="item">
+      <form>
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title-group>
+              <button type="button" mat-flat-button (click)="deleteRow(row)">Delete</button>
+              <mat-card-title> {{ $index + 1 }}</mat-card-title>
+              <mat-card-subtitle [ngClass]="row.formGroup.data.dirty ? 'touched' : 'untouched'">
+                @if (row.formGroup.data.dirty) {
+                  Touched
+                } @else {
+                  Untouched
+                }
+              </mat-card-subtitle>
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            @for (indicator of sort; track indicator) {
+              @if (row.formGroup.get(indicator); as formControl) {
+                @if (modifier === 'Save') {
+                  {{ indicator }}: {{ formControl.value }}
+                }
+                @if (modifier === 'New' || modifier === 'Edit') {
+                  <app-input #dima [label]="indicator" [control]="row.formGroup.get(indicator)" />
+                }
+              }
+            }
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </li>
   }
-
-  @if (modifier === 'Save') {
-    <mat-list role="list" class="list">
-      @for (indicator of sort; track indicator) {
-        @if (firstRow.formGroup.get(indicator); as formControl) {
-          <mat-list-item role="listitem" class="list-item">
-            <mat-card appearance="outlined">
-              <mat-card-content>{{ indicator }}: {{ formControl.value }}</mat-card-content>
-            </mat-card>
-          </mat-list-item>
-        }
-      }
-    </mat-list>
-  }
-}
+</ul>
 
 @if (modifier === 'Delete') {
   <app-table [rows]="rows" [columns]="sort" [dataSource]="rows" />

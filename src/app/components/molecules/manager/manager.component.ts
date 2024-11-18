@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatIcon, ClickDirective, MatButtonModule, SpinnerComponent],
+  imports: [ClickDirective, MatButtonModule, SpinnerComponent, MatIcon],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
 })
@@ -19,9 +19,9 @@ export class ManagerComponent {
     private router: Router
   ) {}
 
-  onClick(): void {
-    const taps = this.fs[this.fs.taps()?.isCursor(Types.Pages) ? 'modifiers' : 'pages'];
-    this.fs.managerEvent() === Events.Click && this.fs.taps.set(taps);
+  async onClick(): Promise<void> {
+    const taps = this.fs[this.fs.taps.is(Types.Pages) ? 'modifiers' : 'pages'];
+    this.fs.managerEvent.signal() === Events.Click && (await this.fs.taps.set(taps));
     this.set(Events.Click);
   }
 
@@ -31,9 +31,5 @@ export class ManagerComponent {
 
   private set(event: Events) {
     this.fs.managerEvent.set(event);
-    this.router.navigate([], {
-      queryParams: { [Types.Manager]: event },
-      queryParamsHandling: 'merge',
-    });
   }
 }

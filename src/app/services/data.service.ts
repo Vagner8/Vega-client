@@ -18,11 +18,11 @@ export class DataService {
     return this.http.get<FractalDto>(`${this.fractalApi}?id=${this.id}`);
   }
 
-  add(fractal: FractalDto): Observable<FractalDto> {
+  add(fractal: FractalDto[]): Observable<FractalDto> {
     return this.http.post<FractalDto>(this.fractalApi, fractal);
   }
 
-  update(dto: FractalDto): Observable<FractalDto> {
+  edit(dto: FractalDto[]): Observable<FractalDto> {
     return this.http.put<FractalDto>(this.fractalApi, dto);
   }
 

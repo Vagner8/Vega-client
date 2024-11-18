@@ -15,7 +15,7 @@ import { InputType } from '@types';
     MatIcon,
   ],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css',
+  styleUrl: './input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {

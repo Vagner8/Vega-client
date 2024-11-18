@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { FractalService } from '@services';
-import { IFractal, Modifiers, Pages, Types } from '@types';
+import { IFractal, Modifiers, Pages } from '@types';
 
 @Component({
   selector: 'app-sidenav-taps',
@@ -13,54 +12,42 @@ import { IFractal, Modifiers, Pages, Types } from '@types';
   styleUrl: './sidenav-taps.component.css',
 })
 export class SidenavTapsComponent {
-  constructor(
-    public fs: FractalService,
-    private router: Router
-  ) {}
+  constructor(public fs: FractalService) {}
 
-  disabled(cursor: string) {
-    const fractals = this.fs.rows.fractals();
+  disabled(cursor: string): boolean {
+    const rows = this.fs.rows.signal();
+    const isNew = this.fs.modifier.is(Modifiers.New);
+    const hasRows = rows.length > 0;
+
     switch (cursor) {
-      case Modifiers.Save:
-        return fractals[0] ? !fractals[0].formGroup.data.dirty : true;
-      case Modifiers.Delete:
-        return fractals.length === 0;
       case Modifiers.Edit:
-        return fractals.length !== 1;
+        return isNew || !hasRows;
+      case Modifiers.Save:
+        return rows.length ? !rows.some(({ formGroup }) => formGroup.data.dirty) : true;
+      case Modifiers.Delete:
+        return isNew || !hasRows;
       default:
         return false;
     }
   }
 
-  onClick(tap: IFractal): void {
-    const isPages = tap.isType(Pages);
+  async onClick(tap: IFractal): Promise<void> {
+    const isPages = tap.is(Pages);
     if (isPages) {
       this.fs.page.set(tap);
-      this.fs.rows.fractals.set([]);
+      this.fs.rows.signal.set([]);
     } else {
-      this.fs.modifier.set(tap);
-      if (tap.isCursor(Modifiers.New)) {
-        this.fs.cloneRow(this.fs.page());
-      }
+      await this.fs.modifier.set(tap);
+      if (tap.is(Modifiers.New)) this.fs.rows.set(this.fs.clone());
     }
-    this.navigation(tap, isPages);
   }
 
   onHold(tap: IFractal): void {
-    if (tap.isCursor(Modifiers.Save)) {
+    if (tap.is(Modifiers.Save)) {
       this.fs.update();
     }
-    if (tap.isCursor(Modifiers.Delete)) {
+    if (tap.is(Modifiers.Delete)) {
       this.fs.delete();
     }
-  }
-
-  private navigation(tap: IFractal, isPages: boolean): void {
-    this.router.navigate(isPages ? [tap.cursor] : [], {
-      queryParams: isPages
-        ? { [Types.Manager]: this.fs.managerEvent() }
-        : { [Types.Modifiers]: tap.cursor },
-      queryParamsHandling: isPages ? null : 'merge',
-    });
   }
 }

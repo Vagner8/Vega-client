@@ -1,6 +1,6 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="fs.managerEvent() === 'Click'"
+    [opened]="fs.managerEvent.signal() === 'Click'"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"

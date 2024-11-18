@@ -1,16 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import {
-  ControlsDto,
-  FractalDto,
-  FractalsDto,
-  IFractal,
-  IFractals,
-  Indicators,
-  Types,
-} from '@types';
-import { Fractal } from '@utils';
+import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators } from '@types';
+import { Fractal, PageState, ModifierState, TapsState, ManagerState, FractalsState } from '@utils';
 import { DataService } from './data.service';
-import { Router } from '@angular/router';
 import { v4 } from 'uuid';
 
 @Injectable({
@@ -22,10 +13,11 @@ export class FractalService {
   modifiers: IFractal | null = null;
 
   root = signal<IFractal | null>(null);
-  page = signal<IFractal | null>(null);
-  taps = signal<IFractal | null>(null);
-  modifier = signal<IFractal | null>(null);
-  managerEvent = signal('');
+  page = new PageState();
+  taps = new TapsState();
+  rows = new FractalsState();
+  modifier = new ModifierState();
+  managerEvent = new ManagerState();
 
   holding = {
     go: signal(false),
@@ -36,23 +28,15 @@ export class FractalService {
     },
   };
 
-  rows = {
-    fractals: signal<IFractal[]>([]),
-    set(fractal: IFractal) {
-      const set = new Set(this.fractals());
-      set[set.has(fractal) ? 'delete' : 'add'](fractal);
-      this.fractals.set(Array.from(set));
-    },
-  };
+  rowsLength: number | null = null;
 
-  constructor(
-    public ds: DataService,
-    public router: Router
-  ) {}
+  constructor(public ds: DataService) {}
 
-  cloneRow(parent: IFractal | null): void {
-    if (!parent) return;
+  clone(): Fractal {
+    const parent = this.page.signal()!;
+    if (!this.rowsLength) this.rowsLength = parent.list().length;
     const cloneId = v4();
+    this.rowsLength++;
     const row = new Fractal(
       {
         id: cloneId,
@@ -70,53 +54,49 @@ export class FractalService {
       },
       null
     );
-    const cursor = parent.list().length.toString();
-    row.cursor = parent.fractals ? cursor : '0';
+    row.cursor = parent.fractals ? this.rowsLength.toString() : '0';
     row.isClone = true;
-    if (parent.fractals) {
-      parent.fractals[cursor] = row;
-    } else {
-      parent.fractals = { 0: row };
-    }
-    this.rows.fractals.set([row]);
+    return row;
   }
 
   update(): void {
-    const toUpdate = this.rows.fractals()[0];
-    const { dto, formGroup } = toUpdate;
-    Object.entries(formGroup.data.getRawValue()).forEach(([indicator, data]) => {
-      dto.controls[indicator].data = data as string;
+    const rows = this.rows.signal();
+    const parent = this.page.signal();
+    const rowsToAdd: FractalDto[] = [];
+    if (!parent) return;
+    rows.forEach(row => {
+      if (parent.fractals) parent.fractals[row.cursor] = row;
+      else parent.fractals = { [row.cursor]: row };
+      rowsToAdd.push(row.update());
     });
-    if (toUpdate.isClone) {
-      this.ds.add(dto).subscribe(data => console.log('🚀 ~ add:', data));
+    if (rows[0].isClone) {
+      this.ds.add(rowsToAdd).subscribe(data => console.log('🚀 ~ add:', data));
     } else {
-      this.ds.update(dto).subscribe(data => console.log('🚀 ~ update:', data));
+      this.ds.edit(rowsToAdd).subscribe(data => console.log('🚀 ~ add:', data));
     }
-    this.afterRequest();
+    this.reset();
   }
 
   delete(): void {
     const toDelete: FractalDto[] = [];
-    const fractals = this.page()?.fractals;
+    const fractals = this.page.signal()?.fractals;
     if (!fractals) return;
-    for (const row of this.rows.fractals()) {
+    for (const row of this.rows.signal()) {
       toDelete.push(row.dto);
       delete fractals[row.cursor];
     }
     this.ds.delete(toDelete).subscribe(data => console.log('🚀 ~ delete:', data));
-    this.afterRequest();
+    this.reset();
   }
 
   toFractal(dto: FractalDto) {
     return new Fractal(dto, this.toFractals(dto.fractals));
   }
 
-  private afterRequest(): void {
-    this.rows.fractals.set([]);
+  private reset(): void {
+    this.rows.signal.set([]);
     this.modifier.set(null);
-    this.router.navigate([this.page()?.cursor], {
-      queryParams: { [Types.Manager]: this.managerEvent() },
-    });
+    this.page.set(this.page.signal());
   }
 
   private toFractals(fractals: FractalsDto | null) {

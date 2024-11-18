@@ -13,6 +13,12 @@ export class Fractal implements IFractal {
     this.formGroup = this.getFormGroup();
   }
 
+  is(test: string | object): boolean {
+    return typeof test === 'object'
+      ? Object.values(test).includes(this.cursor)
+      : test === this.cursor;
+  }
+
   list(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
   }
@@ -28,7 +34,7 @@ export class Fractal implements IFractal {
   find(test: string, fractals: IFractals | null = this.fractals): IFractal | null {
     if (fractals) {
       for (const key in fractals) {
-        if (fractals[key].isCursor(test) || fractals[key].dto.id === test) return fractals[key];
+        if (fractals[key].is(test) || fractals[key].dto.id === test) return fractals[key];
         const found = this.find(test, fractals[key].fractals);
         if (found) return found;
       }
@@ -36,12 +42,11 @@ export class Fractal implements IFractal {
     return null;
   }
 
-  isType(type: object): boolean {
-    return Object.values(type).some(name => this.cursor === name);
-  }
-
-  isCursor(data: string): boolean {
-    return this.cursor === data;
+  update(): FractalDto {
+    Object.entries(this.formGroup.data.getRawValue()).forEach(([indicator, data]) => {
+      this.dto.controls[indicator].data = data as string;
+    });
+    return this.dto;
   }
 
   private getFormGroup(): FractalFormGroup {
