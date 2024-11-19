@@ -2,11 +2,7 @@
   @if (fs.taps.signal(); as taps) {
     @for (indicator of taps.split('Sort'); track indicator) {
       @if (taps.find(indicator); as tap) {
-        <app-tap
-          [tap]="tap"
-          [disabled]="disabled(tap.cursor)"
-          (onClick)="onClick($event)"
-          (onHold)="onHold($event)" />
+        <app-tap [tap]="tap" (onClick)="onClick($event)" (onHold)="onHold($event)" />
       }
     }
   }

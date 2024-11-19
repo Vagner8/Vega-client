@@ -1,6 +1,6 @@
 <button
   mat-flat-button
-  [disabled]="disabled"
+  [disabled]="disabled()"
   appClick
   [activateOnHold]="activateOnHold(tap)"
   (onHold)="onHold.emit(tap)"

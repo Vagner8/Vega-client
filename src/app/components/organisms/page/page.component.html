@@ -6,6 +6,7 @@
       [rows]="fs.rows.signal()"
       [columns]="page.split('Sort')"
       [dataSource]="page.list()"
-      (row)="onRowClick($event)" />
+      (outHold)="onRowHold()"
+      (outClick)="onRowClick($event)" />
   }
 }

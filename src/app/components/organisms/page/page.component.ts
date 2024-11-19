@@ -49,4 +49,12 @@ export class PageComponent implements OnInit {
     await this.fs.taps.set(this.fs.modifiers);
     this.fs.managerEvent.set(Events.Click);
   }
+
+  onRowHold(): void {
+    if (this.fs.rows.signal().length) {
+      this.fs.rows.unload();
+    } else {
+      this.fs.rows.load(this.fs.page.signal()?.list());
+    }
+  }
 }

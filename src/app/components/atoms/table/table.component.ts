@@ -15,5 +15,7 @@ export class TableComponent {
   @Input() rows!: IFractal[];
   @Input() columns!: string[];
   @Input() dataSource!: IFractal[];
-  row = output<IFractal>();
+
+  outHold = output<IFractal>();
+  outClick = output<IFractal>();
 }

@@ -3,14 +3,24 @@ import { inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 export class RowsState {
-  protected router = inject(Router);
   signal = signal<IFractal[]>([]);
+  private router = inject(Router);
 
   async set(row: IFractal): Promise<void> {
-    if (row.isClone && this.signal().some(row => !row.isClone)) this.signal.set([]);
+    if (row.isClone && this.signal().some(row => !row.isClone)) this.unload();
     const set = new Set(this.signal());
     set[set.has(row) ? 'delete' : 'add'](row);
     this.signal.set(Array.from(set));
+    this.navigate();
+  }
+
+  load(rows: IFractal[] = []): void {
+    this.signal.set(rows);
+    this.navigate();
+  }
+
+  unload(): void {
+    this.signal.set([]);
     this.navigate();
   }
 

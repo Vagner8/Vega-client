@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { FractalService } from '@services';
@@ -10,26 +10,10 @@ import { IFractal, Modifiers, Pages } from '@types';
   imports: [TapComponent, MatListModule],
   templateUrl: './sidenav-taps.component.html',
   styleUrl: './sidenav-taps.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavTapsComponent {
   constructor(public fs: FractalService) {}
-
-  disabled(cursor: string): boolean {
-    const rows = this.fs.rows.signal();
-    const isNew = this.fs.modifier.is(Modifiers.New);
-    const hasRows = rows.length > 0;
-
-    switch (cursor) {
-      case Modifiers.Edit:
-        return isNew || !hasRows;
-      case Modifiers.Save:
-        return rows.length ? !rows.some(({ formGroup }) => formGroup.data.dirty) : true;
-      case Modifiers.Delete:
-        return isNew || !hasRows;
-      default:
-        return false;
-    }
-  }
 
   async onClick(tap: IFractal): Promise<void> {
     const isPages = tap.is(Pages);
