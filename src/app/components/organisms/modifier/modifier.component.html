@@ -1,42 +1,46 @@
 <ul
   class="list"
-  [class.two-items]="rows.length === 2"
-  [class.three-or-more-items]="rows.length >= 3">
-  @for (row of rows; track row.cursor) {
+  [class.two-items]="rows().length === 2"
+  [class.three-or-more-items]="rows().length >= 3">
+  @for (row of rows(); track row.cursor) {
     <li class="item">
-      <form>
-        <mat-card appearance="outlined">
-          <mat-card-header>
-            <mat-card-title-group>
-              <button type="button" mat-flat-button (click)="deleteRow(row)">Delete</button>
-              <mat-card-title> {{ $index + 1 }}</mat-card-title>
-              <mat-card-subtitle [ngClass]="row.formGroup.data.dirty ? 'touched' : 'untouched'">
-                @if (row.formGroup.data.dirty) {
-                  Touched
-                } @else {
-                  Untouched
-                }
-              </mat-card-subtitle>
-            </mat-card-title-group>
-          </mat-card-header>
-          <mat-card-content>
-            @for (indicator of sort; track indicator) {
-              @if (row.formGroup.get(indicator); as formControl) {
-                @if (modifier === 'Save') {
-                  {{ indicator }}: {{ formControl.value }}
-                }
-                @if (modifier === 'New' || modifier === 'Edit') {
-                  <app-input #dima [label]="indicator" [control]="row.formGroup.get(indicator)" />
-                }
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title-group>
+            <button type="button" mat-flat-button (click)="deleteRow(row)">Cancel</button>
+            <mat-card-title> {{ $index + 1 }}</mat-card-title>
+            @if (row.formGroup.dirty) {
+              <mat-card-subtitle class="touched">Touched</mat-card-subtitle>
+            } @else {
+              <mat-card-subtitle class="untouched">Untouched</mat-card-subtitle>
+            }
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          @switch (modifier()) {
+            @case ('Save') {
+              @for (indicator of sort(); track indicator) {
+                {{ indicator }}: {{ row.formGroup.get(indicator)?.value }}
               }
             }
-          </mat-card-content>
-        </mat-card>
-      </form>
+            @case ('Edit') {
+              <app-form [sort]="sort()" [formGroup]="row.formGroup" />
+            }
+            @case ('New') {
+              <app-form [sort]="sort()" [formGroup]="row.formGroup" />
+            }
+            @case ('Delete') {
+              @for (indicator of sort(); track indicator) {
+                <mat-card appearance="outlined">
+                  <mat-card-content
+                    >{{ indicator }}: {{ row.formGroup.get(indicator)?.value }}</mat-card-content
+                  >
+                </mat-card>
+              }
+            }
+          }
+        </mat-card-content>
+      </mat-card>
     </li>
   }
 </ul>
-
-@if (modifier === 'Delete') {
-  <app-table [rows]="rows" [columns]="sort" [dataSource]="rows" />
-}

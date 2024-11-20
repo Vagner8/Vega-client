@@ -1,6 +1,6 @@
 <mat-form-field class="mat-form-field">
   <mat-label i18n>{{ label }}</mat-label>
-  <input #inputElementRef [type]="label" matInput [formControl]="control" />
+  <input #inputElementRef [type]="label" matInput formControlName="{{ label }}" />
   @if (control.value && clearButton) {
     <button
       type="button"

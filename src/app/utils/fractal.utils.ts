@@ -1,10 +1,10 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FractalDto, IFractals, IFractal, FractalFormGroup } from '@types';
+import { FractalDto, IFractals, IFractal } from '@types';
 
 export class Fractal implements IFractal {
   cursor!: string;
   isClone?: boolean;
-  formGroup: FractalFormGroup;
+  formGroup: FormGroup;
 
   constructor(
     public dto: FractalDto,
@@ -27,8 +27,8 @@ export class Fractal implements IFractal {
     return this.dto.controls?.[indicator]?.data || '';
   }
 
-  split<T extends []>(indicator: string): T {
-    return this.data(indicator).split(':') as T;
+  split(indicator: string): string[] {
+    return this.data(indicator).split(':');
   }
 
   find(test: string, fractals: IFractals | null = this.fractals): IFractal | null {
@@ -43,26 +43,21 @@ export class Fractal implements IFractal {
   }
 
   update(): FractalDto {
-    Object.entries(this.formGroup.data.getRawValue()).forEach(([indicator, data]) => {
+    Object.entries(this.formGroup.getRawValue()).forEach(([indicator, data]) => {
       this.dto.controls[indicator].data = data as string;
     });
     return this.dto;
   }
 
-  private getFormGroup(): FractalFormGroup {
-    return {
-      data: new FormGroup(
-        Object.entries(this.dto.controls).reduce(
-          (acc, [indicator, control]) => {
-            acc[indicator] = new FormControl(control.data);
-            return acc;
-          },
-          {} as Record<string, FormControl>
-        )
-      ),
-      get(indicator: string) {
-        return this.data.get(indicator) as FormControl;
-      },
-    };
+  private getFormGroup(): FormGroup {
+    return new FormGroup(
+      Object.entries(this.dto.controls).reduce(
+        (acc: Record<string, FormControl>, [indicator, control]) => {
+          acc[indicator] = new FormControl(control.data);
+          return acc;
+        },
+        {}
+      )
+    );
   }
 }

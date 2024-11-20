@@ -1,0 +1,21 @@
+@if (formGroup(); as formGroup) {
+  <form [formGroup]="formGroup" (input)="inputOut.emit(formGroup)">
+    @for (indicator of sort(); track indicator) {
+      <mat-form-field class="mat-form-field">
+        <mat-label i18n>{{ indicator }}</mat-label>
+        <input #inputElementRef [type]="indicator" matInput formControlName="{{ indicator }}" />
+        @if (inputElementRef.value) {
+          <button
+            type="button"
+            matSuffix
+            mat-icon-button
+            i18n-aria-label
+            aria-label="Clear input"
+            (click)="inputElementRef.value = ''">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    }
+  </form>
+}

@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 export enum Types {
   Root = 'Root',
@@ -53,22 +53,17 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
-export interface FractalFormGroup {
-  data: FormGroup;
-  get(indicator: string): FormControl;
-}
-
 export interface IFractal {
   dto: FractalDto;
   cursor: string;
   fractals: IFractals | null;
-  formGroup: FractalFormGroup;
+  formGroup: FormGroup;
   isClone?: boolean;
 
   is(test: string | object): boolean;
   data(indicator: string): string;
   list(): IFractal[];
   find(test: string, fractals?: IFractals | null): IFractal | null;
-  split<T extends []>(indicator: string): T;
+  split(indicator: string): string[];
   update(): FractalDto;
 }
