@@ -22,7 +22,18 @@ export class SidenavTapsComponent {
     } else {
       await this.fs.modifier.set(tap);
       if (tap.is(Modifiers.New)) this.fs.rows.set(this.fs.clone());
+      if (tap.is(Modifiers.Save)) {
+        this.fs.rows.filter(row => row.formGroup.dirty);
+        this.fs.rows.formRecord()?.disable();
+        return;
+      }
+      if (tap.is(Modifiers.Delete)) {
+        this.fs.rows.filter(row => !row.isClone);
+        this.fs.rows.formRecord()?.disable();
+        return;
+      }
     }
+    this.fs.rows.formRecord()?.enable();
   }
 
   onHold(tap: IFractal): void {

@@ -1,10 +1,6 @@
 @if (fs.page.signal(); as page) {
-  @if (Modifier && fs.rows.formRecord(); as formRecord) {
-    <app-modifier
-      [sort]="page.split('Sort')"
-      [rows]="fs.rows.signal()"
-      [modifier]="Modifier"
-      [formRecord]="formRecord" />
+  @if (Modifier) {
+    <app-modifier [sort]="page.split('Sort')" [rows]="fs.rows.signal()" [modifier]="Modifier" />
   } @else {
     <app-table
       [rows]="fs.rows.signal()"

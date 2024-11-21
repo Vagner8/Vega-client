@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TableComponent } from '@components/atoms';
-import { DataService, FractalService } from '@services';
+import { FractalService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { Events, IFractal, Types } from '@types';
 
@@ -17,14 +17,11 @@ export class PageComponent implements OnInit {
   @Input() Manager = '';
   @Input() Modifier = '';
 
-  constructor(
-    public fs: FractalService,
-    private ds: DataService
-  ) {}
+  constructor(public fs: FractalService) {}
 
   ngOnInit(): void {
-    this.ds.get().subscribe(dto => {
-      const root = this.fs.toFractal(dto);
+    const root = this.fs.root();
+    if (root) {
       this.fs.pages = root.find(Types.Pages);
       this.fs.modifiers = root.find(Types.Modifiers);
 
@@ -38,10 +35,10 @@ export class PageComponent implements OnInit {
           const row = root.find(id);
           return row ? row : this.fs.clone();
         });
-        this.fs.rows.signal.set(rows);
+        this.fs.rows.setRows(rows);
       }
       this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
-    });
+    }
   }
 
   async onRowClick(row: IFractal): Promise<void> {

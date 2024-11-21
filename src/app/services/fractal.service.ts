@@ -1,5 +1,13 @@
 import { Injectable, signal } from '@angular/core';
-import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators } from '@types';
+import {
+  ControlsDto,
+  Events,
+  FractalDto,
+  FractalsDto,
+  IFractal,
+  IFractals,
+  Indicators,
+} from '@types';
 import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState } from '@utils';
 import { DataService } from './data.service';
 import { v4 } from 'uuid';
@@ -18,7 +26,7 @@ export class FractalService {
   taps = new TapsState();
   rows = new RowsState();
   modifier = new ModifierState();
-  managerEvent = new ManagerState();
+  managerEvent = new ManagerState(Events.Click);
 
   holding = {
     go: signal(false),
@@ -63,17 +71,23 @@ export class FractalService {
   update(): void {
     const rows = this.rows.signal();
     const parent = this.page.signal();
+    if (!parent || rows.length == 0) return;
     const rowsToAdd: FractalDto[] = [];
-    if (!parent) return;
+    const rowsToUpdate: FractalDto[] = [];
     rows.forEach(row => {
-      if (parent.fractals) parent.fractals[row.cursor] = row;
-      else parent.fractals = { [row.cursor]: row };
-      rowsToAdd.push(row.update());
+      if (row.isClone) {
+        if (parent.fractals) parent.fractals[row.cursor] = row;
+        else parent.fractals = { [row.cursor]: row };
+        rowsToAdd.push(row.update());
+      } else {
+        rowsToUpdate.push(row.update());
+      }
     });
-    if (rows[0].isClone) {
+    if (rowsToAdd.length > 0) {
       this.ds.add(rowsToAdd).subscribe(data => console.log('🚀 ~ add:', data));
-    } else {
-      this.ds.edit(rowsToAdd).subscribe(data => console.log('🚀 ~ add:', data));
+    }
+    if (rowsToUpdate.length > 0) {
+      this.ds.edit(rowsToUpdate).subscribe(data => console.log('🚀 ~ add:', data));
     }
     this.reset();
   }

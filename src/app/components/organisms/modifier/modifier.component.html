@@ -8,7 +8,7 @@
         <mat-card-header>
           <mat-card-title-group>
             <button type="button" mat-flat-button (click)="deleteRow(row)">Cancel</button>
-            <mat-card-title> {{ $index + 1 }}</mat-card-title>
+            <mat-card-title> {{ $index + 1 }} {{ row.isClone ? 'new' : '' }}</mat-card-title>
             @if (row.formGroup.dirty) {
               <mat-card-subtitle class="touched">Touched</mat-card-subtitle>
             } @else {
@@ -17,28 +17,7 @@
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-          @switch (modifier()) {
-            @case ('Save') {
-              @for (indicator of sort(); track indicator) {
-                {{ indicator }}: {{ row.formGroup.get(indicator)?.value }}
-              }
-            }
-            @case ('Edit') {
-              <app-form [sort]="sort()" [formGroup]="row.formGroup" />
-            }
-            @case ('New') {
-              <app-form [sort]="sort()" [formGroup]="row.formGroup" />
-            }
-            @case ('Delete') {
-              @for (indicator of sort(); track indicator) {
-                <mat-card appearance="outlined">
-                  <mat-card-content
-                    >{{ indicator }}: {{ row.formGroup.get(indicator)?.value }}</mat-card-content
-                  >
-                </mat-card>
-              }
-            }
-          }
+          <app-form [sort]="sort()" [formGroup]="row.formGroup" />
         </mat-card-content>
       </mat-card>
     </li>

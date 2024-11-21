@@ -4,14 +4,14 @@
       <mat-form-field class="mat-form-field">
         <mat-label i18n>{{ indicator }}</mat-label>
         <input #inputElementRef [type]="indicator" matInput formControlName="{{ indicator }}" />
-        @if (inputElementRef.value) {
+        @if (inputElementRef.value && !formGroup.disabled) {
           <button
             type="button"
             matSuffix
             mat-icon-button
             i18n-aria-label
             aria-label="Clear input"
-            (click)="inputElementRef.value = ''">
+            (click)="onClick(inputElementRef)">
             <mat-icon>close</mat-icon>
           </button>
         }

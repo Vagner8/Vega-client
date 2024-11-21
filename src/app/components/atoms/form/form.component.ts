@@ -14,4 +14,9 @@ export class FormComponent {
   formGroup = input<FormGroup | null>(null);
 
   inputOut = output<FormGroup>();
+
+  onClick(input: HTMLInputElement): void {
+    input.value = '';
+    this.formGroup()?.markAsDirty();
+  }
 }

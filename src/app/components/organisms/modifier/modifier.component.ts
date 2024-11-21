@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { FormRecord } from '@angular/forms';
 import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule, MatListModule } from '@mat';
 import { FractalService } from '@services';
@@ -17,7 +16,6 @@ export class ModifierComponent {
   sort = input<string[]>([]);
   rows = input<IFractal[]>([]);
   modifier = input<string>();
-  formRecord = input<FormRecord>();
 
   constructor(public fs: FractalService) {}
 

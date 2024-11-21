@@ -1,10 +1,14 @@
-import { inject, signal } from '@angular/core';
+import { inject, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fractal } from './fractal.utils';
 
 export abstract class State<T> {
   protected router = inject(Router);
-  signal = signal<T | null>(null);
+  signal: WritableSignal<T | null>;
+
+  constructor(defaultState: T | null = null) {
+    this.signal = signal(defaultState);
+  }
 
   abstract navigate(state: T | null): Promise<void>;
 

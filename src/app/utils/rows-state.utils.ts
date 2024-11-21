@@ -9,12 +9,16 @@ export class RowsState {
   private router = inject(Router);
 
   async set(row: IFractal): Promise<void> {
-    if (row.isClone && this.signal().some(row => !row.isClone)) this.unload();
     const set = new Set(this.signal());
     set[set.has(row) ? 'delete' : 'add'](row);
     this.signal.set(Array.from(set));
     this.formRecord.set(this.createFormRecord());
     this.navigate();
+  }
+
+  setRows(row: IFractal[]): void {
+    this.signal.set(Array.from(row));
+    this.formRecord.set(this.createFormRecord());
   }
 
   load(rows: IFractal[] = []): void {
@@ -29,8 +33,13 @@ export class RowsState {
     this.navigate();
   }
 
-  delete(rowToDelete: IFractal) {
+  delete(rowToDelete: IFractal): void {
     this.signal.update(prev => prev.filter(row => row !== rowToDelete));
+    this.navigate();
+  }
+
+  filter(callback: (row: IFractal) => boolean): void {
+    this.signal.update(rows => rows.filter(callback));
     this.navigate();
   }
 
