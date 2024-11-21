@@ -1,13 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import {
-  ControlsDto,
-  Events,
-  FractalDto,
-  FractalsDto,
-  IFractal,
-  IFractals,
-  Indicators,
-} from '@types';
+import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators } from '@types';
 import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState } from '@utils';
 import { DataService } from './data.service';
 import { v4 } from 'uuid';
@@ -26,7 +18,7 @@ export class FractalService {
   taps = new TapsState();
   rows = new RowsState();
   modifier = new ModifierState();
-  managerEvent = new ManagerState(Events.Click);
+  managerEvent = new ManagerState();
 
   holding = {
     go: signal(false),

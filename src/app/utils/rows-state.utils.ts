@@ -21,7 +21,7 @@ export class RowsState {
     this.formRecord.set(this.createFormRecord());
   }
 
-  load(rows: IFractal[] = []): void {
+  async load(rows: IFractal[] = []): Promise<void> {
     this.signal.set(rows);
     this.formRecord.set(this.createFormRecord());
     this.navigate();

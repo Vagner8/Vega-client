@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { ClickDirective } from '@directives';
-import { IFractal, Modifiers } from '@types';
+import { IFractal, Modifiers, Pages } from '@types';
 import { FractalService } from '@services';
 
 @Component({
@@ -17,6 +17,11 @@ export class TapComponent {
 
   onHold = output<IFractal>();
   onClick = output<IFractal>();
+  onHoldStart = output<IFractal>();
+
+  disabled = computed<boolean>(() =>
+    this.tap()?.is('New') || this.tap()?.is(Pages) ? false : this.fs.rows.signal().length === 0
+  );
 
   constructor(public fs: FractalService) {}
 

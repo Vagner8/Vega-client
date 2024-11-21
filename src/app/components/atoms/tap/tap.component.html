@@ -1,10 +1,12 @@
 @if (tap(); as tap) {
   <button
     mat-flat-button
+    [disabled]="disabled()"
     appClick
     [activateOnHold]="activateOnHold(tap)"
     (onHold)="onHold.emit(tap)"
-    (onClick)="onClick.emit(tap)">
+    (onClick)="onClick.emit(tap)"
+    (onHoldStart)="onClick.emit(tap)">
     <mat-icon>{{ tap.data('Icon') }}</mat-icon>
     <ng-content select="[before-tap-name]"></ng-content> {{ tap.cursor }}
   </button>

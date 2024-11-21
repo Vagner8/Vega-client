@@ -16,8 +16,7 @@ export class SidenavTapsComponent {
   constructor(public fs: FractalService) {}
 
   async onClick(tap: IFractal): Promise<void> {
-    const isPages = tap.is(Pages);
-    if (isPages) {
+    if (tap.is(Pages)) {
       this.fs.reset(tap);
     } else {
       await this.fs.modifier.set(tap);

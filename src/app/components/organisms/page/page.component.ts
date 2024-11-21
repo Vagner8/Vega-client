@@ -47,11 +47,13 @@ export class PageComponent implements OnInit {
     this.fs.managerEvent.set(Events.Click);
   }
 
-  onRowHold(): void {
+  async onRowHold(): Promise<void> {
     if (this.fs.rows.signal().length) {
       this.fs.rows.unload();
     } else {
-      this.fs.rows.load(this.fs.page.signal()?.list());
+      await this.fs.rows.load(this.fs.page.signal()?.list());
+      await this.fs.taps.set(this.fs.modifiers);
+      this.fs.managerEvent.set(Events.Click);
     }
   }
 }
