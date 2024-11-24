@@ -5,19 +5,9 @@
   @for (row of rows(); track row.cursor) {
     <li class="item">
       <mat-card appearance="outlined">
-        <mat-card-header>
-          <mat-card-title-group>
-            <button type="button" mat-flat-button (click)="deleteRow(row)">Cancel</button>
-            <mat-card-title> {{ $index + 1 }} {{ row.isClone ? 'new' : '' }}</mat-card-title>
-            @if (row.formGroup.dirty || fs.modifier.is('Delete')) {
-              <mat-card-subtitle class="touched">Touched</mat-card-subtitle>
-            } @else {
-              <mat-card-subtitle class="untouched">Untouched</mat-card-subtitle>
-            }
-          </mat-card-title-group>
-        </mat-card-header>
+        <app-card-header [row]="row" [ordinal]="$index + 1" (clickOut)="deleteRow($event)" />
         <mat-card-content>
-          <app-form [sort]="sort()" [formGroup]="row.formGroup" />
+          <app-form [sort]="sort()" [row]="row" (inputOut)="onInputOut($event)" />
         </mat-card-content>
       </mat-card>
     </li>

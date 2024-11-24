@@ -17,7 +17,7 @@ export class ManagerComponent {
   constructor(public fs: FractalService) {}
 
   async onClick(): Promise<void> {
-    if (this.fs.taps.is(Types.Modifiers) && this.fs.rows.signal().length > 0) {
+    if (this.fs.modifier.signal()) {
       await this.fs.page.set(this.fs.page.signal());
       this.fs.reset();
       return;

@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
 import { FractalService } from '@services';
 import { IFractal, Modifiers, Pages } from '@types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-sidenav-taps',
@@ -13,7 +14,20 @@ import { IFractal, Modifiers, Pages } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavTapsComponent {
+  activateSave$!: Observable<boolean>;
+
   constructor(public fs: FractalService) {}
+
+  disabled(cursor: string) {
+    const isNotEmpty = computed(() => this.fs.rows.signal().length === 0);
+
+    return {
+      [Modifiers.New]: false,
+      [Modifiers.Edit]: isNotEmpty,
+      [Modifiers.Save]: this.activateSave$,
+      [Modifiers.Delete]: isNotEmpty,
+    }[cursor];
+  }
 
   async onClick(tap: IFractal): Promise<void> {
     if (tap.is(Pages)) {
@@ -23,16 +37,16 @@ export class SidenavTapsComponent {
       if (tap.is(Modifiers.New)) this.fs.rows.set(this.fs.clone());
       if (tap.is(Modifiers.Save)) {
         this.fs.rows.filter(row => row.formGroup.dirty);
-        this.fs.rows.formRecord()?.disable();
+        this.fs.disableFormGroups.next(true);
         return;
       }
       if (tap.is(Modifiers.Delete)) {
         this.fs.rows.filter(row => !row.isClone);
-        this.fs.rows.formRecord()?.disable();
+        this.fs.disableFormGroups.next(true);
         return;
       }
     }
-    this.fs.rows.formRecord()?.enable();
+    this.fs.disableFormGroups.next(false);
   }
 
   onHold(tap: IFractal): void {

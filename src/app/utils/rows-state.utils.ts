@@ -5,31 +5,26 @@ import { FormGroup, FormRecord } from '@angular/forms';
 
 export class RowsState {
   signal = signal<IFractal[]>([]);
-  formRecord = signal<FormRecord<FormGroup> | null>(null);
   private router = inject(Router);
 
   async set(row: IFractal): Promise<void> {
     const set = new Set(this.signal());
     set[set.has(row) ? 'delete' : 'add'](row);
     this.signal.set(Array.from(set));
-    this.formRecord.set(this.createFormRecord());
     this.navigate();
   }
 
   setRows(row: IFractal[]): void {
     this.signal.set(Array.from(row));
-    this.formRecord.set(this.createFormRecord());
   }
 
   async load(rows: IFractal[] = []): Promise<void> {
     this.signal.set(rows);
-    this.formRecord.set(this.createFormRecord());
     this.navigate();
   }
 
   unload(): void {
     this.signal.set([]);
-    this.formRecord.set(null);
     this.navigate();
   }
 

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FractalService } from '@services';
+import { Modifiers } from '@types';
 
 @Component({
   selector: 'app-header',
@@ -11,5 +12,10 @@ import { FractalService } from '@services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+  modifier = computed<string | undefined>(() => {
+    const modifier = this.fs.modifier.signal();
+    return modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
+  });
+
   constructor(public fs: FractalService) {}
 }

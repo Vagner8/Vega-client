@@ -13,6 +13,7 @@ import { Events, IFractal, Types } from '@types';
 })
 export class PageComponent implements OnInit {
   @Input() Rows = '';
+  @Input() Taps = '';
   @Input() Pages = '';
   @Input() Manager = '';
   @Input() Modifier = '';
@@ -28,7 +29,7 @@ export class PageComponent implements OnInit {
       this.fs.root.set(root);
       this.fs.manager.set(root.find(Types.Manager));
       this.fs.page.signal.set(root.find(this.Pages));
-      this.fs.taps.signal.set(this.fs[this.Rows || this.Modifier ? 'modifiers' : 'pages']);
+      this.fs.taps.signal.set(this.fs[this.Taps === Types.Modifiers ? 'modifiers' : 'pages']);
       this.fs.modifier.signal.set(root.find(this.Modifier));
       if (this.Rows) {
         const rows = this.Rows.split(':').map(id => {

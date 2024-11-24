@@ -3,6 +3,7 @@ import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators }
 import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState } from '@utils';
 import { DataService } from './data.service';
 import { v4 } from 'uuid';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,8 @@ export class FractalService {
 
   root = signal<IFractal | null>(null);
   manager = signal<IFractal | null>(null);
+  formGroupChanges = signal<IFractal | null>(null);
+  disableFormGroups = new BehaviorSubject(false);
 
   page = new PageState();
   taps = new TapsState();
@@ -104,6 +107,7 @@ export class FractalService {
     await this.page.set(page || this.page.signal());
     await this.modifier.set(null);
     this.rows.signal.set([]);
+    this.formGroupChanges.set(null);
   }
 
   private toFractals(fractals: FractalsDto | null) {

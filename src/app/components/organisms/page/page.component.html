@@ -1,6 +1,6 @@
 @if (fs.page.signal(); as page) {
   @if (Modifier) {
-    <app-modifier [sort]="page.split('Sort')" [rows]="fs.rows.signal()" [modifier]="Modifier" />
+    <app-modifier [sort]="page.split('Sort')" [rows]="fs.rows.signal()" />
   } @else {
     <app-table
       [rows]="fs.rows.signal()"
