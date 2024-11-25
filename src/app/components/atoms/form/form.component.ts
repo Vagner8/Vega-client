@@ -38,6 +38,6 @@ export class FormComponent implements OnDestroy, OnInit {
 
   onClick(input: HTMLInputElement): void {
     input.value = '';
-    this.row.formGroup?.markAsDirty();
+    this.fs.formGroupChanges.set(this.row);
   }
 }

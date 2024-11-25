@@ -4,11 +4,12 @@ import { ClickDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { FractalService } from '@services';
 import { Events, Types } from '@types';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [ClickDirective, MatButtonModule, SpinnerComponent, MatIcon],
+  imports: [ClickDirective, MatButtonModule, SpinnerComponent, MatIcon, NgClass],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

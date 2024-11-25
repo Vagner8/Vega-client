@@ -1,14 +1,5 @@
 @use 'variables.scss' as *;
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 :host {
   display: flex;
   flex-direction: column;
@@ -49,8 +40,4 @@
 
 app-sidenav {
   flex-grow: 1;
-}
-
-.app {
-  // opacity: 0;
 }

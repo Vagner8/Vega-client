@@ -8,7 +8,7 @@
     @if (fs.holding.go() && !fs.holding.end()) {
       <app-spinner mode="determinate" />
     } @else {
-      <mat-icon>{{ manager.data('Icon') }}</mat-icon>
+      <mat-icon class="show">{{ manager.data('Icon') }}</mat-icon>
     }
   </button>
 }

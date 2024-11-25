@@ -1,25 +1,10 @@
-<!-- @if (tap(); as tap) {
+@if (tap(); as tap) {
   <button
     mat-flat-button
     appTapsActivation
     [tap]="tap"
     [rows]="fs.rows.signal()"
-    [modifier]="fs.modifier.signal()"
-    [formRecord]="fs.rows.formRecord()"
-    [formRecordChanges]="fs.formRecordChanges()"
-    appClick
-    [activateOnHold]="activateOnHold(tap)"
-    (onHold)="onHold.emit(tap)"
-    (onClick)="onClick.emit(tap)"
-    (onHoldStart)="onClick.emit(tap)">
-    <mat-icon>{{ tap.data('Icon') }}</mat-icon>
-    <ng-content select="[before-tap-name]"></ng-content> {{ tap.cursor }}
-  </button>
-} -->
-
-@if (tap(); as tap) {
-  <button
-    mat-flat-button
+    [formGroupChanges]="fs.formGroupChanges()"
     appClick
     [activateOnHold]="activateOnHold(tap)"
     (onHold)="onHold.emit(tap)"

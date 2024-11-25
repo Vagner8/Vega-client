@@ -1,5 +1,9 @@
 @use 'variables.scss' as *;
 
+.show {
+  animation: fadeIn 0.2s ease-in-out forwards;
+}
+
 ::ng-deep .mat-mdc-progress-spinner circle {
   stroke: $color-secondary !important;
 }
