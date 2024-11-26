@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TableComponent } from '@components/atoms';
 import { FractalService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
@@ -10,6 +10,7 @@ import { Events, IFractal, Types } from '@types';
   imports: [TableComponent, ModifierComponent],
   templateUrl: './page.component.html',
   styleUrl: './page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent implements OnInit {
   @Input() Rows = '';
@@ -31,24 +32,22 @@ export class PageComponent implements OnInit {
       this.fs.page.signal.set(root.find(this.Pages));
       this.fs.taps.signal.set(this.fs[this.Taps === Types.Modifiers ? 'modifiers' : 'pages']);
       this.fs.modifier.signal.set(root.find(this.Modifier));
-      if (this.Rows) {
-        const rows = this.Rows.split(':').map(id => {
+      this.Rows &&
+        this.Rows.split(':').forEach(id => {
           const row = root.find(id);
-          return row ? row : this.fs.clone();
+          this.fs.rows.set(row ? row : this.fs.clone());
         });
-        this.fs.rows.setRows(rows);
-      }
       this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
     }
   }
 
-  async onRowClick(row: IFractal): Promise<void> {
+  async onRowTapOut(row: IFractal): Promise<void> {
     await this.fs.rows.set(row);
     await this.fs.taps.set(this.fs.modifiers);
     this.fs.managerEvent.set(Events.Click);
   }
 
-  async onRowHold(): Promise<void> {
+  async onRowHoldDoneOut(): Promise<void> {
     if (this.fs.rows.signal().length) {
       this.fs.rows.unload();
     } else {

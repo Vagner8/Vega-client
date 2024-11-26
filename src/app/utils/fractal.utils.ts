@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FractalDto, IFractals, IFractal } from '@types';
+import { FractalDto, IFractals, IFractal, Indicators } from '@types';
 
 export class Fractal implements IFractal {
   cursor!: string;
@@ -27,8 +27,8 @@ export class Fractal implements IFractal {
     return this.dto.controls?.[indicator]?.data || '';
   }
 
-  split(indicator: string): string[] {
-    return this.data(indicator).split(':');
+  sort(): string[] {
+    return this.data(Indicators.Sort).split(':');
   }
 
   find(test: string, fractals: IFractals | null = this.fractals): IFractal | null {

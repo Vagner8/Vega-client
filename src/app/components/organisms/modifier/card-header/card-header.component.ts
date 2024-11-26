@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, Input, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Input, output } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatListModule } from '@mat';
 import { FractalService } from '@services';
 import { IFractal } from '@types';
@@ -14,7 +14,6 @@ import { IFractal } from '@types';
 })
 export class CardHeaderComponent {
   @Input() row!: IFractal;
-  ordinal = input(0);
   clickOut = output<IFractal>();
   toggledClass: 'Untouched' | 'Touched' = 'Untouched';
 

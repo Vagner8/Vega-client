@@ -5,7 +5,7 @@
   @for (row of rows(); track row.cursor) {
     <li class="item">
       <mat-card appearance="outlined">
-        <app-card-header [row]="row" [ordinal]="$index + 1" (clickOut)="deleteRow($event)" />
+        <app-card-header [row]="row" (clickOut)="deleteRow($event)" />
         <mat-card-content>
           <app-form [sort]="sort()" [row]="row" (inputOut)="onInputOut($event)" />
         </mat-card-content>

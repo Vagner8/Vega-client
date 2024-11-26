@@ -1,11 +1,6 @@
 @if (this.fs.manager(); as manager) {
-  <button
-    mat-mini-fab
-    appClick
-    [activateOnHold]="fs.managerEvent.signal() === 'Click'"
-    (onClick)="onClick()"
-    (onHold)="onHold()">
-    @if (fs.holding.go() && !fs.holding.end()) {
+  <button mat-mini-fab appEvent (tapOut)="onManagerTapOut()" (holdDoneOut)="onManagerStopHoldOut()">
+    @if (switcher$ | async) {
       <app-spinner mode="determinate" />
     } @else {
       <mat-icon class="show">{{ manager.data('Icon') }}</mat-icon>

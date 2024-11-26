@@ -19,7 +19,7 @@ export enum Indicators {
   Icon = 'Icon',
   Sort = 'Sort',
   Cursor = 'Cursor',
-  Options = 'Options',
+  Position = 'Position',
 }
 
 export enum Pages {
@@ -64,6 +64,6 @@ export interface IFractal {
   data(indicator: string): string;
   list(): IFractal[];
   find(test: string, fractals?: IFractals | null): IFractal | null;
-  split(indicator: string): string[];
+  sort(): string[];
   update(): FractalDto;
 }

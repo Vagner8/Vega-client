@@ -1,34 +1,40 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
-import { ClickDirective } from '@directives';
+import { EventDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { FractalService } from '@services';
 import { Events, Types } from '@types';
-import { NgClass } from '@angular/common';
+import { map, merge, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [ClickDirective, MatButtonModule, SpinnerComponent, MatIcon, NgClass],
+  imports: [MatButtonModule, SpinnerComponent, MatIcon, EventDirective, AsyncPipe],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagerComponent {
+export class ManagerComponent implements OnInit {
+  switcher$!: Observable<boolean>;
+
   constructor(public fs: FractalService) {}
 
-  async onClick(): Promise<void> {
-    if (this.fs.modifier.signal()) {
-      await this.fs.page.set(this.fs.page.signal());
-      this.fs.reset();
-      return;
-    }
+  ngOnInit(): void {
+    this.switcher$ = merge(
+      this.fs.holdRun$.pipe(map(() => true)),
+      this.fs.holdDone$.pipe(map(() => false)),
+      this.fs.cancelHold$.pipe(map(() => false))
+    );
+  }
+
+  async onManagerTapOut(): Promise<void> {
     const taps = this.fs[this.fs.taps.is(Types.Pages) ? 'modifiers' : 'pages'];
     this.fs.managerEvent.signal() === Events.Click && (await this.fs.taps.set(taps));
     this.fs.managerEvent.set(Events.Click);
   }
 
-  onHold(): void {
+  onManagerStopHoldOut(): void {
     this.fs.managerEvent.set(Events.Hold);
   }
 }

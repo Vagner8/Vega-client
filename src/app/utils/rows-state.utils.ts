@@ -14,10 +14,6 @@ export class RowsState {
     this.navigate();
   }
 
-  setRows(row: IFractal[]): void {
-    this.signal.set(Array.from(row));
-  }
-
   async load(rows: IFractal[] = []): Promise<void> {
     this.signal.set(rows);
     this.navigate();

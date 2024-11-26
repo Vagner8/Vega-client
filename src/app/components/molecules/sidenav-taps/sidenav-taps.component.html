@@ -1,12 +1,11 @@
 <mat-list class="mat-list-app-sidenav">
   @if (fs.taps.signal(); as taps) {
-    @for (indicator of taps.split('Sort'); track indicator) {
+    @for (indicator of taps.sort(); track indicator) {
       @if (taps.find(indicator); as tap) {
         <app-tap
           [tap]="tap"
-          (onClick)="onClick($event)"
-          (onHold)="onHold($event)"
-          (onHoldStart)="onClick($event)" />
+          (onTapTapOut)="onTapTapOut($event)"
+          (onTapHoldDoneOut)="onTapHoldDoneOut($event)" />
       }
     }
   }

@@ -5,11 +5,9 @@
     [tap]="tap"
     [rows]="fs.rows.signal()"
     [formGroupChanges]="fs.formGroupChanges()"
-    appClick
-    [activateOnHold]="activateOnHold(tap)"
-    (onHold)="onHold.emit(tap)"
-    (onClick)="onClick.emit(tap)"
-    (onHoldStart)="onClick.emit(tap)">
+    appEvent
+    (tapOut)="onTapTapOut.emit(tap)"
+    (holdDoneOut)="onTapHoldDoneOut.emit(tap)">
     <mat-icon>{{ tap.data('Icon') }}</mat-icon>
     <ng-content select="[before-tap-name]"></ng-content> {{ tap.cursor }}
   </button>

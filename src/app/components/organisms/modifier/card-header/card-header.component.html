@@ -1,7 +1,7 @@
 <mat-card-header>
   <mat-card-title-group>
     <button type="button" mat-flat-button (click)="clickOut.emit(row)">Cancel</button>
-    <mat-card-title> {{ ordinal() }} {{ row.isClone ? 'new' : '' }}</mat-card-title>
+    <mat-card-title> {{ row.cursor }} {{ row.isClone ? 'New' : '' }}</mat-card-title>
     @if (fs.modifier.signal()?.is('Delete')) {
       <mat-card-subtitle class="Deletable">Deletable</mat-card-subtitle>
     } @else {
