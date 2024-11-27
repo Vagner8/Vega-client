@@ -4,6 +4,8 @@ export enum InputType {
   Password = 'Password',
 }
 
+export type Timeout = ReturnType<typeof setTimeout>;
+
 export type IconName =
   | 'add'
   | 'edit'

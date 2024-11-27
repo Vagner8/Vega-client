@@ -41,7 +41,10 @@ export class InputComponent {
       : 'visibility_off';
   }
 
-  get messages() {
+  get messages(): {
+    valid: string;
+    required: string;
+  } {
     return {
       valid: `${$localize`Please enter a valid`}`,
       required: `${$localize`is required`}`,

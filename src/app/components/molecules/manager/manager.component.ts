@@ -23,8 +23,8 @@ export class ManagerComponent implements OnInit {
   ngOnInit(): void {
     this.switcher$ = merge(
       this.fs.holdRun$.pipe(map(() => true)),
-      this.fs.holdDone$.pipe(map(() => false)),
-      this.fs.cancelHold$.pipe(map(() => false))
+      this.fs.hold$.pipe(map(() => false)),
+      this.fs.holdCancel$.pipe(map(() => false))
     );
   }
 

@@ -15,7 +15,7 @@ import { IFractal, Modifiers, Pages } from '@types';
 export class SidenavTapsComponent {
   constructor(public fs: FractalService) {}
 
-  async onTapTapOut(tap: IFractal): Promise<void> {
+  async touch(tap: IFractal): Promise<void> {
     if (tap.is(Pages)) {
       this.fs.reset(tap);
     } else {
@@ -23,19 +23,19 @@ export class SidenavTapsComponent {
       if (tap.is(Modifiers.New)) this.fs.rows.set(this.fs.clone());
       if (tap.is(Modifiers.Save)) {
         this.fs.rows.filter(row => row.formGroup.dirty);
-        this.fs.disableFormGroups.next(true);
+        this.fs.disableFormGroups$.next(true);
         return;
       }
       if (tap.is(Modifiers.Delete)) {
         this.fs.rows.filter(row => !row.isClone);
-        this.fs.disableFormGroups.next(true);
+        this.fs.disableFormGroups$.next(true);
         return;
       }
     }
-    this.fs.disableFormGroups.next(false);
+    this.fs.disableFormGroups$.next(false);
   }
 
-  onTapHoldDoneOut(tap: IFractal): void {
+  hold(tap: IFractal): void {
     if (tap.is(Modifiers.Save)) {
       this.fs.update();
     }

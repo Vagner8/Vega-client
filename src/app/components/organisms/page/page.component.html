@@ -9,8 +9,8 @@
         [rows]="fs.rows.signal()"
         [columns]="page.sort()"
         [dataSource]="page.list()"
-        (onRowTapOut)="onRowTapOut($event)"
-        (onRowHoldDoneOut)="onRowHoldDoneOut()" />
+        (hold)="hold()"
+        (touch)="touch($event)" />
     }
   }
 }

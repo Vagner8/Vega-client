@@ -1,7 +1,7 @@
 <form [formGroup]="row.formGroup" (input)="inputOut.emit(row)">
   @for (indicator of sort(); track indicator) {
     @if (indicator !== 'Position') {
-      <mat-form-field class="mat-form-field">
+      <mat-form-field class="form-field">
         <mat-label i18n>{{ indicator }}</mat-label>
         <input #inputElementRef [type]="indicator" matInput formControlName="{{ indicator }}" />
         @if (inputElementRef.value && !row.formGroup.disabled) {

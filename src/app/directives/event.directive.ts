@@ -1,56 +1,57 @@
-import { Directive, HostListener, output, OnInit, ElementRef } from '@angular/core';
+import { Directive, HostListener, output } from '@angular/core';
 import { FractalService } from '@services';
-import Hammer from 'hammerjs';
+import { Timeout } from '@types';
 
 @Directive({
   selector: '[appEvent]',
   standalone: true,
 })
-export class EventDirective implements OnInit {
-  private time = 0;
-  private threshold = 820;
+export class EventDirective {
+  hold = output();
+  touch = output();
 
-  tapOut = output();
-  holdRunOut = output();
-  holdDoneOut = output();
-  holdCancelOut = output();
+  private isHoldSucceed = false;
 
-  constructor(
-    private el: ElementRef,
-    private fs: FractalService
-  ) {}
+  private holdDelay = 150;
+  private holdThreshold = 820;
 
-  ngOnInit(): void {
-    const hammer = new Hammer(this.el.nativeElement);
+  private holdTimeout: Timeout | null = null;
+  private holdDelayTimeout: Timeout | null = null;
 
-    hammer.on('press', () => {
-      this.time = Date.now();
-      this.holdRunOut.emit();
-      this.fs.holdRun$.next();
-    });
+  constructor(private fs: FractalService) {}
 
-    hammer.on('pressup', () => {
-      if (Date.now() - this.time > this.threshold) {
-        this.holdDoneOut.emit();
-        this.fs.holdDone$.next();
-      } else {
-        this.holdCancelOut.emit();
-        this.fs.cancelHold$.next();
-      }
-    });
+  @HostListener('pointerdown')
+  pointerdown(): void {
+    this.holdDelayTimeout = setTimeout(() => this.fs.holdRun$.next(), this.holdDelay);
+    this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
+  }
 
-    hammer.on('tap', () => {
-      this.tapOut.emit();
-    });
+  @HostListener('pointerup')
+  pointerup(): void {
+    if (this.isHoldSucceed) {
+      this.hold.emit();
+      this.fs.hold$.next();
+      this.cancel();
+    } else {
+      this.touch.emit();
+      this.cancel();
+    }
+  }
 
-    hammer.on('panend', () => {
-      this.holdCancelOut.emit();
-      this.fs.cancelHold$.next();
-    });
+  @HostListener('pointerleave')
+  pointerleave(): void {
+    this.cancel();
   }
 
   @HostListener('contextmenu', ['$event'])
   onContextmenu(event: Event): void {
     event.preventDefault();
+  }
+
+  private cancel(): void {
+    this.isHoldSucceed = false;
+    this.fs.hold$.next();
+    this.holdTimeout && clearTimeout(this.holdTimeout);
+    this.holdDelayTimeout && clearTimeout(this.holdDelayTimeout);
   }
 }

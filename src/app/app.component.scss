@@ -34,10 +34,6 @@
   padding: 0 $size-medium;
 }
 
-::ng-deep .mat-mdc-progress-spinner circle {
-  stroke: $color-manager;
-}
-
 app-sidenav {
   flex-grow: 1;
 }

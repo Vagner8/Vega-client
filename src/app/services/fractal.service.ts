@@ -12,29 +12,21 @@ export class FractalService {
   pages: IFractal | null = null;
   modifiers: IFractal | null = null;
 
+  hold$ = new Subject<void>();
   holdRun$ = new Subject<void>();
-  holdDone$ = new Subject<void>();
-  cancelHold$ = new Subject<void>();
+  holdCancel$ = new Subject<void>();
+
+  disableFormGroups$ = new BehaviorSubject(false);
 
   root = signal<IFractal | null>(null);
   manager = signal<IFractal | null>(null);
   formGroupChanges = signal<IFractal | null>(null);
-  disableFormGroups = new BehaviorSubject(false);
 
   page = new PageState();
   taps = new TapsState();
   rows = new RowsState();
   modifier = new ModifierState();
   managerEvent = new ManagerState();
-
-  holding = {
-    go: signal(false),
-    end: signal(false),
-    reset() {
-      this.go.set(false);
-      this.end.set(false);
-    },
-  };
 
   constructor(public ds: DataService) {}
 
@@ -110,11 +102,11 @@ export class FractalService {
     this.formGroupChanges.set(null);
   }
 
-  toFractal(dto: FractalDto) {
+  toFractal(dto: FractalDto): Fractal {
     return new Fractal(dto, this.toFractals(dto.fractals));
   }
 
-  private toFractals(fractals: FractalsDto | null) {
+  private toFractals(fractals: FractalsDto | null): IFractals | null {
     if (!fractals) return null;
     const result: IFractals = {};
     for (const indicator in fractals) {

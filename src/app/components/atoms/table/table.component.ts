@@ -19,15 +19,13 @@ import { IFractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent implements AfterViewInit {
-  @ViewChild(MatSort) sort?: MatSort;
-  private matTableDataSource!: MatTableDataSource<IFractal>;
-
   @Input() rows: IFractal[] = [];
   @Input() columns: string[] = [];
   @Input()
   set dataSource(fractals: IFractal[]) {
     this.matTableDataSource = new MatTableDataSource(fractals);
-    this.matTableDataSource.sortingDataAccessor = (item, property) => item.data(property) || '';
+    this.matTableDataSource.sortingDataAccessor = (item, property): string =>
+      item.data(property) || '';
     if (this.sort) this.matTableDataSource.sort = this.sort;
   }
 
@@ -35,10 +33,14 @@ export class TableComponent implements AfterViewInit {
     return this.matTableDataSource;
   }
 
-  onRowTapOut = output<IFractal>();
-  onRowHoldDoneOut = output<IFractal>();
+  hold = output<IFractal>();
+  touch = output<IFractal>();
 
-  ngAfterViewInit() {
+  private matTableDataSource!: MatTableDataSource<IFractal>;
+
+  @ViewChild(MatSort) sort?: MatSort;
+
+  ngAfterViewInit(): void {
     if (this.sort) this.matTableDataSource.sort = this.sort;
   }
 }

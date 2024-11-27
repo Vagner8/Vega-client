@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { EventDirective, TapsActivationDirective } from '@directives';
-import { IFractal, Modifiers } from '@types';
+import { IFractal } from '@types';
 import { FractalService } from '@services';
 
 @Component({
@@ -16,12 +16,8 @@ export class TapComponent {
   tap = input<IFractal>();
   disabled = input<IFractal>();
 
-  onTapTapOut = output<IFractal>();
-  onTapHoldDoneOut = output<IFractal>();
+  hold = output<IFractal>();
+  touch = output<IFractal>();
 
   constructor(public fs: FractalService) {}
-
-  activateOnHold(tap: IFractal): boolean {
-    return [Modifiers.Save, Modifiers.Delete].some(cursor => tap.is(cursor));
-  }
 }

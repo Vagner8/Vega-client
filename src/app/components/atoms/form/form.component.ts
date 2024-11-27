@@ -25,7 +25,7 @@ export class FormComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.prevRawValue = this.row.formGroup?.getRawValue();
     this.unsubscriber.set(
-      this.fs.disableFormGroups.subscribe(disabled =>
+      this.fs.disableFormGroups$.subscribe(disabled =>
         this.row.formGroup[disabled ? 'disable' : 'enable']()
       )
     );

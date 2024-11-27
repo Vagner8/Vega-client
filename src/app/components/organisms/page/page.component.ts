@@ -41,13 +41,7 @@ export class PageComponent implements OnInit {
     }
   }
 
-  async onRowTapOut(row: IFractal): Promise<void> {
-    await this.fs.rows.set(row);
-    await this.fs.taps.set(this.fs.modifiers);
-    this.fs.managerEvent.set(Events.Click);
-  }
-
-  async onRowHoldDoneOut(): Promise<void> {
+  async hold(): Promise<void> {
     if (this.fs.rows.signal().length) {
       this.fs.rows.unload();
     } else {
@@ -55,5 +49,11 @@ export class PageComponent implements OnInit {
       await this.fs.taps.set(this.fs.modifiers);
       this.fs.managerEvent.set(Events.Click);
     }
+  }
+
+  async touch(row: IFractal): Promise<void> {
+    await this.fs.rows.set(row);
+    await this.fs.taps.set(this.fs.modifiers);
+    this.fs.managerEvent.set(Events.Click);
   }
 }
