@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { EventDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { FractalService } from '@services';
+import { EventService, FractalService } from '@services';
 import { Events, Types } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -18,13 +18,16 @@ import { AsyncPipe } from '@angular/common';
 export class ManagerComponent implements OnInit {
   switcher$!: Observable<boolean>;
 
-  constructor(public fs: FractalService) {}
+  constructor(
+    public fs: FractalService,
+    private es: EventService
+  ) {}
 
   ngOnInit(): void {
     this.switcher$ = merge(
-      this.fs.holdRun$.pipe(map(() => true)),
-      this.fs.hold$.pipe(map(() => false)),
-      this.fs.holdCancel$.pipe(map(() => false))
+      this.es.holdRun$.pipe(map(() => true)),
+      this.es.hold$.pipe(map(() => false)),
+      this.es.holdCancel$.pipe(map(() => false))
     );
   }
 

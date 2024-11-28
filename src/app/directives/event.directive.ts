@@ -1,5 +1,5 @@
 import { Directive, HostListener, output } from '@angular/core';
-import { FractalService } from '@services';
+import { EventService, FractalService } from '@services';
 import { Timeout } from '@types';
 
 @Directive({
@@ -18,11 +18,14 @@ export class EventDirective {
   private holdTimeout: Timeout | null = null;
   private holdDelayTimeout: Timeout | null = null;
 
-  constructor(private fs: FractalService) {}
+  constructor(
+    private fs: FractalService,
+    private es: EventService
+  ) {}
 
   @HostListener('pointerdown')
   pointerdown(): void {
-    this.holdDelayTimeout = setTimeout(() => this.fs.holdRun$.next(), this.holdDelay);
+    this.holdDelayTimeout = setTimeout(() => this.es.holdRun$.next(), this.holdDelay);
     this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
   }
 
@@ -30,7 +33,7 @@ export class EventDirective {
   pointerup(): void {
     if (this.isHoldSucceed) {
       this.hold.emit();
-      this.fs.hold$.next();
+      this.es.hold$.next();
       this.cancel();
     } else {
       this.touch.emit();
@@ -50,7 +53,7 @@ export class EventDirective {
 
   private cancel(): void {
     this.isHoldSucceed = false;
-    this.fs.hold$.next();
+    this.es.hold$.next();
     this.holdTimeout && clearTimeout(this.holdTimeout);
     this.holdDelayTimeout && clearTimeout(this.holdDelayTimeout);
   }

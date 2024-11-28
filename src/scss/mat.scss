@@ -7,6 +7,10 @@
 }
 
 .mat-mdc-progress-spinner circle {
+  stroke: $color-manager !important;
+}
+
+.manager-spinner .mat-mdc-progress-spinner circle {
   stroke: $color-secondary !important;
 }
 

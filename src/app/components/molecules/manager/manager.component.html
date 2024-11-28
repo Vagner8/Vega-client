@@ -1,7 +1,7 @@
 @if (this.fs.manager(); as manager) {
   <button mat-mini-fab appEvent (touch)="onManagerTapOut()" (hold)="onManagerStopHoldOut()">
     @if (switcher$ | async) {
-      <app-spinner mode="determinate" />
+      <app-spinner class="manager-spinner" mode="determinate" />
     } @else {
       <mat-icon class="show">{{ manager.data('Icon') }}</mat-icon>
     }

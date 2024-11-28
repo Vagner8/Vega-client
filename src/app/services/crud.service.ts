@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FractalDto, IFractal } from '@types';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CrudService {
-  update({ rows, parent }: { rows: IFractal[]; parent: IFractal }): {
-    toAdd: FractalDto[];
-    toUpdate: FractalDto[];
-  } {
+  constructor(private ds: DataService) {}
+
+  update(rows: IFractal[], parent: IFractal | null): void {
+    if (!parent || rows.length === 0) return;
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
     rows.forEach(row => {
@@ -22,9 +23,23 @@ export class CrudService {
       }
     });
 
-    return {
-      toAdd,
-      toUpdate,
-    };
+    if (toAdd.length > 0) {
+      this.ds.add(toAdd).subscribe(data => console.log('🚀 ~ add:', data));
+    }
+    if (toUpdate.length > 0) {
+      this.ds.update(toUpdate).subscribe(data => console.log('🚀 ~ add:', data));
+    }
+  }
+
+  delete(rows: IFractal[], parent: IFractal | null): void {
+    if (!parent || rows.length === 0) return;
+    const toDelete: FractalDto[] = [];
+    const fractals = parent.fractals;
+    if (!fractals) return;
+    for (const row of rows) {
+      toDelete.push(row.dto);
+      delete fractals[row.cursor];
+    }
+    this.ds.delete(toDelete).subscribe(data => console.log('🚀 ~ delete:', data));
   }
 }

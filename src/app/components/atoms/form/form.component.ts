@@ -1,7 +1,7 @@
 import { Component, Input, input, output, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
-import { FractalService } from '@services';
+import { EventService, FractalService } from '@services';
 import { IFractal } from '@types';
 import { Unsubscriber } from '@utils';
 
@@ -20,12 +20,15 @@ export class FormComponent implements OnDestroy, OnInit {
 
   unsubscriber = new Unsubscriber();
 
-  constructor(private fs: FractalService) {}
+  constructor(
+    private fs: FractalService,
+    private es: EventService
+  ) {}
 
   ngOnInit(): void {
     this.prevRawValue = this.row.formGroup?.getRawValue();
     this.unsubscriber.set(
-      this.fs.disableFormGroups$.subscribe(disabled =>
+      this.es.disableFormGroups$.subscribe(disabled =>
         this.row.formGroup[disabled ? 'disable' : 'enable']()
       )
     );

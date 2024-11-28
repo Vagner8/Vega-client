@@ -22,7 +22,7 @@ export class DataService {
     return this.http.post<FractalDto>(this.fractalApi, fractal);
   }
 
-  edit(dto: FractalDto[]): Observable<FractalDto> {
+  update(dto: FractalDto[]): Observable<FractalDto> {
     return this.http.put<FractalDto>(this.fractalApi, dto);
   }
 

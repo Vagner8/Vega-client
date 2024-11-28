@@ -1,9 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators } from '@types';
+import { ControlsDto, IFractal, Indicators } from '@types';
 import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState } from '@utils';
-import { DataService } from './data.service';
 import { v4 } from 'uuid';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { CrudService } from './crud.service';
 
 @Injectable({
@@ -12,12 +10,6 @@ import { CrudService } from './crud.service';
 export class FractalService {
   pages: IFractal | null = null;
   modifiers: IFractal | null = null;
-
-  hold$ = new Subject<void>();
-  holdRun$ = new Subject<void>();
-  holdCancel$ = new Subject<void>();
-
-  disableFormGroups$ = new BehaviorSubject(false);
 
   root = signal<IFractal | null>(null);
   manager = signal<IFractal | null>(null);
@@ -29,10 +21,7 @@ export class FractalService {
   modifier = new ModifierState();
   managerEvent = new ManagerState();
 
-  constructor(
-    private ds: DataService,
-    private cs: CrudService
-  ) {}
+  constructor(private cs: CrudService) {}
 
   clone(): Fractal {
     const parent = this.page.signal();
@@ -63,39 +52,12 @@ export class FractalService {
   }
 
   update(): void {
-    const rows = this.rows.signal();
-    const parent = this.page.signal();
-    if (!parent || rows.length === 0) return;
-    const rowsToAdd: FractalDto[] = [];
-    const rowsToUpdate: FractalDto[] = [];
-    rows.forEach(row => {
-      if (row.isClone) {
-        row.isClone = false;
-        if (parent.fractals) parent.fractals[row.cursor] = row;
-        else parent.fractals = { [row.cursor]: row };
-        rowsToAdd.push(row.update());
-      } else {
-        rowsToUpdate.push(row.update());
-      }
-    });
-    if (rowsToAdd.length > 0) {
-      this.ds.add(rowsToAdd).subscribe(data => console.log('🚀 ~ add:', data));
-    }
-    if (rowsToUpdate.length > 0) {
-      this.ds.edit(rowsToUpdate).subscribe(data => console.log('🚀 ~ add:', data));
-    }
+    this.cs.update(this.rows.signal(), this.page.signal());
     this.reset();
   }
 
   delete(): void {
-    const toDelete: FractalDto[] = [];
-    const fractals = this.page.signal()?.fractals;
-    if (!fractals) return;
-    for (const row of this.rows.signal()) {
-      toDelete.push(row.dto);
-      delete fractals[row.cursor];
-    }
-    this.ds.delete(toDelete).subscribe(data => console.log('🚀 ~ delete:', data));
+    this.cs.delete(this.rows.signal(), this.page.signal());
     this.reset();
   }
 
@@ -104,23 +66,5 @@ export class FractalService {
     await this.modifier.set(null);
     this.rows.signal.set([]);
     this.formGroupChanges.set(null);
-  }
-
-  toFractal(dto: FractalDto): Fractal {
-    return new Fractal(dto, this.toFractals(dto.fractals));
-  }
-
-  private toFractals(fractals: FractalsDto | null): IFractals | null {
-    if (!fractals) return null;
-    const result: IFractals = {};
-    for (const indicator in fractals) {
-      const fractal = new Fractal(
-        fractals[indicator],
-        this.toFractals(fractals[indicator].fractals)
-      );
-      fractal.cursor = indicator;
-      result[indicator] = fractal;
-    }
-    return result;
   }
 }
