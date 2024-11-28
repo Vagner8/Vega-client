@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TableComponent } from '@components/atoms';
-import { FractalService } from '@services';
+import { DataService, FractalService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
-import { Events, IFractal, Types } from '@types';
+import { Events, IFractal, Indicators, Types } from '@types';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-page',
@@ -19,7 +20,10 @@ export class PageComponent implements OnInit {
   @Input() Manager = '';
   @Input() Modifier = '';
 
-  constructor(public fs: FractalService) {}
+  constructor(
+    public fs: FractalService,
+    private ds: DataService
+  ) {}
 
   ngOnInit(): void {
     const root = this.fs.root();
@@ -39,6 +43,16 @@ export class PageComponent implements OnInit {
         });
       this.fs.managerEvent.signal.set(this.Manager || Events.Hold);
     }
+  }
+
+  drop({ previousIndex, currentIndex }: CdkDragDrop<string[]>): void {
+    const page = this.fs.page.signal();
+    if (!page) return;
+    const columns = page.sort();
+    moveItemInArray(columns, previousIndex, currentIndex);
+    page.dto.controls[Indicators.Sort].data = columns.join(':');
+    const { id, parentId, controls } = page.dto;
+    this.ds.edit([{ id, parentId, fractals: null, controls }]).subscribe();
   }
 
   async hold(): Promise<void> {

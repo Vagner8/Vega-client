@@ -1,8 +1,14 @@
 @if (dataSource.sortData.length > 0) {
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop.emit($event)">
     @for (column of columns; track column) {
       <ng-container [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
           {{ column }}
         </th>
         <td mat-cell *matCellDef="let fractal">

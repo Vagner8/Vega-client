@@ -9,6 +9,7 @@
         [rows]="fs.rows.signal()"
         [columns]="page.sort()"
         [dataSource]="page.list()"
+        (drop)="drop($event)"
         (hold)="hold()"
         (touch)="touch($event)" />
     }
