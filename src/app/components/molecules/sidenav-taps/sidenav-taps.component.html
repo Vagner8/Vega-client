@@ -1,8 +1,8 @@
-<mat-list class="mat-list-app-sidenav">
+<mat-list cdkDropList (cdkDropListDropped)="drop($event)">
   @if (fs.taps.signal(); as taps) {
     @for (indicator of taps.sort(); track indicator) {
       @if (taps.find(indicator); as tap) {
-        <app-tap [tap]="tap" (hold)="hold($event)" (touch)="touch($event)" />
+        <app-tap class="tap" cdkDrag [tap]="tap" (hold)="hold($event)" (touch)="touch($event)" />
       }
     }
   }

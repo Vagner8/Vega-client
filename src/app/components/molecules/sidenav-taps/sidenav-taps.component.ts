@@ -1,19 +1,33 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
-import { FractalService } from '@services';
-import { IFractal, Modifiers, Pages } from '@types';
+import { DataService, FractalService } from '@services';
+import { IFractal, Indicators, Modifiers, Pages } from '@types';
+import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-sidenav-taps',
   standalone: true,
-  imports: [TapComponent, MatListModule],
+  imports: [TapComponent, MatListModule, CdkDropList, CdkDrag],
   templateUrl: './sidenav-taps.component.html',
-  styleUrl: './sidenav-taps.component.css',
+  styleUrl: './sidenav-taps.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavTapsComponent {
-  constructor(public fs: FractalService) {}
+  constructor(
+    public fs: FractalService,
+    private ds: DataService
+  ) {}
+
+  drop(event: CdkDragDrop<string[]>): void {
+    const taps = this.fs.taps.signal();
+    if (!taps) return;
+    const sort = taps.sort();
+    moveItemInArray(sort, event.previousIndex, event.currentIndex);
+    taps.dto.controls[Indicators.Sort].data = sort.join(':');
+    const { id, parentId, controls } = taps.dto;
+    this.ds.edit([{ id, parentId, fractals: null, controls }]).subscribe();
+  }
 
   async touch(tap: IFractal): Promise<void> {
     if (tap.is(Pages)) {

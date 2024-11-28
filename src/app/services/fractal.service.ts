@@ -4,6 +4,7 @@ import { Fractal, PageState, ModifierState, TapsState, ManagerState, RowsState }
 import { DataService } from './data.service';
 import { v4 } from 'uuid';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { CrudService } from './crud.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,10 @@ export class FractalService {
   modifier = new ModifierState();
   managerEvent = new ManagerState();
 
-  constructor(public ds: DataService) {}
+  constructor(
+    private ds: DataService,
+    private cs: CrudService
+  ) {}
 
   clone(): Fractal {
     const parent = this.page.signal();
