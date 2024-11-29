@@ -10,11 +10,12 @@ import { EventDirective } from '@directives';
 import { MatTableModule, MatSortModule, MatSort, MatTableDataSource } from '@mat';
 import { IFractal } from '@types';
 import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [MatTableModule, EventDirective, MatSortModule, CdkDropList, CdkDrag],
+  imports: [NgTemplateOutlet, MatTableModule, EventDirective, MatSortModule, CdkDropList, CdkDrag],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +35,9 @@ export class TableComponent implements AfterViewInit {
     return this.matTableDataSource;
   }
 
-  drop = output<CdkDragDrop<string[]>>();
+  dropRows = output<CdkDragDrop<string>>();
+  dropHeaders = output<CdkDragDrop<string[]>>();
+
   hold = output<IFractal>();
   touch = output<IFractal>();
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatButtonModule, MatIcon } from '@mat';
+import { MatButtonModule } from '@mat';
 import { EventDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService } from '@services';
@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatButtonModule, SpinnerComponent, MatIcon, EventDirective, AsyncPipe],
+  imports: [MatButtonModule, SpinnerComponent, EventDirective, AsyncPipe],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,13 +31,13 @@ export class ManagerComponent implements OnInit {
     );
   }
 
-  async onManagerTapOut(): Promise<void> {
+  async touch(): Promise<void> {
     const taps = this.fs[this.fs.taps.is(Types.Pages) ? 'modifiers' : 'pages'];
     this.fs.managerEvent.signal() === Events.Click && (await this.fs.taps.set(taps));
     this.fs.managerEvent.set(Events.Click);
   }
 
-  onManagerStopHoldOut(): void {
+  hold(): void {
     this.fs.managerEvent.set(Events.Hold);
   }
 }

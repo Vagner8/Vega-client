@@ -1,12 +1,12 @@
-import { Directive, HostListener, output } from '@angular/core';
-import { EventService, FractalService } from '@services';
+import { Directive, HostListener, OnDestroy, OnInit, output } from '@angular/core';
+import { EventService } from '@services';
 import { Timeout } from '@types';
 
 @Directive({
   selector: '[appEvent]',
   standalone: true,
 })
-export class EventDirective {
+export class EventDirective implements OnInit, OnDestroy {
   hold = output();
   touch = output();
 
@@ -18,10 +18,15 @@ export class EventDirective {
   private holdTimeout: Timeout | null = null;
   private holdDelayTimeout: Timeout | null = null;
 
-  constructor(
-    private fs: FractalService,
-    private es: EventService
-  ) {}
+  constructor(private es: EventService) {}
+
+  ngOnInit(): void {
+    document.addEventListener('contextmenu', this.onContextmenu);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('contextmenu', this.onContextmenu);
+  }
 
   @HostListener('pointerdown')
   pointerdown(): void {
@@ -46,10 +51,9 @@ export class EventDirective {
     this.cancel();
   }
 
-  @HostListener('contextmenu', ['$event'])
-  onContextmenu(event: Event): void {
+  private onContextmenu = (event: Event): void => {
     event.preventDefault();
-  }
+  };
 
   private cancel(): void {
     this.isHoldSucceed = false;

@@ -27,7 +27,7 @@ export class CrudService {
       this.ds.add(toAdd).subscribe(data => console.log('🚀 ~ add:', data));
     }
     if (toUpdate.length > 0) {
-      this.ds.update(toUpdate).subscribe(data => console.log('🚀 ~ add:', data));
+      this.ds.update(toUpdate).subscribe(data => console.log('🚀 ~ update:', data));
     }
   }
 

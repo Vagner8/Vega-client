@@ -9,9 +9,10 @@
         [rows]="fs.rows.signal()"
         [columns]="page.sort()"
         [dataSource]="page.list()"
-        (drop)="es.drop(page, $event)"
         (hold)="hold()"
-        (touch)="touch($event)" />
+        (touch)="touch($event)"
+        (dropRows)="es.dropRows(page, $event)"
+        (dropHeaders)="es.drop(page, $event)" />
     }
   }
 }
