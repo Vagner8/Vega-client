@@ -1,14 +1,22 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { MatToolbar } from '@mat';
 import { ManagerComponent } from '../manager/manager.component';
-import { CdkDrag } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragRelease } from '@angular/cdk/drag-drop';
+import { SettingsButtonComponent } from '../settings/button/settings-button.component';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MatToolbar, ManagerComponent, CdkDrag],
+  imports: [MatToolbar, ManagerComponent, SettingsButtonComponent, CdkDrag],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToolbarComponent {}
+export class ToolbarComponent extends SuperComponent {
+  dragDisabled = computed(() => !this.ss.toggles()['Drag-and-Drop']);
+
+  onDragReleased(event: CdkDragRelease): void {
+    console.log('🚀 ~ event:', event);
+  }
+}

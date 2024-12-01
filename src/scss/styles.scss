@@ -1,7 +1,7 @@
 @use './variables.scss' as *;
 @use './scrollbar.scss';
 @use './animations.scss';
-@use './mat.scss';
+@use './mat-styles.scss';
 
 body {
   margin: 0;
@@ -12,4 +12,9 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent; /* Chrome, Safari, etc. */
+  -webkit-touch-callout: none; /* Disable long-press menus */
 }

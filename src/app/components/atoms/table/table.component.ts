@@ -26,8 +26,7 @@ export class TableComponent implements AfterViewInit {
   @Input()
   set dataSource(fractals: IFractal[]) {
     this.matTableDataSource = new MatTableDataSource(fractals);
-    this.matTableDataSource.sortingDataAccessor = (item, property): string =>
-      item.data(property) || '';
+    this.matTableDataSource.sortingDataAccessor = (item, property): string => item.string(property);
     if (this.sort) this.matTableDataSource.sort = this.sort;
   }
 

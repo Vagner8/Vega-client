@@ -1,13 +1,13 @@
 @if (fs.page.signal(); as page) {
   @if (Modifier) {
-    <app-modifier [sort]="page.sort()" [rows]="fs.rows.signal()" />
+    <app-modifier [sort]="page.array('Sort')" [rows]="fs.rows.signal()" />
   } @else {
     @if (Pages === 'Home') {
       <h1>Home</h1>
     } @else {
       <app-table
         [rows]="fs.rows.signal()"
-        [columns]="page.sort()"
+        [columns]="page.array('Sort')"
         [dataSource]="page.list()"
         (hold)="hold()"
         (touch)="touch($event)"

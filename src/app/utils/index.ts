@@ -5,3 +5,4 @@ export * from './taps-state.utils';
 export * from './manager-state.utils';
 export * from './rows-state.utils';
 export * from './unsubscriber';
+export * from './super-component.utils';

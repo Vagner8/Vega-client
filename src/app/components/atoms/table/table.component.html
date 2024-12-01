@@ -2,9 +2,9 @@
   <ng-container *ngTemplateOutlet="true ? dropRowsTable : dropHeadersTable" />
 }
 
-@if (dataSource.sortData.length > 0) {
+<!-- @if (dataSource.sortData.length > 0) {
   <ng-container *ngTemplateOutlet="false ? dropRowsTable : dropHeadersTable" />
-}
+} -->
 
 <ng-template #dropHeadersTable>
   <mat-table
@@ -37,7 +37,6 @@
 
 <ng-template #dropRowsTable>
   <mat-table
-    #table
     [dataSource]="dataSource"
     matSort
     appDragTable

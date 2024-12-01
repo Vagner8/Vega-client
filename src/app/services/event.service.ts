@@ -16,9 +16,10 @@ export class EventService {
 
   constructor(private ds: DataService) {}
 
-  drop(fractal: IFractal | null, { previousIndex, currentIndex }: CdkDragDrop<string[]>): void {
+  drop(fractal: IFractal | null, event: CdkDragDrop<string[]>): void {
     if (!fractal) return;
-    const columns = fractal.sort();
+    const { previousIndex, currentIndex } = event;
+    const columns = fractal.array('Sort');
     moveItemInArray(columns, previousIndex, currentIndex);
     fractal.dto.controls[Indicators.Sort].data = columns.join(':');
     const { id, parentId, controls } = fractal.dto;

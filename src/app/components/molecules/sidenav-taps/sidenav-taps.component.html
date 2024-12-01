@@ -1,6 +1,6 @@
 <mat-list cdkDropList (cdkDropListDropped)="es.drop(fs.taps.signal(), $event)">
   @if (fs.taps.signal(); as taps) {
-    @for (indicator of taps.sort(); track indicator) {
+    @for (indicator of taps.array('Sort'); track indicator) {
       @if (taps.find(indicator); as tap) {
         <app-tap
           class="tap"

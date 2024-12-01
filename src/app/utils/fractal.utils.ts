@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { FractalDto, IFractals, IFractal, Indicators } from '@types';
+import { FractalDto, IFractals, IFractal, ControlDtoData, Indicators } from '@types';
 
 export class Fractal implements IFractal {
   cursor!: string;
@@ -10,7 +10,7 @@ export class Fractal implements IFractal {
     public dto: FractalDto,
     public fractals: IFractals | null
   ) {
-    this.formGroup = this.getFormGroup();
+    this.formGroup = this.createFormGroup();
   }
 
   is(test: string | object): boolean {
@@ -19,16 +19,28 @@ export class Fractal implements IFractal {
       : test === this.cursor;
   }
 
+  has(indicator: string): boolean {
+    return Boolean(this.dto.controls[indicator]);
+  }
+
   list(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
   }
 
-  data(indicator: string): string {
-    return this.dto.controls?.[indicator]?.data || '';
+  data(indicator: string): ControlDtoData {
+    return this.dto.controls[indicator].data;
   }
 
-  sort(): string[] {
-    return this.data(Indicators.Sort).split(':');
+  bool(indicator: string): boolean {
+    return this.data(indicator) as boolean;
+  }
+
+  array(indicator: string): string[] {
+    return this.string(indicator).split(':');
+  }
+
+  string(indicator: string): string {
+    return this.data(indicator) as string;
   }
 
   find(test: string, fractals: IFractals | null = this.fractals): IFractal | null {
@@ -49,11 +61,18 @@ export class Fractal implements IFractal {
     return this.dto;
   }
 
-  private getFormGroup(): FormGroup {
+  getFormControl(name: string): FormControl {
+    return this.formGroup.get(name) as FormControl;
+  }
+
+  private createFormGroup(): FormGroup {
     return new FormGroup(
       Object.entries(this.dto.controls).reduce(
         (acc: Record<string, FormControl>, [indicator, control]) => {
-          acc[indicator] = new FormControl(control.data);
+          const value = this.has(Indicators.Select)
+            ? this.array(Indicators.Select)[0]
+            : control.data;
+          acc[indicator] = new FormControl(value);
           return acc;
         },
         {}

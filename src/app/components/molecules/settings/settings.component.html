@@ -1,0 +1,41 @@
+@if (fs.settings(); as settings) {
+  <mat-nav-list class="list">
+    <mat-card-title-group>
+      <mat-card-title>Settings</mat-card-title>
+      <button type="button" mat-flat-button (click)="this.sheetRef.dismiss()">Close</button>
+    </mat-card-title-group>
+    @for (indicator of settings.array('Sort'); track indicator) {
+      @if (settings.find(indicator); as setting) {
+        <mat-card appearance="outlined">
+          <mat-card-header
+            ><mat-card-title-group>
+              <mat-card-title>{{ setting.data('Cursor') }}</mat-card-title>
+              <mat-card-subtitle>{{ setting.data('Description') }}</mat-card-subtitle>
+            </mat-card-title-group></mat-card-header
+          >
+
+          <mat-card-content>
+            @if (setting.has('Toggle')) {
+              <mat-slide-toggle
+                [formControl]="setting.getFormControl('Toggle')"
+                (change)="toggle(setting)"
+                >Slide me!</mat-slide-toggle
+              >
+            }
+            @if (setting.has('Select')) {
+              <mat-form-field>
+                <mat-select
+                  [formControl]="setting.getFormControl('Select')"
+                  (selectionChange)="select(setting)">
+                  @for (option of setting.array('Select'); track option) {
+                    <mat-option [value]="option">{{ option }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+  </mat-nav-list>
+}

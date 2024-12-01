@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TableComponent } from '@components/atoms';
-import { DataService, EventService, FractalService } from '@services';
+import { EventService, FractalService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { Events, IFractal, Types } from '@types';
 
@@ -21,8 +21,7 @@ export class PageComponent implements OnInit {
 
   constructor(
     public fs: FractalService,
-    public es: EventService,
-    private ds: DataService
+    public es: EventService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +32,7 @@ export class PageComponent implements OnInit {
 
       this.fs.root.set(root);
       this.fs.manager.set(root.find(Types.Manager));
+      this.fs.settings.set(root.find(Types.Settings));
       this.fs.page.signal.set(root.find(this.Pages));
       this.fs.taps.signal.set(this.fs[this.Taps === Types.Modifiers ? 'modifiers' : 'pages']);
       this.fs.modifier.signal.set(root.find(this.Modifier));

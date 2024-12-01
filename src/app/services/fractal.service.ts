@@ -13,6 +13,7 @@ export class FractalService {
 
   root = signal<IFractal | null>(null);
   manager = signal<IFractal | null>(null);
+  settings = signal<IFractal | null>(null);
   formGroupChanges = signal<IFractal | null>(null);
 
   page = new PageState();
@@ -33,7 +34,7 @@ export class FractalService {
       {
         id: cloneId,
         parentId: parent.dto.id,
-        controls: parent.sort().reduce((acc: ControlsDto, indicator) => {
+        controls: parent.array(Indicators.Sort).reduce((acc: ControlsDto, indicator) => {
           acc[indicator] = {
             id: v4(),
             parentId: cloneId,

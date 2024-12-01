@@ -13,3 +13,5 @@ export * from '@angular/material/snack-bar';
 export * from '@angular/material/progress-spinner';
 export * from '@angular/material/card';
 export * from '@angular/material/sort';
+export * from '@angular/material/bottom-sheet';
+export * from '@angular/material/slide-toggle';
