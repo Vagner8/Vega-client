@@ -1,12 +1,12 @@
 import { Directive, HostListener, OnDestroy, OnInit, output } from '@angular/core';
-import { EventService } from '@services';
 import { Timeout } from '@types';
+import { SuperComponent } from '@utils';
 
 @Directive({
   selector: '[appEvent]',
   standalone: true,
 })
-export class EventDirective implements OnInit, OnDestroy {
+export class EventDirective extends SuperComponent implements OnInit, OnDestroy {
   hold = output();
   touch = output();
 
@@ -17,8 +17,6 @@ export class EventDirective implements OnInit, OnDestroy {
 
   private holdTimeout: Timeout | null = null;
   private holdDelayTimeout: Timeout | null = null;
-
-  constructor(private es: EventService) {}
 
   ngOnInit(): void {
     document.addEventListener('contextmenu', this.onContextmenu);

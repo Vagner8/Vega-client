@@ -1,17 +1,13 @@
 @if (dataSource.sortData.length > 0) {
-  <ng-container *ngTemplateOutlet="true ? dropRowsTable : dropHeadersTable" />
+  <ng-container
+    *ngTemplateOutlet="ss.toggles['Drag-and-Drop']() ? dropHeadersTable : dropRowsTable" />
 }
-
-<!-- @if (dataSource.sortData.length > 0) {
-  <ng-container *ngTemplateOutlet="false ? dropRowsTable : dropHeadersTable" />
-} -->
 
 <ng-template #dropHeadersTable>
   <mat-table
     [dataSource]="dataSource"
     matSort
     cdkDropList
-    [cdkDropListDisabled]="false"
     cdkDropListOrientation="horizontal"
     (cdkDropListDropped)="dropHeaders.emit($event)">
     @for (column of columns; track column) {
@@ -19,19 +15,19 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x">
           {{ column }}
         </mat-header-cell>
-        <mat-cell *matCellDef="let fractal">
-          {{ fractal.data(column) }}
+        <mat-cell *matCellDef="let row">
+          {{ row.data(column) }}
         </mat-cell>
       </ng-container>
     }
     <mat-header-row *matHeaderRowDef="columns" />
     <mat-row
       mat-row
-      *matRowDef="let fractal; columns: columns"
+      *matRowDef="let row; columns: columns"
       appEvent
-      (hold)="this.hold.emit(fractal)"
-      (touch)="this.touch.emit(fractal)"
-      [class.row-is-clicked]="rows.includes(fractal)" />
+      (hold)="this.hold.emit(row)"
+      (touch)="this.touch.emit(row)"
+      [class.row-is-clicked]="rows.includes(row)" />
   </mat-table>
 </ng-template>
 
@@ -42,15 +38,14 @@
     appDragTable
     cdkDropList
     cdkDropListData="dataSource"
-    [cdkDropListDisabled]="false"
     (cdkDropListDropped)="dropRows.emit($event)">
     @for (column of columns; track column) {
       <ng-container [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ column }}
         </mat-header-cell>
-        <mat-cell *matCellDef="let fractal">
-          {{ fractal.data(column) }}
+        <mat-cell *matCellDef="let row">
+          {{ row.data(column) }}
         </mat-cell>
       </ng-container>
     }

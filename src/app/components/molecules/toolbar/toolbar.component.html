@@ -1,9 +1,6 @@
 <mat-toolbar class="toolbar" color="primary">
   @if (fs.settings()?.string('Icon'); as icon) {
-    <app-settings-button [icon]="icon" cdkDrag [cdkDragDisabled]="dragDisabled()" />
+    <app-settings-button [icon]="icon" cdkDrag />
   }
-  <app-manager
-    cdkDrag
-    [cdkDragDisabled]="dragDisabled()"
-    (cdkDragReleased)="onDragReleased($event)" />
+  <app-manager cdkDrag (cdkDragReleased)="onDragReleased($event)" />
 </mat-toolbar>

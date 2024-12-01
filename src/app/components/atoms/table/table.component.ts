@@ -11,6 +11,7 @@ import { MatTableModule, MatSortModule, MatSort, MatTableDataSource } from '@mat
 import { IFractal } from '@types';
 import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { NgTemplateOutlet } from '@angular/common';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +21,7 @@ import { NgTemplateOutlet } from '@angular/common';
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent extends SuperComponent implements AfterViewInit {
   @Input() rows: IFractal[] = [];
   @Input() columns: string[] = [];
   @Input()

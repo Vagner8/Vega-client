@@ -12,7 +12,6 @@ import {
 import { SuperComponent } from '@utils';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IFractal } from '@types';
 
 @Component({
   selector: 'app-settings',
@@ -33,19 +32,4 @@ import { IFractal } from '@types';
 })
 export class SettingsComponent extends SuperComponent {
   sheetRef = inject(MatBottomSheetRef);
-  isChecked = false;
-
-  toggle(setting: IFractal): void {
-    const { value } = setting.getFormControl('Toggle');
-    this.ss.toggles.update(prev => ({ ...prev, [setting.cursor]: value }));
-
-    console.log('🚀 ~ setting:', this.fs.settings()?.find('Menu')?.formGroup);
-  }
-
-  select(setting: IFractal): void {
-    const { value } = setting.getFormControl('Select');
-    this.ss.selects.update(prev => ({ ...prev, [setting.cursor]: value }));
-
-    console.log('🚀 ~ setting:', this.ss.selects());
-  }
 }

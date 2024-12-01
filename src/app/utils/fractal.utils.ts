@@ -61,8 +61,8 @@ export class Fractal implements IFractal {
     return this.dto;
   }
 
-  getFormControl(name: string): FormControl {
-    return this.formGroup.get(name) as FormControl;
+  getFormControl(name: string): FormControl | null {
+    return this.formGroup.get(name) as FormControl | null;
   }
 
   private createFormGroup(): FormGroup {

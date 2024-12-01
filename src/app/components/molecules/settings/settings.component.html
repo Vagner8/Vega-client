@@ -7,26 +7,24 @@
     @for (indicator of settings.array('Sort'); track indicator) {
       @if (settings.find(indicator); as setting) {
         <mat-card appearance="outlined">
-          <mat-card-header
-            ><mat-card-title-group>
+          <mat-card-header>
+            <mat-card-title-group>
               <mat-card-title>{{ setting.data('Cursor') }}</mat-card-title>
               <mat-card-subtitle>{{ setting.data('Description') }}</mat-card-subtitle>
-            </mat-card-title-group></mat-card-header
-          >
+            </mat-card-title-group>
+          </mat-card-header>
 
           <mat-card-content>
-            @if (setting.has('Toggle')) {
+            @if (setting.getFormControl('Toggle'); as formControl) {
               <mat-slide-toggle
-                [formControl]="setting.getFormControl('Toggle')"
-                (change)="toggle(setting)"
-                >Slide me!</mat-slide-toggle
-              >
+                [formControl]="formControl"
+                (change)="ss.toggles[setting.cursor].set(formControl.value)" />
             }
-            @if (setting.has('Select')) {
+            @if (setting.getFormControl('Select'); as formControl) {
               <mat-form-field>
                 <mat-select
-                  [formControl]="setting.getFormControl('Select')"
-                  (selectionChange)="select(setting)">
+                  [formControl]="formControl"
+                  (selectionChange)="ss.selects[setting.cursor].set(formControl.value)">
                   @for (option of setting.array('Select'); track option) {
                     <mat-option [value]="option">{{ option }}</mat-option>
                   }

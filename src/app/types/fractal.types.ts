@@ -81,5 +81,5 @@ export interface IFractal {
   array(indicator: string): string[];
   string(indicator: string): string;
   update(): FractalDto;
-  getFormControl(name: string): FormControl;
+  getFormControl(name: string): FormControl | null;
 }

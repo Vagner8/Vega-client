@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TableComponent } from '@components/atoms';
-import { EventService, FractalService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { Events, IFractal, Types } from '@types';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-page',
@@ -12,17 +12,12 @@ import { Events, IFractal, Types } from '@types';
   styleUrl: './page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageComponent implements OnInit {
+export class PageComponent extends SuperComponent implements OnInit {
   @Input() Rows = '';
   @Input() Taps = '';
   @Input() Pages = '';
   @Input() Manager = '';
   @Input() Modifier = '';
-
-  constructor(
-    public fs: FractalService,
-    public es: EventService
-  ) {}
 
   ngOnInit(): void {
     const root = this.fs.root();
@@ -32,7 +27,9 @@ export class PageComponent implements OnInit {
 
       this.fs.root.set(root);
       this.fs.manager.set(root.find(Types.Manager));
-      this.fs.settings.set(root.find(Types.Settings));
+      const settings = root.find(Types.Settings);
+      this.fs.settings.set(settings);
+      this.ss.setSettings(settings);
       this.fs.page.signal.set(root.find(this.Pages));
       this.fs.taps.signal.set(this.fs[this.Taps === Types.Modifiers ? 'modifiers' : 'pages']);
       this.fs.modifier.signal.set(root.find(this.Modifier));

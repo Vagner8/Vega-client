@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@mat';
-import { FractalService } from '@services';
 import { SidenavTapsComponent } from '@components/molecules';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
@@ -11,6 +11,6 @@ import { SidenavTapsComponent } from '@components/molecules';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent {
-  constructor(public fs: FractalService) {}
+export class SidenavComponent extends SuperComponent {
+  position = computed(() => this.ss.selects['Menu']() as 'start' | 'end');
 }

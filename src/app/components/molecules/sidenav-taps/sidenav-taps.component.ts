@@ -1,24 +1,20 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { MatListModule } from '@mat';
-import { EventService, FractalService } from '@services';
 import { IFractal, Modifiers, Pages } from '@types';
 import { CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
+import { SuperComponent } from '@utils';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-sidenav-taps',
   standalone: true,
-  imports: [TapComponent, MatListModule, CdkDropList, CdkDrag],
+  imports: [TapComponent, MatListModule, CdkDropList, CdkDrag, NgClass],
   templateUrl: './sidenav-taps.component.html',
   styleUrl: './sidenav-taps.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidenavTapsComponent {
-  constructor(
-    public es: EventService,
-    public fs: FractalService
-  ) {}
-
+export class SidenavTapsComponent extends SuperComponent {
   async touch(tap: IFractal): Promise<void> {
     if (tap.is(Pages)) {
       this.fs.reset(tap);
