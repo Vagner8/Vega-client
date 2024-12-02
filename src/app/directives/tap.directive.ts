@@ -1,15 +1,28 @@
-import { Directive, HostListener, OnDestroy, OnInit, output } from '@angular/core';
-import { Timeout } from '@types';
+import {
+  Directive,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  output,
+} from '@angular/core';
+import { IFractal, Modifiers, Timeout, Toggles } from '@types';
 import { SuperComponent } from '@utils';
 
 @Directive({
-  selector: '[appEvent]',
+  selector: '[appTap]',
   standalone: true,
 })
-export class EventDirective extends SuperComponent implements OnInit, OnDestroy {
+export class TapDirective extends SuperComponent implements OnInit, OnDestroy {
+  @Input() tap?: IFractal;
+
   hold = output();
   touch = output();
 
+  private disabled = false;
   private isHoldSucceed = false;
 
   private holdDelay = 150;
@@ -17,6 +30,36 @@ export class EventDirective extends SuperComponent implements OnInit, OnDestroy 
 
   private holdTimeout: Timeout | null = null;
   private holdDelayTimeout: Timeout | null = null;
+
+  private el = inject<ElementRef<HTMLButtonElement>>(ElementRef);
+
+  constructor() {
+    super();
+    const button = this.el.nativeElement;
+
+    effect(() => {
+      this.disabled = this.ss.toggles[Toggles.DragAndDrop]();
+      this.el.nativeElement.style.cursor = this.disabled ? 'move' : 'pointer';
+    });
+
+    effect(() => {
+      if (this.ss.toggles[Toggles.DragAndDrop]()) {
+        button.disabled = false;
+        return;
+      }
+      switch (this.tap?.cursor) {
+        case Modifiers.Save:
+          button.disabled = !this.fs.formGroupChanges();
+          break;
+        case Modifiers.Edit:
+        case Modifiers.Delete:
+          button.disabled = this.fs.rows.signal().length === 0;
+          break;
+        default:
+          button.disabled = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     document.addEventListener('contextmenu', this.onContextmenu);
@@ -28,12 +71,14 @@ export class EventDirective extends SuperComponent implements OnInit, OnDestroy 
 
   @HostListener('pointerdown')
   pointerdown(): void {
+    if (this.disabled) return;
     this.holdDelayTimeout = setTimeout(() => this.es.holdRun$.next(), this.holdDelay);
     this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
   }
 
   @HostListener('pointerup')
   pointerup(): void {
+    if (this.disabled) return;
     if (this.isHoldSucceed) {
       this.hold.emit();
       this.es.hold$.next();

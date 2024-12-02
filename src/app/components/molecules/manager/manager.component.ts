@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@mat';
-import { EventDirective } from '@directives';
+import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService } from '@services';
 import { Events, Types } from '@types';
@@ -10,7 +10,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatButtonModule, SpinnerComponent, EventDirective, AsyncPipe],
+  imports: [MatButtonModule, SpinnerComponent, TapDirective, AsyncPipe],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

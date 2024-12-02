@@ -6,7 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { EventDirective } from '@directives';
+import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule, MatSort, MatTableDataSource } from '@mat';
 import { IFractal } from '@types';
 import { CdkDropList, CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -16,7 +16,7 @@ import { SuperComponent } from '@utils';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgTemplateOutlet, MatTableModule, EventDirective, MatSortModule, CdkDropList, CdkDrag],
+  imports: [NgTemplateOutlet, MatTableModule, TapDirective, MatSortModule, CdkDropList, CdkDrag],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
