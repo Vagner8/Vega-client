@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { EventService, FractalService } from '@services';
 import { Events, Types } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-manager',
@@ -15,29 +15,27 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagerComponent implements OnInit {
-  switcher$!: Observable<boolean>;
-
-  constructor(
-    public fs: FractalService,
-    private es: EventService
-  ) {}
+export class ManagerComponent extends SuperComponent implements OnInit {
+  showSpinner$!: Observable<boolean>;
+  prevEvent: keyof typeof Events | null = null;
 
   ngOnInit(): void {
-    this.switcher$ = merge(
+    this.showSpinner$ = merge(
       this.es.holdRun$.pipe(map(() => true)),
       this.es.hold$.pipe(map(() => false)),
       this.es.holdCancel$.pipe(map(() => false))
     );
   }
 
-  async touch(): Promise<void> {
-    const taps = this.fs[this.fs.taps.is(Types.Pages) ? 'modifiers' : 'pages'];
-    this.fs.managerEvent.signal() === Events.Click && (await this.fs.taps.set(taps));
-    this.fs.managerEvent.set(Events.Click);
-  }
-
-  hold(): void {
-    this.fs.managerEvent.set(Events.Hold);
+  async event(event: keyof typeof Events): Promise<void> {
+    if (this.prevEvent !== event) {
+      await this.navigate({ [Types.Manager]: event });
+      this.fs.managerEvent.set(event);
+    }
+    if (event === Events.Touch && this.prevEvent !== Events.Hold) {
+      this.fs.taps.update(prev => (prev?.is(Types.Pages) ? this.fs.modifiers : this.fs.pages));
+      await this.navigate({ [Types.Taps]: this.fs.taps()?.cursor });
+    }
+    this.prevEvent = event;
   }
 }

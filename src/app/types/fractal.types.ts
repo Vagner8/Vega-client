@@ -1,5 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
+export enum Fractals {}
+
 export enum Types {
   Root = 'Root',
   Rows = 'Rows',
@@ -13,10 +15,12 @@ export enum Types {
 
 export enum Events {
   Hold = 'Hold',
-  Click = 'Click',
+  Touch = 'Touch',
 }
 
 export enum Indicators {
+  X = 'X',
+  Y = 'Y',
   Icon = 'Icon',
   Sort = 'Sort',
   Toggle = 'Toggle',
@@ -50,12 +54,19 @@ export type ControlsDto = Record<string, ControlDto>;
 export type FractalsDto = Record<string, FractalDto>;
 export type IFractals = Record<string, IFractal>;
 export type ControlDtoData = string | boolean;
+export type FractalStatus = 'stable' | 'new' | 'saved';
+
+export interface FractalEvent {
+  type: keyof typeof Events;
+  fractal: IFractal;
+}
 
 export interface ControlDto {
   id: string;
   data: ControlDtoData;
   parentId: string;
   indicator: string;
+  client?: boolean;
 }
 
 export interface FractalDto {
@@ -65,21 +76,30 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
+export interface $Event {
+  type: keyof typeof Events;
+  fractal: IFractal;
+}
+
 export interface IFractal {
   dto: FractalDto;
+  status: FractalStatus;
   cursor: string;
+  parent: IFractal;
   fractals: IFractals | null;
   formGroup: FormGroup;
-  isClone?: boolean;
 
   is(test: string | object): boolean;
   has(indicator: string): boolean;
   data(indicator: string): ControlDtoData;
-  list(): IFractal[];
-  find(test: string, fractals?: IFractals | null): IFractal | null;
+  find(test: Events[number], fractals?: IFractals | null): IFractal;
   bool(indicator: string): boolean;
-  array(indicator: string): string[];
+  list(): IFractal[];
+  sort(): string[];
+  split(indicator: string): string[];
+  clone(): IFractal;
   string(indicator: string): string;
   update(): FractalDto;
+  navigate?: <T>(state: T) => Promise<void>;
   getFormControl(name: string): FormControl | null;
 }

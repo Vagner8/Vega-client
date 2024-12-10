@@ -1,18 +1,9 @@
-@if (dataSource.sortData.length > 0) {
-  <ng-container
-    *ngTemplateOutlet="ss.toggles['Drag-and-Drop']() ? dropHeadersTable : dropRowsTable" />
-}
-
-<ng-template #dropHeadersTable>
-  <mat-table
-    [dataSource]="dataSource"
-    matSort
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    (cdkDropListDropped)="dropHeaders.emit($event)">
+@if (fractals.length > 0) {
+  <mat-table [dataSource]="fractals" matSort>
     @for (column of columns; track column) {
+      <h1>{{ column }}</h1>
       <ng-container [matColumnDef]="column">
-        <mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag cdkDragLockAxis="x">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ column }}
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
@@ -25,39 +16,8 @@
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
-      (hold)="this.hold.emit(row)"
-      (touch)="this.touch.emit(row)"
+      (hold)="hold.emit(row)"
+      (touch)="touch.emit(row)"
       [class.row-is-clicked]="rows.includes(row)" />
   </mat-table>
-</ng-template>
-
-<ng-template #dropRowsTable>
-  <mat-table
-    [dataSource]="dataSource"
-    matSort
-    appDragTable
-    cdkDropList
-    cdkDropListData="dataSource"
-    (cdkDropListDropped)="dropRows.emit($event)">
-    @for (column of columns; track column) {
-      <ng-container [matColumnDef]="column">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ column }}
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ row.data(column) }}
-        </mat-cell>
-      </ng-container>
-    }
-    <mat-header-row *matHeaderRowDef="columns" />
-    <mat-row
-      cdkDrag
-      cdkDragLockAxis="y"
-      [cdkDragData]="row"
-      *matRowDef="let row; columns: columns"
-      appTap
-      (hold)="this.hold.emit(row)"
-      (touch)="this.touch.emit(row)"
-      [class.row-is-clicked]="rows.includes(row)" />
-  </mat-table>
-</ng-template>
+}

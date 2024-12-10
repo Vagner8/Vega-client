@@ -4,6 +4,7 @@ import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
 import { DataService, MapService } from '@services';
 import { SuperComponent } from '@utils';
+import { Types } from '@types';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,12 @@ export class AppComponent extends SuperComponent implements OnInit {
   ds = inject(DataService);
 
   ngOnInit(): void {
-    this.ds.get().subscribe(dto => this.fs.root.set(this.ms.toFractal(dto)));
+    this.ds.get().subscribe(dto => {
+      const root = this.ms.toFractal(dto);
+      this.fs.pages = root.find(Types.Pages);
+      this.fs.manager = root.find(Types.Manager);
+      this.fs.modifiers = root.find(Types.Modifiers);
+      this.fs.root.set(root);
+    });
   }
 }

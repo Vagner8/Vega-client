@@ -1,6 +1,7 @@
 <mat-toolbar class="toolbar" color="primary">
-  @if (fs.settings()?.string('Icon'); as icon) {
-    <app-settings-button [icon]="icon" cdkDrag />
-  }
-  <app-manager cdkDrag (cdkDragReleased)="onDragReleased($event)" />
+  <!-- @if (fs.settings(); as settings) {
+    <app-settings-button [fractal]="settings" />
+    <app-manager />
+  } -->
+  <app-manager />
 </mat-toolbar>

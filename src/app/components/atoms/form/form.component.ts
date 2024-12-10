@@ -1,9 +1,7 @@
-import { Component, Input, input, output, OnDestroy, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, Input, output } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
-import { EventService, FractalService } from '@services';
 import { IFractal } from '@types';
-import { Unsubscriber } from '@utils';
 
 @Component({
   selector: 'app-form',
@@ -12,35 +10,9 @@ import { Unsubscriber } from '@utils';
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
-export class FormComponent implements OnDestroy, OnInit {
-  @Input() row!: IFractal;
-  sort = input<string[]>([]);
-  inputOut = output<IFractal>();
+export class FormComponent {
+  @Input() formGroup!: FormGroup;
+  @Input() sort: string[] = [];
+  change = output<IFractal>();
   prevRawValue!: Record<string, string>;
-
-  unsubscriber = new Unsubscriber();
-
-  constructor(
-    private fs: FractalService,
-    private es: EventService
-  ) {}
-
-  ngOnInit(): void {
-    this.prevRawValue = this.row.formGroup?.getRawValue();
-    this.unsubscriber.set(
-      this.es.disableFormGroups$.subscribe(disabled =>
-        this.row.formGroup[disabled ? 'disable' : 'enable']()
-      )
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.row.formGroup.reset(this.prevRawValue);
-    this.unsubscriber.clear();
-  }
-
-  onClick(input: HTMLInputElement): void {
-    input.value = '';
-    this.fs.formGroupChanges.set(this.row);
-  }
 }

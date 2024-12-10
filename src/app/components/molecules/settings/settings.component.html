@@ -1,10 +1,10 @@
-@if (fs.settings(); as settings) {
+<!-- @if (fs.settings(); as settings) {
   <mat-nav-list class="list">
     <mat-card-title-group>
       <mat-card-title>Settings</mat-card-title>
       <button type="button" mat-flat-button (click)="this.sheetRef.dismiss()">Close</button>
     </mat-card-title-group>
-    @for (indicator of settings.array('Sort'); track indicator) {
+    @for (indicator of settings.sort(); track indicator) {
       @if (settings.find(indicator); as setting) {
         <mat-card appearance="outlined">
           <mat-card-header>
@@ -24,7 +24,7 @@
               <mat-form-field>
                 <mat-select
                   [formControl]="formControl"
-                  (selectionChange)="ss.selects[setting.cursor].set(formControl.value)">
+                  (selectionChange)="ss.selectionChanged(setting, formControl.value)">
                   @for (option of setting.array('Select'); track option) {
                     <mat-option [value]="option">{{ option }}</mat-option>
                   }
@@ -36,4 +36,4 @@
       }
     }
   </mat-nav-list>
-}
+} -->

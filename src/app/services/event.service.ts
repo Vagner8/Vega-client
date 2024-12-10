@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { IFractal, Indicators } from '@types';
 import { DataService } from './data.service';
@@ -12,19 +12,10 @@ export class EventService {
   holdRun$ = new Subject<void>();
   holdCancel$ = new Subject<void>();
 
+  dragStarted$ = new Subject<void>();
   disableFormGroups$ = new BehaviorSubject(false);
 
-  constructor(private ds: DataService) {}
-
-  drop(fractal: IFractal | null, event: CdkDragDrop<string[]>): void {
-    if (!fractal) return;
-    const { previousIndex, currentIndex } = event;
-    const columns = fractal.array('Sort');
-    moveItemInArray(columns, previousIndex, currentIndex);
-    fractal.dto.controls[Indicators.Sort].data = columns.join(':');
-    const { id, parentId, controls } = fractal.dto;
-    this.ds.update([{ id, parentId, fractals: null, controls }]).subscribe();
-  }
+  private ds = inject(DataService);
 
   dropRows(fractal: IFractal | null, { previousIndex, currentIndex }: CdkDragDrop<string>): void {
     if (!fractal) return;

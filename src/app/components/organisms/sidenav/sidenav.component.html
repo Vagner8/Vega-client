@@ -1,11 +1,36 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="fs.managerEvent.signal() === 'Click'"
+    [opened]="fs.managerEvent() === 'Touch'"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
-    [position]="position()">
-    <app-sidenav-taps></app-sidenav-taps>
+    position="end">
+    @if (fs.taps(); as taps) {
+      <mat-list>
+        @for (indicator of taps.sort(); track indicator) {
+          @switch (indicator) {
+            @case ('New') {
+              <app-new [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
+            }
+            @case ('Save') {
+              <app-save
+                [tap]="taps.find(indicator)"
+                [disabled]="!rs.form.dirty"
+                (touch)="modifierTouched($event)" />
+            }
+            @case ('Edit') {
+              <app-edit [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
+            }
+            @case ('Delete') {
+              <app-delete [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
+            }
+            @default {
+              <app-tap [tap]="taps.find(indicator)" (touch)="pageTouched($event)" />
+            }
+          }
+        }
+      </mat-list>
+    }
   </mat-drawer>
   <router-outlet></router-outlet>
 </mat-drawer-container>

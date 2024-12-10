@@ -1,31 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
-import { FormRecord } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule, MatListModule } from '@mat';
-import { FractalService } from '@services';
 import { IFractal } from '@types';
-import { CardHeaderComponent } from './card-header/card-header.component';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatListModule, MatCardModule, MatButtonModule, FormComponent, CardHeaderComponent],
+  imports: [MatListModule, MatCardModule, MatButtonModule, FormComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModifierComponent {
-  @Input() formRecord!: FormRecord;
-  sort = input<string[]>([]);
+export class ModifierComponent extends SuperComponent {
   rows = input<IFractal[]>([]);
-
-  constructor(public fs: FractalService) {}
-
-  deleteRow(row: IFractal): void {
-    this.fs.rows.delete(row);
-  }
-
-  onInputOut(row: IFractal): void {
-    this.fs.formGroupChanges.set(row);
-  }
+  deleteRow = output<IFractal>();
 }

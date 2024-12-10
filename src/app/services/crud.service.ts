@@ -13,8 +13,8 @@ export class CrudService {
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
     rows.forEach(row => {
-      if (row.isClone) {
-        row.isClone = false;
+      if (row.status === 'new') {
+        row.status = 'saved';
         if (parent.fractals) parent.fractals[row.cursor] = row;
         else parent.fractals = { [row.cursor]: row };
         toAdd.push(row.update());

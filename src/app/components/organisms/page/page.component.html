@@ -1,18 +1,12 @@
-@if (fs.page.signal(); as page) {
+@if (fs.table(); as table) {
   @if (Modifier) {
-    <app-modifier [sort]="page.array('Sort')" [rows]="fs.rows.signal()" />
+    <app-modifier [rows]="rs.list()" (deleteRow)="deleteRow($event)" />
   } @else {
-    @if (Pages === 'Home') {
-      <h1>Home</h1>
-    } @else {
-      <app-table
-        [rows]="fs.rows.signal()"
-        [columns]="page.array('Sort')"
-        [dataSource]="page.list()"
-        (hold)="hold()"
-        (touch)="touch($event)"
-        (dropRows)="es.dropRows(page, $event)"
-        (dropHeaders)="es.drop(page, $event)" />
-    }
+    <app-table
+      [rows]="rs.list()"
+      [columns]="table.sort()"
+      [fractals]="table.list()"
+      (hold)="hold()"
+      (touch)="rowTouched($event)" />
   }
 }

@@ -5,9 +5,14 @@
   @for (row of rows(); track row.cursor) {
     <li class="item">
       <mat-card appearance="outlined">
-        <app-card-header [row]="row" (clickOut)="deleteRow($event)" />
+        <mat-card-header>
+          <mat-card-title-group>
+            <button type="button" mat-flat-button (click)="deleteRow.emit(row)">Cancel</button>
+            <mat-card-title> {{ row.cursor }} {{ row.status }} </mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
         <mat-card-content>
-          <app-form [sort]="sort()" [row]="row" (inputOut)="onInputOut($event)" />
+          <app-form [sort]="row.parent.sort()" [formGroup]="row.formGroup" />
         </mat-card-content>
       </mat-card>
     </li>

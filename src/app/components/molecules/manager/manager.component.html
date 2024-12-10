@@ -1,7 +1,5 @@
-@if (fs.manager(); as manager) {
-  <button mat-mini-fab appTap (touch)="touch()" (hold)="hold()">
-    @if (switcher$ | async) {
-      <app-spinner class="manager-spinner" mode="determinate" />
-    }
-  </button>
-}
+<button mat-mini-fab appTap (hold)="event('Hold')" (touch)="event('Touch')">
+  @if (showSpinner$ | async) {
+    <app-spinner class="manager-spinner" mode="determinate" />
+  }
+</button>

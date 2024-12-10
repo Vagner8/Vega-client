@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, Input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIcon } from '@mat';
 import { TapDirective } from '@directives';
 import { IFractal } from '@types';
-import { FractalService } from '@services';
+import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-tap',
@@ -12,11 +12,10 @@ import { FractalService } from '@services';
   styleUrl: './tap.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TapComponent {
+export class TapComponent extends SuperComponent {
   @Input() tap!: IFractal;
+  @Input() disabled = false;
 
   hold = output<IFractal>();
   touch = output<IFractal>();
-
-  fs = inject(FractalService);
 }
