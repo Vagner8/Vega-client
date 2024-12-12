@@ -1,17 +1,29 @@
 import { inject } from '@angular/core';
 import { ActivatedRoute, Params, QueryParamsHandling, Router } from '@angular/router';
-import { DataService, EventService, FractalService, ListService, SettingsService } from '@services';
-import { Types } from '@types';
+import {
+  DataService,
+  EventService,
+  FractalService,
+  ListService,
+  ManagerService,
+  ModifiersService,
+  SettingsService,
+  TapsService,
+} from '@services';
 import { Subscription } from 'rxjs';
 
 export abstract class SuperComponent {
   subscriptions: Subscription[] = [];
 
+  ts = inject(TapsService);
   ls = inject(ListService);
   ds = inject(DataService);
   es = inject(EventService);
   fs = inject(FractalService);
   ss = inject(SettingsService);
+  ms = inject(ModifiersService);
+  mgr = inject(ManagerService);
+
   route = inject(ActivatedRoute);
   router = inject(Router);
 

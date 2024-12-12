@@ -1,11 +1,11 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="fs.managerEvent() === 'Touch'"
+    [opened]="mgr.$event() === 'Touch'"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (fs.taps(); as taps) {
+    @if (ts.$taps(); as taps) {
       <mat-list>
         @for (indicator of taps.sort(); track indicator) {
           @switch (indicator) {
@@ -15,8 +15,8 @@
             @case ('Save') {
               <app-save
                 [tap]="taps.find(indicator)"
-                [newTapTouched]="!!fs.modifier()?.is('New')"
-                [isRowsFormDirty]="ls.form.dirty"
+                [newTapTouched]="!!ms.$modifier()?.is('New')"
+                [isRowsFormDirty]="ls.rowsForm.dirty"
                 (touch)="modifierTouched($event)" />
             }
             @case ('Edit') {

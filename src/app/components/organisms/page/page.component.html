@@ -1,13 +1,16 @@
-@if (ls.$list(); as list) {
-  @if (Modifier) {
-    <app-modifier [rows]="ls.$rows()" (deleteRow)="ls.removeRow($event)" />
+@if (bs.ls.$list(); as list) {
+  @if (modifyColumns$ | async) {
+    <app-modifier modify="columns" />
+  } @else if (Modifier) {
+    <app-modifier [rows]="bs.ls.$rows()" (deleteRow)="bs.ls.removeRow($event)" />
   } @else {
     <app-list
-      [rows]="ls.$rows()"
-      [columns]="ls.$columns[list.cursor]()"
+      [rows]="bs.ls.$rows()"
+      [columns]="bs.ls.$columns[list.cursor]()"
       [dataSource]="list.list()"
-      (hold)="ls.holdRow(list)"
+      (hold)="bs.ls.holdRow(list)"
       (touch)="rowTouched($event)"
+      (holdHeader)="bs.ls.addColumn()"
       (columnsChanged)="columnsChanged($event)" />
   }
 }

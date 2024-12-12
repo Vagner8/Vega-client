@@ -13,7 +13,7 @@ import { SuperComponent } from '@utils';
 })
 export class HeaderComponent extends SuperComponent {
   get modifier(): string | undefined {
-    const modifier = this.fs.modifier();
+    const modifier = this.ms.$modifier();
     return modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
   }
 }

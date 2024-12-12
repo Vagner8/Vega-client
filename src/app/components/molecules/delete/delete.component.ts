@@ -24,7 +24,7 @@ export class DeleteComponent extends SuperComponent {
   }
 
   deleteTouched(tap: IFractal): void {
-    this.ls.form.disable();
+    this.ls.rowsForm.disable();
     this.touch.emit(tap);
   }
 }

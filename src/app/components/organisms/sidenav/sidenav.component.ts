@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { IFractal, Types } from '@types';
+import { FractalsParams, IFractal } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -32,7 +32,7 @@ export class SidenavComponent extends SuperComponent {
   }
 
   modifierTouched(tap: IFractal): void {
-    this.fs.modifier.set(tap);
-    this.navigate({ [Types.Modifier]: tap.cursor });
+    this.ms.$modifier.set(tap);
+    this.navigate({ [FractalsParams.Modifier]: tap.cursor });
   }
 }

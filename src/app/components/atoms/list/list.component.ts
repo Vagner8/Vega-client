@@ -19,5 +19,6 @@ export class ListComponent extends SuperComponent {
   @Input() dataSource: IFractal[] = [];
   hold = output<IFractal>();
   touch = output<IFractal>();
+  holdHeader = output();
   columnsChanged = output<CdkDragDrop<string[]>>();
 }

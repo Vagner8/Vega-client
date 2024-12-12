@@ -1,7 +1,7 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IFractal, Modifiers, Types } from '@types';
+import { FractalsParams, IFractal } from '@types';
 
 @Injectable({
   providedIn: 'root',
@@ -10,18 +10,22 @@ export class ListService {
   $list = signal<IFractal | null>(null);
   $rows = signal<IFractal[]>([]);
   $columns: Record<string, WritableSignal<string[]>> = {};
-  form = new FormArray<FormGroup>([]);
+
+  lists!: IFractal;
+  rowsForm = new FormArray<FormGroup>([]);
+  columnsForm = new FormArray<FormGroup>([]);
+
   router = inject(Router);
 
   set(list: IFractal): void {
-    this.form = new FormArray<FormGroup>([]);
+    this.rowsForm = new FormArray<FormGroup>([]);
     this.$rows.set([]);
     this.$list.set(list);
     if (!this.$columns[list.cursor]) {
       this.$columns[list.cursor] = signal(list.sort());
     }
     this.router.navigate([list.cursor], {
-      queryParams: { [Types.Rows]: null, [Types.Modifier]: null },
+      queryParams: { [FractalsParams.Rows]: null, [FractalsParams.Modifier]: null },
       queryParamsHandling: 'merge',
     });
   }
@@ -37,33 +41,37 @@ export class ListService {
       if (prev.includes(row)) {
         return this.removeHelper(prev, row);
       } else {
-        this.form.push(row.formGroup);
+        this.rowsForm.push(row.formGroup);
         return [...prev, row];
       }
     });
     await this.navigateToRows();
   }
 
-  init({ rowsIds, modifier, list }: { rowsIds: string; modifier: string; list: IFractal }): void {
-    this.$columns[list.cursor] = signal(list.sort());
+  addColumn(): void {
+    this.list.sort().forEach(item => {
+      this.columnsForm.push(new FormGroup({ column: new FormControl(item) }));
+    });
+  }
+
+  init({ Rows, Lists }: { Rows: string; Lists: string }): void {
+    this.$list.set(this.lists.find(Lists));
+    this.$columns[this.list.cursor] = signal(this.list.sort());
     this.$rows.set(
-      rowsIds
-        ? rowsIds.split(':').map(rowId => {
+      Rows
+        ? Rows.split(':').map(rowId => {
             try {
-              const row = list.find(rowId);
-              this.form.push(row.formGroup);
-              return list.find(rowId);
+              const row = this.list.find(rowId);
+              this.rowsForm.push(row.formGroup);
+              return this.list.find(rowId);
             } catch {
-              const clone = list.clone();
-              this.form.push(clone.formGroup);
+              const clone = this.list.clone();
+              this.rowsForm.push(clone.formGroup);
               return clone;
             }
           })
         : []
     );
-    if (Modifiers.Delete === modifier) {
-      this.form.disable();
-    }
   }
 
   holdRow(list: IFractal | null): void {
@@ -77,14 +85,14 @@ export class ListService {
   }
 
   private removeHelper(rows: IFractal[], removedRow: IFractal): IFractal[] {
-    this.form.removeAt(rows.indexOf(removedRow));
+    this.rowsForm.removeAt(rows.indexOf(removedRow));
     return rows.filter(row => row !== removedRow);
   }
 
   private async navigateToRows(): Promise<void> {
     await this.router.navigate([], {
       queryParams: {
-        [Types.Rows]: this.$rows()
+        [FractalsParams.Rows]: this.$rows()
           .map(row => row.dto.id)
           .join(':'),
       },

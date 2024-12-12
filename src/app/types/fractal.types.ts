@@ -1,17 +1,20 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
-export enum Fractals {}
+export const FractalsParams = {
+  Rows: 'Rows',
+  Taps: 'Taps',
+  Lists: 'Lists',
+  Manager: 'Manager',
+  Modifier: 'Modifier',
+};
 
-export enum Types {
-  Root = 'Root',
-  Rows = 'Rows',
-  Taps = 'Taps',
-  Lists = 'Lists',
-  Manager = 'Manager',
-  Settings = 'Settings',
-  Modifier = 'Modifier',
-  Modifiers = 'Modifiers',
-}
+export const Fractals = {
+  Root: 'Root',
+  Lists: 'Lists',
+  Manager: 'Manager',
+  Settings: 'Settings',
+  Modifiers: 'Modifiers',
+};
 
 export enum Events {
   Hold = 'Hold',

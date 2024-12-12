@@ -15,7 +15,7 @@ export class EditComponent extends SuperComponent {
   disabled = computed(() => this.ls.$rows().length === 0);
 
   editTouched(tap: IFractal): void {
-    this.ls.form.enable();
+    this.ls.rowsForm.enable();
     this.touch.emit(tap);
   }
 }

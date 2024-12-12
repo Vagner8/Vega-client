@@ -39,7 +39,7 @@ export class SaveComponent extends SuperComponent {
   }
 
   saveTouched(tap: IFractal): void {
-    this.ls.form.disable();
+    this.ls.rowsForm.disable();
     this.touch.emit(tap);
   }
 }
