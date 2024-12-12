@@ -1,6 +1,6 @@
-import { Component, computed, Input, output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
-import { IFractal } from '@types';
+import { FractalDto, FractalStatus, IFractal } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -8,15 +8,23 @@ import { SuperComponent } from '@utils';
   standalone: true,
   imports: [TapComponent],
   templateUrl: './delete.component.html',
-  styleUrl: './delete.component.css',
 })
 export class DeleteComponent extends SuperComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
-  disabled = computed(() => this.rs.list().length === 0);
+
+  deleteHeld(): void {
+    const toDelete: FractalDto[] = [];
+    for (const row of this.ls.rows()) {
+      delete row.parent.fractals![row.cursor];
+      if (row.status !== FractalStatus.New) toDelete.push(row.update());
+    }
+    toDelete.length > 0 && this.ds.delete(toDelete).subscribe();
+    this.navigateToTable(this.fs.get('list').cursor);
+  }
 
   deleteTouched(tap: IFractal): void {
-    this.rs.form.disable();
+    this.ls.form.disable();
     this.touch.emit(tap);
   }
 }

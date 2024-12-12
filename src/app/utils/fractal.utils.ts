@@ -11,7 +11,7 @@ import {
 import { v4 } from 'uuid';
 
 export class Fractal implements IFractal {
-  status: FractalStatus = 'stable';
+  status: FractalStatus = FractalStatus.Stable;
   cursor!: string;
   parent!: IFractal;
   fractals: IFractals | null = null;
@@ -63,7 +63,7 @@ export class Fractal implements IFractal {
 
   update(): FractalDto {
     Object.entries(this.formGroup.getRawValue()).forEach(([indicator, data]) => {
-      this.dto.controls[indicator].data = data as string;
+      this.dto.controls[indicator].data = data as ControlDtoData;
     });
     return this.dto;
   }
@@ -92,7 +92,7 @@ export class Fractal implements IFractal {
       fractals: null,
     });
     row.cursor = index;
-    row.status = 'new';
+    row.status = FractalStatus.New;
     row.parent = this;
     if (this.fractals) {
       this.fractals[index] = row;

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule, MatListModule } from '@mat';
-import { IFractal } from '@types';
+import { IFractal, Modifiers } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -15,4 +15,8 @@ import { SuperComponent } from '@utils';
 export class ModifierComponent extends SuperComponent {
   rows = input<IFractal[]>([]);
   deleteRow = output<IFractal>();
+  subtitle = computed(() => {
+    const cursor = this.fs.modifier()?.cursor;
+    return cursor === Modifiers.New ? Modifiers.Edit : cursor;
+  });
 }

@@ -1,19 +1,12 @@
 @use 'variables.scss' as *;
 
-.Touched,
-.Untouched {
-  color: $color-common;
-  padding: 0 $size-medium;
-  border-radius: $size-extra-small;
+.subtitle {
   margin-bottom: $size-extra-small;
+  color: $color-success;
 }
 
-.Touched {
-  background-color: $color-success;
-}
-
-.Untouched {
-  background-color: $color-warning;
+.Delete {
+  color: $color-danger;
 }
 
 .list {

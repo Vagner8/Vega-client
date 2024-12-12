@@ -1,6 +1,6 @@
-import { Component, Input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { TapComponent } from '../../atoms/tap/tap.component';
-import { IFractal } from '@types';
+import { FractalDto, FractalStatus, IFractal } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -8,15 +8,38 @@ import { SuperComponent } from '@utils';
   standalone: true,
   imports: [TapComponent],
   templateUrl: './save.component.html',
-  styleUrl: './save.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SaveComponent extends SuperComponent {
   @Input() tap!: IFractal;
-  @Input() disabled!: boolean;
+  @Input() set newTapTouched(value: boolean) {
+    this.disabled = this.disabled && !value;
+  }
+  @Input() set isRowsFormDirty(value: boolean) {
+    this.disabled = this.disabled && !value;
+  }
   touch = output<IFractal>();
+  disabled = true;
+
+  saveHeld(): void {
+    const toAdd: FractalDto[] = [];
+    const toUpdate: FractalDto[] = [];
+
+    for (const row of this.ls.rows()) {
+      if (row.status === FractalStatus.New) {
+        toAdd.push(row.update());
+        continue;
+      }
+      if (row.formGroup.dirty) toUpdate.push(row.update());
+    }
+
+    toAdd.length > 0 && this.ds.add(toAdd).subscribe();
+    toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
+    this.navigateToTable(this.fs.get('list').cursor);
+  }
 
   saveTouched(tap: IFractal): void {
-    this.rs.form.disable();
+    this.ls.form.disable();
     this.touch.emit(tap);
   }
 }

@@ -38,7 +38,7 @@ export class TapDirective extends SuperComponent implements OnInit, OnDestroy {
   pointerup(): void {
     if (this.isHoldSucceed) {
       this.hold.emit();
-      this.es.hold$.next();
+      this.es.holdEnd$.next();
       this.cancel();
     } else {
       this.touch.emit();
@@ -57,7 +57,7 @@ export class TapDirective extends SuperComponent implements OnInit, OnDestroy {
 
   private cancel(): void {
     this.isHoldSucceed = false;
-    this.es.hold$.next();
+    this.es.holdEnd$.next();
     this.holdTimeout && clearTimeout(this.holdTimeout);
     this.holdDelayTimeout && clearTimeout(this.holdDelayTimeout);
   }

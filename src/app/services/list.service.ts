@@ -1,18 +1,18 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IFractal, Types } from '@types';
+import { IFractal, Modifiers, Types } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RowsService {
-  list = signal<IFractal[]>([]);
+export class ListService {
+  rows = signal<IFractal[]>([]);
   form = new FormArray<FormGroup>([]);
   router = inject(Router);
 
   async add(row: IFractal): Promise<void> {
-    this.list.update(prev => {
+    this.rows.update(prev => {
       if (prev.includes(row)) {
         return this.removeHelper(prev, row);
       } else {
@@ -23,37 +23,40 @@ export class RowsService {
     await this.navigate();
   }
 
-  init(ids: string, table: IFractal): void {
-    this.list.set(
-      ids
-        ? ids.split(':').map(rowId => {
+  init({ rowsIds, modifier, list }: { rowsIds: string; modifier: string; list: IFractal }): void {
+    this.rows.set(
+      rowsIds
+        ? rowsIds.split(':').map(rowId => {
             try {
-              const row = table.find(rowId);
+              const row = list.find(rowId);
               this.form.push(row.formGroup);
-              return table.find(rowId);
+              return list.find(rowId);
             } catch {
-              const clone = table.clone();
+              const clone = list.clone();
               this.form.push(clone.formGroup);
-              return table.clone();
+              return clone;
             }
           })
         : []
     );
+    if (Modifiers.Delete === modifier) {
+      this.form.disable();
+    }
   }
 
   clear(): void {
-    this.list.set([]);
+    this.rows.set([]);
     this.form = new FormArray<FormGroup>([]);
     this.navigate();
   }
 
   hold(table: IFractal | null): void {
-    this.list.update(prev => (prev.length === 0 && table ? table.list() : []));
+    this.rows.update(prev => (prev.length === 0 && table ? table.list() : []));
     this.navigate();
   }
 
   remove(row: IFractal): void {
-    this.list.update(prev => this.removeHelper(prev, row));
+    this.rows.update(prev => this.removeHelper(prev, row));
     this.navigate();
   }
 
@@ -65,7 +68,7 @@ export class RowsService {
   private async navigate(): Promise<void> {
     await this.router.navigate([], {
       queryParams: {
-        [Types.Rows]: this.list()
+        [Types.Rows]: this.rows()
           .map(row => row.dto.id)
           .join(':'),
       },

@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { IFractal, Indicators } from '@types';
 import { DataService } from './data.service';
 
@@ -8,12 +8,8 @@ import { DataService } from './data.service';
   providedIn: 'root',
 })
 export class EventService {
-  hold$ = new Subject<void>();
   holdRun$ = new Subject<void>();
-  holdCancel$ = new Subject<void>();
-
-  dragStarted$ = new Subject<void>();
-  disableFormGroups$ = new BehaviorSubject(false);
+  holdEnd$ = new Subject<void>();
 
   private ds = inject(DataService);
 

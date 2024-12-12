@@ -8,7 +8,12 @@
         <mat-card-header>
           <mat-card-title-group>
             <button type="button" mat-flat-button (click)="deleteRow.emit(row)">Cancel</button>
-            <mat-card-title> {{ row.cursor }} {{ row.status }} </mat-card-title>
+            <mat-card-title>
+              {{ row.cursor }} {{ row.status === 'New' ? row.status : null }}
+            </mat-card-title>
+            <mat-card-subtitle class="subtitle" [class]="subtitle()">{{
+              subtitle()
+            }}</mat-card-subtitle>
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>

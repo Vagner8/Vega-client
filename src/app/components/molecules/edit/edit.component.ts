@@ -8,15 +8,14 @@ import { SuperComponent } from '@utils';
   standalone: true,
   imports: [TapComponent],
   templateUrl: './edit.component.html',
-  styleUrl: './edit.component.css',
 })
 export class EditComponent extends SuperComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
-  disabled = computed(() => this.rs.list().length === 0);
+  disabled = computed(() => this.ls.rows().length === 0);
 
   editTouched(tap: IFractal): void {
-    this.rs.form.enable();
+    this.ls.form.enable();
     this.touch.emit(tap);
   }
 }

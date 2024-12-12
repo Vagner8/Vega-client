@@ -22,8 +22,8 @@ export class ManagerComponent extends SuperComponent implements OnInit {
   ngOnInit(): void {
     this.showSpinner$ = merge(
       this.es.holdRun$.pipe(map(() => true)),
-      this.es.hold$.pipe(map(() => false)),
-      this.es.holdCancel$.pipe(map(() => false))
+      this.es.holdEnd$.pipe(map(() => false))
+      // this.es.holdCancel$.pipe(map(() => false))
     );
   }
 
@@ -33,7 +33,7 @@ export class ManagerComponent extends SuperComponent implements OnInit {
       this.fs.managerEvent.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.fs.taps.update(prev => (prev?.is(Types.Pages) ? this.fs.modifiers : this.fs.pages));
+      this.fs.taps.update(prev => (prev?.is(Types.Lists) ? this.fs.modifiers : this.fs.pages));
       await this.navigate({ [Types.Taps]: this.fs.taps()?.cursor });
     }
     this.prevEvent = event;

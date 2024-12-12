@@ -27,11 +27,9 @@ export class SidenavComponent extends SuperComponent {
     console.log('🚀 ~ tap:', tap);
   }
 
-  pageTouched(tap: IFractal): void {
-    this.rs.clear();
-    this.fs.table.set(tap);
-    this.fs.modifier.set(null);
-    this.navigate({ [Types.Rows]: null, [Types.Modifier]: null }, [tap.cursor]);
+  listTouched(tap: IFractal): void {
+    this.fs.list.set(tap);
+    this.navigateToTable(tap.cursor);
   }
 
   modifierTouched(tap: IFractal): void {

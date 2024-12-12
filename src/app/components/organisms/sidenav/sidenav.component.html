@@ -10,12 +10,13 @@
         @for (indicator of taps.sort(); track indicator) {
           @switch (indicator) {
             @case ('New') {
-              <app-new [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
+              <app-new [tap]="taps.find(indicator)" />
             }
             @case ('Save') {
               <app-save
                 [tap]="taps.find(indicator)"
-                [disabled]="!rs.form.dirty"
+                [newTapTouched]="!!fs.modifier()?.is('New')"
+                [isRowsFormDirty]="ls.form.dirty"
                 (touch)="modifierTouched($event)" />
             }
             @case ('Edit') {
@@ -25,7 +26,7 @@
               <app-delete [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
             }
             @default {
-              <app-tap [tap]="taps.find(indicator)" (touch)="pageTouched($event)" />
+              <app-tap [tap]="taps.find(indicator)" (touch)="listTouched($event)" />
             }
           }
         }

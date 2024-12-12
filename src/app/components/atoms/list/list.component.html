@@ -1,0 +1,21 @@
+<table
+  mat-table
+  [dataSource]="dataSource"
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="columnChanged.emit($event)">
+  @for (column of columns; track $index) {
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell cdkDrag *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let row">{{ row.getFormControl(column)?.value }}</td>
+    </ng-container>
+  }
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: columns"
+    appTap
+    (hold)="hold.emit(row)"
+    (touch)="touch.emit(row)"
+    [class.row-is-clicked]="rows.includes(row)"></tr>
+</table>

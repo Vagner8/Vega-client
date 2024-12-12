@@ -1,1 +1,1 @@
-<app-tap [tap]="tap" [disabled]="disabled" (touch)="saveTouched($event)" />
+<app-tap [tap]="tap" [disabled]="disabled" (hold)="saveHeld()" (touch)="saveTouched($event)" />

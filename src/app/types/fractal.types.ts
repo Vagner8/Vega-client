@@ -6,7 +6,7 @@ export enum Types {
   Root = 'Root',
   Rows = 'Rows',
   Taps = 'Taps',
-  Pages = 'Pages',
+  Lists = 'Lists',
   Manager = 'Manager',
   Settings = 'Settings',
   Modifier = 'Modifier',
@@ -37,7 +37,7 @@ export enum Selects {
   Menu = 'Menu',
 }
 
-export enum Pages {
+export enum Lists {
   Home = 'Home',
   Users = 'Users',
   Products = 'Products',
@@ -50,11 +50,15 @@ export enum Modifiers {
   Delete = 'Delete',
 }
 
+export enum FractalStatus {
+  New = 'New',
+  Stable = 'Stable',
+}
+
 export type ControlsDto = Record<string, ControlDto>;
 export type FractalsDto = Record<string, FractalDto>;
 export type IFractals = Record<string, IFractal>;
 export type ControlDtoData = string | boolean;
-export type FractalStatus = 'stable' | 'new' | 'saved';
 
 export interface FractalEvent {
   type: keyof typeof Events;

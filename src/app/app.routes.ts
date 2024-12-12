@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { Pages, Types } from '@types';
+import { Lists, Types } from '@types';
 import { PageComponent } from '@components/organisms';
 
 export const routes: Routes = [
   {
-    path: `:${Types.Pages}`,
+    path: `:${Types.Lists}`,
     component: PageComponent,
   },
-  { path: '**', redirectTo: Pages.Home },
+  { path: '**', redirectTo: Lists.Home },
 ];

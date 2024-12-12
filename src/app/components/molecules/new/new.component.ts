@@ -1,6 +1,6 @@
 import { Component, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
-import { IFractal } from '@types';
+import { IFractal, Types } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -8,16 +8,16 @@ import { SuperComponent } from '@utils';
   standalone: true,
   imports: [TapComponent],
   templateUrl: './new.component.html',
-  styleUrl: './new.component.css',
 })
 export class NewComponent extends SuperComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
 
   async newTouch(tap: IFractal): Promise<void> {
-    this.rs.form.enable();
-    const table = this.fs.table();
-    table && this.rs.add(table.clone());
+    this.ls.form.enable();
+    await this.ls.add(this.fs.get('list').clone());
+    this.fs.modifier.set(tap);
     this.touch.emit(tap);
+    this.navigate({ [Types.Modifier]: tap.cursor });
   }
 }
