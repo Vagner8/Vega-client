@@ -15,7 +15,7 @@ export class NewComponent extends SuperComponent {
 
   async newTouch(tap: IFractal): Promise<void> {
     this.ls.form.enable();
-    await this.ls.add(this.fs.get('list').clone());
+    await this.ls.addRow(this.ls.list.clone());
     this.fs.modifier.set(tap);
     this.touch.emit(tap);
     this.navigate({ [Types.Modifier]: tap.cursor });

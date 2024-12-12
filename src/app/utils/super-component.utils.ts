@@ -33,10 +33,4 @@ export abstract class SuperComponent {
       queryParamsHandling,
     });
   }
-
-  navigateToTable(cursor: string): void {
-    this.ls.clear();
-    this.fs.modifier.set(null);
-    this.navigate({ [Types.Rows]: null, [Types.Modifier]: null }, [cursor]);
-  }
 }

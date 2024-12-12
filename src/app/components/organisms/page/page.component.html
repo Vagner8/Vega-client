@@ -1,13 +1,13 @@
-@if (fs.list(); as list) {
+@if (ls.$list(); as list) {
   @if (Modifier) {
-    <app-modifier [rows]="ls.rows()" (deleteRow)="ls.remove($event)" />
+    <app-modifier [rows]="ls.$rows()" (deleteRow)="ls.removeRow($event)" />
   } @else {
     <app-list
-      [rows]="ls.rows()"
-      [columns]="list.sort()"
+      [rows]="ls.$rows()"
+      [columns]="ls.$columns[list.cursor]()"
       [dataSource]="list.list()"
-      (hold)="ls.hold(list)"
+      (hold)="ls.holdRow(list)"
       (touch)="rowTouched($event)"
-      (columnChanged)="columnChanged($event)" />
+      (columnsChanged)="columnsChanged($event)" />
   }
 }

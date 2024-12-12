@@ -23,7 +23,6 @@ export class ManagerComponent extends SuperComponent implements OnInit {
     this.showSpinner$ = merge(
       this.es.holdRun$.pipe(map(() => true)),
       this.es.holdEnd$.pipe(map(() => false))
-      // this.es.holdCancel$.pipe(map(() => false))
     );
   }
 

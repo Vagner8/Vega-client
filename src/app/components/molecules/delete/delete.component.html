@@ -1,5 +1,5 @@
 <app-tap
   [tap]="tap"
-  [disabled]="ls.rows().length === 0"
+  [disabled]="ls.$rows().length === 0"
   (hold)="deleteHeld()"
   (touch)="deleteTouched($event)" />

@@ -28,8 +28,7 @@ export class SidenavComponent extends SuperComponent {
   }
 
   listTouched(tap: IFractal): void {
-    this.fs.list.set(tap);
-    this.navigateToTable(tap.cursor);
+    this.ls.set(tap);
   }
 
   modifierTouched(tap: IFractal): void {

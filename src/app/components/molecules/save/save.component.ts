@@ -25,7 +25,7 @@ export class SaveComponent extends SuperComponent {
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
 
-    for (const row of this.ls.rows()) {
+    for (const row of this.ls.$rows()) {
       if (row.status === FractalStatus.New) {
         toAdd.push(row.update());
         continue;
@@ -35,7 +35,7 @@ export class SaveComponent extends SuperComponent {
 
     toAdd.length > 0 && this.ds.add(toAdd).subscribe();
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
-    this.navigateToTable(this.fs.get('list').cursor);
+    this.ls.set(this.ls.list);
   }
 
   saveTouched(tap: IFractal): void {

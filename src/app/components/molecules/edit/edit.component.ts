@@ -12,7 +12,7 @@ import { SuperComponent } from '@utils';
 export class EditComponent extends SuperComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
-  disabled = computed(() => this.ls.rows().length === 0);
+  disabled = computed(() => this.ls.$rows().length === 0);
 
   editTouched(tap: IFractal): void {
     this.ls.form.enable();

@@ -19,10 +19,5 @@ export class ListComponent extends SuperComponent {
   @Input() dataSource: IFractal[] = [];
   hold = output<IFractal>();
   touch = output<IFractal>();
-  columnChanged = output<CdkDragDrop<string[]>>();
-
-  ngOnInit(): void {
-    console.log('🚀 ~ columns:', this.columns);
-    console.log('🚀 ~ dataSource:', this.dataSource);
-  }
+  columnsChanged = output<CdkDragDrop<string[]>>();
 }

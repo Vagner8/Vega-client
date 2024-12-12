@@ -4,7 +4,6 @@ import { IFractal } from '@types';
 interface Signals {
   root: WritableSignal<IFractal | null>;
   taps: WritableSignal<IFractal | null>;
-  list: WritableSignal<IFractal | null>;
   modifier: WritableSignal<IFractal | null>;
 }
 
@@ -18,7 +17,6 @@ export class FractalService implements Signals {
   modifiers!: IFractal;
 
   taps = signal<IFractal | null>(null);
-  list = signal<IFractal | null>(null);
   modifier = signal<IFractal | null>(null);
   managerEvent = signal('');
 

@@ -24,12 +24,8 @@ export class PageComponent extends SuperComponent implements OnInit {
     this.init();
   }
 
-  ngOnChanges(): void {
-    console.log('🚀 ~ Pages:', this.Lists);
-  }
-
   async rowTouched(row: IFractal): Promise<void> {
-    await this.ls.add(row);
+    await this.ls.addRow(row);
     if (this.fs.managerEvent() !== Events.Touch) {
       this.fs.managerEvent.set(Events.Touch);
       await this.navigate({ [Types.Manager]: Events.Touch });
@@ -40,14 +36,16 @@ export class PageComponent extends SuperComponent implements OnInit {
     }
   }
 
-  columnChanged(event: CdkDragDrop<string[]>): void {
-    moveItemInArray([], event.previousIndex, event.currentIndex);
+  columnsChanged(event: CdkDragDrop<string[]>): void {
+    const columns = this.ls.$columns[this.Lists]();
+    moveItemInArray(columns, event.previousIndex, event.currentIndex);
+    this.ls.$columns[this.Lists].set(columns);
   }
 
   private init(): void {
     const list = this.fs.pages.find(this.Lists);
     this.fs.taps.set(this.Taps === Types.Lists ? this.fs.pages : this.fs.modifiers);
-    this.fs.list.set(list);
+    this.ls.$list.set(list);
     this.ls.init({ rowsIds: this.Rows, modifier: this.Modifier, list });
     this.fs.modifier.set(this.Modifier ? this.fs.modifiers.find(this.Modifier) : null);
     this.fs.managerEvent.set(this.Manager);
