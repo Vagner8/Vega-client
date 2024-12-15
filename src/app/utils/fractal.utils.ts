@@ -8,13 +8,12 @@ export class Fractal implements IFractal {
   parent!: IFractal;
   fractals: IFractals | null = null;
   formGroup: FormGroup;
-  formArray: FormArray<FormGroup>;
+  formArray!: FormArray<FormGroup>;
+
+  private newFractalsPositions: string[] = [];
 
   constructor(public dto: FractalDto) {
     this.formGroup = this.createFormGroup();
-    this.formArray = new FormArray<FormGroup>(
-      this.fractals ? Object.values(this.fractals).map(fractal => fractal.formGroup) : []
-    );
   }
 
   is(test: string | object): boolean {
@@ -59,6 +58,7 @@ export class Fractal implements IFractal {
 
   clone(): IFractal {
     const index = (++this.list().length).toString();
+    this.newFractalsPositions.push(index);
     const cloneId = v4();
     const controls = this.columns().reduce((acc: ControlsDto, indicator) => {
       acc[indicator] = {
@@ -79,16 +79,19 @@ export class Fractal implements IFractal {
     row.cursor = index;
     row.status = FractalStatus.New;
     row.parent = this;
-    if (this.fractals) {
-      this.fractals[index] = row;
-    } else {
-      this.fractals = { [index]: row };
-    }
+    if (this.fractals) this.fractals[index] = row;
     return row;
   }
 
   indicators(): string[] {
     return Object.keys(this.dto.controls);
+  }
+
+  deleteNewFractals(): void {
+    this.newFractalsPositions.forEach(position => {
+      if (this.fractals) delete this.fractals[position];
+    });
+    this.newFractalsPositions = [];
   }
 
   private findRecursion(test: string, fractals: IFractals | null): IFractal | null {

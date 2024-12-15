@@ -1,19 +1,17 @@
 @if (ls.$list(); as list) {
   @if (Modifier) {
-    <app-rows-modifier [rows]="ls.$rows()" />
+    <app-rows-modifier [rows]="rs.$rows()" />
   }
   @if (!Modifier) {
     @if (Lists === 'Home') {
       <app-modifier [fractals]="fs.root.list()" />
     } @else {
       <app-list
-        [rows]="ls.$rows()"
-        [columns]="ls.$columns[list.cursor]()"
+        [rows]="rs.$rows()"
+        [columns]="list.columns()"
         [dataSource]="list.list()"
-        (hold)="ls.holdRow(list)"
-        (touch)="rowTouched($event)"
-        (holdHeader)="ls.editColumn()"
-        (columnsChanged)="columnsChanged($event)" />
+        (hold)="rs.hold(list)"
+        (touch)="rowTouched($event)" />
     }
   }
 }

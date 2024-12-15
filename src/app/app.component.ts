@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
-import { SuperComponent } from '@utils';
 import { Fractals } from '@types';
+import {
+  DataService,
+  FractalService,
+  ListService,
+  ManagerService,
+  ModifiersService,
+} from '@services';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +18,13 @@ import { Fractals } from '@types';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent extends SuperComponent implements OnInit {
+export class AppComponent implements OnInit {
+  ds = inject(DataService);
+  ls = inject(ListService);
+  fs = inject(FractalService);
+  ms = inject(ModifiersService);
+  mgr = inject(ManagerService);
+
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
       const root = this.fs.toFractal(dto);

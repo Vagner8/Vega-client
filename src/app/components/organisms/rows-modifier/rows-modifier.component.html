@@ -7,7 +7,7 @@
       <mat-card appearance="outlined">
         <mat-card-header>
           <mat-card-title-group>
-            <button top type="button" mat-flat-button (click)="ls.removeRow(row)">Cancel</button>
+            <button top type="button" mat-flat-button (click)="rs.delete(row)">Cancel</button>
             <mat-card-title>{{ row.data('Position') }}</mat-card-title>
             <mat-card-subtitle class="subtitle" [class]="subtitle()">{{
               subtitle()

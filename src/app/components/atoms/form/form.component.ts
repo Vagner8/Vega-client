@@ -1,5 +1,5 @@
 import { Component, Input, output } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
 import { IFractal } from '@types';
 

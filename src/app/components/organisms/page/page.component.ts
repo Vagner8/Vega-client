@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { ListComponent } from '@components/atoms';
-import { Events, Fractals, FractalsParams, IFractal, Modifiers } from '@types';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { map } from 'rxjs';
+import { Events, Fractals, IFractal } from '@types';
 import {
   BaseService,
   FractalService,
   ListService,
   ManagerService,
   ModifiersService,
+  RowsService,
   TapsService,
 } from '@services';
 import { AppModifierComponent } from '../app-modifier/app-modifier.component';
@@ -22,9 +21,10 @@ import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent implements OnInit {
+  bs = inject(BaseService);
   ts = inject(TapsService);
   ls = inject(ListService);
-  bs = inject(BaseService);
+  rs = inject(RowsService);
   fs = inject(FractalService);
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
@@ -35,38 +35,26 @@ export class PageComponent implements OnInit {
   @Input() Manager = '';
   @Input() Modifier = '';
 
-  modifyColumns$ = this.ls.columnsForm.valueChanges.pipe(
-    map(() => this.ls.columnsForm.controls.length > 0)
-  );
-
   ngOnInit(): void {
     this.init();
   }
 
   async rowTouched(row: IFractal): Promise<void> {
-    await this.ls.addRow(row);
+    await this.rs.set(row);
     if (this.mgr.$event() !== Events.Touch) {
-      this.mgr.$event.set(Events.Touch);
-      await this.bs.navigate({ [FractalsParams.Manager]: Events.Touch });
+      this.mgr.set(Events.Touch);
     }
     if (this.ts.$taps()?.is(Fractals.Lists)) {
-      this.ts.$taps.set(this.ms.modifiers);
-      await this.bs.navigate({ [FractalsParams.Taps]: Fractals.Modifiers });
+      this.ts.set(this.ms.modifiers);
     }
-  }
-
-  columnsChanged(event: CdkDragDrop<string[]>): void {
-    const columns = this.ls.$columns[this.Lists]();
-    moveItemInArray(columns, event.previousIndex, event.currentIndex);
-    this.ls.$columns[this.Lists].set(columns);
   }
 
   private init(): void {
     const { Rows, Taps, Lists, Manager, Modifier } = this;
-    this.ls.init({ Rows, Lists });
+    this.ls.init({ Lists });
+    this.rs.init({ Rows, list: this.ls.list });
     this.ms.init({ Modifier });
+    this.ts.init({ Taps, lists: this.ls.lists, modifiers: this.ms.modifiers });
     this.mgr.init({ Manager });
-    this.ts.$taps.set(Taps === FractalsParams.Lists ? this.ls.lists : this.ms.modifiers);
-    if (Modifiers.Delete === Modifier) this.ls.rowsForm.disable();
   }
 }

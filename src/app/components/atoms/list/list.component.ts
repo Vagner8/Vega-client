@@ -1,4 +1,3 @@
-import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
@@ -8,7 +7,7 @@ import { SuperComponent } from '@utils';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [MatTableModule, TapDirective, MatSortModule, CdkDropList, CdkDrag],
+  imports: [MatTableModule, TapDirective, MatSortModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,6 +18,4 @@ export class ListComponent extends SuperComponent {
   @Input() dataSource: IFractal[] = [];
   hold = output<IFractal>();
   touch = output<IFractal>();
-  holdHeader = output();
-  columnsChanged = output<CdkDragDrop<string[]>>();
 }

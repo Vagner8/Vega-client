@@ -7,3 +7,4 @@ export * from './modifiers.service';
 export * from './taps.service';
 export * from './manager.service';
 export * from './base.service';
+export * from './rows.service';

@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { FractalDto, FractalsDto, IFractal, IFractals } from '@types';
 import { Fractal } from '@utils';
 
@@ -31,6 +32,9 @@ export class FractalService {
       fractal.parent = parent;
       fractal.cursor = indicator;
       result[indicator] = fractal;
+      fractal.formArray = new FormArray<FormGroup>(
+        fractal.fractals ? Object.values(fractal.fractals).map(fractal => fractal.formGroup) : []
+      );
     }
     return result;
   }

@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
+import { ListService, ManagerService, ModifiersService, RowsService, TapsService } from '@services';
 import { IFractal } from '@types';
-import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
@@ -22,12 +22,20 @@ import { SuperComponent } from '@utils';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent extends SuperComponent {
+export class SidenavComponent {
+  ts = inject(TapsService);
+  ls = inject(ListService);
+  rs = inject(RowsService);
+  ms = inject(ModifiersService);
+  mgr = inject(ManagerService);
+
   hold(tap: IFractal): void {
     console.log('🚀 ~ tap:', tap);
   }
 
   async listTouched(tap: IFractal): Promise<void> {
+    tap.deleteNewFractals();
+    await this.rs.set(null);
     await this.ls.set(tap);
     this.ms.set(null);
   }

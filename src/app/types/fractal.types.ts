@@ -92,4 +92,5 @@ export interface IFractal {
   indicators(): string[];
   navigate?: <T>(state: T) => Promise<void>;
   getFormControl(name: string): FormControl | null;
+  deleteNewFractals(): void;
 }

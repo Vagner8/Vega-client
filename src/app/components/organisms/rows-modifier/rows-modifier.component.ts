@@ -1,7 +1,7 @@
 import { Component, computed, inject, Input } from '@angular/core';
 import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { ListService, ModifiersService } from '@services';
+import { ModifiersService, RowsService } from '@services';
 import { IFractal, Modifiers } from '@types';
 
 @Component({
@@ -12,7 +12,7 @@ import { IFractal, Modifiers } from '@types';
   styleUrl: './rows-modifier.component.scss',
 })
 export class RowsModifierComponent {
-  ls = inject(ListService);
+  rs = inject(RowsService);
   ms = inject(ModifiersService);
   @Input() rows: IFractal[] = [];
   subtitle = computed(() => {
