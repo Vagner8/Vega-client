@@ -19,7 +19,7 @@ export class AppComponent extends SuperComponent implements OnInit {
       this.ls.lists = root.find(Fractals.Lists);
       this.mgr.manager = root.find(Fractals.Manager);
       this.ms.modifiers = root.find(Fractals.Modifiers);
-      this.fs.root.set(root);
+      this.fs.$root.set(root);
     });
   }
 }

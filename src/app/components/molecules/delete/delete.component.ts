@@ -13,13 +13,14 @@ export class DeleteComponent extends SuperComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
 
-  deleteHeld(): void {
+  async deleteHeld(): Promise<void> {
     const toDelete: FractalDto[] = [];
     for (const row of this.ls.$rows()) {
       delete row.parent.fractals![row.cursor];
       if (row.status !== FractalStatus.New) toDelete.push(row.update());
     }
     toDelete.length > 0 && this.ds.delete(toDelete).subscribe();
+    await this.ms.set(null);
     this.ls.set(this.ls.list);
   }
 

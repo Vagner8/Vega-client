@@ -1,0 +1,10 @@
+@use 'variables.scss' as *;
+
+.description {
+  justify-content: end;
+  margin-right: 0;
+}
+
+.card-margin-bottom {
+  margin-bottom: $size-large;
+}

@@ -1,13 +1,5 @@
-import { FormControl, FormGroup } from '@angular/forms';
-import {
-  FractalDto,
-  IFractals,
-  IFractal,
-  ControlDtoData,
-  Indicators,
-  ControlsDto,
-  FractalStatus,
-} from '@types';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FractalDto, IFractals, IFractal, Indicators, ControlsDto, FractalStatus } from '@types';
 import { v4 } from 'uuid';
 
 export class Fractal implements IFractal {
@@ -16,9 +8,13 @@ export class Fractal implements IFractal {
   parent!: IFractal;
   fractals: IFractals | null = null;
   formGroup: FormGroup;
+  formArray: FormArray<FormGroup>;
 
   constructor(public dto: FractalDto) {
     this.formGroup = this.createFormGroup();
+    this.formArray = new FormArray<FormGroup>(
+      this.fractals ? Object.values(this.fractals).map(fractal => fractal.formGroup) : []
+    );
   }
 
   is(test: string | object): boolean {
@@ -31,24 +27,15 @@ export class Fractal implements IFractal {
     return Boolean(this.dto.controls[indicator]);
   }
 
-  data(indicator: string): ControlDtoData {
+  data(indicator: string): string {
     return this.dto.controls[indicator]?.data || '';
   }
 
-  bool(indicator: string): boolean {
-    return this.data(indicator) as boolean;
-  }
-
-  split(indicator: string): string[] {
-    return this.string(indicator).split(':');
-  }
-
-  sort(): string[] {
-    return this.split(Indicators.Sort);
-  }
-
-  string(indicator: string): string {
-    return this.data(indicator) as string;
+  columns(): string[] {
+    return this.check(
+      this.data(Indicators.Columns).split(':'),
+      `Unable to find columns in: ${this.cursor}`
+    );
   }
 
   list(): IFractal[] {
@@ -56,14 +43,12 @@ export class Fractal implements IFractal {
   }
 
   find(test: string, fractals: IFractals | null = this.fractals): IFractal {
-    const result = this.findRecursion(test, fractals);
-    if (!result) throw new Error(`Unable to find fractal for the: ${test}`);
-    return result;
+    return this.check(this.findRecursion(test, fractals), `Unable to find fractal by: ${test}`);
   }
 
   update(): FractalDto {
     Object.entries(this.formGroup.getRawValue()).forEach(([indicator, data]) => {
-      this.dto.controls[indicator].data = data as ControlDtoData;
+      this.dto.controls[indicator].data = data as string;
     });
     return this.dto;
   }
@@ -75,7 +60,7 @@ export class Fractal implements IFractal {
   clone(): IFractal {
     const index = (++this.list().length).toString();
     const cloneId = v4();
-    const controls = this.sort().reduce((acc: ControlsDto, indicator) => {
+    const controls = this.columns().reduce((acc: ControlsDto, indicator) => {
       acc[indicator] = {
         id: v4(),
         parentId: cloneId,
@@ -102,6 +87,10 @@ export class Fractal implements IFractal {
     return row;
   }
 
+  indicators(): string[] {
+    return Object.keys(this.dto.controls);
+  }
+
   private findRecursion(test: string, fractals: IFractals | null): IFractal | null {
     if (fractals) {
       for (const key in fractals) {
@@ -117,14 +106,16 @@ export class Fractal implements IFractal {
     return new FormGroup(
       Object.entries(this.dto.controls).reduce(
         (acc: Record<string, FormControl>, [indicator, control]) => {
-          const value = this.has(Indicators.Select)
-            ? this.split(Indicators.Select)[0]
-            : control.data;
-          acc[indicator] = new FormControl(value);
+          acc[indicator] = new FormControl(control.data);
           return acc;
         },
         {}
       )
     );
+  }
+
+  private check<T>(data: T | null, massage: string): T {
+    if (!data) throw new Error(`Massage: ${massage}.\nCursor: ${this.cursor}`);
+    return data;
   }
 }

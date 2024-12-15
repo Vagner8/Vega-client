@@ -1,17 +1,17 @@
-<form [formGroup]="formGroup">
-  @for (indicator of sort; track indicator) {
+<form [formGroup]="fractal.formGroup">
+  @for (indicator of fractal.indicators(); track indicator) {
     @if (indicator !== 'Position') {
       <mat-form-field class="form-field">
         <mat-label i18n>{{ indicator }}</mat-label>
         <input #inputElementRef [type]="indicator" matInput formControlName="{{ indicator }}" />
-        @if (inputElementRef.value && !formGroup.disabled) {
+        @if (inputElementRef.value && !fractal.formGroup.disabled) {
           <button
             type="button"
             matSuffix
             mat-icon-button
             i18n-aria-label
             aria-label="Clear input"
-            (click)="formGroup.get(indicator)?.setValue('')">
+            (click)="fractal.formGroup.get(indicator)?.setValue('')">
             <mat-icon>close</mat-icon>
           </button>
         }

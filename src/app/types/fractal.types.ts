@@ -1,20 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
-
-export const FractalsParams = {
-  Rows: 'Rows',
-  Taps: 'Taps',
-  Lists: 'Lists',
-  Manager: 'Manager',
-  Modifier: 'Modifier',
-};
-
-export const Fractals = {
-  Root: 'Root',
-  Lists: 'Lists',
-  Manager: 'Manager',
-  Settings: 'Settings',
-  Modifiers: 'Modifiers',
-};
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 export enum Events {
   Hold = 'Hold',
@@ -25,10 +9,10 @@ export enum Indicators {
   X = 'X',
   Y = 'Y',
   Icon = 'Icon',
-  Sort = 'Sort',
   Toggle = 'Toggle',
   Select = 'Select',
   Cursor = 'Cursor',
+  Columns = 'Columns',
   Position = 'Position',
 }
 
@@ -51,6 +35,7 @@ export enum Modifiers {
   Edit = 'Edit',
   Save = 'Save',
   Delete = 'Delete',
+  Columns = 'Columns',
 }
 
 export enum FractalStatus {
@@ -61,7 +46,6 @@ export enum FractalStatus {
 export type ControlsDto = Record<string, ControlDto>;
 export type FractalsDto = Record<string, FractalDto>;
 export type IFractals = Record<string, IFractal>;
-export type ControlDtoData = string | boolean;
 
 export interface FractalEvent {
   type: keyof typeof Events;
@@ -70,7 +54,7 @@ export interface FractalEvent {
 
 export interface ControlDto {
   id: string;
-  data: ControlDtoData;
+  data: string;
   parentId: string;
   indicator: string;
   client?: boolean;
@@ -95,18 +79,17 @@ export interface IFractal {
   parent: IFractal;
   fractals: IFractals | null;
   formGroup: FormGroup;
+  formArray: FormArray<FormGroup>;
 
   is(test: string | object): boolean;
   has(indicator: string): boolean;
-  data(indicator: string): ControlDtoData;
+  data(indicator: string): string;
   find(test: Events[number], fractals?: IFractals | null): IFractal;
-  bool(indicator: string): boolean;
   list(): IFractal[];
-  sort(): string[];
-  split(indicator: string): string[];
   clone(): IFractal;
-  string(indicator: string): string;
   update(): FractalDto;
+  columns(): string[];
+  indicators(): string[];
   navigate?: <T>(state: T) => Promise<void>;
   getFormControl(name: string): FormControl | null;
 }

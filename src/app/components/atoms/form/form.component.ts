@@ -11,8 +11,7 @@ import { IFractal } from '@types';
   styleUrl: './form.component.scss',
 })
 export class FormComponent {
-  @Input() formGroup!: FormGroup;
-  @Input() sort: string[] = [];
+  @Input({ required: true }) fractal!: IFractal;
   change = output<IFractal>();
   prevRawValue!: Record<string, string>;
 }

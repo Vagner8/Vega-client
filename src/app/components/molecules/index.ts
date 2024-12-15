@@ -4,3 +4,4 @@ export * from './new/new.component';
 export * from './save/save.component';
 export * from './edit/edit.component';
 export * from './delete/delete.component';
+export * from '../atoms/form-card/form-card.component';

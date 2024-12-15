@@ -1,7 +1,7 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { FractalsParams, IFractal } from '@types';
+import { FractalsParams, IFractal, Lists, Modifiers } from '@types';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,19 +15,16 @@ export class ListService {
   rowsForm = new FormArray<FormGroup>([]);
   columnsForm = new FormArray<FormGroup>([]);
 
-  router = inject(Router);
+  bs = inject(BaseService);
 
-  set(list: IFractal): void {
+  async set(list: IFractal): Promise<void> {
     this.rowsForm = new FormArray<FormGroup>([]);
     this.$rows.set([]);
     this.$list.set(list);
-    if (!this.$columns[list.cursor]) {
-      this.$columns[list.cursor] = signal(list.sort());
+    if (!this.$columns[list.cursor] && !list.is(Lists.Home)) {
+      this.$columns[list.cursor] = signal(list.columns());
     }
-    this.router.navigate([list.cursor], {
-      queryParams: { [FractalsParams.Rows]: null, [FractalsParams.Modifier]: null },
-      queryParamsHandling: 'merge',
-    });
+    await this.bs.navigate({ [FractalsParams.Rows]: null }, [list.cursor]);
   }
 
   get list(): IFractal {
@@ -48,18 +45,21 @@ export class ListService {
     await this.navigateToRows();
   }
 
-  addColumn(): void {
-    this.list.sort().forEach(item => {
-      this.columnsForm.push(new FormGroup({ column: new FormControl(item) }));
+  editColumn(): void {
+    this.list.columns().forEach(item => {
+      this.columnsForm.push(new FormGroup({ Column: new FormControl(item) }));
     });
+    this.bs.navigate({ [FractalsParams.Modifier]: Modifiers.Columns });
   }
 
-  init({ Rows, Lists }: { Rows: string; Lists: string }): void {
-    this.$list.set(this.lists.find(Lists));
-    this.$columns[this.list.cursor] = signal(this.list.sort());
+  init(params: { Rows: string; Lists: string }): void {
+    this.$list.set(this.lists.find(params.Lists));
+    if (params.Lists !== Lists.Home) {
+      this.$columns[this.list.cursor] = signal(this.list.columns());
+    }
     this.$rows.set(
-      Rows
-        ? Rows.split(':').map(rowId => {
+      params.Rows
+        ? params.Rows.split(':').map(rowId => {
             try {
               const row = this.list.find(rowId);
               this.rowsForm.push(row.formGroup);
@@ -90,13 +90,10 @@ export class ListService {
   }
 
   private async navigateToRows(): Promise<void> {
-    await this.router.navigate([], {
-      queryParams: {
-        [FractalsParams.Rows]: this.$rows()
-          .map(row => row.dto.id)
-          .join(':'),
-      },
-      queryParamsHandling: 'merge',
+    await this.bs.navigate({
+      [FractalsParams.Rows]: this.$rows()
+        .map(row => row.dto.id)
+        .join(':'),
     });
   }
 }

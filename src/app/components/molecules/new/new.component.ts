@@ -1,7 +1,7 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
-import { FractalsParams, IFractal } from '@types';
-import { SuperComponent } from '@utils';
+import { ListService, ModifiersService } from '@services';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-new',
@@ -9,15 +9,17 @@ import { SuperComponent } from '@utils';
   imports: [TapComponent],
   templateUrl: './new.component.html',
 })
-export class NewComponent extends SuperComponent {
+export class NewComponent {
+  ls = inject(ListService);
+  ms = inject(ModifiersService);
+
   @Input() tap!: IFractal;
   touch = output<IFractal>();
 
   async newTouch(tap: IFractal): Promise<void> {
     this.ls.rowsForm.enable();
     await this.ls.addRow(this.ls.list.clone());
-    this.ms.$modifier.set(tap);
+    this.ms.set(tap);
     this.touch.emit(tap);
-    this.navigate({ [FractalsParams.Modifier]: tap.cursor });
   }
 }

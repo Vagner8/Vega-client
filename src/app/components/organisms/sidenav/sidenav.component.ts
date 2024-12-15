@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { FractalsParams, IFractal } from '@types';
+import { IFractal } from '@types';
 import { SuperComponent } from '@utils';
 
 @Component({
@@ -27,12 +27,12 @@ export class SidenavComponent extends SuperComponent {
     console.log('🚀 ~ tap:', tap);
   }
 
-  listTouched(tap: IFractal): void {
-    this.ls.set(tap);
+  async listTouched(tap: IFractal): Promise<void> {
+    await this.ls.set(tap);
+    this.ms.set(null);
   }
 
   modifierTouched(tap: IFractal): void {
-    this.ms.$modifier.set(tap);
-    this.navigate({ [FractalsParams.Modifier]: tap.cursor });
+    this.ms.set(tap);
   }
 }

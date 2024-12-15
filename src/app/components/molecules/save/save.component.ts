@@ -21,7 +21,7 @@ export class SaveComponent extends SuperComponent {
   touch = output<IFractal>();
   disabled = true;
 
-  saveHeld(): void {
+  async saveHeld(): Promise<void> {
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
 
@@ -35,6 +35,7 @@ export class SaveComponent extends SuperComponent {
 
     toAdd.length > 0 && this.ds.add(toAdd).subscribe();
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
+    await this.ms.set(null);
     this.ls.set(this.ls.list);
   }
 

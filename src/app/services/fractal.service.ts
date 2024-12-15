@@ -1,21 +1,17 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { FractalDto, FractalsDto, IFractal, IFractals } from '@types';
 import { Fractal } from '@utils';
-
-interface Signals {
-  root: WritableSignal<IFractal | null>;
-}
 
 @Injectable({
   providedIn: 'root',
 })
-export class FractalService implements Signals {
-  root = signal<IFractal | null>(null);
+export class FractalService {
+  $root = signal<IFractal | null>(null);
 
-  get(name: keyof Signals): IFractal {
-    const fractal = this[name]();
-    if (!fractal) throw new Error(`Unable to get fractal with name: ${name}`);
-    return fractal;
+  get root(): IFractal {
+    const root = this.$root();
+    if (!root) throw new Error('');
+    return root;
   }
 
   toFractal(dto: FractalDto): IFractal {

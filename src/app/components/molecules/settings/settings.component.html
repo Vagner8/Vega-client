@@ -4,7 +4,7 @@
       <mat-card-title>Settings</mat-card-title>
       <button type="button" mat-flat-button (click)="this.sheetRef.dismiss()">Close</button>
     </mat-card-title-group>
-    @for (indicator of settings.sort(); track indicator) {
+    @for (indicator of settings.columns(); track indicator) {
       @if (settings.find(indicator); as setting) {
         <mat-card appearance="outlined">
           <mat-card-header>

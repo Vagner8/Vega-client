@@ -1,0 +1,16 @@
+<mat-accordion class="example-headers-align">
+  @if (fractals.length > 0) {
+    @for (fractal of fractals; track $index) {
+      <mat-expansion-panel hideToggle (afterExpand)="afterExpand(fractal)">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ fractal.cursor }}</mat-panel-title>
+          <mat-panel-description class="description">
+            <mat-icon>{{ fractal.data('Icon') }}</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <app-form-card [fractal]="fractal" />
+        <app-modifier [fractals]="fractal.list()" />
+      </mat-expansion-panel>
+    }
+  }
+</mat-accordion>
