@@ -9,8 +9,8 @@
       <app-list
         [rows]="rs.$rows()"
         [columns]="list.columns"
-        [dataSource]="ls.$list()?.list || []"
-        (hold)="rs.hold(list)"
+        [dataSource]="list.list"
+        (hold)="rowHeld(list)"
         (touch)="rowTouched($event)" />
     }
   }

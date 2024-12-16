@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core
 import { MatButtonModule, MatIcon } from '@mat';
 import { TapDirective } from '@directives';
 import { IFractal } from '@types';
-import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-tap',
@@ -12,7 +11,7 @@ import { SuperComponent } from '@utils';
   styleUrl: './tap.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TapComponent extends SuperComponent {
+export class TapComponent {
   @Input() tap!: IFractal;
   @Input() disabled = false;
 

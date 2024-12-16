@@ -2,7 +2,6 @@ import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { IFractal } from '@types';
-import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +11,7 @@ import { SuperComponent } from '@utils';
   styleUrl: './list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListComponent extends SuperComponent {
+export class ListComponent {
   @Input() rows: IFractal[] = [];
   @Input() columns: string[] = [];
   @Input() dataSource: IFractal[] = [];

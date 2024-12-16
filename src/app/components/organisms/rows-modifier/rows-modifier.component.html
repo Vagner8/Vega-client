@@ -2,7 +2,7 @@
   class="list"
   [class.two-items]="rows.length === 2"
   [class.three-or-more-items]="rows.length >= 3">
-  @for (row of rows; track row.cursor) {
+  @for (row of rows; track row.dto.id) {
     <li class="item">
       <mat-card appearance="outlined">
         <mat-card-header>

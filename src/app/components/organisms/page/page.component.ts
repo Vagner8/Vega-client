@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { ListComponent } from '@components/atoms';
-import { Events, Fractals, IFractal } from '@types';
+import { Events, Fractals, IFractal, Modifiers } from '@types';
 import {
   BaseService,
   FractalService,
@@ -39,8 +39,17 @@ export class PageComponent implements OnInit {
     this.init();
   }
 
+  async rowHeld(list: IFractal): Promise<void> {
+    await this.rs.hold(list);
+    this.openSidenav();
+  }
+
   async rowTouched(row: IFractal): Promise<void> {
     await this.rs.set(row);
+    this.openSidenav();
+  }
+
+  private openSidenav(): void {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
     }
@@ -56,5 +65,7 @@ export class PageComponent implements OnInit {
     this.ms.init({ Modifier });
     this.ts.init({ Taps, lists: this.ls.lists, modifiers: this.ms.modifiers });
     this.mgr.init({ Manager });
+    [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier) &&
+      this.ls.list.formArray.disable();
   }
 }

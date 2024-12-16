@@ -42,7 +42,7 @@ export class RowsService {
     await this.navigate();
   }
 
-  hold(list: IFractal | null): void {
+  async hold(list: IFractal | null): Promise<void> {
     this.$rows.update(prev => (prev.length === 0 && list ? list.list : []));
     this.navigate();
   }

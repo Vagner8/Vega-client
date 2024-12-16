@@ -1,12 +1,14 @@
-import { Directive, HostListener, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { Directive, HostListener, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { EventService } from '@services';
 import { IFractal, Timeout } from '@types';
-import { SuperComponent } from '@utils';
 
 @Directive({
   selector: '[appTap]',
   standalone: true,
 })
-export class TapDirective extends SuperComponent implements OnInit, OnDestroy {
+export class TapDirective implements OnInit, OnDestroy {
+  es = inject(EventService);
+
   @Input() tap?: IFractal;
 
   hold = output();

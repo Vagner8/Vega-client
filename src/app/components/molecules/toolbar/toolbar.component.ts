@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatToolbar } from '@mat';
 import { ManagerComponent } from '../manager/manager.component';
-import { SuperComponent } from '@utils';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,4 +10,4 @@ import { SuperComponent } from '@utils';
   styleUrl: './toolbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ToolbarComponent extends SuperComponent {}
+export class ToolbarComponent {}
