@@ -13,14 +13,14 @@ export class RowsService {
     return this.$rows();
   }
 
-  init({ Rows, list }: { list: IFractal; Rows: string }): void {
+  init({ Rows, collection }: { collection: IFractal; Rows: string }): void {
     this.$rows.set(
       Rows
         ? Rows.split(':').map(row => {
             try {
-              return list.find(row);
+              return collection.find(row);
             } catch {
-              return list.cloneChild();
+              return collection.cloneChild();
             }
           })
         : []
@@ -42,8 +42,8 @@ export class RowsService {
     await this.navigate();
   }
 
-  async hold(list: IFractal | null): Promise<void> {
-    this.$rows.update(prev => (prev.length === 0 && list ? list.list : []));
+  async hold(collection: IFractal | null): Promise<void> {
+    this.$rows.update(prev => (prev.length === 0 && collection ? collection.list : []));
     this.navigate();
   }
 

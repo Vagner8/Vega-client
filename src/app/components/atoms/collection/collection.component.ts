@@ -7,11 +7,11 @@ import { IFractal } from '@types';
   selector: 'app-list',
   standalone: true,
   imports: [MatTableModule, TapDirective, MatSortModule],
-  templateUrl: './list.component.html',
-  styleUrl: './list.component.scss',
+  templateUrl: './collection.component.html',
+  styleUrl: './collection.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListComponent {
+export class CollectionComponent {
   @Input() rows: IFractal[] = [];
   @Input() columns: string[] = [];
   @Input() dataSource: IFractal[] = [];

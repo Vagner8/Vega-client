@@ -6,7 +6,7 @@ import { Fractals } from '@types';
 import {
   DataService,
   FractalService,
-  ListService,
+  CollectionsService,
   ManagerService,
   ModifiersService,
 } from '@services';
@@ -20,15 +20,15 @@ import {
 })
 export class AppComponent implements OnInit {
   ds = inject(DataService);
-  ls = inject(ListService);
   fs = inject(FractalService);
   ms = inject(ModifiersService);
+  cs = inject(CollectionsService);
   mgr = inject(ManagerService);
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
       const root = this.fs.toFractal(dto);
-      this.ls.lists = root.find(Fractals.Lists);
+      this.cs.collections = root.find(Fractals.Collections);
       this.mgr.manager = root.find(Fractals.Manager);
       this.ms.modifiers = root.find(Fractals.Modifiers);
       this.fs.$root.set(root);

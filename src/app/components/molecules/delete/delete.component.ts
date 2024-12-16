@@ -1,6 +1,6 @@
 import { Component, inject, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
-import { DataService, ListService, ModifiersService, RowsService } from '@services';
+import { DataService, CollectionsService, ModifiersService, RowsService } from '@services';
 import { FractalDto, FractalStatus, IFractal, IFractals, Indicators } from '@types';
 
 @Component({
@@ -10,7 +10,7 @@ import { FractalDto, FractalStatus, IFractal, IFractals, Indicators } from '@typ
   templateUrl: './delete.component.html',
 })
 export class DeleteComponent {
-  ls = inject(ListService);
+  cs = inject(CollectionsService);
   rs = inject(RowsService);
   ds = inject(DataService);
   ms = inject(ModifiersService);
@@ -23,8 +23,8 @@ export class DeleteComponent {
     const toDelete: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
     const updatedFractals: IFractals = {};
-    for (const position in this.ls.list.fractals) {
-      const fractal = this.ls.list.fractals[position];
+    for (const position in this.cs.collection.fractals) {
+      const fractal = this.cs.collection.fractals[position];
       if (!this.rs.rows.includes(fractal)) {
         const position = `${newPosition++}`;
         fractal.dto.controls[Indicators.Position].data = position;
@@ -35,16 +35,16 @@ export class DeleteComponent {
         fractal.status !== FractalStatus.New && toDelete.push(fractal.dto);
       }
     }
-    this.ls.list.fractals = updatedFractals;
+    this.cs.collection.fractals = updatedFractals;
     toDelete.length > 0 && this.ds.delete(toDelete).subscribe();
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
     await this.ms.set(null);
     await this.rs.set(null);
-    this.ls.set(this.ls.list);
+    this.cs.set(this.cs.collection);
   }
 
   deleteTouched(tap: IFractal): void {
-    this.ls.list.formArray.disable();
+    this.cs.collection.formArray.disable();
     this.touch.emit(tap);
   }
 }

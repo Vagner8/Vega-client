@@ -1,16 +1,16 @@
-@if (ls.$list(); as list) {
+@if (cs.$collection(); as collection) {
   @if (Modifier) {
     <app-rows-modifier [rows]="rs.$rows()" />
   }
   @if (!Modifier) {
-    @if (Lists === 'Home') {
+    @if (Collections === 'Home') {
       <app-modifier [fractals]="fs.root.list" />
     } @else {
       <app-list
         [rows]="rs.$rows()"
-        [columns]="list.columns"
-        [dataSource]="list.list"
-        (hold)="rowHeld(list)"
+        [columns]="collection.columns"
+        [dataSource]="collection.list"
+        (hold)="rowHeld(collection)"
         (touch)="rowTouched($event)" />
     }
   }

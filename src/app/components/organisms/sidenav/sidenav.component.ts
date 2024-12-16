@@ -3,7 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { ListService, ManagerService, ModifiersService, RowsService, TapsService } from '@services';
+import {
+  CollectionsService,
+  ManagerService,
+  ModifiersService,
+  RowsService,
+  TapsService,
+} from '@services';
 import { IFractal } from '@types';
 
 @Component({
@@ -24,7 +30,7 @@ import { IFractal } from '@types';
 })
 export class SidenavComponent {
   ts = inject(TapsService);
-  ls = inject(ListService);
+  cs = inject(CollectionsService);
   rs = inject(RowsService);
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
@@ -35,7 +41,7 @@ export class SidenavComponent {
 
   async listTouched(tap: IFractal): Promise<void> {
     await this.rs.set(null);
-    await this.ls.set(tap);
+    await this.cs.set(tap);
     this.ms.set(null);
   }
 

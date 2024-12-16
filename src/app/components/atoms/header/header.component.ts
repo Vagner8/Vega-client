@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ListService, ModifiersService } from '@services';
+import { CollectionsService, ModifiersService } from '@services';
 import { Modifiers } from '@types';
 
 @Component({
@@ -12,7 +12,7 @@ import { Modifiers } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  ls = inject(ListService);
+  cs = inject(CollectionsService);
   ms = inject(ModifiersService);
 
   get modifier(): string | undefined {

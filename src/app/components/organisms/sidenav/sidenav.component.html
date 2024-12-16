@@ -16,7 +16,7 @@
               <app-save
                 [tap]="taps.find(indicator)"
                 [newTapTouched]="!!ms.$modifier()?.is('New')"
-                [isRowsFormDirty]="ls.list.formArray.dirty"
+                [isRowsFormDirty]="cs.collection.formArray.dirty"
                 (touch)="modifierTouched($event)" />
             }
             @case ('Edit') {

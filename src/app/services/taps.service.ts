@@ -10,7 +10,7 @@ export class TapsService {
   $taps = signal<IFractal | null>(null);
 
   init({ Taps, lists, modifiers }: { Taps: string; lists: IFractal; modifiers: IFractal }): void {
-    this.$taps.set(Taps === FractalsParams.Lists ? lists : modifiers);
+    this.$taps.set(Taps === FractalsParams.Collections ? lists : modifiers);
   }
 
   async set(taps: IFractal): Promise<void> {

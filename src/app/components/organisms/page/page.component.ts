@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { ListComponent } from '@components/atoms';
+import { CollectionComponent } from '@components/atoms';
 import { Events, Fractals, IFractal, Modifiers } from '@types';
 import {
   BaseService,
   FractalService,
-  ListService,
+  CollectionsService,
   ManagerService,
   ModifiersService,
   RowsService,
@@ -16,14 +16,14 @@ import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component'
 @Component({
   selector: 'app-page',
   standalone: true,
-  imports: [ListComponent, AppModifierComponent, RowsModifierComponent],
+  imports: [CollectionComponent, AppModifierComponent, RowsModifierComponent],
   templateUrl: './page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent implements OnInit {
   bs = inject(BaseService);
   ts = inject(TapsService);
-  ls = inject(ListService);
+  cs = inject(CollectionsService);
   rs = inject(RowsService);
   fs = inject(FractalService);
   ms = inject(ModifiersService);
@@ -31,7 +31,7 @@ export class PageComponent implements OnInit {
 
   @Input() Taps = '';
   @Input() Rows = '';
-  @Input() Lists = '';
+  @Input() Collections = '';
   @Input() Manager = '';
   @Input() Modifier = '';
 
@@ -39,8 +39,8 @@ export class PageComponent implements OnInit {
     this.init();
   }
 
-  async rowHeld(list: IFractal): Promise<void> {
-    await this.rs.hold(list);
+  async rowHeld(collection: IFractal): Promise<void> {
+    await this.rs.hold(collection);
     this.openSidenav();
   }
 
@@ -53,19 +53,19 @@ export class PageComponent implements OnInit {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
     }
-    if (this.ts.$taps()?.is(Fractals.Lists)) {
+    if (this.ts.$taps()?.is(Fractals.Collections)) {
       this.ts.set(this.ms.modifiers);
     }
   }
 
   private init(): void {
-    const { Rows, Taps, Lists, Manager, Modifier } = this;
-    this.ls.init({ Lists });
-    this.rs.init({ Rows, list: this.ls.list });
+    const { Rows, Taps, Collections, Manager, Modifier } = this;
+    this.cs.init({ Collections });
+    this.rs.init({ Rows, collection: this.cs.collection });
     this.ms.init({ Modifier });
-    this.ts.init({ Taps, lists: this.ls.lists, modifiers: this.ms.modifiers });
+    this.ts.init({ Taps, lists: this.cs.collections, modifiers: this.ms.modifiers });
     this.mgr.init({ Manager });
     [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier) &&
-      this.ls.list.formArray.disable();
+      this.cs.collection.formArray.disable();
   }
 }

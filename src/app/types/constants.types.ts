@@ -1,15 +1,15 @@
 export const FractalsParams = {
   Rows: 'Rows',
   Taps: 'Taps',
-  Lists: 'Lists',
   Manager: 'Manager',
   Modifier: 'Modifier',
+  Collections: 'Collections',
 };
 
 export const Fractals = {
   Root: 'Root',
-  Lists: 'Lists',
   Manager: 'Manager',
   Settings: 'Settings',
   Modifiers: 'Modifiers',
+  Collections: 'Collections',
 };

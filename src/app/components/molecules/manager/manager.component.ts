@@ -8,7 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import {
   BaseService,
   EventService,
-  ListService,
+  CollectionsService,
   ManagerService,
   ModifiersService,
   TapsService,
@@ -28,7 +28,7 @@ export class ManagerComponent implements OnInit {
 
   bs = inject(BaseService);
   ts = inject(TapsService);
-  ls = inject(ListService);
+  cs = inject(CollectionsService);
   es = inject(EventService);
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
@@ -45,7 +45,9 @@ export class ManagerComponent implements OnInit {
       await this.mgr.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(Fractals.Lists) ? this.ms.modifiers : this.ls.lists));
+      this.ts.$taps.update(prev =>
+        prev?.is(Fractals.Collections) ? this.ms.modifiers : this.cs.collections
+      );
       await this.bs.navigate({ [FractalsParams.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;

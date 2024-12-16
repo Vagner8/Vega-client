@@ -24,7 +24,7 @@ export enum Selects {
   Menu = 'Menu',
 }
 
-export enum Lists {
+export enum Collections {
   Home = 'Home',
   Users = 'Users',
   Products = 'Products',
