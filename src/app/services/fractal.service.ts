@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
 import { FractalDto, FractalsDto, IFractal, IFractals } from '@types';
 import { Fractal } from '@utils';
 
@@ -11,30 +10,23 @@ export class FractalService {
 
   get root(): IFractal {
     const root = this.$root();
-    if (!root) throw new Error('');
+    if (!root) throw new Error('Unable to get Root fractal');
     return root;
   }
 
   toFractal(dto: FractalDto): IFractal {
-    const fractal = new Fractal(dto);
-    fractal.cursor = 'Root';
-    fractal.parent = fractal;
-    fractal.fractals = this.toFractals(dto.fractals, fractal);
-    return fractal;
+    const root = new Fractal(dto, null);
+    root.fractals = this.toFractals(dto.fractals, root);
+    return root;
   }
 
   private toFractals(dto: FractalsDto | null, parent: IFractal): IFractals | null {
     if (!dto) return null;
     const result: IFractals = {};
     for (const indicator in dto) {
-      const fractal = new Fractal(dto[indicator]);
-      fractal.fractals = this.toFractals(fractal.dto.fractals, fractal);
-      fractal.parent = parent;
-      fractal.cursor = indicator;
+      const fractal = new Fractal(dto[indicator], parent);
+      fractal.fractals = this.toFractals(dto[indicator].fractals, fractal);
       result[indicator] = fractal;
-      fractal.formArray = new FormArray<FormGroup>(
-        fractal.fractals ? Object.values(fractal.fractals).map(fractal => fractal.formGroup) : []
-      );
     }
     return result;
   }

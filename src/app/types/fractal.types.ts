@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormRecord } from '@angular/forms';
 
 export enum Events {
   Hold = 'Hold',
@@ -75,22 +75,21 @@ export interface $Event {
 export interface IFractal {
   dto: FractalDto;
   status: FractalStatus;
-  cursor: string;
-  parent: IFractal;
+  parent: IFractal | null;
   fractals: IFractals | null;
-  formGroup: FormGroup;
-  formArray: FormArray<FormGroup>;
+  formRecord: FormRecord;
+  formArray: FormArray<FormRecord>;
+
+  get list(): IFractal[];
+  get cursor(): string;
+  get columns(): string[];
+  get indicators(): string[];
 
   is(test: string | object): boolean;
-  has(indicator: string): boolean;
   data(indicator: string): string;
   find(test: Events[number], fractals?: IFractals | null): IFractal;
-  list(): IFractal[];
-  clone(): IFractal;
-  update(): FractalDto;
-  columns(): string[];
-  indicators(): string[];
-  navigate?: <T>(state: T) => Promise<void>;
-  getFormControl(name: string): FormControl | null;
-  deleteNewFractals(): void;
+  update(): IFractal;
+  addChild(children: IFractal): void;
+  cloneChild(): IFractal;
+  getFormControl(name: string): FormControl;
 }

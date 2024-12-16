@@ -7,7 +7,7 @@
     position="end">
     @if (ts.$taps(); as taps) {
       <mat-list>
-        @for (indicator of taps.columns(); track indicator) {
+        @for (indicator of taps.columns; track indicator) {
           @switch (indicator) {
             @case ('New') {
               <app-new [tap]="taps.find(indicator)" />

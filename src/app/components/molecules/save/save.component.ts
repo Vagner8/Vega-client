@@ -26,22 +26,25 @@ export class SaveComponent {
   disabled = true;
 
   async saveHeld(): Promise<void> {
+    this.disabled = true;
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
 
-    for (const row of this.rs.$rows()) {
+    for (const row of this.rs.rows) {
       if (row.status === FractalStatus.New) {
         row.status = FractalStatus.Stable;
-        toAdd.push(row.update());
+        const updated = row.update();
+        toAdd.push(updated.dto);
+        this.ls.list.addChild(updated);
         continue;
       }
-      if (row.formGroup.dirty) toUpdate.push(row.update());
+      if (row.formRecord.dirty) toUpdate.push(row.update().dto);
     }
     toAdd.length > 0 && this.ds.add(toAdd).subscribe();
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
     await this.ms.set(null);
+    await this.rs.set(null);
     this.ls.set(this.ls.list);
-    this.rs.set(null);
   }
 
   saveTouched(tap: IFractal): void {

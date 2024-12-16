@@ -1,7 +1,7 @@
 import { Component, inject, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
 import { DataService, ListService, ModifiersService, RowsService } from '@services';
-import { FractalDto, FractalStatus, IFractal } from '@types';
+import { FractalDto, FractalStatus, IFractal, IFractals, Indicators } from '@types';
 
 @Component({
   selector: 'app-delete',
@@ -19,22 +19,28 @@ export class DeleteComponent {
   touch = output<IFractal>();
 
   async deleteHeld(): Promise<void> {
+    let newPosition = 1;
     const toDelete: FractalDto[] = [];
-    const rows = this.rs.$rows();
-    for (let i = 0; i <= this.ls.list.list().length; i++) {
-      if (!this.ls.list.fractals) return;
-      if (rows.includes(this.ls.list.fractals[i])) {
-        delete this.ls.list.fractals[i];
-        if (this.rs.$rows()[i].status !== FractalStatus.New) toDelete.push(this.rs.$rows()[i].dto);
+    const toUpdate: FractalDto[] = [];
+    const updatedFractals: IFractals = {};
+    for (const position in this.ls.list.fractals) {
+      const fractal = this.ls.list.fractals[position];
+      if (!this.rs.rows.includes(fractal)) {
+        const position = `${newPosition++}`;
+        fractal.dto.controls[Indicators.Position].data = position;
+        fractal.getFormControl(Indicators.Position)?.setValue(position);
+        updatedFractals[newPosition - 1] = fractal;
+        fractal.status !== FractalStatus.New && toUpdate.push(fractal.dto);
+      } else {
+        fractal.status !== FractalStatus.New && toDelete.push(fractal.dto);
       }
     }
-    for (const row of this.rs.$rows()) {
-      delete row.parent.fractals![row.cursor];
-      if (row.status !== FractalStatus.New) toDelete.push(row.update());
-    }
+    this.ls.list.fractals = updatedFractals;
     toDelete.length > 0 && this.ds.delete(toDelete).subscribe();
+    toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
     await this.ms.set(null);
-    await this.ls.set(this.ls.list);
+    await this.rs.set(null);
+    this.ls.set(this.ls.list);
   }
 
   deleteTouched(tap: IFractal): void {

@@ -34,7 +34,6 @@ export class SidenavComponent {
   }
 
   async listTouched(tap: IFractal): Promise<void> {
-    tap.deleteNewFractals();
     await this.rs.set(null);
     await this.ls.set(tap);
     this.ms.set(null);

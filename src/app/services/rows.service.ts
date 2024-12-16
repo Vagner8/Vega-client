@@ -9,6 +9,10 @@ export class RowsService {
   bs = inject(BaseService);
   $rows = signal<IFractal[]>([]);
 
+  get rows(): IFractal[] {
+    return this.$rows();
+  }
+
   init({ Rows, list }: { list: IFractal; Rows: string }): void {
     this.$rows.set(
       Rows
@@ -16,7 +20,7 @@ export class RowsService {
             try {
               return list.find(row);
             } catch {
-              return list.clone();
+              return list.cloneChild();
             }
           })
         : []
@@ -39,7 +43,7 @@ export class RowsService {
   }
 
   hold(list: IFractal | null): void {
-    this.$rows.update(prev => (prev.length === 0 && list ? list.list() : []));
+    this.$rows.update(prev => (prev.length === 0 && list ? list.list : []));
     this.navigate();
   }
 

@@ -19,8 +19,8 @@ export class NewComponent {
 
   async newTouch(tap: IFractal): Promise<void> {
     this.ls.list.formArray.enable();
-    await this.rs.set(this.ls.list.clone());
-    this.ms.set(tap);
     this.touch.emit(tap);
+    await this.ms.set(tap);
+    this.rs.set(this.ls.list.cloneChild());
   }
 }
