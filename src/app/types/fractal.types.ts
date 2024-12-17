@@ -31,6 +31,7 @@ export enum Collections {
 }
 
 export enum Modifiers {
+  App = 'App',
   New = 'New',
   Edit = 'Edit',
   Save = 'Save',
@@ -77,13 +78,14 @@ export interface IFractal {
   status: FractalStatus;
   parent: IFractal | null;
   fractals: IFractals | null;
-  formRecord: FormRecord;
   formArray: FormArray<FormRecord>;
+  formRecord: FormRecord;
 
   get list(): IFractal[];
   get cursor(): string;
   get columns(): string[];
   get indicators(): string[];
+  get controlsList(): ControlDto[];
 
   is(test: string | object): boolean;
   data(indicator: string): string;

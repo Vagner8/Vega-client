@@ -1,5 +1,13 @@
 import { FormArray, FormControl, FormRecord } from '@angular/forms';
-import { FractalDto, IFractals, IFractal, Indicators, ControlsDto, FractalStatus } from '@types';
+import {
+  FractalDto,
+  IFractals,
+  IFractal,
+  Indicators,
+  ControlsDto,
+  FractalStatus,
+  ControlDto,
+} from '@types';
 import { v4 } from 'uuid';
 
 export class Fractal implements IFractal {
@@ -20,6 +28,10 @@ export class Fractal implements IFractal {
 
   get list(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
+  }
+
+  get controlsList(): ControlDto[] {
+    return Object.values(this.dto.controls);
   }
 
   get cursor(): string {

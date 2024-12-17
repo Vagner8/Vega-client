@@ -1,16 +1,48 @@
-<mat-accordion class="example-headers-align">
-  @if (fractals.length > 0) {
-    @for (fractal of fractals; track $index) {
-      <mat-expansion-panel hideToggle (afterExpand)="afterExpand(fractal)">
-        <mat-expansion-panel-header>
-          <mat-panel-title> {{ fractal.cursor }}</mat-panel-title>
-          <mat-panel-description class="description">
-            <mat-icon>{{ fractal.data('Icon') }}</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <app-form-card [fractal]="fractal" />
-        <app-modifier [fractals]="fractal.list" />
-      </mat-expansion-panel>
-    }
+<!-- <mat-accordion>
+  @for (fractal of fractal.list; track $index) {
+    <mat-expansion-panel
+      [ngClass]="this.ams.$current() === fractal ? 'active' : ''"
+      (afterExpand)="afterExpand(fractal)"
+      (afterCollapse)="afterCollapse(fractal)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          @if (fractal.data('Icon'); as icon) {
+            <mat-icon class="icon">{{ icon }}</mat-icon>
+          }
+          {{ fractal.cursor }}</mat-panel-title
+        >
+      </mat-expansion-panel-header>
+      <div class="children">
+        <ul class="list">
+          @for (control of fractal.controlsList; track $index) {
+            <li>
+              <mat-card appearance="outlined">
+                <mat-card-header>
+                  <mat-card-title-group>
+                    <mat-card-title>
+                      {{ control.indicator }}
+                    </mat-card-title>
+                  </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                  {{ control.data }}
+                </mat-card-content>
+              </mat-card>
+            </li>
+          }
+        </ul>
+        @if (fractal.fractals) {
+          <app-modifier [fractal]="fractal" />
+        }
+      </div>
+    </mat-expansion-panel>
   }
+</mat-accordion> -->
+
+<mat-accordion>
+  <app-expansion-panel [fractal]="fractal">
+    @for (fractal of fractal.list; track $index) {
+      <app-modifier [fractal]="fractal" />
+    }
+  </app-expansion-panel>
 </mat-accordion>

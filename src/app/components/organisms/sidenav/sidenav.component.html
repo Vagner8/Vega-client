@@ -25,6 +25,9 @@
             @case ('Delete') {
               <app-delete [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
             }
+            @case ('App') {
+              <app-tap [tap]="taps.find(indicator)" (touch)="appModifierTouched($event)" />
+            }
             @default {
               <app-tap [tap]="taps.find(indicator)" (touch)="listTouched($event)" />
             }

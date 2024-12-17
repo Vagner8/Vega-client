@@ -17,7 +17,7 @@ export class NewComponent {
   @Input() tap!: IFractal;
   touch = output<IFractal>();
 
-  async newTouch(tap: IFractal): Promise<void> {
+  async newTouched(tap: IFractal): Promise<void> {
     this.cs.collection.formArray.enable();
     this.touch.emit(tap);
     await this.ms.set(tap);

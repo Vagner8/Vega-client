@@ -1,0 +1,36 @@
+<mat-expansion-panel
+  [ngClass]="this.ams.$current() === fractal ? 'active' : ''"
+  (afterExpand)="afterExpand(fractal)"
+  (afterCollapse)="afterCollapse(fractal)">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      @if (fractal.data('Icon'); as icon) {
+        <mat-icon class="icon">{{ icon }}</mat-icon>
+      }
+      {{ fractal.cursor }}</mat-panel-title
+    >
+  </mat-expansion-panel-header>
+  <div class="children">
+    <ul class="list">
+      @for (control of fractal.controlsList; track $index) {
+        <li>
+          <mat-card appearance="outlined">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>
+                  {{ control.indicator }}
+                </mat-card-title>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              {{ control.data }}
+            </mat-card-content>
+          </mat-card>
+        </li>
+      }
+    </ul>
+    @if (fractal.fractals) {
+      <ng-content />
+    }
+  </div>
+</mat-expansion-panel>

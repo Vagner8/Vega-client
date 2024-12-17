@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { FractalsParams, Collections } from '@types';
-import { PageComponent } from '@components/organisms';
+import { ScreenComponent } from '@components/organisms';
 
 export const routes: Routes = [
   {
     path: `:${FractalsParams.Collections}`,
-    component: PageComponent,
+    component: ScreenComponent,
   },
   { path: '**', redirectTo: Collections.Home },
 ];

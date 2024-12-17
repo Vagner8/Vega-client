@@ -1,0 +1,23 @@
+@if (cs.$collection(); as collection) {
+  @if (Modifier) {
+    <app-rows-modifier [rows]="rs.$rows()" />
+  }
+  @if (!Modifier) {
+    @switch (Collections) {
+      @case ('Home') {
+        <h1>Home</h1>
+      }
+      @case ('App') {
+        <app-modifier [fractal]="fs.root" />
+      }
+      @default {
+        <app-list
+          [rows]="rs.$rows()"
+          [columns]="collection.columns"
+          [dataSource]="collection.list"
+          (hold)="rowHeld(collection)"
+          (touch)="rowTouched($event)" />
+      }
+    }
+  }
+}

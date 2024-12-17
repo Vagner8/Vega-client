@@ -1,0 +1,22 @@
+@use 'variables.scss' as *;
+
+.icon {
+  margin-right: $size-small;
+}
+
+.list,
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: $size-medium;
+}
+
+.mat-expansion-panel {
+  border: solid 1px $color-border;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.mat-expansion-panel.active {
+  background-color: $color-secondary;
+}

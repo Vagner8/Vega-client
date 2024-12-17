@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CollectionsService, ModifiersService } from '@services';
 import { Modifiers } from '@types';
 
@@ -15,8 +15,9 @@ export class HeaderComponent {
   cs = inject(CollectionsService);
   ms = inject(ModifiersService);
 
-  get modifier(): string | undefined {
+  title = computed<string>(() => {
     const modifier = this.ms.$modifier();
-    return modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
-  }
+    const modifierTitle = modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
+    return `${this.cs.$collection()?.cursor} ${modifierTitle || ''}`;
+  });
 }

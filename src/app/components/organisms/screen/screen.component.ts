@@ -14,13 +14,13 @@ import { AppModifierComponent } from '../app-modifier/app-modifier.component';
 import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component';
 
 @Component({
-  selector: 'app-page',
+  selector: 'app-screen',
   standalone: true,
   imports: [CollectionComponent, AppModifierComponent, RowsModifierComponent],
-  templateUrl: './page.component.html',
+  templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageComponent implements OnInit {
+export class ScreenComponent implements OnInit {
   bs = inject(BaseService);
   ts = inject(TapsService);
   cs = inject(CollectionsService);
