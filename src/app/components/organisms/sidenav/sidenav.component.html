@@ -5,7 +5,7 @@
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (ts.$taps(); as taps) {
+    @if (ts.$current(); as taps) {
       <mat-list>
         @for (indicator of taps.columns; track indicator) {
           @switch (indicator) {
@@ -15,8 +15,8 @@
             @case ('Save') {
               <app-save
                 [tap]="taps.find(indicator)"
-                [newTapTouched]="!!ms.$modifier()?.is('New')"
-                [isRowsFormDirty]="cs.collection.formArray.dirty"
+                [newTapTouched]="!!ms.$current()?.is('New')"
+                [isRowsFormDirty]="cs.current.formArray.dirty"
                 (touch)="modifierTouched($event)" />
             }
             @case ('Edit') {
@@ -26,7 +26,7 @@
               <app-delete [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
             }
             @case ('App') {
-              <app-tap [tap]="taps.find(indicator)" (touch)="appModifierTouched($event)" />
+              <app-tap [tap]="taps.find(indicator)" (touch)="listTouched($event)" />
             }
             @default {
               <app-tap [tap]="taps.find(indicator)" (touch)="listTouched($event)" />

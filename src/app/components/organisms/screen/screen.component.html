@@ -1,6 +1,6 @@
-@if (cs.$collection(); as collection) {
+@if (cs.$current(); as collection) {
   @if (Modifier) {
-    <app-rows-modifier [rows]="rs.$rows()" />
+    <app-rows-modifier [rows]="rs.$currents()" />
   }
   @if (!Modifier) {
     @switch (Collections) {
@@ -8,11 +8,11 @@
         <h1>Home</h1>
       }
       @case ('App') {
-        <app-modifier [fractal]="fs.root" />
+        <app-modifier [fractal]="rts.current" />
       }
       @default {
         <app-list
-          [rows]="rs.$rows()"
+          [rows]="rs.$currents()"
           [columns]="collection.columns"
           [dataSource]="collection.list"
           (hold)="rowHeld(collection)"

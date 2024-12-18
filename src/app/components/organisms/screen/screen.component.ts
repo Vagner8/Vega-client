@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angu
 import { CollectionComponent } from '@components/atoms';
 import { Events, Fractals, IFractal, Modifiers } from '@types';
 import {
-  BaseService,
-  FractalService,
+  RootService,
   CollectionsService,
   ManagerService,
   ModifiersService,
@@ -21,19 +20,18 @@ import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScreenComponent implements OnInit {
-  bs = inject(BaseService);
   ts = inject(TapsService);
-  cs = inject(CollectionsService);
   rs = inject(RowsService);
-  fs = inject(FractalService);
   ms = inject(ModifiersService);
+  cs = inject(CollectionsService);
+  rts = inject(RootService);
   mgr = inject(ManagerService);
 
   @Input() Taps = '';
   @Input() Rows = '';
-  @Input() Collections = '';
   @Input() Manager = '';
   @Input() Modifier = '';
+  @Input() Collections = '';
 
   ngOnInit(): void {
     this.init();
@@ -53,19 +51,19 @@ export class ScreenComponent implements OnInit {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
     }
-    if (this.ts.$taps()?.is(Fractals.Collections)) {
-      this.ts.set(this.ms.modifiers);
+    if (this.ts.$current()?.is(Fractals.Collections)) {
+      this.ts.set(this.ms.parent);
     }
   }
 
   private init(): void {
     const { Rows, Taps, Collections, Manager, Modifier } = this;
-    this.cs.init({ Collections });
-    this.rs.init({ Rows, collection: this.cs.collection });
-    this.ms.init({ Modifier });
-    this.ts.init({ Taps, lists: this.cs.collections, modifiers: this.ms.modifiers });
+    this.cs.init({ root: this.rts.current, Collections });
+    this.rs.init({ Rows, collection: this.cs.current });
+    this.ms.init({ root: this.rts.current, Modifier });
+    this.ts.init({ Taps, lists: this.cs.parent, modifiers: this.ms.parent });
     this.mgr.init({ Manager });
     [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier) &&
-      this.cs.collection.formArray.disable();
+      this.cs.current.formArray.disable();
   }
 }

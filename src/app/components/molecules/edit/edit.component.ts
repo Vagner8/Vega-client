@@ -14,10 +14,10 @@ export class EditComponent {
   cs = inject(CollectionsService);
   @Input() tap!: IFractal;
   touch = output<IFractal>();
-  disabled = computed(() => this.rs.$rows().length === 0);
+  disabled = computed(() => this.rs.$currents().length === 0);
 
   editTouched(tap: IFractal): void {
-    this.cs.collection.formArray.enable();
+    this.cs.current.formArray.enable();
     this.touch.emit(tap);
   }
 }

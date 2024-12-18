@@ -30,12 +30,12 @@ export class SaveComponent {
     const toAdd: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
 
-    for (const row of this.rs.rows) {
+    for (const row of this.rs.$currents()) {
       if (row.status === FractalStatus.New) {
         row.status = FractalStatus.Stable;
         const updated = row.update();
         toAdd.push(updated.dto);
-        this.cs.collection.addChild(updated);
+        this.cs.current.addChild(updated);
         continue;
       }
       if (row.formRecord.dirty) toUpdate.push(row.update().dto);
@@ -44,11 +44,11 @@ export class SaveComponent {
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
     await this.ms.set(null);
     await this.rs.set(null);
-    this.cs.set(this.cs.collection);
+    this.cs.set(this.cs.current);
   }
 
   saveTouched(tap: IFractal): void {
-    this.cs.collection.formArray.disable();
+    this.cs.current.formArray.disable();
     this.touch.emit(tap);
   }
 }

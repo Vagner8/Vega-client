@@ -23,9 +23,9 @@ export class DeleteComponent {
     const toDelete: FractalDto[] = [];
     const toUpdate: FractalDto[] = [];
     const updatedFractals: IFractals = {};
-    for (const position in this.cs.collection.fractals) {
-      const fractal = this.cs.collection.fractals[position];
-      if (!this.rs.rows.includes(fractal)) {
+    for (const position in this.cs.current.fractals) {
+      const fractal = this.cs.current.fractals[position];
+      if (!this.rs.$currents().includes(fractal)) {
         const position = `${newPosition++}`;
         fractal.dto.controls[Indicators.Position].data = position;
         fractal.getFormControl(Indicators.Position)?.setValue(position);
@@ -35,16 +35,16 @@ export class DeleteComponent {
         fractal.status !== FractalStatus.New && toDelete.push(fractal.dto);
       }
     }
-    this.cs.collection.fractals = updatedFractals;
+    this.cs.current.fractals = updatedFractals;
     toDelete.length > 0 && this.ds.delete(toDelete).subscribe();
     toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
     await this.ms.set(null);
     await this.rs.set(null);
-    this.cs.set(this.cs.collection);
+    this.cs.set(this.cs.current);
   }
 
   deleteTouched(tap: IFractal): void {
-    this.cs.collection.formArray.disable();
+    this.cs.current.formArray.disable();
     this.touch.emit(tap);
   }
 }

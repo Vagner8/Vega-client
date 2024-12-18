@@ -11,24 +11,11 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <ul class="list">
-      @for (control of fractal.controlsList; track $index) {
-        <li>
-          <mat-card appearance="outlined">
-            <mat-card-header>
-              <mat-card-title-group>
-                <mat-card-title>
-                  {{ control.indicator }}
-                </mat-card-title>
-              </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-content>
-              {{ control.data }}
-            </mat-card-content>
-          </mat-card>
-        </li>
-      }
-    </ul>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <app-form [fractal]="fractal" />
+      </mat-card-content>
+    </mat-card>
     @if (fractal.fractals) {
       <ng-content />
     }

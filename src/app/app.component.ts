@@ -5,7 +5,7 @@ import { ToolbarComponent } from '@components/molecules';
 import { Fractals } from '@types';
 import {
   DataService,
-  FractalService,
+  RootService,
   CollectionsService,
   ManagerService,
   ModifiersService,
@@ -20,18 +20,18 @@ import {
 })
 export class AppComponent implements OnInit {
   ds = inject(DataService);
-  fs = inject(FractalService);
   ms = inject(ModifiersService);
   cs = inject(CollectionsService);
+  rts = inject(RootService);
   mgr = inject(ManagerService);
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
-      const root = this.fs.toFractal(dto);
-      this.cs.collections = root.find(Fractals.Collections);
-      this.mgr.manager = root.find(Fractals.Manager);
-      this.ms.modifiers = root.find(Fractals.Modifiers);
-      this.fs.$root.set(root);
+      const root = this.rts.toFractal(dto);
+      this.ms.parent = root.find(Fractals.Modifiers);
+      this.cs.parent = root.find(Fractals.Collections);
+      this.mgr.$current.set(root.find(Fractals.Manager));
+      this.rts.$current.set(root);
     });
   }
 }

@@ -48,8 +48,4 @@ export class SidenavComponent {
   modifierTouched(tap: IFractal): void {
     this.ms.set(tap);
   }
-
-  appModifierTouched(tap: IFractal): void {
-    this.cs.set(tap);
-  }
 }

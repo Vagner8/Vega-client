@@ -1,9 +1,7 @@
-import { Injectable, signal } from '@angular/core';
-import { IFractal } from '@types';
+import { Injectable } from '@angular/core';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppModifierService {
-  $current = signal<IFractal | null>(null);
-}
+export class AppModifierService extends BaseService {}

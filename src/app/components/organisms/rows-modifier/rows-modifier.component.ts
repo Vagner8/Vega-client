@@ -16,7 +16,7 @@ export class RowsModifierComponent {
   ms = inject(ModifiersService);
   @Input() rows: IFractal[] = [];
   subtitle = computed(() => {
-    const cursor = this.ms.$modifier()?.cursor;
+    const cursor = this.ms.$current()?.cursor;
     return cursor === Modifiers.New ? Modifiers.Edit : cursor;
   });
 }

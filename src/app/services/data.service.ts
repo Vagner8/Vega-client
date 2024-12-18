@@ -8,14 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private id = ENV.ID;
-  private api = ENV.API;
-  private fractalApi = `${this.api}fractal`;
+  private fractalApi = `${ENV.API}fractal`;
 
   constructor(private http: HttpClient) {}
 
   get(): Observable<FractalDto> {
-    return this.http.get<FractalDto>(`${this.fractalApi}?id=${this.id}`);
+    return this.http.get<FractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
   }
 
   add(fractal: FractalDto[]): Observable<FractalDto> {

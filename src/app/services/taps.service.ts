@@ -1,20 +1,17 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FractalsParams, IFractal } from '@types';
 import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TapsService {
-  bs = inject(BaseService);
-  $taps = signal<IFractal | null>(null);
-
+export class TapsService extends BaseService {
   init({ Taps, lists, modifiers }: { Taps: string; lists: IFractal; modifiers: IFractal }): void {
-    this.$taps.set(Taps === FractalsParams.Collections ? lists : modifiers);
+    this.$current.set(Taps === FractalsParams.Collections ? lists : modifiers);
   }
 
   async set(taps: IFractal): Promise<void> {
-    this.$taps.set(taps);
-    await this.bs.navigate({ [FractalsParams.Taps]: taps.cursor });
+    this.$current.set(taps);
+    await this.navigate({ [FractalsParams.Taps]: taps.cursor });
   }
 }

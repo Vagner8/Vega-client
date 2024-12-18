@@ -1,19 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FractalDto, FractalsDto, IFractal, IFractals } from '@types';
 import { Fractal } from '@utils';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FractalService {
-  $root = signal<IFractal | null>(null);
-
-  get root(): IFractal {
-    const root = this.$root();
-    if (!root) throw new Error('Unable to get Root fractal');
-    return root;
-  }
-
+export class RootService extends BaseService {
   toFractal(dto: FractalDto): IFractal {
     const root = new Fractal(dto, null);
     root.fractals = this.toFractals(dto.fractals, root);
