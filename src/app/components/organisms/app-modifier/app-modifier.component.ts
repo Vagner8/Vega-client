@@ -13,14 +13,5 @@ import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.compo
 })
 export class AppModifierComponent {
   ams = inject(AppModifierService);
-
   @Input() fractal!: IFractal;
-
-  afterExpand(fractal: IFractal): void {
-    this.ams.$current.set(fractal);
-  }
-
-  afterCollapse(fractal: IFractal): void {
-    this.ams.$current.set(fractal.parent ? fractal.parent : null);
-  }
 }

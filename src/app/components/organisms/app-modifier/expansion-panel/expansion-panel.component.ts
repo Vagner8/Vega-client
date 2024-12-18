@@ -1,24 +1,20 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { FormComponent } from '@components/atoms';
-import { MatCardModule, MatExpansionModule, MatIconModule } from '@mat';
+import { Component, inject, Input } from '@angular/core';
+import { MatCardModule, MatExpansionModule, MatIconModule, MatTableModule } from '@mat';
 import { AppModifierService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
-  imports: [MatExpansionModule, MatIconModule, MatCardModule, FormComponent, NgClass],
+  imports: [MatExpansionModule, MatIconModule, MatCardModule, MatTableModule, NgClass],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })
-export class ExpansionPanelComponent implements OnInit {
+export class ExpansionPanelComponent {
   ams = inject(AppModifierService);
   @Input() fractal!: IFractal;
-
-  ngOnInit(): void {
-    this.fractal.formRecord.disable();
-  }
+  columns = ['indicator', 'data'];
 
   afterExpand(fractal: IFractal): void {
     this.ams.$current.set(fractal);

@@ -10,6 +10,12 @@
   gap: $size-medium;
 }
 
+.table {
+  border: solid 1px $color-border;
+  width: 100%;
+  overflow: auto;
+}
+
 .mat-expansion-panel {
   border: solid 1px $color-border;
   box-shadow: none !important;
@@ -18,4 +24,16 @@
 
 .mat-expansion-panel.active {
   background-color: $color-secondary;
+}
+
+.table-wrapper {
+  overflow: auto;
+}
+
+::ng-deep {
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      padding: 0 $size-small $size-small;
+    }
+  }
 }

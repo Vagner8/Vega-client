@@ -1,48 +1,7 @@
-<!-- <mat-accordion>
-  @for (fractal of fractal.list; track $index) {
-    <mat-expansion-panel
-      [ngClass]="this.ams.$current() === fractal ? 'active' : ''"
-      (afterExpand)="afterExpand(fractal)"
-      (afterCollapse)="afterCollapse(fractal)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          @if (fractal.data('Icon'); as icon) {
-            <mat-icon class="icon">{{ icon }}</mat-icon>
-          }
-          {{ fractal.cursor }}</mat-panel-title
-        >
-      </mat-expansion-panel-header>
-      <div class="children">
-        <ul class="list">
-          @for (control of fractal.controlsList; track $index) {
-            <li>
-              <mat-card appearance="outlined">
-                <mat-card-header>
-                  <mat-card-title-group>
-                    <mat-card-title>
-                      {{ control.indicator }}
-                    </mat-card-title>
-                  </mat-card-title-group>
-                </mat-card-header>
-                <mat-card-content>
-                  {{ control.data }}
-                </mat-card-content>
-              </mat-card>
-            </li>
-          }
-        </ul>
-        @if (fractal.fractals) {
-          <app-modifier [fractal]="fractal" />
-        }
-      </div>
-    </mat-expansion-panel>
-  }
-</mat-accordion> -->
-
-<mat-accordion>
-  <app-expansion-panel [fractal]="fractal">
+<app-expansion-panel [fractal]="fractal">
+  <mat-accordion>
     @for (fractal of fractal.list; track $index) {
       <app-modifier [fractal]="fractal" />
     }
-  </app-expansion-panel>
-</mat-accordion>
+  </mat-accordion>
+</app-expansion-panel>
