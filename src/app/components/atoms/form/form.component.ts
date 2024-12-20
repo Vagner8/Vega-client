@@ -14,4 +14,8 @@ export class FormComponent {
   @Input({ required: true }) fractal!: IFractal;
   change = output<IFractal>();
   prevRawValue!: Record<string, string>;
+
+  get names(): string[] {
+    return Object.keys(this.fractal.formRecord.controls);
+  }
 }

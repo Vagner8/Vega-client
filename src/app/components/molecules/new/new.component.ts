@@ -20,9 +20,9 @@ export class NewComponent {
 
   async newTouched(tap: IFractal): Promise<void> {
     if (this.cs.$current()?.is(Modifiers.App)) {
-      this.ams.current.formRecord.enable();
-      this.ams.current.formRecord.addControl('Indicator', new FormControl(''));
-      this.ams.current.formRecord.addControl('Data', new FormControl(''));
+      // this.ams.current.formRecord.enable();
+      this.ams.current.formRecord.addControl('Indicator', new FormControl(''), { emitEvent: true });
+      // this.ams.current.formRecord.addControl('Data', new FormControl(''), { emitEvent: true });
       console.log('🚀 ~ this.ams.current:', this.ams.current);
     } else {
       this.cs.current.formArray.enable();

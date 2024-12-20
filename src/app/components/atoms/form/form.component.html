@@ -1,21 +1,19 @@
 <form [formGroup]="fractal.formRecord">
-  @for (indicator of fractal.indicators; track indicator) {
-    @if (indicator !== 'Position') {
-      <mat-form-field class="form-field">
-        <mat-label i18n>{{ indicator }}</mat-label>
-        <input #inputElementRef [type]="indicator" matInput formControlName="{{ indicator }}" />
-        @if (inputElementRef.value && !fractal.formRecord.disabled) {
-          <button
-            type="button"
-            matSuffix
-            mat-icon-button
-            i18n-aria-label
-            aria-label="Clear input"
-            (click)="fractal.formRecord.get(indicator)?.setValue('')">
-            <mat-icon>close</mat-icon>
-          </button>
-        }
-      </mat-form-field>
-    }
+  @for (name of names; track name) {
+    <mat-form-field class="form-field">
+      <mat-label i18n>{{ name }}</mat-label>
+      <input #inputElementRef [type]="name" matInput formControlName="{{ name }}" />
+      @if (inputElementRef.value && !fractal.formRecord.get(name)?.disabled) {
+        <button
+          type="button"
+          matSuffix
+          mat-icon-button
+          i18n-aria-label
+          aria-label="Clear input"
+          (click)="fractal.formRecord.get(name)?.setValue('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
   }
 </form>
