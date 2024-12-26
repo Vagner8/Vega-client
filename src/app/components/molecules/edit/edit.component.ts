@@ -1,6 +1,6 @@
-import { Component, computed, inject, Input, output } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { TapComponent } from '@components/atoms';
-import { CollectionsService, RowsService } from '@services';
+import { CollectionsService, ModifiersService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
@@ -10,14 +10,13 @@ import { IFractal } from '@types';
   templateUrl: './edit.component.html',
 })
 export class EditComponent {
-  rs = inject(RowsService);
+  ms = inject(ModifiersService);
   cs = inject(CollectionsService);
   @Input() tap!: IFractal;
   touch = output<IFractal>();
-  disabled = computed(() => this.rs.$currents().length === 0);
 
   editTouched(tap: IFractal): void {
-    this.cs.current.formArray.enable();
-    this.touch.emit(tap);
+    // this.cs.current.formArray.enable();
+    // this.touch.emit(tap);
   }
 }

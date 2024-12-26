@@ -31,16 +31,13 @@ module.exports = {
         ],
         quotes: ['error', 'single'],
         semi: ['error', 'always'],
-        'max-len': ['error', { code: 100 }],
+        'max-len': ['error', { code: 120 }],
         'prettier/prettier': ['error', require('./prettier.config')],
       },
     },
     {
       files: ['*.html'],
-      extends: [
-        'plugin:@angular-eslint/template/recommended',
-        'plugin:@angular-eslint/template/accessibility',
-      ],
+      extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
       rules: {},
     },
     {

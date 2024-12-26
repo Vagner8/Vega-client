@@ -10,14 +10,10 @@
         @for (indicator of taps.columns; track indicator) {
           @switch (indicator) {
             @case ('New') {
-              <app-new [tap]="taps.find(indicator)" />
+              <app-new [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
             }
             @case ('Save') {
-              <app-save
-                [tap]="taps.find(indicator)"
-                [newTapTouched]="!!ms.$current()?.is('New')"
-                [isRowsFormDirty]="cs.current.formArray.dirty"
-                (touch)="modifierTouched($event)" />
+              <app-save [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
             }
             @case ('Edit') {
               <app-edit [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />

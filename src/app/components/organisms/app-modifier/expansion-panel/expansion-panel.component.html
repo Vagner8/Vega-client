@@ -1,21 +1,23 @@
 <mat-expansion-panel
+  hideToggle
+  disabled
+  [expanded]="expanded"
   [ngClass]="this.ams.$current() === fractal ? 'active' : ''"
-  (afterExpand)="afterExpand(fractal)"
-  (afterCollapse)="afterCollapse(fractal)">
+  (closed)="closed.emit(fractal)"
+  (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
       @if (fractal.data('Icon'); as icon) {
-        <mat-icon class="icon">{{ icon }}</mat-icon>
+        <mat-icon class="icon" class="icon">{{ icon }}</mat-icon>
       }
-      {{ fractal.cursor }}</mat-panel-title
+      <span class="cursor">{{ fractal.cursor }}</span></mat-panel-title
     >
+    <button class="custom-toggle" mat-icon-button (click)="toggle()">
+      <mat-icon>{{ expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+    </button>
   </mat-expansion-panel-header>
   <div class="children">
-    <mat-card appearance="outlined">
-      <mat-card-content>
-        <app-form [fractal]="fractal" />
-      </mat-card-content>
-    </mat-card>
+    <app-collection [dataSource]="fractal.controlsList" [columns]="['indicator', 'data']" [rows]="rs.$currents()" />
     @if (fractal.fractals) {
       <ng-content />
     }

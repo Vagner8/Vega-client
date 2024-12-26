@@ -1,25 +1,11 @@
-<ul
-  class="list"
-  [class.two-items]="rows.length === 2"
-  [class.three-or-more-items]="rows.length >= 3">
+<!-- <ul class="list" [class.two-items]="rows.length === 2" [class.three-or-more-items]="rows.length >= 3">
   @for (row of rows; track row.dto.id) {
     <li class="item">
-      <mat-card appearance="outlined">
-        <mat-card-header>
-          <mat-card-title-group>
-            <button top type="button" mat-flat-button (click)="rs.delete(row)">Cancel</button>
-            <mat-card-title>{{
-              row.status === 'New' ? 'New' : row.data('Position')
-            }}</mat-card-title>
-            <mat-card-subtitle class="subtitle" [class]="subtitle()">{{
-              subtitle()
-            }}</mat-card-subtitle>
-          </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content>
-          <app-form [fractal]="row" />
-        </mat-card-content>
-      </mat-card>
+      <app-form-card
+        [title]="row.status === 'New' ? 'New' : row.data('Position')"
+        [subtitle]="subtitle() || ''"
+        [formRecord]="row.formRecord"
+        (cancel)="rs.delete(row)" />
     </li>
   }
-</ul>
+</ul> -->

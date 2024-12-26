@@ -1,0 +1,10 @@
+@use 'variables.scss' as *;
+
+.subtitle {
+  margin-bottom: $size-extra-small;
+  color: $color-success;
+}
+
+.Delete {
+  color: $color-danger;
+}

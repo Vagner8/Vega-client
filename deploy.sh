@@ -9,7 +9,7 @@ eco $(node --version)
 eco $(npm --version)
 
 git clone https://github.com/Vagner8/fractal-client.git
-cd ./IFractal-client
+cd ./Fractal-client
 
 npm i
 npm install -g @angular/cli

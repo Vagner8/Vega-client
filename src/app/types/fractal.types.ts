@@ -1,5 +1,3 @@
-import { FormArray, FormControl, FormRecord } from '@angular/forms';
-
 export enum Events {
   Hold = 'Hold',
   Touch = 'Touch',
@@ -44,21 +42,20 @@ export enum FractalStatus {
   Stable = 'Stable',
 }
 
-export type ControlsDto = Record<string, ControlDto>;
 export type FractalsDto = Record<string, FractalDto>;
 export type IFractals = Record<string, IFractal>;
-
-export interface FractalEvent {
-  type: keyof typeof Events;
-  fractal: IFractal;
-}
+export type ControlsDto = Record<string, ControlDto>;
 
 export interface ControlDto {
   id: string;
   data: string;
   parentId: string;
   indicator: string;
-  client?: boolean;
+}
+
+export interface FractalEvent {
+  type: keyof typeof Events;
+  fractal: IFractal;
 }
 
 export interface FractalDto {
@@ -68,30 +65,19 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
-export interface $Event {
-  type: keyof typeof Events;
-  fractal: IFractal;
-}
-
 export interface IFractal {
   dto: FractalDto;
   status: FractalStatus;
   parent: IFractal | null;
   fractals: IFractals | null;
-  formArray: FormArray<FormRecord>;
-  formRecord: FormRecord;
 
   get list(): IFractal[];
   get cursor(): string;
   get columns(): string[];
-  get indicators(): string[];
   get controlsList(): ControlDto[];
 
   is(test: string | object): boolean;
   data(indicator: string): string;
   find(test: Events[number], fractals?: IFractals | null): IFractal;
-  update(): IFractal;
-  addChild(children: IFractal): void;
   cloneChild(): IFractal;
-  getFormControl(name: string): FormControl;
 }

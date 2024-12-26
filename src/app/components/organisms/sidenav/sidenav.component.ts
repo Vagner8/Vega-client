@@ -4,13 +4,14 @@ import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
 import {
+  AppModifierService,
   CollectionsService,
   ManagerService,
   ModifiersService,
   RowsService,
   TapsService,
 } from '@services';
-import { IFractal } from '@types';
+import { IFractal, Modifiers } from '@types';
 
 @Component({
   selector: 'app-sidenav',
@@ -30,10 +31,11 @@ import { IFractal } from '@types';
 })
 export class SidenavComponent {
   ts = inject(TapsService);
-  cs = inject(CollectionsService);
   rs = inject(RowsService);
   ms = inject(ModifiersService);
+  cs = inject(CollectionsService);
   mgr = inject(ManagerService);
+  ams = inject(AppModifierService);
 
   hold(tap: IFractal): void {
     console.log('🚀 ~ tap:', tap);
@@ -46,6 +48,10 @@ export class SidenavComponent {
   }
 
   modifierTouched(tap: IFractal): void {
-    this.ms.set(tap);
+    if (this.cs.current.is(Modifiers.App)) {
+      this.ms.$current.set(tap);
+    } else {
+      this.ms.set(tap);
+    }
   }
 }

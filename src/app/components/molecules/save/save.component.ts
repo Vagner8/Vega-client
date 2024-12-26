@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input, output } from '@angular/core';
 import { TapComponent } from '../../atoms/tap/tap.component';
-import { FractalDto, FractalStatus, IFractal } from '@types';
+import { FractalDto, FractalStatus, IFractal, Modifiers } from '@types';
 import { DataService, CollectionsService, ModifiersService, RowsService } from '@services';
 
 @Component({
@@ -13,42 +13,40 @@ import { DataService, CollectionsService, ModifiersService, RowsService } from '
 export class SaveComponent {
   rs = inject(RowsService);
   ds = inject(DataService);
-  cs = inject(CollectionsService);
   ms = inject(ModifiersService);
+  cs = inject(CollectionsService);
   @Input() tap!: IFractal;
-  @Input() set newTapTouched(value: boolean) {
-    this.disabled = this.disabled && !value;
-  }
-  @Input() set isRowsFormDirty(value: boolean) {
-    this.disabled = this.disabled && !value;
-  }
   touch = output<IFractal>();
-  disabled = true;
 
   async saveHeld(): Promise<void> {
-    this.disabled = true;
-    const toAdd: FractalDto[] = [];
-    const toUpdate: FractalDto[] = [];
-
-    for (const row of this.rs.$currents()) {
-      if (row.status === FractalStatus.New) {
-        row.status = FractalStatus.Stable;
-        const updated = row.update();
-        toAdd.push(updated.dto);
-        this.cs.current.addChild(updated);
-        continue;
-      }
-      if (row.formRecord.dirty) toUpdate.push(row.update().dto);
-    }
-    toAdd.length > 0 && this.ds.add(toAdd).subscribe();
-    toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
-    await this.ms.set(null);
-    await this.rs.set(null);
-    this.cs.set(this.cs.current);
+    // if (this.cs.$current()?.is(Modifiers.App)) {
+    //   this.ms.currentHeld$.next(this.tap);
+    // } else {
+    //   const toAdd: FractalDto[] = [];
+    //   const toUpdate: FractalDto[] = [];
+    //   for (const row of this.rs.$currents()) {
+    //     if (row.status === FractalStatus.New) {
+    //       row.status = FractalStatus.Stable;
+    //       const updated = row.update();
+    //       toAdd.push(updated.dto);
+    //       this.cs.current.addChild(updated);
+    //       continue;
+    //     }
+    //     if (row.formRecord.dirty) toUpdate.push(row.update().dto);
+    //   }
+    //   toAdd.length > 0 && this.ds.add(toAdd).subscribe();
+    //   toUpdate.length > 0 && this.ds.update(toUpdate).subscribe();
+    //   await this.ms.set(null);
+    //   await this.rs.set(null);
+    //   this.cs.set(this.cs.current);
+    // }
   }
 
   saveTouched(tap: IFractal): void {
-    this.cs.current.formArray.disable();
-    this.touch.emit(tap);
+    // if (!this.cs.current.is(Modifiers.App)) {
+    //   this.ms.$current.set(tap);
+    //   this.cs.current.formArray.disable();
+    //   this.touch.emit(tap);
+    // }
   }
 }

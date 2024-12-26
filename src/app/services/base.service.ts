@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Params, QueryParamsHandling, Router } from '@angular/router';
 import { IFractal } from '@types';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,6 +9,8 @@ import { IFractal } from '@types';
 export class BaseService {
   router = inject(Router);
   $current = signal<IFractal | null>(null);
+  currentHeld$ = new Subject<IFractal | null>();
+  currentTouched$ = new Subject<IFractal | null>();
   private _parent: IFractal | null = null;
 
   get parent(): IFractal {

@@ -17,3 +17,4 @@ export * from '@angular/material/bottom-sheet';
 export * from '@angular/material/slide-toggle';
 export * from '@angular/material/expansion';
 export * from '@angular/material/tree';
+export * from '@angular/material/stepper';

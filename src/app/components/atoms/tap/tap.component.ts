@@ -13,7 +13,6 @@ import { IFractal } from '@types';
 })
 export class TapComponent {
   @Input() tap!: IFractal;
-  @Input() disabled = false;
 
   hold = output<IFractal>();
   touch = output<IFractal>();

@@ -1,14 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CollectionComponent } from '@components/atoms';
-import { Events, Fractals, IFractal, Modifiers } from '@types';
-import {
-  RootService,
-  CollectionsService,
-  ManagerService,
-  ModifiersService,
-  RowsService,
-  TapsService,
-} from '@services';
+import { Events, Fractals, IFractal } from '@types';
+import { RootService, CollectionsService, ManagerService, ModifiersService, RowsService, TapsService } from '@services';
 import { AppModifierComponent } from '../app-modifier/app-modifier.component';
 import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component';
 
@@ -57,13 +50,13 @@ export class ScreenComponent implements OnInit {
   }
 
   private init(): void {
-    const { Rows, Taps, Collections, Manager, Modifier } = this;
-    this.cs.init({ root: this.rts.current, Collections });
-    this.rs.init({ Rows, collection: this.cs.current });
-    this.ms.init({ root: this.rts.current, Modifier });
-    this.ts.init({ Taps, lists: this.cs.parent, modifiers: this.ms.parent });
-    this.mgr.init({ Manager });
-    [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier) &&
-      this.cs.current.formArray.disable();
+    // const { Rows, Taps, Collections, Manager, Modifier } = this;
+    // this.cs.init({ root: this.rts.current, Collections });
+    // this.rs.init({ Rows, collection: this.cs.current });
+    // this.ms.init({ root: this.rts.current, Modifier });
+    // this.ts.init({ Taps, lists: this.cs.parent, modifiers: this.ms.parent });
+    // this.mgr.init({ Manager });
+    // [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier)
+    // && this.cs.current.formArray.disable();
   }
 }

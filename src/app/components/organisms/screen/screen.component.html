@@ -1,23 +1,26 @@
-@if (cs.$current(); as collection) {
-  @if (Modifier) {
-    <app-rows-modifier [rows]="rs.$currents()" />
-  }
-  @if (!Modifier) {
-    @switch (Collections) {
-      @case ('Home') {
-        <h1>Home</h1>
-      }
-      @case ('App') {
-        <app-modifier [fractal]="rts.current" />
-      }
-      @default {
-        <app-list
-          [rows]="rs.$currents()"
-          [columns]="collection.columns"
-          [dataSource]="collection.list"
-          (hold)="rowHeld(collection)"
-          (touch)="rowTouched($event)" />
+@if (rts.$current(); as root) {
+  <app-modifier [fractal]="root" />
+  <!-- @if (cs.$current(); as collection) {
+    @if (Modifier) {
+      <app-rows-modifier [rows]="rs.$currents()" />
+    }
+    @if (!Modifier) {
+      @switch (Collections) {
+        @case ('Home') {
+          <h1>Home</h1>
+        }
+        @case ('App') {
+          <app-modifier [fractal]="root" />
+        }
+        @default {
+          <app-collection
+            [rows]="rs.$currents()"
+            [columns]="collection.columns"
+            [dataSource]="collection.list"
+            (hold)="rowHeld(collection)"
+            (touch)="rowTouched($event)" />
+        }
       }
     }
-  }
+  } -->
 }

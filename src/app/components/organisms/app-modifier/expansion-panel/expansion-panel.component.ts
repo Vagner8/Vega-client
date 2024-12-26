@@ -1,32 +1,35 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input, OnInit, signal } from '@angular/core';
-import { FormComponent } from '@components/atoms';
-import { MatCardModule, MatExpansionModule, MatIconModule, MatTableModule } from '@mat';
-import { AppModifierService } from '@services';
-import { IFractal } from '@types';
+import { Component, inject, Input, output, signal } from '@angular/core';
+import { MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatTableModule } from '@mat';
+import { AppModifierService, ModifiersService, RowsService } from '@services';
+import { ControlDto, IFractal } from '@types';
+import { CollectionComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
   imports: [
     MatExpansionModule,
+    MatButtonModule,
     MatIconModule,
     MatCardModule,
     MatTableModule,
-    FormComponent,
+    CollectionComponent,
     NgClass,
   ],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })
-export class ExpansionPanelComponent implements OnInit {
+export class ExpansionPanelComponent {
+  rs = inject(RowsService);
+  ms = inject(ModifiersService);
   ams = inject(AppModifierService);
   @Input() fractal!: IFractal;
-  columns = ['indicator', 'data'];
+  closed = output<IFractal>();
+  expanded = false;
 
-  ngOnInit(): void {
-    console.count('ExpansionPanelComponent');
-    this.fractal.formRecord.disable();
+  toggle(): void {
+    this.expanded = !this.expanded;
   }
 
   afterExpand(fractal: IFractal): void {
@@ -37,10 +40,6 @@ export class ExpansionPanelComponent implements OnInit {
       this.ams.$levels[level] = signal(fractal);
     }
     this.ams.$current.set(fractal);
-  }
-
-  afterCollapse(fractal: IFractal): void {
-    if (fractal === this.ams.$current())
-      this.ams.$current.set(fractal.parent ? fractal.parent : null);
+    this.ms.currentTouched$.next(null);
   }
 }

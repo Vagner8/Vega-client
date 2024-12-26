@@ -8,6 +8,6 @@ module.exports = {
   arrowParens: 'avoid',
   trailingComma: 'es5',
   bracketSameLine: true,
-  printWidth: 100,
+  printWidth: 120,
   organizeImports: true,
 };

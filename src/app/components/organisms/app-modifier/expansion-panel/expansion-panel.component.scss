@@ -37,3 +37,29 @@
     }
   }
 }
+
+::ng-deep {
+  mat-expansion-panel.new-panel {
+    .mat-expansion-panel-body {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: $size-medium;
+    }
+  }
+}
+
+.new-panel {
+  border: none;
+}
+
+.subtitle {
+  margin-bottom: $size-extra-small;
+  color: $color-success;
+}
+
+.icon,
+.cursor,
+.custom-toggle {
+  color: #363936;
+}

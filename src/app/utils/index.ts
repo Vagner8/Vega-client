@@ -1,1 +1,1 @@
-export * from './fractal.utils';
+export * from './fractal.util';

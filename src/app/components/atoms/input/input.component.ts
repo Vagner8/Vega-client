@@ -6,14 +6,7 @@ import { InputType } from '@types';
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIcon,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIcon],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,9 +29,7 @@ export class InputComponent {
   }
 
   toggleVisibilityIcon(): string {
-    return this._inputElementRef.nativeElement.type === 'password'
-      ? 'visibility'
-      : 'visibility_off';
+    return this._inputElementRef.nativeElement.type === 'password' ? 'visibility' : 'visibility_off';
   }
 
   get messages(): {
