@@ -8,3 +8,4 @@ export * from './taps.service';
 export * from './manager.service';
 export * from './rows.service';
 export * from './app-modifier.service';
+export * from './form.service';

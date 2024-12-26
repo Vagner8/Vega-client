@@ -1,7 +1,7 @@
 import { Component, inject, Input, viewChild } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@mat';
 import { AppModifierService, ModifiersService } from '@services';
-import { IFractal } from '@types';
+import { Collections, IFractal } from '@types';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 
 @Component({
@@ -19,8 +19,8 @@ export class AppModifierComponent {
   accordion = viewChild(MatAccordion);
 
   shouldRenderLevel(fractal: IFractal): boolean {
-    const level = this.ams.$levels[this.ams.getNestingLevel(fractal) - 1];
-    return level && level() === fractal.parent;
+    const level = this.ams.$levels[this.ams.getLevel(fractal) - 1];
+    return level && level() === fractal.parent && !fractal.parent.is(Collections);
   }
 
   closed(): void {

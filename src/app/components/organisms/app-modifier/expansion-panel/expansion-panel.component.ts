@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, inject, Input, output, signal } from '@angular/core';
 import { MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatTableModule } from '@mat';
 import { AppModifierService, ModifiersService, RowsService } from '@services';
-import { ControlDto, IFractal } from '@types';
+import { Collections, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -26,19 +26,15 @@ export class ExpansionPanelComponent {
   ams = inject(AppModifierService);
   @Input() fractal!: IFractal;
   closed = output<IFractal>();
-  expanded = false;
 
-  toggle(): void {
-    this.expanded = !this.expanded;
+  get isCollection(): boolean {
+    return this.fractal.is(Collections);
   }
 
   afterExpand(fractal: IFractal): void {
-    const level = this.ams.getNestingLevel(fractal);
-    if (this.ams.$levels[level]) {
-      this.ams.$levels[level].set(fractal);
-    } else {
-      this.ams.$levels[level] = signal(fractal);
-    }
+    const level = this.ams.getLevel(fractal);
+    if (this.ams.$levels[level]) this.ams.$levels[level].set(fractal);
+    else this.ams.$levels[level] = signal(fractal);
     this.ams.$current.set(fractal);
     this.ms.currentTouched$.next(null);
   }

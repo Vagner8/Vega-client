@@ -6,6 +6,9 @@
         @if (isControl(row)) {
           {{ column === 'indicator' ? row.indicator : row.data }}
         }
+        @if (isFractal(row)) {
+          {{ row.data(column) }}
+        }
       </td>
     </ng-container>
   }

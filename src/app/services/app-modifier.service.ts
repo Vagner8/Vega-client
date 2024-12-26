@@ -8,7 +8,7 @@ import { IFractal } from '@types';
 export class AppModifierService extends BaseService {
   $levels: Record<string, WritableSignal<IFractal>> = {};
 
-  getNestingLevel(fractal: IFractal): number {
+  getLevel(fractal: IFractal): number {
     let level = 0;
     let current: IFractal | null = fractal;
     while (current) {
