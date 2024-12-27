@@ -1,8 +1,15 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input, output, signal } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatExpansionModule, MatIconModule, MatTableModule } from '@mat';
-import { AppModifierService, ModifiersService, RowsService } from '@services';
-import { Collections, IFractal } from '@types';
+import { Component, inject, Input, OnInit, output, viewChild } from '@angular/core';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatExpansionModule,
+  MatExpansionPanel,
+  MatIconModule,
+  MatTableModule,
+} from '@mat';
+import { AppModifierService } from '@services';
+import { Collections, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -20,22 +27,24 @@ import { CollectionComponent } from '@components/atoms';
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })
-export class ExpansionPanelComponent {
-  rs = inject(RowsService);
-  ms = inject(ModifiersService);
+export class ExpansionPanelComponent implements OnInit {
   ams = inject(AppModifierService);
   @Input() fractal!: IFractal;
+  panel = viewChild(MatExpansionPanel);
   closed = output<IFractal>();
+
+  ngOnInit(): void {
+    if (this.fractal.is(Fractals.Root)) {
+      this.ams.$current.set(this.fractal);
+      this.panel()?.open();
+    }
+  }
 
   get isCollection(): boolean {
     return this.fractal.is(Collections);
   }
 
   afterExpand(fractal: IFractal): void {
-    const level = this.ams.getLevel(fractal);
-    if (this.ams.$levels[level]) this.ams.$levels[level].set(fractal);
-    else this.ams.$levels[level] = signal(fractal);
     this.ams.$current.set(fractal);
-    this.ms.currentTouched$.next(null);
   }
 }

@@ -1,0 +1,9 @@
+<app-expansion-panel [fractal]="fractal" (closed)="closed()">
+  @if (shouldRender()) {
+    <mat-accordion>
+      @for (fractal of fractal.list; track fractal.dto.id) {
+        <app-control-panel [fractal]="fractal" />
+      }
+    </mat-accordion>
+  }
+</app-expansion-panel>

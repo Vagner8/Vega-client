@@ -1,9 +1,0 @@
-<app-expansion-panel [fractal]="fractal" (closed)="closed()">
-  <mat-accordion>
-    @for (fractal of fractal.list; track fractal.dto.id) {
-      @if (shouldRenderLevel(fractal)) {
-        <app-modifier [fractal]="fractal" />
-      }
-    }
-  </mat-accordion>
-</app-expansion-panel>

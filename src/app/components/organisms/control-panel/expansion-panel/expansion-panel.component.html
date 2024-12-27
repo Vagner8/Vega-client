@@ -12,11 +12,12 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-collection [dataSource]="fractal.controlsList" [columns]="['indicator', 'data']" [rows]="rs.$currents()" />
+    <app-collection [dataSource]="fractal.controlsList" [columns]="['indicator', 'data']" [rows]="[]" />
 
     @if (isCollection && fractal.list.length > 0) {
-      <app-collection [dataSource]="fractal.list" [columns]="fractal.columns" [rows]="rs.$currents()" />
+      <app-collection [dataSource]="fractal.list" [columns]="fractal.columns" [rows]="[]" />
     }
+
     @if (fractal.fractals) {
       <ng-content />
     }

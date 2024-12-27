@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angu
 import { CollectionComponent } from '@components/atoms';
 import { Events, Fractals, IFractal } from '@types';
 import { RootService, CollectionsService, ManagerService, ModifiersService, RowsService, TapsService } from '@services';
-import { AppModifierComponent } from '../app-modifier/app-modifier.component';
 import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component';
+import { ControlPanelComponent } from '../control-panel/control-panel.component';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [CollectionComponent, AppModifierComponent, RowsModifierComponent],
+  imports: [CollectionComponent, ControlPanelComponent, RowsModifierComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
