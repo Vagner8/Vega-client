@@ -6,6 +6,8 @@ import { BaseService } from './base.service';
   providedIn: 'root',
 })
 export class CollectionsService extends BaseService {
+  collections!: IFractal;
+
   async set(collection: IFractal): Promise<void> {
     this.$current.set(collection);
     await this.navigate({}, [collection.cursor]);

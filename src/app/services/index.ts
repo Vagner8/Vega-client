@@ -7,5 +7,6 @@ export * from './modifiers.service';
 export * from './taps.service';
 export * from './manager.service';
 export * from './rows.service';
-export * from './app-modifier.service';
+export * from './control-panel.service';
 export * from './form.service';
+export * from './update.service';

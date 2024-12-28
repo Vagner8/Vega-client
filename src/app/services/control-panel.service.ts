@@ -4,4 +4,4 @@ import { BaseService } from './base.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppModifierService extends BaseService {}
+export class ControlPanelService extends BaseService {}

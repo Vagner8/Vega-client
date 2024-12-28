@@ -2,7 +2,6 @@ import { Component, Input, ChangeDetectionStrategy, output } from '@angular/core
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { ControlDto, IFractal } from '@types';
-import { Fractal } from '@utils';
 
 @Component({
   selector: 'app-collection',
@@ -13,17 +12,18 @@ import { Fractal } from '@utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollectionComponent {
-  @Input() rows: IFractal[] = [];
+  @Input() like!: 'fractal' | 'control';
+  @Input() rows: IFractal[] | ControlDto[] = [];
   @Input() columns: string[] = [];
   @Input() dataSource: unknown[] = [];
-  hold = output<IFractal>();
-  touch = output<IFractal>();
+  hold = output<IFractal | ControlDto>();
+  touch = output<IFractal | ControlDto>();
 
-  isFractal(item: unknown): item is IFractal {
-    return item instanceof Fractal;
+  isFractal(row: unknown): row is IFractal {
+    return this.like === 'fractal';
   }
 
-  isControl(item: unknown): item is ControlDto {
-    return !this.isFractal(item);
+  isControl(row: unknown): row is ControlDto {
+    return this.like === 'control';
   }
 }

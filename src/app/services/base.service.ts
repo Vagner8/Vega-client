@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Params, QueryParamsHandling, Router } from '@angular/router';
-import { IFractal } from '@types';
-import { Subject } from 'rxjs';
+import { ControlDto, IFractal } from '@types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,23 +8,19 @@ import { Subject } from 'rxjs';
 export class BaseService {
   router = inject(Router);
   $current = signal<IFractal | null>(null);
-  currentHeld$ = new Subject<IFractal | null>();
-  currentTouched$ = new Subject<IFractal | null>();
-  private _parent: IFractal | null = null;
-
-  get parent(): IFractal {
-    if (!this._parent) throw new Error('Unable to get parent');
-    return this._parent;
-  }
-
-  set parent(parent: IFractal) {
-    this._parent = parent;
-  }
 
   get current(): IFractal {
     const current = this.$current();
     if (!current) throw new Error(`Current is ${current}`);
     return current;
+  }
+
+  isFractal(test: object): test is IFractal {
+    return Object.hasOwn(test, 'dto');
+  }
+
+  isControl(test: object): test is ControlDto {
+    return Object.hasOwn(test, 'indicator');
   }
 
   async navigate(

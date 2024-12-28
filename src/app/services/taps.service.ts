@@ -6,8 +6,8 @@ import { BaseService } from './base.service';
   providedIn: 'root',
 })
 export class TapsService extends BaseService {
-  init({ Taps, lists, modifiers }: { Taps: string; lists: IFractal; modifiers: IFractal }): void {
-    this.$current.set(Taps === FractalsParams.Collections ? lists : modifiers);
+  init({ Taps, modifiers, collections }: { Taps: string; modifiers: IFractal; collections: IFractal }): void {
+    this.$current.set(Taps === FractalsParams.Collections ? collections : modifiers);
   }
 
   async set(taps: IFractal): Promise<void> {

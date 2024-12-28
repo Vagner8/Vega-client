@@ -4,7 +4,7 @@ import { TapComponent } from '@components/atoms';
 import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
 import {
-  AppModifierService,
+  ControlPanelService,
   CollectionsService,
   ManagerService,
   ModifiersService,
@@ -35,7 +35,7 @@ export class SidenavComponent {
   ms = inject(ModifiersService);
   cs = inject(CollectionsService);
   mgr = inject(ManagerService);
-  ams = inject(AppModifierService);
+  cps = inject(ControlPanelService);
 
   hold(tap: IFractal): void {
     console.log('🚀 ~ tap:', tap);

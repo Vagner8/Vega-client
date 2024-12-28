@@ -6,6 +6,8 @@ import { BaseService } from './base.service';
   providedIn: 'root',
 })
 export class ModifiersService extends BaseService {
+  modifiers!: IFractal;
+
   async set(modifier: IFractal | null): Promise<void> {
     this.$current.set(modifier);
     await this.navigate({ [FractalsParams.Modifier]: modifier ? modifier.cursor : null });

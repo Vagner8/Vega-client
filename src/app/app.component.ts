@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
     this.ds.get().subscribe(dto => {
       const root = Fractal.create(dto, null);
       console.log('🚀 ~ root:', root);
-      this.ms.parent = root.find(Fractals.Modifiers);
-      this.cs.parent = root.find(Fractals.Collections);
+      this.ms.modifiers = root.find(Fractals.Modifiers);
+      this.cs.collections = root.find(Fractals.Collections);
       this.mgr.$current.set(root.find(Fractals.Manager));
       this.rts.$current.set(root);
     });

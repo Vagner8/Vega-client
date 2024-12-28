@@ -2,7 +2,7 @@ import { Component, computed, inject, Input, viewChild } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@mat';
 import { Collections, IFractal } from '@types';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
-import { AppModifierService } from '@services';
+import { ControlPanelService } from '@services';
 
 @Component({
   selector: 'app-control-panel',
@@ -12,13 +12,13 @@ import { AppModifierService } from '@services';
   styleUrl: './control-panel.component.scss',
 })
 export class ControlPanelComponent {
-  ams = inject(AppModifierService);
+  cps = inject(ControlPanelService);
   @Input() fractal!: IFractal;
   accordion = viewChild(MatAccordion);
 
   shouldRender = computed(() => {
     if (this.fractal.is(Collections)) return false;
-    let current = this.ams.$current();
+    let current = this.cps.$current();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -27,7 +27,7 @@ export class ControlPanelComponent {
   });
 
   closed(): void {
-    this.ams.$current.set(this.ams.current.parent);
+    this.cps.$current.set(this.cps.current.parent);
     this.accordion()?.closeAll();
   }
 }

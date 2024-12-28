@@ -37,12 +37,12 @@ export class ManagerComponent implements OnInit {
     this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
   }
 
-  async holdAndRTouch(event: keyof typeof Events): Promise<void> {
+  async holdAndTouch(event: keyof typeof Events): Promise<void> {
     if (this.prevEvent !== event) {
       await this.mgr.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$current.update(prev => (prev?.is(Fractals.Collections) ? this.ms.parent : this.cs.parent));
+      this.ts.$current.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.cs.collections));
       await this.rts.navigate({ [FractalsParams.Taps]: this.ts.$current()?.cursor });
     }
     this.prevEvent = event;

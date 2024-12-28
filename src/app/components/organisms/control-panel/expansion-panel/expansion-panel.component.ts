@@ -8,8 +8,8 @@ import {
   MatIconModule,
   MatTableModule,
 } from '@mat';
-import { AppModifierService } from '@services';
-import { Collections, Fractals, IFractal } from '@types';
+import { ControlPanelService, UpdateService } from '@services';
+import { Collections, ControlDto, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -28,14 +28,15 @@ import { CollectionComponent } from '@components/atoms';
   styleUrl: './expansion-panel.component.scss',
 })
 export class ExpansionPanelComponent implements OnInit {
-  ams = inject(AppModifierService);
+  us = inject(UpdateService);
+  cps = inject(ControlPanelService);
   @Input() fractal!: IFractal;
   panel = viewChild(MatExpansionPanel);
   closed = output<IFractal>();
 
   ngOnInit(): void {
     if (this.fractal.is(Fractals.Root)) {
-      this.ams.$current.set(this.fractal);
+      this.cps.$current.set(this.fractal);
       this.panel()?.open();
     }
   }
@@ -45,6 +46,11 @@ export class ExpansionPanelComponent implements OnInit {
   }
 
   afterExpand(fractal: IFractal): void {
-    this.ams.$current.set(fractal);
+    this.us.reset();
+    this.cps.$current.set(fractal);
+  }
+
+  touch(row: ControlDto | IFractal): void {
+    this.us.set(row);
   }
 }

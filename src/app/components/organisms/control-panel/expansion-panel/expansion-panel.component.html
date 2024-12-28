@@ -1,6 +1,6 @@
 <mat-expansion-panel
   hideToggle
-  [ngClass]="this.ams.$current() === fractal ? 'active' : ''"
+  [ngClass]="this.cps.$current() === fractal ? 'active' : ''"
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
@@ -12,10 +12,20 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-collection [dataSource]="fractal.controlsList" [columns]="['indicator', 'data']" [rows]="[]" />
+    <app-collection
+      like="control"
+      [rows]="us.$controls()"
+      [columns]="['indicator', 'data']"
+      [dataSource]="fractal.controlsList"
+      (touch)="touch($event)" />
 
     @if (isCollection && fractal.list.length > 0) {
-      <app-collection [dataSource]="fractal.list" [columns]="fractal.columns" [rows]="[]" />
+      <app-collection
+        like="fractal"
+        [rows]="us.$fractals()"
+        [columns]="fractal.columns"
+        [dataSource]="fractal.list"
+        (touch)="touch($event)" />
     }
 
     @if (fractal.fractals) {
