@@ -1,14 +1,22 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CollectionComponent } from '@components/atoms';
 import { Events, Fractals, IFractal } from '@types';
-import { RootService, CollectionsService, ManagerService, ModifiersService, RowsService, TapsService } from '@services';
-import { RowsModifierComponent } from '../rows-modifier/rows-modifier.component';
+import {
+  RootService,
+  CollectionsService,
+  ManagerService,
+  ModifiersService,
+  RowsService,
+  TapsService,
+  UpdateService,
+} from '@services';
+import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [CollectionComponent, ControlPanelComponent, RowsModifierComponent],
+  imports: [CollectionComponent, ControlPanelComponent, ModifierComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -19,6 +27,8 @@ export class ScreenComponent implements OnInit {
   cs = inject(CollectionsService);
   rts = inject(RootService);
   mgr = inject(ManagerService);
+
+  us = inject(UpdateService);
 
   @Input() Taps = '';
   @Input() Rows = '';
@@ -32,11 +42,6 @@ export class ScreenComponent implements OnInit {
 
   async rowHeld(collection: IFractal): Promise<void> {
     await this.rs.hold(collection);
-    this.openSidenav();
-  }
-
-  async rowTouched(row: IFractal): Promise<void> {
-    await this.rs.set(row);
     this.openSidenav();
   }
 

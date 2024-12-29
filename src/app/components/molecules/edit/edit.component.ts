@@ -16,7 +16,6 @@ export class EditComponent {
   touch = output<IFractal>();
 
   editTouched(tap: IFractal): void {
-    // this.cs.current.formArray.enable();
-    // this.touch.emit(tap);
+    this.touch.emit(tap);
   }
 }

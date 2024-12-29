@@ -24,6 +24,10 @@ export class Fractal implements IFractal {
     return Object.values(this.dto.controls);
   }
 
+  get indicators(): string[] {
+    return Object.keys(this.dto.controls);
+  }
+
   get cursor(): string {
     return this.data(Indicators.Cursor) || this.data(Indicators.Position);
   }

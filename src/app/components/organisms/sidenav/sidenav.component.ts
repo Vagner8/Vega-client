@@ -11,7 +11,7 @@ import {
   RowsService,
   TapsService,
 } from '@services';
-import { IFractal, Modifiers } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-sidenav',
@@ -41,17 +41,13 @@ export class SidenavComponent {
     console.log('🚀 ~ tap:', tap);
   }
 
-  async listTouched(tap: IFractal): Promise<void> {
+  async collectionTouched(tap: IFractal): Promise<void> {
     await this.rs.set(null);
     await this.cs.set(tap);
     this.ms.set(null);
   }
 
   modifierTouched(tap: IFractal): void {
-    if (this.cs.current.is(Modifiers.App)) {
-      this.ms.$current.set(tap);
-    } else {
-      this.ms.set(tap);
-    }
+    this.ms.set(tap);
   }
 }

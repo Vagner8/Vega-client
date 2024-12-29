@@ -1,8 +1,7 @@
 @if (rts.$current(); as root) {
-  <app-control-panel [fractal]="root" />
-  <!-- @if (cs.$current(); as collection) {
+  @if (cs.$current(); as collection) {
     @if (Modifier) {
-      <app-rows-modifier [rows]="rs.$currents()" />
+      <app-modifier />
     }
     @if (!Modifier) {
       @switch (Collections) {
@@ -10,17 +9,12 @@
           <h1>Home</h1>
         }
         @case ('App') {
-          <app-modifier [fractal]="root" />
+          <app-control-panel [fractal]="root" />
         }
         @default {
-          <app-collection
-            [rows]="rs.$currents()"
-            [columns]="collection.columns"
-            [dataSource]="collection.list"
-            (hold)="rowHeld(collection)"
-            (touch)="rowTouched($event)" />
+          <app-collection [rows]="us.$currents()" [dataSource]="collection.list" (hold)="rowHeld(collection)" />
         }
       }
     }
-  } -->
+  }
 }

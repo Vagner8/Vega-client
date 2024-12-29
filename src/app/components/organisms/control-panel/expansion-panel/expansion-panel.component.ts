@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { ControlPanelService, UpdateService } from '@services';
-import { Collections, ControlDto, Fractals, IFractal } from '@types';
+import { Collections, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -35,22 +35,20 @@ export class ExpansionPanelComponent implements OnInit {
   closed = output<IFractal>();
 
   ngOnInit(): void {
+    console.log('🚀 ~ fractal:', this.fractal.cursor);
+
     if (this.fractal.is(Fractals.Root)) {
       this.cps.$current.set(this.fractal);
       this.panel()?.open();
     }
   }
 
-  get isCollection(): boolean {
-    return this.fractal.is(Collections);
+  get isFractalCollection(): boolean {
+    return this.fractal.is(Collections) && this.fractal.list.length > 0;
   }
 
   afterExpand(fractal: IFractal): void {
-    this.us.reset();
+    this.us.$currents.set([]);
     this.cps.$current.set(fractal);
-  }
-
-  touch(row: ControlDto | IFractal): void {
-    this.us.set(row);
   }
 }

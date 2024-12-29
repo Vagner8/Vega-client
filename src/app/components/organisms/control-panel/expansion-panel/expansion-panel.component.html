@@ -12,20 +12,18 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-collection
-      like="control"
-      [rows]="us.$controls()"
-      [columns]="['indicator', 'data']"
-      [dataSource]="fractal.controlsList"
-      (touch)="touch($event)" />
-
-    @if (isCollection && fractal.list.length > 0) {
+    @if (isFractalCollection) {
       <app-collection
-        like="fractal"
-        [rows]="us.$fractals()"
+        class="collection"
+        [rows]="us.$currents()"
         [columns]="fractal.columns"
-        [dataSource]="fractal.list"
-        (touch)="touch($event)" />
+        [dataSource]="fractal.list" />
+    } @else {
+      <app-collection
+        class="collection"
+        like="controls"
+        [columns]="['indicator', 'data']"
+        [dataSource]="fractal.controlsList" />
     }
 
     @if (fractal.fractals) {

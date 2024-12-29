@@ -12,18 +12,10 @@ import { ControlDto, IFractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollectionComponent {
-  @Input() like!: 'fractal' | 'control';
-  @Input() rows: IFractal[] | ControlDto[] = [];
+  @Input() like: 'controls' | 'fractals' = 'fractals';
+  @Input() rows: IFractal[] = [];
   @Input() columns: string[] = [];
   @Input() dataSource: unknown[] = [];
-  hold = output<IFractal | ControlDto>();
+  hold = output<IFractal>();
   touch = output<IFractal | ControlDto>();
-
-  isFractal(row: unknown): row is IFractal {
-    return this.like === 'fractal';
-  }
-
-  isControl(row: unknown): row is ControlDto {
-    return this.like === 'control';
-  }
 }

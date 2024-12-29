@@ -3,11 +3,11 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td mat-cell *matCellDef="let row">
-        @if (isControl(row)) {
-          {{ column === 'indicator' ? row.indicator : row.data }}
-        }
-        @if (isFractal(row)) {
+        @if (like === 'fractals') {
           {{ row.data(column) }}
+        }
+        @if (like === 'controls') {
+          {{ column === 'indicator' ? row.indicator : row.data }}
         }
       </td>
     </ng-container>

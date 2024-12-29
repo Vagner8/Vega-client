@@ -74,6 +74,7 @@ export interface IFractal {
   get list(): IFractal[];
   get cursor(): string;
   get columns(): string[];
+  get indicators(): string[];
   get controlsList(): ControlDto[];
 
   is(test: string | object): boolean;
