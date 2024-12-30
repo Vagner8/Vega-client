@@ -17,13 +17,16 @@
         class="collection"
         [rows]="us.$currents()"
         [columns]="fractal.columns"
-        [dataSource]="fractal.list" />
+        [dataSource]="fractal.list"
+        (touch)="touchFractal($event)" />
     } @else {
       <app-collection
         class="collection"
         like="controls"
+        [rows]="us.$currents().includes(fractal) ? fractal.controlsList : []"
         [columns]="['indicator', 'data']"
-        [dataSource]="fractal.controlsList" />
+        [dataSource]="fractal.controlsList"
+        (touch)="touchControl()" />
     }
 
     @if (fractal.fractals) {

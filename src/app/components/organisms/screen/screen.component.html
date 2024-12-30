@@ -12,7 +12,11 @@
           <app-control-panel [fractal]="root" />
         }
         @default {
-          <app-collection [rows]="us.$currents()" [dataSource]="collection.list" (hold)="rowHeld(collection)" />
+          <app-collection
+            [rows]="us.$currents()"
+            [columns]="collection.columns"
+            [dataSource]="collection.list"
+            (hold)="rowHeld(collection)" />
         }
       }
     }

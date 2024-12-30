@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { DeleteComponent, EditComponent, NewComponent, SaveComponent } from '@components/molecules';
 import { MatListModule, MatSidenavModule } from '@mat';
 import {
   ControlPanelService,
@@ -16,16 +15,7 @@ import { IFractal } from '@types';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [
-    MatSidenavModule,
-    RouterOutlet,
-    MatListModule,
-    TapComponent,
-    NewComponent,
-    SaveComponent,
-    EditComponent,
-    DeleteComponent,
-  ],
+  imports: [MatSidenavModule, RouterOutlet, MatListModule, TapComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
@@ -41,13 +31,13 @@ export class SidenavComponent {
     console.log('🚀 ~ tap:', tap);
   }
 
+  modifierTouched(tap: IFractal): void {
+    this.ms.set(tap);
+  }
+
   async collectionTouched(tap: IFractal): Promise<void> {
     await this.rs.set(null);
     await this.cs.set(tap);
     this.ms.set(null);
-  }
-
-  modifierTouched(tap: IFractal): void {
-    this.ms.set(tap);
   }
 }

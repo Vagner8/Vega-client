@@ -13,7 +13,7 @@ import { ControlDto, IFractal } from '@types';
 })
 export class CollectionComponent {
   @Input() like: 'controls' | 'fractals' = 'fractals';
-  @Input() rows: IFractal[] = [];
+  @Input() rows: unknown[] = [];
   @Input() columns: string[] = [];
   @Input() dataSource: unknown[] = [];
   hold = output<IFractal>();

@@ -7,26 +7,11 @@
     position="end">
     @if (ts.$current(); as taps) {
       <mat-list>
-        @for (indicator of taps.columns; track indicator) {
-          @switch (indicator) {
-            @case ('New') {
-              <app-new [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
-            }
-            @case ('Save') {
-              <app-save [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
-            }
-            @case ('Edit') {
-              <app-edit [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
-            }
-            @case ('Delete') {
-              <app-delete [tap]="taps.find(indicator)" (touch)="modifierTouched($event)" />
-            }
-            @case ('App') {
-              <app-tap [tap]="taps.find(indicator)" (touch)="collectionTouched($event)" />
-            }
-            @default {
-              <app-tap [tap]="taps.find(indicator)" (touch)="collectionTouched($event)" />
-            }
+        @for (column of taps.columns; track column) {
+          @if (taps.find(column); as tap) {
+            <app-tap
+              [tap]="tap"
+              (touch)="tap.parent?.cursor === 'Collections' ? collectionTouched($event) : modifierTouched($event)" />
           }
         }
       </mat-list>
