@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { ControlPanelService, UpdateService } from '@services';
-import { Collections, ControlDto, Fractals, IFractal } from '@types';
+import { Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -41,19 +41,7 @@ export class ExpansionPanelComponent implements OnInit {
     }
   }
 
-  get isFractalCollection(): boolean {
-    return this.fractal.is(Collections) && this.fractal.list.length > 0;
-  }
-
   afterExpand(fractal: IFractal): void {
     this.cps.$current.set(fractal);
-  }
-
-  touchControl(): void {
-    this.us.set(this.fractal);
-  }
-
-  touchFractal(row: IFractal | ControlDto): void {
-    if ('dto' in row) this.us.set(row);
   }
 }

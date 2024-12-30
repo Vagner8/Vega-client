@@ -2,14 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
-import {
-  ControlPanelService,
-  CollectionsService,
-  ManagerService,
-  ModifiersService,
-  RowsService,
-  TapsService,
-} from '@services';
+import { CollectionsService, ManagerService, ModifiersService, TapsService, UpdateService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
@@ -21,11 +14,10 @@ import { IFractal } from '@types';
 })
 export class SidenavComponent {
   ts = inject(TapsService);
-  rs = inject(RowsService);
+  us = inject(UpdateService);
   ms = inject(ModifiersService);
   cs = inject(CollectionsService);
   mgr = inject(ManagerService);
-  cps = inject(ControlPanelService);
 
   hold(tap: IFractal): void {
     console.log('🚀 ~ tap:', tap);
@@ -36,7 +28,7 @@ export class SidenavComponent {
   }
 
   async collectionTouched(tap: IFractal): Promise<void> {
-    await this.rs.set(null);
+    this.us.$currents.set([]);
     await this.cs.set(tap);
     this.ms.set(null);
   }

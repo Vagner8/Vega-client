@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CollectionComponent } from '@components/atoms';
-import { Events, Fractals, IFractal } from '@types';
+import { Events, Fractals } from '@types';
 import {
   RootService,
   CollectionsService,
@@ -40,11 +40,6 @@ export class ScreenComponent implements OnInit {
     this.init();
   }
 
-  async rowHeld(collection: IFractal): Promise<void> {
-    await this.rs.hold(collection);
-    this.openSidenav();
-  }
-
   private openSidenav(): void {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
@@ -61,8 +56,8 @@ export class ScreenComponent implements OnInit {
     this.ms.init({ root: this.rts.current, Modifier });
     this.ts.init({
       Taps,
-      modifiers: this.rts.current.find(Fractals.Modifiers),
-      collections: this.rts.current.find(Fractals.Collections),
+      modifiers: this.ms.modifiers,
+      collections: this.cs.collections,
     });
     this.mgr.init({ Manager });
     // [Modifiers.Delete, Modifiers.Save].some(modifier => modifier === Modifier)

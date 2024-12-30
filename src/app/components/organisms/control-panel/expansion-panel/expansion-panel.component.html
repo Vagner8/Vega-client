@@ -12,23 +12,7 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    @if (isFractalCollection) {
-      <app-collection
-        class="collection"
-        [rows]="us.$currents()"
-        [columns]="fractal.columns"
-        [dataSource]="fractal.list"
-        (touch)="touchFractal($event)" />
-    } @else {
-      <app-collection
-        class="collection"
-        like="controls"
-        [rows]="us.$currents().includes(fractal) ? fractal.controlsList : []"
-        [columns]="['indicator', 'data']"
-        [dataSource]="fractal.controlsList"
-        (touch)="touchControl()" />
-    }
-
+    <app-collection class="collection" [rows]="us.$currents()" [fractal]="fractal" />
     @if (fractal.fractals) {
       <ng-content />
     }
