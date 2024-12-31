@@ -1,7 +1,6 @@
 @if (fractal.form; as form) {
   <form [formGroup]="form">
     @for (name of names; track name) {
-      <h1>Name {{ name }}</h1>
       <mat-form-field class="form-field">
         <mat-label i18n>{{ name }}</mat-label>
         <input #inputElementRef [type]="name" matInput [formControlName]="name" />

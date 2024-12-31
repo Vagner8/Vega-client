@@ -19,11 +19,11 @@ export class Fractal implements IFractal {
   status: FractalStatus = FractalStatus.Stable;
   fractals: IFractals | null = null;
 
-  get fractalsList(): IFractal[] {
+  get fractalsArray(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
   }
 
-  get controlsList(): ControlDto[] {
+  get controlsArray(): ControlDto[] {
     return Object.values(this.dto.controls);
   }
 
@@ -36,9 +36,8 @@ export class Fractal implements IFractal {
   }
 
   array(arrayIndicators: keyof typeof ArrayIndicators): string[] {
-    const array = this.data(arrayIndicators).split(':');
-    if (array) return array;
-    else throw new Error(`Unable to make array in: ${this.cursor}`);
+    const data = this.data(arrayIndicators);
+    return data ? data.split(':') : [];
   }
 
   static create(dto: FractalDto, parent: IFractal | null): IFractal {
@@ -95,7 +94,7 @@ export class Fractal implements IFractal {
 
   setFrom(): IFractal {
     this.form = new FormRecord(
-      this.controlsList.reduce((acc: Record<string, FormControl>, { indicator, data }) => {
+      this.controlsArray.reduce((acc: Record<string, FormControl>, { indicator, data }) => {
         acc[indicator] = new FormControl(data);
         return acc;
       }, {})

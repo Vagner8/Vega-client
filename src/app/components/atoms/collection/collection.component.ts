@@ -14,27 +14,27 @@ import { ControlDto, IFractal } from '@types';
 })
 export class CollectionComponent {
   us = inject(UpdateService);
+  @Input() like: 'fractals' | 'controls' = 'fractals';
   @Input() rows: IFractal[] = [];
   @Input() fractal!: IFractal;
-  @Input() controlsCollection = false;
   hold = output<IFractal>();
   touch = output<IFractal>();
 
   get columns(): string[] {
-    return this.controlsCollection ? ['indicator', 'data'] : this.fractal.array('Columns');
+    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.array('Columns');
   }
 
   get dataSource(): unknown[] {
-    return this.controlsCollection ? this.fractal.controlsList : this.fractal.fractalsList;
+    return this.like === 'controls' ? this.fractal.controlsArray : this.fractal.fractalsArray;
   }
 
   onHold(row: IFractal): void {
-    if (this.controlsCollection) this.us.set(row);
-    else this.us.$currents.set(this.us.$currents().length > 0 ? [] : row.parent?.fractalsList || []);
+    if (this.like === 'controls') this.us.set([row]);
+    else this.us.set(this.us.$currents().length > 0 ? null : row.parent?.fractalsArray);
   }
 
   onTouch(row: IFractal): void {
-    this.us.set(row);
+    this.us.set([row]);
     this.touch.emit(row);
   }
 

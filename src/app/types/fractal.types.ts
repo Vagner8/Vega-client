@@ -80,8 +80,8 @@ export interface IFractal {
 
   get cursor(): string;
   get indicators(): string[];
-  get fractalsList(): IFractal[];
-  get controlsList(): ControlDto[];
+  get fractalsArray(): IFractal[];
+  get controlsArray(): ControlDto[];
 
   is(test: string | object): boolean;
   data(indicator: string): string;

@@ -15,7 +15,7 @@ export class EventService {
 
   dropRows(fractal: IFractal | null, { previousIndex, currentIndex }: CdkDragDrop<string>): void {
     if (!fractal) return;
-    const list = fractal.fractalsList;
+    const list = fractal.fractalsArray;
     moveItemInArray(list, previousIndex, currentIndex);
     list.forEach((item, index) => {
       if (fractal.fractals && fractal.dto.fractals) {

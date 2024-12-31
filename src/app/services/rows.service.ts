@@ -38,7 +38,7 @@ export class RowsService extends BaseService {
   }
 
   async hold(collection: IFractal | null): Promise<void> {
-    this.$currents.update(prev => (prev.length === 0 && collection ? collection.fractalsList : []));
+    this.$currents.update(prev => (prev.length === 0 && collection ? collection.fractalsArray : []));
     this.navigateToRows();
   }
 

@@ -30,6 +30,5 @@ export class ControlPanelComponent {
   closed(): void {
     this.cps.$current.set(this.cps.current.parent);
     this.accordion()?.closeAll();
-    this.us.set(this.fractal);
   }
 }

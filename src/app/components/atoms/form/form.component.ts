@@ -16,6 +16,7 @@ export class FormComponent {
   prevRawValue!: Record<string, string>;
 
   get names(): string[] {
-    return this.fractal.indicators;
+    const columns = this.fractal.parent?.array('Columns');
+    return columns && columns.length > 0 ? columns : this.fractal.indicators;
   }
 }
