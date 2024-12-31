@@ -12,7 +12,10 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-collection class="collection" [rows]="us.$currents()" [fractal]="fractal" />
+    <app-collection class="collection" [rows]="us.$currents()" [fractal]="fractal" [controlsCollection]="true" />
+    @if (isCollection) {
+      <app-collection class="collection" [rows]="us.$currents()" [fractal]="fractal" />
+    }
     @if (fractal.fractals) {
       <ng-content />
     }

@@ -12,4 +12,8 @@ import { UpdateService } from '@services';
 })
 export class ModifierComponent {
   us = inject(UpdateService);
+
+  ngOnInit(): void {
+    console.log('🚀 ~ this.us.formArray:', this.us.formArray.getRawValue());
+  }
 }

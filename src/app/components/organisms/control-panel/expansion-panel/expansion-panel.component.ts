@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { ControlPanelService, UpdateService } from '@services';
-import { Fractals, IFractal } from '@types';
+import { Collections, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -39,6 +39,10 @@ export class ExpansionPanelComponent implements OnInit {
       this.cps.$current.set(this.fractal);
       this.panel()?.open();
     }
+  }
+
+  get isCollection(): boolean {
+    return this.fractal.is(Collections) && this.fractal.fractals !== null;
   }
 
   afterExpand(fractal: IFractal): void {

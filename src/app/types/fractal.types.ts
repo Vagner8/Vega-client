@@ -1,6 +1,13 @@
+import { FormRecord } from '@angular/forms';
+
 export enum Events {
   Hold = 'Hold',
   Touch = 'Touch',
+}
+
+export enum ArrayIndicators {
+  Sort = 'Sort',
+  Columns = 'Columns',
 }
 
 export enum Indicators {
@@ -10,7 +17,6 @@ export enum Indicators {
   Toggle = 'Toggle',
   Select = 'Select',
   Cursor = 'Cursor',
-  Columns = 'Columns',
   Position = 'Position',
 }
 
@@ -67,18 +73,20 @@ export interface FractalDto {
 
 export interface IFractal {
   dto: FractalDto;
+  form: FormRecord | null;
   status: FractalStatus;
   parent: IFractal | null;
   fractals: IFractals | null;
 
-  get list(): IFractal[];
   get cursor(): string;
-  get columns(): string[];
   get indicators(): string[];
+  get fractalsList(): IFractal[];
   get controlsList(): ControlDto[];
 
   is(test: string | object): boolean;
   data(indicator: string): string;
   find(test: Events[number], fractals?: IFractals | null): IFractal;
+  array(arrayIndicators: keyof typeof ArrayIndicators): string[];
+  setFrom(): IFractal;
   cloneChild(): IFractal;
 }

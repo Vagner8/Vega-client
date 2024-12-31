@@ -1,3 +1,4 @@
+import { FormControl, FormRecord } from '@angular/forms';
 import {
   FractalDto,
   Indicators,
@@ -7,16 +8,18 @@ import {
   IFractal,
   IFractals,
   ControlDto,
+  ArrayIndicators,
 } from '@types';
 import { v4 } from 'uuid';
 
 export class Fractal implements IFractal {
   dto!: FractalDto;
+  form: FormRecord | null = null;
   parent: IFractal | null = null;
   status: FractalStatus = FractalStatus.Stable;
   fractals: IFractals | null = null;
 
-  get list(): IFractal[] {
+  get fractalsList(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
   }
 
@@ -32,10 +35,10 @@ export class Fractal implements IFractal {
     return this.data(Indicators.Cursor) || this.data(Indicators.Position);
   }
 
-  get columns(): string[] {
-    const columns = this.data(Indicators.Columns).split(':');
-    if (columns) return columns;
-    else throw new Error(`Unable to find columns in: ${this.cursor}`);
+  array(arrayIndicators: keyof typeof ArrayIndicators): string[] {
+    const array = this.data(arrayIndicators).split(':');
+    if (array) return array;
+    else throw new Error(`Unable to make array in: ${this.cursor}`);
   }
 
   static create(dto: FractalDto, parent: IFractal | null): IFractal {
@@ -73,7 +76,7 @@ export class Fractal implements IFractal {
       {
         id,
         parentId: this.dto.id,
-        controls: this.columns.reduce((acc: ControlsDto, indicator) => {
+        controls: this.array('Columns').reduce((acc: ControlsDto, indicator) => {
           acc[indicator] = {
             id: v4(),
             parentId: id,
@@ -88,6 +91,16 @@ export class Fractal implements IFractal {
     );
     clone.status = FractalStatus.New;
     return clone;
+  }
+
+  setFrom(): IFractal {
+    this.form = new FormRecord(
+      this.controlsList.reduce((acc: Record<string, FormControl>, { indicator, data }) => {
+        acc[indicator] = new FormControl(data);
+        return acc;
+      }, {})
+    );
+    return this;
   }
 
   find(test: string, fractals: IFractals | null = this.fractals): IFractal {

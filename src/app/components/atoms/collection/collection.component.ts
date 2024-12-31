@@ -1,8 +1,8 @@
-import { Component, Input, ChangeDetectionStrategy, output, inject, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, output, inject } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { UpdateService } from '@services';
-import { Collections, ControlDto, IFractal } from '@types';
+import { ControlDto, IFractal } from '@types';
 
 @Component({
   selector: 'app-collection',
@@ -12,29 +12,25 @@ import { Collections, ControlDto, IFractal } from '@types';
   styleUrl: './collection.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionComponent implements OnInit {
+export class CollectionComponent {
   us = inject(UpdateService);
   @Input() rows: IFractal[] = [];
   @Input() fractal!: IFractal;
+  @Input() controlsCollection = false;
   hold = output<IFractal>();
   touch = output<IFractal>();
-  isFractalCollection = false;
-
-  ngOnInit(): void {
-    this.isFractalCollection = this.fractal.is(Collections) && this.fractal.fractals !== null;
-  }
 
   get columns(): string[] {
-    return this.isFractalCollection ? this.fractal.columns : ['indicator', 'data'];
+    return this.controlsCollection ? ['indicator', 'data'] : this.fractal.array('Columns');
   }
 
   get dataSource(): unknown[] {
-    return this.isFractalCollection ? this.fractal.list : this.fractal.controlsList;
+    return this.controlsCollection ? this.fractal.controlsList : this.fractal.fractalsList;
   }
 
   onHold(row: IFractal): void {
-    if (this.isFractalCollection) this.us.$currents.set(this.us.$currents().length > 0 ? [] : row.parent?.list || []);
-    else this.us.set(row);
+    if (this.controlsCollection) this.us.set(row);
+    else this.us.$currents.set(this.us.$currents().length > 0 ? [] : row.parent?.fractalsList || []);
   }
 
   onTouch(row: IFractal): void {
@@ -42,7 +38,7 @@ export class CollectionComponent implements OnInit {
     this.touch.emit(row);
   }
 
-  rowIsClicked(row: IFractal | ControlDto): boolean {
+  clickedRow(row: IFractal | ControlDto): boolean {
     if ('dto' in row) return this.rows.includes(row);
     else return this.rows.includes(this.fractal) && this.fractal.dto.id === row.parentId;
   }

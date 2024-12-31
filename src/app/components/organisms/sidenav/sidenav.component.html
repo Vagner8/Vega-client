@@ -7,7 +7,7 @@
     position="end">
     @if (ts.$current(); as taps) {
       <mat-list>
-        @for (column of taps.columns; track column) {
+        @for (column of taps.array('Sort'); track column) {
           @if (taps.find(column); as tap) {
             <app-tap
               [tap]="tap"

@@ -2,12 +2,11 @@
   class="list"
   [class.two-items]="us.$currents().length === 2"
   [class.three-or-more-items]="us.$currents().length >= 3">
-  @for (row of us.$currents(); track row.dto.id) {
-    <li class="item">
-      <!-- <app-form-card
-        [title]="row.status === 'New' ? 'New' : row.data('Position')"
-        [subtitle]="'subtitle'"
-        [formRecord]="row.formRecord" /> -->
-    </li>
+  @for (fractal of us.$currents(); track fractal.dto.id) {
+    @if (fractal.form) {
+      <li class="item">
+        <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+      </li>
+    }
   }
 </ul>

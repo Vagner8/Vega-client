@@ -3,10 +3,10 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td mat-cell *matCellDef="let row">
-        @if (isFractalCollection) {
-          {{ row.data(column) }}
-        } @else {
+        @if (controlsCollection) {
           {{ column === 'indicator' ? row.indicator : row.data }}
+        } @else {
+          {{ row.data(column) }}
         }
       </td>
     </ng-container>
@@ -16,7 +16,7 @@
     mat-row
     *matRowDef="let row; columns: columns"
     appTap
-    (hold)="onHold(isFractalCollection ? row : fractal)"
-    (touch)="onTouch(isFractalCollection ? row : fractal)"
-    [class.row-is-clicked]="rowIsClicked(row)"></tr>
+    (hold)="onHold(controlsCollection ? fractal : row)"
+    (touch)="onTouch(controlsCollection ? fractal : row)"
+    [class.clicked-row]="clickedRow(row)"></tr>
 </table>
