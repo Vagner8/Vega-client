@@ -12,11 +12,19 @@
     </ng-container>
   }
   <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: columns"
-    appTap
-    (hold)="onHold(like === 'controls' ? fractal : row)"
-    (touch)="onTouch(like === 'controls' ? fractal : row)"
-    [class.clicked-row]="clickedRow(row)"></tr>
+  @if (like === 'controls') {
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+      (click)="onClick(fractal)"
+      [class.clicked-row]="ss.$fractal() === fractal"></tr>
+  } @else {
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+      appTap
+      (hold)="ss.select(row)"
+      (touch)="ss.push(row)"
+      [class.clicked-row]="ss.$fractals().includes(row)"></tr>
+  }
 </table>

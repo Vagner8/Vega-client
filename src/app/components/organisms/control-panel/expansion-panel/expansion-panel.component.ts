@@ -8,8 +8,8 @@ import {
   MatIconModule,
   MatTableModule,
 } from '@mat';
-import { ControlPanelService, UpdateService } from '@services';
-import { ArrayIndicators, Fractals, IFractal } from '@types';
+import { ControlPanelService, SelectService } from '@services';
+import { GroupIndicators, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -28,7 +28,7 @@ import { CollectionComponent } from '@components/atoms';
   styleUrl: './expansion-panel.component.scss',
 })
 export class ExpansionPanelComponent implements OnInit {
-  us = inject(UpdateService);
+  ss = inject(SelectService);
   cps = inject(ControlPanelService);
   @Input() fractal!: IFractal;
   panel = viewChild(MatExpansionPanel);
@@ -42,10 +42,11 @@ export class ExpansionPanelComponent implements OnInit {
   }
 
   get hasColumns(): boolean {
-    return Boolean(this.fractal.data(ArrayIndicators.Columns)) && this.fractal.fractals !== null;
+    return Boolean(this.fractal.data(GroupIndicators.Columns)) && this.fractal.fractals !== null;
   }
 
   afterExpand(fractal: IFractal): void {
+    this.ss.reset();
     this.cps.$current.set(fractal);
   }
 }

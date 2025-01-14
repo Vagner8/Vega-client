@@ -8,16 +8,28 @@ import {
   IFractal,
   IFractals,
   ControlDto,
-  ArrayIndicators,
+  GroupIndicators,
+  Fractals,
 } from '@types';
 import { v4 } from 'uuid';
 
 export class Fractal implements IFractal {
   dto!: FractalDto;
-  form: FormRecord | null = null;
-  parent: IFractal | null = null;
+  form!: FormRecord;
+  parent!: IFractal;
   status: FractalStatus = FractalStatus.Stable;
   fractals: IFractals | null = null;
+
+  get cursor(): string {
+    return this.data(Indicators.Cursor) || this.data(Indicators.Position);
+  }
+
+  get columns(): string[] {
+    if (this.is(Fractals.Root) || this.parent.array(GroupIndicators.Columns).length === 0) {
+      return Object.keys(this.dto.controls);
+    }
+    return this.parent.array(GroupIndicators.Columns);
+  }
 
   get fractalsArray(): IFractal[] {
     return this.fractals ? Object.values(this.fractals) : [];
@@ -27,28 +39,21 @@ export class Fractal implements IFractal {
     return Object.values(this.dto.controls);
   }
 
-  get indicators(): string[] {
-    return Object.keys(this.dto.controls);
-  }
-
-  get cursor(): string {
-    return this.data(Indicators.Cursor) || this.data(Indicators.Position);
-  }
-
-  array(arrayIndicators: keyof typeof ArrayIndicators): string[] {
+  array(arrayIndicators: keyof typeof GroupIndicators): string[] {
     const data = this.data(arrayIndicators);
     return data ? data.split(':') : [];
   }
 
-  static create(dto: FractalDto, parent: IFractal | null): IFractal {
+  static create(dto: FractalDto, parent: IFractal): IFractal {
     const fractal = new Fractal();
     fractal.dto = dto;
+    fractal.form = fractal.getFrom();
     fractal.parent = parent;
     fractal.fractals = fractal.toFractals(dto.fractals, fractal);
     return fractal;
   }
 
-  private toFractals(dto: FractalsDto | null, parent: IFractal | null): IFractals | null {
+  private toFractals(dto: FractalsDto | null, parent: IFractal): IFractals | null {
     if (!dto) return null;
     const result: IFractals = {};
     for (const indicator in dto) {
@@ -92,20 +97,19 @@ export class Fractal implements IFractal {
     return clone;
   }
 
-  setFrom(): IFractal {
-    this.form = new FormRecord(
+  find(test: string, fractals: IFractals | null = this.fractals): IFractal {
+    const fractal = this.findRecursively(test, fractals);
+    if (fractal) return fractal;
+    else throw new Error(`Unable to find fractal by: ${test}`);
+  }
+
+  getFrom(): FormRecord {
+    return new FormRecord(
       this.controlsArray.reduce((acc: Record<string, FormControl>, { indicator, data }) => {
         acc[indicator] = new FormControl(data);
         return acc;
       }, {})
     );
-    return this;
-  }
-
-  find(test: string, fractals: IFractals | null = this.fractals): IFractal {
-    const fractal = this.findRecursively(test, fractals);
-    if (fractal) return fractal;
-    else throw new Error(`Unable to find fractal by: ${test}`);
   }
 
   private findRecursively(test: string, fractals: IFractals | null): IFractal | null {

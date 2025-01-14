@@ -5,7 +5,7 @@ export enum Events {
   Touch = 'Touch',
 }
 
-export enum ArrayIndicators {
+export enum GroupIndicators {
   Sort = 'Sort',
   Columns = 'Columns',
 }
@@ -73,20 +73,19 @@ export interface FractalDto {
 
 export interface IFractal {
   dto: FractalDto;
-  form: FormRecord | null;
+  form: FormRecord;
   status: FractalStatus;
-  parent: IFractal | null;
+  parent: IFractal;
   fractals: IFractals | null;
 
   get cursor(): string;
-  get indicators(): string[];
+  get columns(): string[];
   get fractalsArray(): IFractal[];
   get controlsArray(): ControlDto[];
 
   is(test: string | object): boolean;
   data(indicator: string): string;
   find(test: Events[number], fractals?: IFractals | null): IFractal;
-  array(arrayIndicators: keyof typeof ArrayIndicators): string[];
-  setFrom(): IFractal;
+  array(arrayIndicators: keyof typeof GroupIndicators): string[];
   cloneChild(): IFractal;
 }

@@ -8,7 +8,7 @@ import {
   ModifiersService,
   RowsService,
   TapsService,
-  UpdateService,
+  SelectService,
 } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
@@ -28,7 +28,7 @@ export class ScreenComponent implements OnInit {
   rts = inject(RootService);
   mgr = inject(ManagerService);
 
-  us = inject(UpdateService);
+  ss = inject(SelectService);
 
   @Input() Taps = '';
   @Input() Rows = '';

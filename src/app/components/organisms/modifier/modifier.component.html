@@ -1,12 +1,12 @@
-<ul
-  class="list"
-  [class.two-items]="us.$currents().length === 2"
-  [class.three-or-more-items]="us.$currents().length >= 3">
-  @for (fractal of us.$currents(); track fractal.dto.id) {
-    @if (fractal.form) {
-      <li class="item">
-        <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
-      </li>
-    }
+<ul class="list" [class.two-items]="fractals.length === 2" [class.three-or-more-items]="fractals.length >= 3">
+  @if (fractal) {
+    <li class="one-item">
+      <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+    </li>
+  }
+  @for (fractal of fractals; track fractal.dto.id) {
+    <li class="item">
+      <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+    </li>
   }
 </ul>

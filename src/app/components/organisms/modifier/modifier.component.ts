@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormCardComponent } from '@components/molecules';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { UpdateService } from '@services';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-modifier',
@@ -11,5 +11,6 @@ import { UpdateService } from '@services';
   styleUrl: './modifier.component.scss',
 })
 export class ModifierComponent {
-  us = inject(UpdateService);
+  @Input() fractal: IFractal | null = null;
+  @Input() fractals: IFractal[] = [];
 }

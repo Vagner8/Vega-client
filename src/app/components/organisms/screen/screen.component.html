@@ -1,7 +1,7 @@
 @if (rts.$current(); as root) {
   @if (cs.$current(); as collection) {
     @if (Modifier) {
-      <app-modifier />
+      <app-modifier [fractal]="ss.$fractal()" [fractals]="ss.$fractals()" />
     }
     @if (!Modifier) {
       @switch (Collections) {
@@ -12,7 +12,7 @@
           <app-control-panel [fractal]="root" />
         }
         @default {
-          <app-collection [rows]="us.$currents()" [fractal]="collection" />
+          <app-collection [fractal]="collection" />
         }
       }
     }

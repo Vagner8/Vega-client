@@ -22,12 +22,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
-      const root = Fractal.create(dto, null);
-      console.log('🚀 ~ root:', root);
+      const root = Fractal.create(dto, new Fractal());
       this.ms.modifiers = root.find(Fractals.Modifiers);
       this.cs.collections = root.find(Fractals.Collections);
       this.mgr.$current.set(root.find(Fractals.Manager));
       this.rts.$current.set(root);
+      console.log('🚀 ~ root:', root);
     });
   }
 }

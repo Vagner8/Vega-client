@@ -14,9 +14,4 @@ export class FormComponent {
   @Input() fractal!: IFractal;
   change = output<IFractal>();
   prevRawValue!: Record<string, string>;
-
-  get names(): string[] {
-    const columns = this.fractal.parent?.array('Columns');
-    return columns && columns.length > 0 ? columns : this.fractal.indicators;
-  }
 }
