@@ -18,7 +18,7 @@ export class CollectionComponent {
   @Input() fractal!: IFractal;
 
   get columns(): string[] {
-    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.array('Columns');
+    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.split('Columns');
   }
 
   get dataSource(): unknown[] {

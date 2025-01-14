@@ -5,7 +5,7 @@ export enum Events {
   Touch = 'Touch',
 }
 
-export enum GroupIndicators {
+export enum SplitebleIndicators {
   Sort = 'Sort',
   Columns = 'Columns',
 }
@@ -79,7 +79,6 @@ export interface IFractal {
 
   is(test: string | object): boolean;
   data(indicator: string): string;
-  find(test: Events[number], fractals?: IFractals | null): IFractal;
-  array(arrayIndicators: keyof typeof GroupIndicators): string[];
-  cloneChild(): IFractal;
+  find(test: Events[number]): IFractal;
+  split(arrayIndicators: keyof typeof SplitebleIndicators): string[];
 }

@@ -1,7 +1,7 @@
 <app-expansion-panel [fractal]="fractal" (closed)="closed()">
   @if (shouldRender()) {
     <mat-accordion>
-      @for (cursor of fractal.array('Sort'); track cursor) {
+      @for (cursor of fractal.split('Sort'); track cursor) {
         <app-control-panel [fractal]="fractal.find(cursor)" />
       }
     </mat-accordion>

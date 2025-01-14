@@ -6,7 +6,6 @@ import {
   CollectionsService,
   ManagerService,
   ModifiersService,
-  RowsService,
   TapsService,
   SelectService,
 } from '@services';
@@ -22,7 +21,6 @@ import { ControlPanelComponent } from '../control-panel/control-panel.component'
 })
 export class ScreenComponent implements OnInit {
   ts = inject(TapsService);
-  rs = inject(RowsService);
   ss = inject(SelectService);
   ms = inject(ModifiersService);
   cs = inject(CollectionsService);
@@ -49,10 +47,9 @@ export class ScreenComponent implements OnInit {
   }
 
   private init(): void {
-    const { Rows, Taps, Collections, Manager, Modifier } = this;
+    const { Taps, Collections, Manager, Modifier } = this;
     const root = this.rts.fractal;
     this.cs.init({ root, Collections });
-    this.rs.init({ Rows, collection: this.cs.fractal });
     this.ms.init({ root, Modifier });
     this.ts.init({
       Taps,

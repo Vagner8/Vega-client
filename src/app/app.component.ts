@@ -4,7 +4,7 @@ import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
 import { Fractals } from '@types';
 import { DataService, RootService, CollectionsService, ManagerService, ModifiersService } from '@services';
-import { Fractal } from '@utils';
+import { fractalFactory } from '@fractal';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
-      const root = Fractal.create(dto, new Fractal());
+      const root = fractalFactory(dto);
       this.ms.modifiers = root.find(Fractals.Modifiers);
       this.cs.collections = root.find(Fractals.Collections);
       this.mgr.$fractal.set(root.find(Fractals.Manager));

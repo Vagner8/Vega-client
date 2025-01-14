@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { ControlPanelService, SelectService } from '@services';
-import { GroupIndicators, Fractals, IFractal } from '@types';
+import { SplitebleIndicators, Fractals, IFractal } from '@types';
 import { CollectionComponent } from '@components/atoms';
 
 @Component({
@@ -42,7 +42,7 @@ export class ExpansionPanelComponent implements OnInit {
   }
 
   get hasColumns(): boolean {
-    return Boolean(this.fractal.data(GroupIndicators.Columns)) && this.fractal.fractals !== null;
+    return Boolean(this.fractal.data(SplitebleIndicators.Columns)) && this.fractal.fractals !== null;
   }
 
   afterExpand(fractal: IFractal): void {

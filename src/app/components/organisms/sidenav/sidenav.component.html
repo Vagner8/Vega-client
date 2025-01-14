@@ -7,7 +7,7 @@
     position="end">
     @if (ts.$fractal(); as taps) {
       <mat-list>
-        @for (column of taps.array('Sort'); track column) {
+        @for (column of taps.split('Sort'); track column) {
           @if (taps.find(column); as tap) {
             @switch (tap.parent.cursor) {
               @case ('Modifiers') {

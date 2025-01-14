@@ -29,8 +29,8 @@
       "@directives": ["app/directives/index.ts"],
       "@constants": ["app/constants/index.ts"],
       "@services": ["app/services/index.ts"],
+      "@fractal": ["app/fractal/index.ts"],
       "@types": ["app/types/index.ts"],
-      "@utils": ["app/utils/index.ts"],
       "@mat": ["app/mat-angular.ts"]
     }
   },

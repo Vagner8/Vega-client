@@ -6,6 +6,5 @@ export * from './collections.service';
 export * from './modifiers.service';
 export * from './taps.service';
 export * from './manager.service';
-export * from './rows.service';
 export * from './control-panel.service';
 export * from './select.service';
