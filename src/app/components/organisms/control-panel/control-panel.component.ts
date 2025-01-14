@@ -19,7 +19,7 @@ export class ControlPanelComponent {
 
   shouldRender = computed(() => {
     if (this.fractal.is(Collections)) return false;
-    let current = this.cps.$current();
+    let current = this.cps.$fractal();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -29,7 +29,7 @@ export class ControlPanelComponent {
 
   closed(): void {
     this.ss.reset();
-    this.cps.$current.set(this.cps.current.parent);
+    this.cps.$fractal.set(this.cps.fractal.parent);
     this.accordion()?.closeAll();
   }
 }

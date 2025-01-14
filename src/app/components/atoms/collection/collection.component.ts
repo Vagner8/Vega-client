@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, output, inject } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { SelectService } from '@services';
@@ -23,9 +23,5 @@ export class CollectionComponent {
 
   get dataSource(): unknown[] {
     return this.like === 'controls' ? this.fractal.controlsArray : this.fractal.fractalsArray;
-  }
-
-  onClick(row: IFractal): void {
-    this.ss.$fractal.update(prev => (prev === row ? null : this.fractal));
   }
 }

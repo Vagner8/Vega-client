@@ -3,7 +3,6 @@ import {
   FractalDto,
   Indicators,
   ControlsDto,
-  FractalStatus,
   FractalsDto,
   IFractal,
   IFractals,
@@ -17,7 +16,6 @@ export class Fractal implements IFractal {
   dto!: FractalDto;
   form!: FormRecord;
   parent!: IFractal;
-  status: FractalStatus = FractalStatus.Stable;
   fractals: IFractals | null = null;
 
   get cursor(): string {
@@ -93,7 +91,6 @@ export class Fractal implements IFractal {
       },
       this
     );
-    clone.status = FractalStatus.New;
     return clone;
   }
 

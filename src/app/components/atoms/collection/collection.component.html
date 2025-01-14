@@ -16,7 +16,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: columns"
-      (click)="onClick(fractal)"
+      (click)="ss.set(fractal)"
       [class.clicked-row]="ss.$fractal() === fractal"></tr>
   } @else {
     <tr

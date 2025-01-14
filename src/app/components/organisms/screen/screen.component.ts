@@ -23,12 +23,11 @@ import { ControlPanelComponent } from '../control-panel/control-panel.component'
 export class ScreenComponent implements OnInit {
   ts = inject(TapsService);
   rs = inject(RowsService);
+  ss = inject(SelectService);
   ms = inject(ModifiersService);
   cs = inject(CollectionsService);
   rts = inject(RootService);
   mgr = inject(ManagerService);
-
-  ss = inject(SelectService);
 
   @Input() Taps = '';
   @Input() Rows = '';
@@ -44,16 +43,17 @@ export class ScreenComponent implements OnInit {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
     }
-    if (this.ts.$current()?.is(Fractals.Collections)) {
+    if (this.ts.$fractal()?.is(Fractals.Collections)) {
       // this.ts.set(this.ms.parent);
     }
   }
 
   private init(): void {
     const { Rows, Taps, Collections, Manager, Modifier } = this;
-    this.cs.init({ root: this.rts.current, Collections });
-    this.rs.init({ Rows, collection: this.cs.current });
-    this.ms.init({ root: this.rts.current, Modifier });
+    const root = this.rts.fractal;
+    this.cs.init({ root, Collections });
+    this.rs.init({ Rows, collection: this.cs.fractal });
+    this.ms.init({ root, Modifier });
     this.ts.init({
       Taps,
       modifiers: this.ms.modifiers,

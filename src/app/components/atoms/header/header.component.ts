@@ -16,8 +16,8 @@ export class HeaderComponent {
   ms = inject(ModifiersService);
 
   title = computed<string>(() => {
-    const modifier = this.ms.$current();
+    const modifier = this.ms.$fractal();
     const modifierTitle = modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
-    return `${this.cs.$current()?.cursor} ${modifierTitle || ''}`;
+    return `${this.cs.$fractal()?.cursor} ${modifierTitle || ''}`;
   });
 }

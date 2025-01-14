@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormCardComponent } from '@components/molecules';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { IFractal } from '@types';
+import { DataService, ModifiersService, SelectService } from '@services';
+import { IFractal, Modifiers } from '@types';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-modifier',
@@ -10,7 +12,25 @@ import { IFractal } from '@types';
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })
-export class ModifierComponent {
+export class ModifierComponent implements OnInit, OnDestroy {
+  ds = inject(DataService);
+  ss = inject(SelectService);
+  ms = inject(ModifiersService);
   @Input() fractal: IFractal | null = null;
   @Input() fractals: IFractal[] = [];
+  private subscription!: Subscription;
+
+  ngOnInit(): void {
+    this.subscription = this.ms.hold$.subscribe(modifier => {
+      switch (modifier?.cursor) {
+        case Modifiers.Save:
+          this.ds.update([]);
+          break;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

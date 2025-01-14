@@ -5,13 +5,18 @@
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (ts.$current(); as taps) {
+    @if (ts.$fractal(); as taps) {
       <mat-list>
         @for (column of taps.array('Sort'); track column) {
           @if (taps.find(column); as tap) {
-            <app-tap
-              [tap]="tap"
-              (touch)="tap.parent.cursor === 'Collections' ? collectionTouched($event) : modifierTouched($event)" />
+            @switch (tap.parent.cursor) {
+              @case ('Modifiers') {
+                <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />
+              }
+              @case ('Collections') {
+                <app-tap [tap]="tap" (touch)="collectionTouched($event)" />
+              }
+            }
           }
         }
       </mat-list>

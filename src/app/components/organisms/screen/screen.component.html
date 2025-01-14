@@ -1,5 +1,5 @@
-@if (rts.$current(); as root) {
-  @if (cs.$current(); as collection) {
+@if (rts.$fractal(); as root) {
+  @if (cs.$fractal(); as collection) {
     @if (Modifier) {
       <app-modifier [fractal]="ss.$fractal()" [fractals]="ss.$fractals()" />
     }

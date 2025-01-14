@@ -7,12 +7,12 @@ import { IFractal } from '@types';
 })
 export class BaseService {
   router = inject(Router);
-  $current = signal<IFractal | null>(null);
+  $fractal = signal<IFractal | null>(null);
 
-  get current(): IFractal {
-    const current = this.$current();
-    if (!current) throw new Error(`Current is ${current}`);
-    return current;
+  get fractal(): IFractal {
+    const fractal = this.$fractal();
+    if (!fractal) throw new Error(`Fractal is ${fractal}`);
+    return fractal;
   }
 
   async navigate(

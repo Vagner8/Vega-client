@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
       const root = Fractal.create(dto, new Fractal());
       this.ms.modifiers = root.find(Fractals.Modifiers);
       this.cs.collections = root.find(Fractals.Collections);
-      this.mgr.$current.set(root.find(Fractals.Manager));
-      this.rts.$current.set(root);
+      this.mgr.$fractal.set(root.find(Fractals.Manager));
+      this.rts.$fractal.set(root);
       console.log('🚀 ~ root:', root);
     });
   }

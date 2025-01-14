@@ -19,17 +19,17 @@ export class SidenavComponent {
   cs = inject(CollectionsService);
   mgr = inject(ManagerService);
 
-  hold(tap: IFractal): void {
-    console.log('🚀 ~ tap:', tap);
+  modifierHeld(tap: IFractal): void {
+    this.ms.hold(tap);
   }
 
   modifierTouched(tap: IFractal): void {
-    this.ms.set(tap);
+    this.ms.touch(tap);
   }
 
   async collectionTouched(tap: IFractal): Promise<void> {
     this.ss.$fractals.set([]);
     await this.cs.set(tap);
-    this.ms.set(null);
+    this.ms.touch(null);
   }
 }

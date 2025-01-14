@@ -9,11 +9,11 @@ export class CollectionsService extends BaseService {
   collections!: IFractal;
 
   async set(collection: IFractal): Promise<void> {
-    this.$current.set(collection);
+    this.$fractal.set(collection);
     await this.navigate({}, [collection.cursor]);
   }
 
   init({ root, Collections }: { root: IFractal; Collections: string }): void {
-    this.$current.set(root.find(Collections));
+    this.$fractal.set(root.find(Collections));
   }
 }

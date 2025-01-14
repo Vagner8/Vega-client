@@ -13,6 +13,7 @@ import {
   TapsService,
   RootService,
 } from '@services';
+import { BaseService } from 'app/services/base.service';
 
 @Component({
   selector: 'app-manager',
@@ -27,6 +28,7 @@ export class ManagerComponent implements OnInit {
   prevEvent: keyof typeof Events | null = null;
 
   ts = inject(TapsService);
+  bs = inject(BaseService);
   cs = inject(CollectionsService);
   es = inject(EventService);
   ms = inject(ModifiersService);
@@ -42,8 +44,8 @@ export class ManagerComponent implements OnInit {
       await this.mgr.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$current.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.cs.collections));
-      await this.rts.navigate({ [FractalsParams.Taps]: this.ts.$current()?.cursor });
+      this.ts.$fractal.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.cs.collections));
+      await this.bs.navigate({ [FractalsParams.Taps]: this.ts.$fractal()?.cursor });
     }
     this.prevEvent = event;
   }

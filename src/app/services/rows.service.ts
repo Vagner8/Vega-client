@@ -6,10 +6,10 @@ import { BaseService } from './base.service';
   providedIn: 'root',
 })
 export class RowsService extends BaseService {
-  $currents = signal<IFractal[]>([]);
+  $fractals = signal<IFractal[]>([]);
 
   init({ Rows, collection }: { collection: IFractal; Rows: string }): void {
-    this.$currents.set(
+    this.$fractals.set(
       Rows
         ? Rows.split(':').map(row => {
             try {
@@ -24,9 +24,9 @@ export class RowsService extends BaseService {
 
   async set(rowToSet: IFractal | null): Promise<void> {
     if (!rowToSet) {
-      this.$currents.set([]);
+      this.$fractals.set([]);
     } else {
-      this.$currents.update(prev => {
+      this.$fractals.update(prev => {
         if (prev.includes(rowToSet)) {
           return prev.filter(row => row !== rowToSet);
         } else {
@@ -38,18 +38,18 @@ export class RowsService extends BaseService {
   }
 
   async hold(collection: IFractal | null): Promise<void> {
-    this.$currents.update(prev => (prev.length === 0 && collection ? collection.fractalsArray : []));
+    this.$fractals.update(prev => (prev.length === 0 && collection ? collection.fractalsArray : []));
     this.navigateToRows();
   }
 
   delete(rowToDelete: IFractal): void {
-    this.$currents.update(prev => prev.filter(row => row !== rowToDelete));
+    this.$fractals.update(prev => prev.filter(row => row !== rowToDelete));
     this.navigateToRows();
   }
 
   private async navigateToRows(): Promise<void> {
     await this.navigate({
-      [FractalsParams.Rows]: this.$currents()
+      [FractalsParams.Rows]: this.$fractals()
         .map(row => row.dto.id)
         .join(':'),
     });

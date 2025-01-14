@@ -43,11 +43,6 @@ export enum Modifiers {
   Columns = 'Columns',
 }
 
-export enum FractalStatus {
-  New = 'New',
-  Stable = 'Stable',
-}
-
 export type FractalsDto = Record<string, FractalDto>;
 export type IFractals = Record<string, IFractal>;
 export type ControlsDto = Record<string, ControlDto>;
@@ -74,7 +69,6 @@ export interface FractalDto {
 export interface IFractal {
   dto: FractalDto;
   form: FormRecord;
-  status: FractalStatus;
   parent: IFractal;
   fractals: IFractals | null;
 
