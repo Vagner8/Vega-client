@@ -1,6 +1,6 @@
 import { FormRecord } from '@angular/forms';
 import { FractalDto, Indicators, IFractal, IFractals, ControlDto, SplitebleIndicators, Fractals } from '@types';
-import { findFractal } from './methods';
+import { findFractal } from './helpers';
 
 export class Fractal implements IFractal {
   dto!: FractalDto;
@@ -44,5 +44,12 @@ export class Fractal implements IFractal {
   split(indicator: keyof typeof SplitebleIndicators): string[] {
     const data = this.data(indicator);
     return data ? data.split(':') : [];
+  }
+
+  update(): FractalDto {
+    for (const indicator in this.form.value) {
+      this.dto.controls[indicator].data = this.form.value[indicator];
+    }
+    return this.dto;
   }
 }

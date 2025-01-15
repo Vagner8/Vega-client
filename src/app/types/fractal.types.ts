@@ -81,4 +81,5 @@ export interface IFractal {
   data(indicator: string): string;
   find(test: Events[number]): IFractal;
   split(arrayIndicators: keyof typeof SplitebleIndicators): string[];
+  update(): FractalDto;
 }
