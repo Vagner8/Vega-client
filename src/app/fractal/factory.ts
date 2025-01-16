@@ -1,6 +1,7 @@
-import { FractalDto, FractalsDto, IFractal, IFractals } from '@types';
+import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, SplitebleIndicators } from '@types';
 import { Fractal } from './fractal';
 import { createForm } from './helpers';
+import { v4 } from 'uuid';
 
 export const fractalFactory = (dto: FractalDto, parent: IFractal = new Fractal()): IFractal => {
   const fractal = new Fractal();
@@ -20,4 +21,25 @@ const fractalsFactory = (dto: FractalsDto | null, parent: IFractal): IFractals |
     result[indicator] = fractal;
   }
   return result;
+};
+
+export const childFactory = (parent: IFractal): IFractal => {
+  const id = v4();
+  const dto: FractalDto = {
+    id,
+    parentId: parent.dto.id,
+    fractals: null,
+    controls: parent.split(SplitebleIndicators.Columns).reduce((acc: ControlsDto, indicator) => {
+      console.log('🚀 ~ indicator:', indicator);
+      acc[indicator] = {
+        id: v4(),
+        parentId: id,
+        data: '',
+        indicator,
+      };
+      return acc;
+    }, {}),
+  };
+  const child = fractalFactory(dto, parent);
+  return child;
 };

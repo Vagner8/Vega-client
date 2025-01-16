@@ -1,10 +1,13 @@
-<ul class="list" [class.two-items]="fractals.length === 2" [class.three-or-more-items]="fractals.length >= 3">
-  @if (fractal) {
+<ul
+  class="list"
+  [class.two-items]="ss.$fractals().length === 2"
+  [class.three-or-more-items]="ss.$fractals().length >= 3">
+  @if (ss.$fractal(); as fractal) {
     <li class="one-item">
       <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
     </li>
   }
-  @for (fractal of fractals; track fractal.dto.id) {
+  @for (fractal of ss.$fractals(); track fractal.dto.id) {
     <li class="item">
       <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
     </li>

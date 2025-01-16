@@ -1,7 +1,7 @@
 @if (rts.$fractal(); as root) {
   @if (cs.$fractal(); as collection) {
     @if (Modifier) {
-      <app-modifier [fractal]="ss.$fractal()" [fractals]="ss.$fractals()" />
+      <app-modifier />
     }
     @if (!Modifier) {
       @switch (Collections) {

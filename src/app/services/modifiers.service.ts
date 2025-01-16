@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 })
 export class ModifiersService extends BaseService {
   hold$ = new Subject<IFractal | null>();
+  touch$ = new Subject<IFractal | null>();
   modifiers!: IFractal;
 
   hold(modifier: IFractal | null): void {
@@ -15,6 +16,7 @@ export class ModifiersService extends BaseService {
   }
 
   async touch(modifier: IFractal | null): Promise<void> {
+    this.touch$.next(modifier);
     this.$fractal.set(modifier);
     await this.navigate({ [FractalsParams.Modifier]: modifier ? modifier.cursor : null });
   }
