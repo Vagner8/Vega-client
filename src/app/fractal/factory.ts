@@ -30,7 +30,6 @@ export const childFactory = (parent: IFractal): IFractal => {
     parentId: parent.dto.id,
     fractals: null,
     controls: parent.split(SplitebleIndicators.Columns).reduce((acc: ControlsDto, indicator) => {
-      console.log('🚀 ~ indicator:', indicator);
       acc[indicator] = {
         id: v4(),
         parentId: id,

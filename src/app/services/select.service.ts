@@ -1,32 +1,34 @@
 import { Injectable, signal } from '@angular/core';
 import { IFractal } from '@types';
-import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SelectService extends BaseService {
-  $fractals = signal<IFractal[]>([]);
+export class SelectService {
+  $parent = signal<IFractal | null>(null);
+  $children = signal<IFractal[]>([]);
 
-  set(row: IFractal): void {
-    this.$fractals.set([]);
-    this.$fractal.update(prev => (prev === row ? null : row));
+  async set(fractal: IFractal | null): Promise<void> {
+    this.$children.set([]);
+    this.$parent.set(fractal);
   }
 
   push(fractal: IFractal): void {
-    this.$fractal.set(null);
-    this.$fractals.update(prev =>
-      prev.includes(fractal) ? prev.filter(prevFractal => prevFractal !== fractal) : [...prev, fractal]
+    this.$children.update(prev =>
+      prev.includes(fractal) ? prev.filter(child => child !== fractal) : [...prev, fractal]
     );
   }
 
   select(fractal: IFractal): void {
-    this.$fractal.set(null);
-    this.$fractals.update(prev => (prev.length > 0 ? [] : fractal.parent.fractalsArray));
+    this.$children.update(prev => (prev.length > 0 ? [] : fractal.parent.fractalsArray));
   }
 
   reset(): void {
-    this.$fractal.set(null);
-    this.$fractals.set([]);
+    // this.$fractal.set(null);
+    this.$children.set([]);
+  }
+
+  init({ root, Collections }: { root: IFractal; Collections: string }): void {
+    this.$parent.set(root.find(Collections));
   }
 }

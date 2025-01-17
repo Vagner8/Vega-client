@@ -5,7 +5,7 @@
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (ts.$fractal(); as taps) {
+    @if (ts.$taps(); as taps) {
       <mat-list>
         @for (column of taps.split('Sort'); track column) {
           @if (taps.find(column); as tap) {

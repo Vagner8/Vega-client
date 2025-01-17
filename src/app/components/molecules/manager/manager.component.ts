@@ -5,14 +5,7 @@ import { SpinnerComponent } from '@components/atoms';
 import { Events, Fractals, FractalsParams } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import {
-  EventService,
-  CollectionsService,
-  ManagerService,
-  ModifiersService,
-  TapsService,
-  RootService,
-} from '@services';
+import { EventService, ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -29,10 +22,9 @@ export class ManagerComponent implements OnInit {
 
   ts = inject(TapsService);
   bs = inject(BaseService);
-  cs = inject(CollectionsService);
   es = inject(EventService);
+  ss = inject(SelectService);
   ms = inject(ModifiersService);
-  rts = inject(RootService);
   mgr = inject(ManagerService);
 
   ngOnInit(): void {
@@ -44,8 +36,8 @@ export class ManagerComponent implements OnInit {
       await this.mgr.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$fractal.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.cs.collections));
-      await this.bs.navigate({ [FractalsParams.Taps]: this.ts.$fractal()?.cursor });
+      this.ts.$taps.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.bs.collections));
+      await this.bs.navigate({ [FractalsParams.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;
   }

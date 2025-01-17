@@ -7,14 +7,14 @@ import { BaseService } from './base.service';
 })
 export class TapsService {
   bs = inject(BaseService);
-  $fractal = signal<IFractal | null>(null);
+  $taps = signal<IFractal | null>(null);
 
   init({ Taps, modifiers, collections }: { Taps: string; modifiers: IFractal; collections: IFractal }): void {
-    this.$fractal.set(Taps === FractalsParams.Collections ? collections : modifiers);
+    this.$taps.set(Taps === FractalsParams.Collections ? collections : modifiers);
   }
 
   async set(taps: IFractal): Promise<void> {
-    this.$fractal.set(taps);
+    this.$taps.set(taps);
     await this.bs.navigate({ [FractalsParams.Taps]: taps.cursor });
   }
 }

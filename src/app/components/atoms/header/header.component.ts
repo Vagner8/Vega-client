@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { CollectionsService, ModifiersService } from '@services';
+import { ModifiersService, SelectService } from '@services';
 import { Modifiers } from '@types';
 
 @Component({
@@ -12,12 +12,12 @@ import { Modifiers } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  cs = inject(CollectionsService);
+  ss = inject(SelectService);
   ms = inject(ModifiersService);
 
   title = computed<string>(() => {
-    const modifier = this.ms.$fractal();
+    const modifier = this.ms.$modifier();
     const modifierTitle = modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
-    return `${this.cs.$fractal()?.cursor} ${modifierTitle || ''}`;
+    return `${this.ss.$parent()?.cursor} ${modifierTitle || ''}`;
   });
 }

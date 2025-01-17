@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { CollectionsService, ManagerService, ModifiersService, TapsService, SelectService } from '@services';
+import { ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { IFractal } from '@types';
+import { BaseService } from 'app/services/base.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,10 +14,10 @@ import { IFractal } from '@types';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
+  bs = inject(BaseService);
   ts = inject(TapsService);
   ss = inject(SelectService);
   ms = inject(ModifiersService);
-  cs = inject(CollectionsService);
   mgr = inject(ManagerService);
 
   modifierHeld(tap: IFractal): void {
@@ -28,8 +29,9 @@ export class SidenavComponent {
   }
 
   async collectionTouched(tap: IFractal): Promise<void> {
-    this.ss.$fractals.set([]);
-    await this.cs.set(tap);
+    this.ss.$children.set([]);
+    this.ss.set(tap);
+    await this.bs.navigate({}, [tap.cursor]);
     this.ms.touch(null);
   }
 }

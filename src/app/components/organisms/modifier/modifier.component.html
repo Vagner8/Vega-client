@@ -1,15 +1,18 @@
-<ul
-  class="list"
-  [class.two-items]="ss.$fractals().length === 2"
-  [class.three-or-more-items]="ss.$fractals().length >= 3">
-  @if (ss.$fractal(); as fractal) {
+@let parent = ss.$parent();
+@let children = ss.$children();
+@let length = children.length;
+
+<ul class="list" [class.two-items]="length === 2" [class.three-or-more-items]="length >= 3">
+  @if (parent && children.includes(parent)) {
     <li class="one-item">
-      <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+      <app-form-card [title]="parent.cursor" [subtitle]="'subtitle'" [fractal]="parent" />
     </li>
   }
-  @for (fractal of ss.$fractals(); track fractal.dto.id) {
-    <li class="item">
-      <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
-    </li>
+  @for (child of children; track child.dto.id) {
+    @if (child !== parent) {
+      <li class="item">
+        <app-form-card [title]="child.cursor" [subtitle]="'subtitle'" [fractal]="child" />
+      </li>
+    }
   }
 </ul>

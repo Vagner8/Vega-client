@@ -7,13 +7,8 @@ import { IFractal } from '@types';
 })
 export class BaseService {
   router = inject(Router);
-  $fractal = signal<IFractal | null>(null);
-
-  get fractal(): IFractal {
-    const fractal = this.$fractal();
-    if (!fractal) throw new Error(`Fractal is ${fractal}`);
-    return fractal;
-  }
+  $root = signal<IFractal | null>(null);
+  collections!: IFractal;
 
   async navigate(
     queryParams?: Params,

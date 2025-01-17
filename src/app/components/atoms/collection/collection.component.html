@@ -16,8 +16,8 @@
     <tr
       mat-row
       *matRowDef="let row; columns: columns"
-      (click)="ss.set(fractal)"
-      [class.clicked-row]="ss.$fractal() === fractal"></tr>
+      (click)="ss.push(fractal)"
+      [class.clicked-row]="ss.$children().includes(fractal)"></tr>
   } @else {
     <tr
       mat-row
@@ -25,6 +25,6 @@
       appTap
       (hold)="ss.select(row)"
       (touch)="ss.push(row)"
-      [class.clicked-row]="ss.$fractals().includes(row)"></tr>
+      [class.clicked-row]="ss.$children().includes(row)"></tr>
   }
 </table>
