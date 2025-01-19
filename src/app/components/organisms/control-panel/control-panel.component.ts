@@ -28,7 +28,7 @@ export class ControlPanelComponent {
 
   closed(): void {
     this.ss.reset();
-    this.ss.set(this.ss.$parent()?.parent || null);
+    this.ss.setParent(this.ss.$parent()?.parent || null);
     this.accordion()?.closeAll();
   }
 }

@@ -6,26 +6,33 @@ import { IFractal } from '@types';
 })
 export class SelectService {
   $parent = signal<IFractal | null>(null);
-  $children = signal<IFractal[]>([]);
 
-  async set(fractal: IFractal | null): Promise<void> {
-    this.$children.set([]);
+  $toAdd = signal<IFractal[]>([]);
+  $toUpdate = signal<IFractal[]>([]);
+  $toDelete = signal<IFractal[]>([]);
+
+  setParent(fractal: IFractal | null): void {
+    this.$toUpdate.set([]);
     this.$parent.set(fractal);
   }
 
-  push(fractal: IFractal): void {
-    this.$children.update(prev =>
+  setToAdd(fractal: IFractal): void {
+    this.$toAdd.update(prev => [...prev, fractal]);
+  }
+
+  setToUpdate(fractal: IFractal): void {
+    this.$toUpdate.update(prev =>
       prev.includes(fractal) ? prev.filter(child => child !== fractal) : [...prev, fractal]
     );
   }
 
   select(fractal: IFractal): void {
-    this.$children.update(prev => (prev.length > 0 ? [] : fractal.parent.fractalsArray));
+    this.$toUpdate.update(prev => (prev.length > 0 ? [] : fractal.parent.fractalsArray));
   }
 
   reset(): void {
     // this.$fractal.set(null);
-    this.$children.set([]);
+    this.$toUpdate.set([]);
   }
 
   init({ root, Collections }: { root: IFractal; Collections: string }): void {

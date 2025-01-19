@@ -1,2 +1,2 @@
 export * from './fractal';
-export * from './factory';
+export * from './factories';

@@ -6,6 +6,7 @@ export enum Events {
 }
 
 export enum SplitebleIndicators {
+  Id = 'Id',
   Sort = 'Sort',
   Columns = 'Columns',
 }

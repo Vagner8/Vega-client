@@ -16,15 +16,15 @@
     <tr
       mat-row
       *matRowDef="let row; columns: columns"
-      (click)="ss.push(fractal)"
-      [class.clicked-row]="ss.$children().includes(fractal)"></tr>
+      (click)="ss.setToUpdate(fractal)"
+      [class.clicked-row]="ss.$toUpdate().includes(fractal)"></tr>
   } @else {
     <tr
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
       (hold)="ss.select(row)"
-      (touch)="ss.push(row)"
-      [class.clicked-row]="ss.$children().includes(row)"></tr>
+      (touch)="ss.setToUpdate(row)"
+      [class.clicked-row]="ss.$toUpdate().includes(row)"></tr>
   }
 </table>

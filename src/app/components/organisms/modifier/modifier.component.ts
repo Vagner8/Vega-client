@@ -19,24 +19,18 @@ export class ModifierComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    const fractal = this.ss.$parent();
-    const fractals = this.ss.$children();
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
+        const toAdd = this.ss.$toAdd();
+        const toUpdate = this.ss.$toUpdate();
         switch (modifier?.cursor) {
           case Modifiers.Save:
-            this.ds.update(fractal ? [fractal.update()] : fractals.map(fractal => fractal.update())).subscribe();
-            break;
-        }
-      })
-    );
-
-    this.subs.push(
-      this.ms.touch$.subscribe(modifier => {
-        switch (modifier?.cursor) {
-          case Modifiers.New:
-            this.ss.$parent();
-            this.ss.push(this.ss.$parent()!.createChild());
+            if (toAdd.length > 0) {
+              this.ds.add(toAdd.map(fractal => fractal.update())).subscribe();
+            }
+            if (toUpdate.length > 0) {
+              this.ds.update(toUpdate.map(fractal => fractal.update())).subscribe();
+            }
             break;
         }
       })

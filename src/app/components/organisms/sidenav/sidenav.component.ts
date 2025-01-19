@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService } from '@services';
-import { IFractal } from '@types';
+import { IFractal, Modifiers } from '@types';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -24,13 +24,22 @@ export class SidenavComponent {
     this.ms.hold(tap);
   }
 
-  modifierTouched(tap: IFractal): void {
-    this.ms.touch(tap);
+  modifierTouched(modifier: IFractal): void {
+    this.ms.touch(modifier);
+    switch (modifier?.cursor) {
+      case Modifiers.New:
+        console.log('🚀 ~ this.ss.$parent():', this.ss.$parent());
+
+        console.log('🚀 ~ this.ss.$parent()!.createChild():', this.ss.$parent()!.createChild());
+
+        this.ss.setToAdd(this.ss.$parent()!.createChild());
+        break;
+    }
   }
 
   async collectionTouched(tap: IFractal): Promise<void> {
-    this.ss.$children.set([]);
-    this.ss.set(tap);
+    this.ss.$toUpdate.set([]);
+    this.ss.setParent(tap);
     await this.bs.navigate({}, [tap.cursor]);
     this.ms.touch(null);
   }

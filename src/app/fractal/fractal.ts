@@ -1,7 +1,7 @@
 import { FormRecord } from '@angular/forms';
 import { FractalDto, Indicators, IFractal, IFractals, ControlDto, SplitebleIndicators, Fractals } from '@types';
 import { findFractal } from './helpers';
-import { childFactory } from './factory';
+import { childFactory } from './factories';
 
 export class Fractal implements IFractal {
   dto!: FractalDto;

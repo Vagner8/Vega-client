@@ -35,7 +35,7 @@ export class ExpansionPanelComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.fractal.is(Fractals.Root)) {
-      this.ss.set(this.fractal);
+      this.ss.setParent(this.fractal);
       this.panel()?.open();
     }
   }
@@ -45,6 +45,6 @@ export class ExpansionPanelComponent implements OnInit {
   }
 
   afterExpand(fractal: IFractal): void {
-    this.ss.set(fractal);
+    this.ss.setParent(fractal);
   }
 }

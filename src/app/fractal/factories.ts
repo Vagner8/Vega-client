@@ -1,4 +1,4 @@
-import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, SplitebleIndicators } from '@types';
+import { ControlsDto, FractalDto, FractalsDto, IFractal, IFractals, Indicators, SplitebleIndicators } from '@types';
 import { Fractal } from './fractal';
 import { createForm } from './helpers';
 import { v4 } from 'uuid';
@@ -23,13 +23,13 @@ const fractalsFactory = (dto: FractalsDto | null, parent: IFractal): IFractals |
   return result;
 };
 
-export const childFactory = (parent: IFractal): IFractal => {
+export const dtoFactory = (parent: IFractal, columns: string[]): FractalDto => {
   const id = v4();
-  const dto: FractalDto = {
+  return {
     id,
     parentId: parent.dto.id,
     fractals: null,
-    controls: parent.split(SplitebleIndicators.Columns).reduce((acc: ControlsDto, indicator) => {
+    controls: columns.reduce((acc: ControlsDto, indicator) => {
       acc[indicator] = {
         id: v4(),
         parentId: id,
@@ -39,6 +39,11 @@ export const childFactory = (parent: IFractal): IFractal => {
       return acc;
     }, {}),
   };
-  const child = fractalFactory(dto, parent);
-  return child;
+};
+
+export const childFactory = (parent: IFractal): IFractal => {
+  const columns = parent.split(SplitebleIndicators.Columns);
+  const dto = dtoFactory(parent, columns.length === 0 ? [Indicators.Cursor] : columns);
+  console.log('🚀 ~ dto:', dto);
+  return fractalFactory(dto, parent);
 };
