@@ -2,10 +2,10 @@
 @let parent = ss.$parent();
 
 @if (root && parent) {
-  @if (Modifier) {
+  @if (Modifiers) {
     <app-modifier />
   }
-  @if (!Modifier) {
+  @if (!Modifiers) {
     @switch (Collections) {
       @case ('Home') {
         <h1>Home</h1>

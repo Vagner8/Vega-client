@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalsParams, IFractal } from '@types';
+import { IFractal } from '@types';
 import { BaseService } from './base.service';
 import { Subject } from 'rxjs';
+import { FractalEntities } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +20,10 @@ export class ModifiersService extends BaseService {
   async touch(modifier: IFractal | null): Promise<void> {
     this.touch$.next(modifier);
     this.$modifier.set(modifier);
-    await this.navigate({ [FractalsParams.Modifier]: modifier ? modifier.cursor : null });
+    await this.navigate({ [FractalEntities.Modifiers]: modifier ? modifier.cursor : null });
   }
 
-  init({ root, Modifier }: { root: IFractal; Modifier: string }): void {
-    this.$modifier.set(Modifier ? root.find(Modifier) : null);
+  init({ root, Modifiers }: { root: IFractal; Modifiers: string }): void {
+    this.$modifier.set(Modifiers ? root.retrieve(Modifiers) : null);
   }
 }

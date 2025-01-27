@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { FractalsParams, IFractal } from '@types';
+import { IFractal } from '@types';
 import { BaseService } from './base.service';
+import { FractalEntities } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ManagerService extends BaseService {
 
   async set(event: string): Promise<void> {
     this.$event.set(event);
-    await this.navigate({ [FractalsParams.Manager]: event });
+    await this.navigate({ [FractalEntities.Manager]: event });
   }
 
   init({ Manager }: { Manager: string }): void {

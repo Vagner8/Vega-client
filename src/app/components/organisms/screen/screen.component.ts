@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CollectionComponent } from '@components/atoms';
-import { Events, Fractals } from '@types';
+import { Events } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { BaseService } from 'app/services/base.service';
+import { FractalEntities } from '@constants';
 
 @Component({
   selector: 'app-screen',
@@ -23,7 +24,7 @@ export class ScreenComponent implements OnInit {
   @Input() Taps = '';
   @Input() Rows = '';
   @Input() Manager = '';
-  @Input() Modifier = '';
+  @Input() Modifiers = '';
   @Input() Collections = '';
 
   ngOnInit(): void {
@@ -34,16 +35,16 @@ export class ScreenComponent implements OnInit {
     if (this.mgr.$event() !== Events.Touch) {
       this.mgr.set(Events.Touch);
     }
-    if (this.ts.$taps()?.is(Fractals.Collections)) {
+    if (this.ts.$taps()?.is(FractalEntities.Collections)) {
       // this.ts.set(this.ms.parent);
     }
   }
 
   private init(): void {
-    const { Taps, Collections, Manager, Modifier } = this;
+    const { Taps, Collections, Manager, Modifiers } = this;
     const root = this.bs.$root()!;
     this.ss.init({ root, Collections });
-    this.ms.init({ root, Modifier });
+    this.ms.init({ root, Modifiers });
     this.ts.init({
       Taps,
       modifiers: this.ms.modifiers,

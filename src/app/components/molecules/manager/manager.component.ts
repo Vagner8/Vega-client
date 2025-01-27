@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { Events, Fractals, FractalsParams } from '@types';
+import { Events } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { EventService, ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { BaseService } from 'app/services/base.service';
+import { FractalEntities } from '@constants';
 
 @Component({
   selector: 'app-manager',
@@ -36,8 +37,8 @@ export class ManagerComponent implements OnInit {
       await this.mgr.set(event);
     }
     if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(Fractals.Collections) ? this.ms.modifiers : this.bs.collections));
-      await this.bs.navigate({ [FractalsParams.Taps]: this.ts.$taps()?.cursor });
+      this.ts.$taps.update(prev => (prev?.is(FractalEntities.Collections) ? this.ms.modifiers : this.bs.collections));
+      await this.bs.navigate({ [FractalEntities.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;
   }

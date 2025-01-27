@@ -5,43 +5,10 @@ export enum Events {
   Touch = 'Touch',
 }
 
-export enum SplitebleIndicators {
-  Id = 'Id',
-  Sort = 'Sort',
-  Columns = 'Columns',
-}
-
-export enum Indicators {
-  X = 'X',
-  Y = 'Y',
-  Icon = 'Icon',
-  Toggle = 'Toggle',
-  Select = 'Select',
-  Cursor = 'Cursor',
-  Position = 'Position',
-}
-
-export enum Toggles {
-  DragAndDrop = 'Drag-and-Drop',
-}
-
-export enum Selects {
-  Menu = 'Menu',
-}
-
 export enum Collections {
   Home = 'Home',
   Users = 'Users',
   Products = 'Products',
-}
-
-export enum Modifiers {
-  App = 'App',
-  New = 'New',
-  Edit = 'Edit',
-  Save = 'Save',
-  Delete = 'Delete',
-  Columns = 'Columns',
 }
 
 export type FractalsDto = Record<string, FractalDto>;
@@ -80,8 +47,9 @@ export interface IFractal {
 
   is(test: string | object): boolean;
   data(indicator: string): string;
-  find(test: Events[number]): IFractal;
-  split(arrayIndicators: keyof typeof SplitebleIndicators): string[];
+  find(test: string): IFractal | null;
+  split(indicator: string): string[];
   update(): FractalDto;
+  retrieve(test: string): IFractal;
   createChild(): IFractal;
 }

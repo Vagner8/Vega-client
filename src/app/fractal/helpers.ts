@@ -9,13 +9,7 @@ export const createForm = (controls: ControlsDto): FormRecord =>
     }, {})
   );
 
-export const findFractal = (test: string, fractals: IFractals | null): IFractal => {
-  const fractal = findFractalRecursively(test, fractals);
-  if (fractal) return fractal;
-  else throw new Error(`Unable to find fractal by: ${test}`);
-};
-
-const findFractalRecursively = (test: string, fractals: IFractals | null): IFractal | null => {
+export const findFractalRecursively = (test: string, fractals: IFractals | null): IFractal | null => {
   if (fractals) {
     for (const key in fractals) {
       if (fractals[key].is(test) || fractals[key].dto.id === test) return fractals[key];

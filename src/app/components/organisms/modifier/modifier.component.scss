@@ -9,10 +9,20 @@
   color: $color-danger;
 }
 
+.modifier {
+  display: flex;
+  flex-direction: column;
+  gap: $size-medium;
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;
   gap: $size-medium;
+}
+
+.parent {
+  width: 100%;
 }
 
 .item {

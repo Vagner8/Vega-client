@@ -1,3 +1,5 @@
+@let icon = fractal.data('Icon');
+
 <mat-expansion-panel
   hideToggle
   [ngClass]="this.ss.$parent() === fractal ? 'active' : ''"
@@ -5,7 +7,7 @@
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.data('Icon'); as icon) {
+      @if (icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
       {{ fractal.cursor }}</mat-panel-title

@@ -1,8 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormCardComponent } from '@components/molecules';
+import { Modifiers } from '@constants';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
-import { Modifiers } from '@types';
 import { Subscription } from 'rxjs';
 
 @Component({

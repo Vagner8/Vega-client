@@ -2,34 +2,36 @@
 @let parent = ss.$parent();
 @let toUpdate = ss.$toUpdate();
 
-@if (parent && toUpdate.includes(parent)) {
-  <ul class="list">
-    <li>
-      <app-form-card [title]="parent.cursor" [subtitle]="'subtitle'" [fractal]="parent" />
-    </li>
-  </ul>
-}
+<div class="modifier">
+  @if (parent && toUpdate.includes(parent)) {
+    <ul class="list">
+      <li class="parent">
+        <app-form-card [title]="parent.cursor" [subtitle]="'subtitle'" [fractal]="parent" />
+      </li>
+    </ul>
+  }
 
-@if (toAdd.length > 0) {
-  <ul class="list" [class.two-items]="toAdd.length === 2" [class.three-or-more-items]="toAdd.length >= 3">
-    @for (fractal of toAdd; track fractal.dto.id) {
-      @if (fractal !== parent) {
-        <li class="item">
-          <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
-        </li>
+  @if (toAdd.length > 0) {
+    <ul class="list" [class.two-items]="toAdd.length === 2" [class.three-or-more-items]="toAdd.length >= 3">
+      @for (fractal of toAdd; track fractal.dto.id) {
+        @if (fractal !== parent) {
+          <li class="item">
+            <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+          </li>
+        }
       }
-    }
-  </ul>
-}
+    </ul>
+  }
 
-@if (toUpdate.length > 0) {
-  <ul class="list" [class.two-items]="toUpdate.length === 2" [class.three-or-more-items]="toUpdate.length >= 3">
-    @for (fractal of toUpdate; track fractal.dto.id) {
-      @if (fractal !== parent) {
-        <li class="item">
-          <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
-        </li>
+  @if (toUpdate.length > 0) {
+    <ul class="list" [class.two-items]="toUpdate.length === 2" [class.three-or-more-items]="toUpdate.length >= 3">
+      @for (fractal of toUpdate; track fractal.dto.id) {
+        @if (fractal !== parent) {
+          <li class="item">
+            <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+          </li>
+        }
       }
-    }
-  </ul>
-}
+    </ul>
+  }
+</div>

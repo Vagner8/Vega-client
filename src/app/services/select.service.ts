@@ -9,7 +9,6 @@ export class SelectService {
 
   $toAdd = signal<IFractal[]>([]);
   $toUpdate = signal<IFractal[]>([]);
-  $toDelete = signal<IFractal[]>([]);
 
   setParent(fractal: IFractal | null): void {
     this.$toUpdate.set([]);
@@ -36,6 +35,6 @@ export class SelectService {
   }
 
   init({ root, Collections }: { root: IFractal; Collections: string }): void {
-    this.$parent.set(root.find(Collections));
+    this.$parent.set(root.retrieve(Collections));
   }
 }

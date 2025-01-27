@@ -1,7 +1,8 @@
 import { FormRecord } from '@angular/forms';
-import { FractalDto, Indicators, IFractal, IFractals, ControlDto, SplitebleIndicators, Fractals } from '@types';
-import { findFractal } from './helpers';
+import { FractalDto, IFractal, IFractals, ControlDto } from '@types';
+import { findFractalRecursively } from './helpers';
 import { childFactory } from './factories';
+import { FractalEntities, Indicators, RequiredIndicators, SplitebleIndicators } from '@constants';
 
 export class Fractal implements IFractal {
   dto!: FractalDto;
@@ -10,11 +11,11 @@ export class Fractal implements IFractal {
   fractals: IFractals | null = null;
 
   get cursor(): string {
-    return this.data(Indicators.Cursor) || this.data(Indicators.Position);
+    return this.data(RequiredIndicators.Cursor) || this.data(Indicators.Position);
   }
 
   get columns(): string[] {
-    if (this.is(Fractals.Root) || this.parent.split(SplitebleIndicators.Columns).length === 0) {
+    if (this.is(FractalEntities.Root) || this.parent.split(SplitebleIndicators.Columns).length === 0) {
       return Object.keys(this.dto.controls);
     }
     return this.parent.split(SplitebleIndicators.Columns);
@@ -38,11 +39,11 @@ export class Fractal implements IFractal {
     return this.dto.controls[indicator]?.data || '';
   }
 
-  find(test: string): IFractal {
-    return findFractal(test, this.fractals);
+  find(test: string): IFractal | null {
+    return findFractalRecursively(test, this.fractals);
   }
 
-  split(indicator: keyof typeof SplitebleIndicators): string[] {
+  split(indicator: string): string[] {
     const data = this.data(indicator);
     return data ? data.split(':') : [];
   }
@@ -52,6 +53,12 @@ export class Fractal implements IFractal {
       this.dto.controls[indicator].data = this.form.value[indicator];
     }
     return this.dto;
+  }
+
+  retrieve(test: string): IFractal {
+    const fractal = findFractalRecursively(test, this.fractals);
+    if (fractal) return fractal;
+    else throw new Error(`Unable to find fractal by: ${test}`);
   }
 
   createChild(): IFractal {
