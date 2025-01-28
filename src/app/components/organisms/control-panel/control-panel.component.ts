@@ -1,6 +1,6 @@
 import { Component, computed, inject, Input, viewChild } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@mat';
-import { Collections, IFractal } from '@types';
+import { Collections, Fractal } from '@types';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { SelectService } from '@services';
 
@@ -13,7 +13,7 @@ import { SelectService } from '@services';
 })
 export class ControlPanelComponent {
   ss = inject(SelectService);
-  @Input() fractal!: IFractal;
+  @Input() fractal!: Fractal;
   accordion = viewChild(MatAccordion);
 
   shouldRender = computed(() => {

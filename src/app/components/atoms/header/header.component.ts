@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { Modifiers } from '@constants';
+import { Modifiers } from '@types';
 import { ModifiersService, SelectService } from '@services';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ScreenComponent } from '@components/organisms';
-import { FractalEntities } from '@constants';
+import { FractalEntities } from '@types';
 
 export const routes: Routes = [
   {

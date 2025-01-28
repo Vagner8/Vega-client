@@ -1,2 +1,2 @@
-export * from './fractal';
-export * from './factories';
+export * from './fractal-factory';
+export * from './fractal-dto-factory';

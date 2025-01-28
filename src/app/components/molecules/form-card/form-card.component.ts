@@ -1,7 +1,7 @@
 import { Component, Input, output } from '@angular/core';
 import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-form-card',
@@ -12,7 +12,7 @@ import { IFractal } from '@types';
 })
 export class FormCardComponent {
   @Input() title = '';
-  @Input() fractal!: IFractal;
+  @Input() fractal!: Fractal;
   @Input() subtitle = '';
   @Input() showCancelButton = true;
   cancel = output();

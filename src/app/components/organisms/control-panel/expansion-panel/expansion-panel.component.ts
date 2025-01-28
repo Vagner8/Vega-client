@@ -9,9 +9,8 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { IFractal } from '@types';
+import { Fractal, FractalEntities, SplitebleIndicators } from '@types';
 import { CollectionComponent } from '@components/atoms';
-import { FractalEntities, SplitebleIndicators } from '@constants';
 
 @Component({
   selector: 'app-expansion-panel',
@@ -30,9 +29,9 @@ import { FractalEntities, SplitebleIndicators } from '@constants';
 })
 export class ExpansionPanelComponent implements OnInit {
   ss = inject(SelectService);
-  @Input() fractal!: IFractal;
+  @Input() fractal!: Fractal;
   panel = viewChild(MatExpansionPanel);
-  closed = output<IFractal>();
+  closed = output<Fractal>();
 
   ngOnInit(): void {
     if (this.fractal.is(FractalEntities.Root)) {
@@ -45,7 +44,7 @@ export class ExpansionPanelComponent implements OnInit {
     return Boolean(this.fractal.data(SplitebleIndicators.Columns)) && this.fractal.fractals !== null;
   }
 
-  afterExpand(fractal: IFractal): void {
+  afterExpand(fractal: Fractal): void {
     this.ss.setParent(fractal);
   }
 }

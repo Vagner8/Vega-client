@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { CollectionComponent } from '@components/atoms';
-import { Events } from '@types';
+import { Events, FractalEntities } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { BaseService } from 'app/services/base.service';
-import { FractalEntities } from '@constants';
 
 @Component({
   selector: 'app-screen',

@@ -1,7 +1,7 @@
 import { Component, Input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-form',
@@ -11,7 +11,7 @@ import { IFractal } from '@types';
   styleUrl: './form.component.scss',
 })
 export class FormComponent {
-  @Input() fractal!: IFractal;
-  change = output<IFractal>();
+  @Input() fractal!: Fractal;
+  change = output<Fractal>();
   prevRawValue!: Record<string, string>;
 }

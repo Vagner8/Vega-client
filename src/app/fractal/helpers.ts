@@ -1,5 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlsDto, IFractal, IFractals } from '@types';
+import { ControlsDto, Fractal, Fractals } from '@types';
 
 export const createForm = (controls: ControlsDto): FormRecord =>
   new FormRecord(
@@ -9,7 +9,7 @@ export const createForm = (controls: ControlsDto): FormRecord =>
     }, {})
   );
 
-export const findFractalRecursively = (test: string, fractals: IFractals | null): IFractal | null => {
+export const findFractalRecursively = (test: string, fractals: Fractals | null): Fractal | null => {
   if (fractals) {
     for (const key in fractals) {
       if (fractals[key].is(test) || fractals[key].dto.id === test) return fractals[key];

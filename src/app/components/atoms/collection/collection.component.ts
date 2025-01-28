@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { SelectService } from '@services';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-collection',
@@ -15,7 +15,7 @@ import { IFractal } from '@types';
 export class CollectionComponent {
   ss = inject(SelectService);
   @Input() like: 'fractals' | 'controls' = 'fractals';
-  @Input() fractal!: IFractal;
+  @Input() fractal!: Fractal;
 
   get columns(): string[] {
     return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.split('Columns');

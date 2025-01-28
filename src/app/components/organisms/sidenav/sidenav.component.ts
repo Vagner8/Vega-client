@@ -1,10 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { Modifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
-import { IFractal } from '@types';
+import { Fractal, Modifiers } from '@types';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -22,7 +21,7 @@ export class SidenavComponent {
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
 
-  modifierHeld(modifier: IFractal): void {
+  modifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
     const toUpdate = this.ss.$toUpdate();
     switch (modifier.cursor) {
@@ -34,16 +33,16 @@ export class SidenavComponent {
     }
   }
 
-  modifierTouched(modifier: IFractal): void {
+  modifierTouched(modifier: Fractal): void {
     this.ms.touch(modifier);
     switch (modifier.cursor) {
       case Modifiers.New:
-        this.ss.setToAdd(this.ss.$parent()!.createChild());
+        // this.ss.setToAdd(new Fractal(this.ss.$parent()));
         break;
     }
   }
 
-  async collectionTouched(tap: IFractal): Promise<void> {
+  async collectionTouched(tap: Fractal): Promise<void> {
     this.ss.$toUpdate.set([]);
     this.ss.setParent(tap);
     await this.bs.navigate({}, [tap.cursor]);

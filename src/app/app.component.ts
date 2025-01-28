@@ -3,9 +3,9 @@ import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
 import { DataService, ManagerService, ModifiersService, SelectService } from '@services';
-import { fractalFactory } from '@fractal';
 import { BaseService } from './services/base.service';
-import { FractalEntities } from '@constants';
+import { FractalEntities } from '@types';
+import { FractalFactory } from '@fractal';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => {
-      const root = fractalFactory(dto);
+      const root = new FractalFactory(dto);
       this.ms.modifiers = root.retrieve(FractalEntities.Modifiers);
       this.bs.collections = root.retrieve(FractalEntities.Collections);
       this.mgr.manager = root.retrieve(FractalEntities.Manager);
