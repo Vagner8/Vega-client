@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
+import { FractalFactory } from '@fractal';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
 import { Fractal, Modifiers } from '@types';
@@ -35,10 +36,8 @@ export class SidenavComponent {
 
   modifierTouched(modifier: Fractal): void {
     this.ms.touch(modifier);
-    switch (modifier.cursor) {
-      case Modifiers.New:
-        // this.ss.setToAdd(new Fractal(this.ss.$parent()));
-        break;
+    if (modifier.is(Modifiers.New)) {
+      this.ss.setToAdd(new FractalFactory({ parent: this.ss.parent }));
     }
   }
 

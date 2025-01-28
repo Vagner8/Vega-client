@@ -10,6 +10,12 @@ export class SelectService {
   $toAdd = signal<Fractal[]>([]);
   $toUpdate = signal<Fractal[]>([]);
 
+  get parent(): Fractal {
+    const parent = this.$parent();
+    if (!parent) throw new Error('Unable to get parent');
+    return parent;
+  }
+
   setParent(fractal: Fractal | null): void {
     this.$toUpdate.set([]);
     this.$parent.set(fractal);

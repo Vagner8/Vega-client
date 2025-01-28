@@ -10,17 +10,19 @@ import {
   SplitebleIndicators,
 } from '@types';
 import { createForm, findFractalRecursively } from './helpers';
+import { FractalDtoFactory } from './fractal-dto-factory';
 
 export class FractalFactory implements Fractal {
+  dto: FractalDto;
   form: FormRecord;
+  parent: Fractal;
   fractals: Fractals | null = null;
 
-  constructor(
-    public dto: FractalDto,
-    public parent: Fractal = {} as Fractal
-  ) {
-    this.form = createForm(dto.controls);
-    this.fractals = this.createFractals(dto.fractals, this);
+  constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal }) {
+    this.parent = parent ? parent : ({} as Fractal);
+    this.dto = dto ? dto : new FractalDtoFactory(this.parent.dto.id);
+    this.form = createForm(this.dto.controls);
+    this.fractals = this.createFractals(this.dto.fractals, this);
   }
 
   get cursor(): string {
@@ -78,7 +80,7 @@ export class FractalFactory implements Fractal {
     if (!fractalsDto) return null;
     const result: Fractals = {};
     for (const indicator in fractalsDto) {
-      const fractal = new FractalFactory(fractalsDto[indicator], parent);
+      const fractal = new FractalFactory({ parent, dto: fractalsDto[indicator] });
       fractal.fractals = this.createFractals(fractalsDto[indicator].fractals, fractal);
       result[indicator] = fractal;
     }

@@ -7,9 +7,9 @@ export enum Events {
 }
 
 export enum FractalTypes {
-  Category = 'Category',
+  Item = 'Item',
+  Entity = 'Entity',
   Collection = 'Collection',
-  item = 'item',
 }
 
 export enum Collections {

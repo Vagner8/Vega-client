@@ -1,14 +1,14 @@
-import { FractalTypes, SplitebleIndicators, Indicators, ControlDto, Fractal, ControlInput } from '@types';
+import { FractalTypes, SplitebleIndicators, Indicators, ControlDto, Fractal, ControlInput, ControlsDto } from '@types';
 import { OrganizerControlDtoFactory, SelectControlDtoFactory, TextControlDtoFactory } from './control-dto-factory';
 import { v4 } from 'uuid';
 
-export const RequiredControlsDtoFactory = (id: string): ControlDto[] => [
-  SelectControlDtoFactory({
+export const RequiredControlsDtoFactory = (id: string): ControlsDto => ({
+  [SplitebleIndicators.Type]: SelectControlDtoFactory({
     data: Object.values(FractalTypes).join(':'),
     parentId: id,
     indicator: SplitebleIndicators.Type,
   }),
-];
+});
 
 export const CategoryControlsDtoFactory = (id: string): ControlDto[] => [
   TextControlDtoFactory({ parentId: id, indicator: Indicators.Cursor }),
