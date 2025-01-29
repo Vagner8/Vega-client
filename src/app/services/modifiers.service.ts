@@ -23,6 +23,6 @@ export class ModifiersService extends BaseService {
   }
 
   init({ root, Modifiers }: { root: Fractal; Modifiers: string }): void {
-    this.$modifier.set(Modifiers ? root.retrieve(Modifiers) : null);
+    this.$modifier.set(Modifiers ? root.getFractal(Modifiers) : null);
   }
 }

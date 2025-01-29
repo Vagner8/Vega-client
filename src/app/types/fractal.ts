@@ -6,11 +6,11 @@ export enum Events {
   Touch = 'Touch',
 }
 
-export enum FractalTypes {
-  Item = 'Item',
-  Entity = 'Entity',
-  Collection = 'Collection',
-}
+export const FractalTypes = {
+  Item: 'Item',
+  Entity: 'Entity',
+  Collection: 'Collection',
+} as const;
 
 export enum Collections {
   Home = 'Home',
@@ -63,9 +63,10 @@ export interface Fractal {
   get controlsArray(): ControlDto[];
 
   is(test: string | object): boolean;
-  data(indicator: string): string;
-  find(test: string): Fractal | null;
-  split(indicator: string): string[];
-  update(): FractalDto;
-  retrieve(test: string): Fractal;
+  has(test: string): boolean;
+  getData(indicator: string): string;
+  splitData(indicator: string): string[];
+  getFractal(test: string): Fractal;
+  findFractal(test: string): Fractal | null;
+  updateFractalByForm(): FractalDto;
 }

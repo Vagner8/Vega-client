@@ -7,7 +7,7 @@ import {
   FractalsDto,
   FractalEntities,
   Indicators,
-  SplitebleIndicators,
+  SplitIndicators,
 } from '@types';
 import { createForm, findFractalRecursively } from './helpers';
 import { FractalDtoFactory } from './fractal-dto-factory';
@@ -20,20 +20,20 @@ export class FractalFactory implements Fractal {
 
   constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal }) {
     this.parent = parent ? parent : ({} as Fractal);
-    this.dto = dto ? dto : new FractalDtoFactory(this.parent.dto.id);
+    this.dto = dto ? dto : new FractalDtoFactory(this.parent);
     this.form = createForm(this.dto.controls);
     this.fractals = this.createFractals(this.dto.fractals, this);
   }
 
   get cursor(): string {
-    return this.data(Indicators.Cursor) || this.data(Indicators.Position);
+    return this.getData(Indicators.Cursor) || this.getData(Indicators.Position);
   }
 
   get columns(): string[] {
-    if (this.is(FractalEntities.Root) || !this.parent.data(SplitebleIndicators.Columns)) {
+    if (this.is(FractalEntities.Root) || !this.parent.getData(SplitIndicators.Columns)) {
       return Object.keys(this.dto.controls);
     }
-    return this.parent.split(SplitebleIndicators.Columns);
+    return this.parent.splitData(SplitIndicators.Columns);
   }
 
   get fractalsArray(): Fractal[] {
@@ -50,30 +50,34 @@ export class FractalFactory implements Fractal {
     return test === this.cursor;
   }
 
-  data(indicator: string): string {
+  has(test: string): boolean {
+    return Boolean(this.getData(test));
+  }
+
+  getData(indicator: string): string {
     return this.dto.controls[indicator]?.data || '';
   }
 
-  find(test: string): Fractal | null {
-    return findFractalRecursively(test, this.fractals);
-  }
-
-  split(indicator: string): string[] {
-    const data = this.data(indicator);
+  splitData(indicator: string): string[] {
+    const data = this.getData(indicator);
     return data ? data.split(':') : [];
   }
 
-  update(): FractalDto {
+  updateFractalByForm(): FractalDto {
     for (const indicator in this.form.value) {
       this.dto.controls[indicator].data = this.form.value[indicator];
     }
     return this.dto;
   }
 
-  retrieve(test: string): Fractal {
+  getFractal(test: string): Fractal {
     const fractal = findFractalRecursively(test, this.fractals);
     if (fractal) return fractal;
     else throw new Error(`Unable to find fractal by: ${test}`);
+  }
+
+  findFractal(test: string): Fractal | null {
+    return findFractalRecursively(test, this.fractals);
   }
 
   private createFractals(fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null {

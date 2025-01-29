@@ -41,6 +41,6 @@ export class SelectService {
   }
 
   init({ root, Collections }: { root: Fractal; Collections: string }): void {
-    this.$parent.set(root.retrieve(Collections));
+    this.$parent.set(root.getFractal(Collections));
   }
 }

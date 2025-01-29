@@ -6,7 +6,7 @@
         @if (like === 'controls') {
           {{ column === 'indicator' ? row.indicator : row.data }}
         } @else {
-          {{ row.data(column) }}
+          {{ row.getData(column) }}
         }
       </td>
     </ng-container>

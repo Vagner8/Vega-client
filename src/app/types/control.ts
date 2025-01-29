@@ -1,14 +1,9 @@
-export enum ControlInput {
-  New = 'New',
-  Text = 'text',
-  Select = 'select',
-  Organizer = 'organizer',
-}
-
-export enum ControlData {
-  Input = 'text',
-  Select = 'select',
-}
+export const ControlInputs = {
+  New: '1',
+  Text: '2',
+  Select: '3',
+  Organizer: '4',
+} as const;
 
 export type ControlsDto = Record<string, ControlDto>;
 

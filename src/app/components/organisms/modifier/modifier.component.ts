@@ -28,10 +28,10 @@ export class ModifierComponent implements OnInit, OnDestroy {
         switch (modifier?.cursor) {
           case Modifiers.Save:
             if (toAdd.length > 0) {
-              this.ds.add(toAdd.map(fractal => fractal.update())).subscribe();
+              this.ds.add(toAdd.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
             if (toUpdate.length > 0) {
-              this.ds.update(toUpdate.map(fractal => fractal.update())).subscribe();
+              this.ds.update(toUpdate.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
             break;
         }

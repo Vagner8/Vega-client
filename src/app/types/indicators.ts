@@ -1,11 +1,11 @@
-export enum Indicators {
-  Icon = 'Icon',
-  Cursor = 'Cursor',
-  Position = 'Position',
-}
+export const Indicators = {
+  Icon: 'Icon',
+  Type: 'Type',
+  Cursor: 'Cursor',
+  Position: 'Position',
+} as const;
 
-export enum SplitebleIndicators {
-  Sort = 'Sort',
-  Type = 'Type',
-  Columns = 'Columns',
-}
+export const SplitIndicators = {
+  Sort: 'Sort',
+  Columns: 'Columns',
+} as const;

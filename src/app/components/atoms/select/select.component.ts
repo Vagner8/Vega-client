@@ -7,7 +7,6 @@ import { MatSelectModule } from '@mat';
   standalone: true,
   imports: [MatSelectModule, ReactiveFormsModule],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.css',
 })
 export class SelectComponent {
   @Input() formControl!: FormControl;

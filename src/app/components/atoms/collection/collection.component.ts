@@ -18,7 +18,7 @@ export class CollectionComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.split('Columns');
+    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.splitData('Columns');
   }
 
   get dataSource(): unknown[] {

@@ -1,21 +1,35 @@
-@if (fractal.form; as form) {
-  <form [formGroup]="form">
-    @for (name of fractal.columns; track name) {
-      <mat-form-field class="form-field">
-        <mat-label i18n>{{ name }}</mat-label>
-        <input #inputElementRef [type]="name" matInput [formControlName]="name" />
-        @if (inputElementRef.value && !form.get(name)?.disabled) {
-          <button
-            type="button"
-            matSuffix
-            mat-icon-button
-            i18n-aria-label
-            aria-label="Clear input"
-            (click)="form.get(name)?.setValue('')">
-            <mat-icon>close</mat-icon>
-          </button>
-        }
-      </mat-form-field>
+@let form = fractal.form;
+
+<form [formGroup]="form">
+  @for (name of fractal.columns; track name) {
+    @switch (fractal.dto.controls[name].input) {
+      @case (controlInputs.Select) {
+        <mat-form-field class="form-field">
+          <mat-label>{{ name }}</mat-label>
+          <mat-select [formControlName]="name">
+            @for (opt of fractal.dto.controls[name].data.split(':'); track opt) {
+              <mat-option value="{{ opt }}">{{ opt }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @default {
+        <mat-form-field class="form-field">
+          <mat-label>{{ name }}</mat-label>
+          <input #inputElementRef [type]="name" matInput [formControlName]="name" />
+          @if (inputElementRef.value && !form.get(name)?.disabled) {
+            <button
+              type="button"
+              matSuffix
+              mat-icon-button
+              i18n-aria-label
+              aria-label="Clear input"
+              (click)="form.get(name)?.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+      }
     }
-  </form>
-}
+  }
+</form>

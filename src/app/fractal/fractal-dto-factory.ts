@@ -1,16 +1,69 @@
-import { ControlsDto, FractalDto, FractalsDto } from '@types';
+import {
+  ControlInputs,
+  ControlsDto,
+  Fractal,
+  FractalDto,
+  FractalsDto,
+  FractalTypes,
+  Indicators,
+  SplitIndicators,
+} from '@types';
 import { v4 } from 'uuid';
-import { RequiredControlsDtoFactory } from './controls-dto-factory';
 
 export class FractalDtoFactory implements FractalDto {
   id: string;
+  parentId: string;
   controls: ControlsDto;
   fractals: FractalsDto | null;
 
-  constructor(public parentId: string) {
-    const id = v4();
-    this.id = id;
+  constructor(private parent: Fractal) {
+    this.id = v4();
+    this.parentId = parent.dto.id;
     this.fractals = null;
-    this.controls = RequiredControlsDtoFactory(id);
+
+    this.controls = this.parent.has(SplitIndicators.Columns)
+      ? this.itemControls(this.id, parent)
+      : this.groupControls(this.id);
+  }
+
+  private groupControls(id: string): ControlsDto {
+    return {
+      [Indicators.Type]: {
+        id: v4(),
+        data: `${FractalTypes.Entity}:${FractalTypes.Collection}`,
+        input: ControlInputs.Select,
+        parentId: id,
+        indicator: Indicators.Type,
+      },
+    };
+  }
+
+  private itemControls(id: string, collection: Fractal): ControlsDto {
+    if (collection.controlsArray.length === 0) {
+      return collection.splitData(SplitIndicators.Columns).reduce((acc: ControlsDto, column) => {
+        acc[column] = {
+          id: v4(),
+          data: '',
+          input: ControlInputs.New,
+          parentId: id,
+          indicator: column,
+        };
+        return acc;
+      }, {});
+    } else {
+      const copy: ControlsDto = {};
+
+      for (const indicator in collection.fractalsArray[0].dto.controls) {
+        const control = collection.fractalsArray[0].dto.controls[indicator];
+        copy[indicator] = {
+          ...control,
+          id: v4(),
+          parentId: id,
+          data: control.input === ControlInputs.Text ? '' : control.data,
+        };
+      }
+
+      return copy;
+    }
   }
 }
