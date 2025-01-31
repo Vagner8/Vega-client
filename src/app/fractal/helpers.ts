@@ -1,13 +1,19 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlsDto, Fractal, Fractals } from '@types';
+import { ControlFieldsNames, ControlsDto, Fractal, FractalForm, Fractals } from '@types';
 
-export const createForm = (controls: ControlsDto): FormRecord =>
-  new FormRecord(
-    Object.values(controls).reduce((acc: Record<string, FormControl>, { indicator, data }) => {
-      acc[indicator] = new FormControl(data);
+export const createForm = (controls: ControlsDto): FractalForm => {
+  return new FormRecord(
+    Object.values(controls).reduce((acc: Record<string, FormRecord>, controlDto) => {
+      acc[controlDto.indicator] = new FormRecord(
+        ControlFieldsNames.reduce((acc: Record<string, FormControl>, field) => {
+          acc[field] = new FormControl(controlDto[field]);
+          return acc;
+        }, {})
+      );
       return acc;
     }, {})
-  );
+  ) as FractalForm;
+};
 
 export const findFractalRecursively = (test: string, fractals: Fractals | null): Fractal | null => {
   if (fractals) {

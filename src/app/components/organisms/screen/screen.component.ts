@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { CollectionComponent } from '@components/atoms';
+import { SheetComponent } from '@components/atoms';
 import { Events, FractalEntities } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
@@ -9,7 +9,7 @@ import { BaseService } from 'app/services/base.service';
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [CollectionComponent, ControlPanelComponent, ModifierComponent],
+  imports: [SheetComponent, ControlPanelComponent, ModifierComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

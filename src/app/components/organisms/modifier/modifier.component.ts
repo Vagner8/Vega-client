@@ -35,6 +35,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
             }
             break;
         }
+        this.ss.reset();
       })
     );
   }

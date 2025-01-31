@@ -1,5 +1,5 @@
-import { FormRecord } from '@angular/forms';
-import { ControlDto, ControlsDto } from './control';
+import { FormControl, FormRecord } from '@angular/forms';
+import { ControlDto, ControlFields, ControlsDto } from './control';
 
 export enum Events {
   Hold = 'Hold',
@@ -36,8 +36,9 @@ export enum Modifiers {
   Columns = 'Columns',
 }
 
-export type FractalsDto = Record<string, FractalDto>;
 export type Fractals = Record<string, Fractal>;
+export type FractalsDto = Record<string, FractalDto>;
+export type FractalForm = FormRecord<FormRecord<FormControl>>;
 
 export interface FractalEvent {
   type: keyof typeof Events;
@@ -53,7 +54,7 @@ export interface FractalDto {
 
 export interface Fractal {
   dto: FractalDto;
-  form: FormRecord;
+  form: FractalForm;
   parent: Fractal;
   fractals: Fractals | null;
 
@@ -67,6 +68,9 @@ export interface Fractal {
   getData(indicator: string): string;
   splitData(indicator: string): string[];
   getFractal(test: string): Fractal;
+  getControl(indicator: string): ControlDto;
+  findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
+  getControlFields(name: string): ControlFields;
   updateFractalByForm(): FractalDto;
 }

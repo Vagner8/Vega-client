@@ -36,7 +36,7 @@ export class SelectService {
   }
 
   reset(): void {
-    // this.$fractal.set(null);
+    this.$toAdd.set([]);
     this.$toUpdate.set([]);
   }
 

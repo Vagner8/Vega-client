@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@mat';
 
@@ -7,9 +7,12 @@ import { MatSelectModule } from '@mat';
   standalone: true,
   imports: [MatSelectModule, ReactiveFormsModule],
   templateUrl: './select.component.html',
+  styleUrl: './select.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
-  @Input() formControl!: FormControl;
-  @Input() options?: string[] = [];
-  @Input() label: string = '';
+  @Input() name: string = '';
+  @Input() opts: string[] = [];
+  @Input() formCtr!: FormControl;
+  @Input() className: string = '';
 }

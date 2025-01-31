@@ -2,23 +2,23 @@ import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { SelectService } from '@services';
-import { Fractal } from '@types';
+import { Fractal, SplitIndicators } from '@types';
 
 @Component({
-  selector: 'app-collection',
+  selector: 'app-sheet',
   standalone: true,
   imports: [MatTableModule, TapDirective, MatSortModule],
-  templateUrl: './collection.component.html',
-  styleUrl: './collection.component.scss',
+  templateUrl: './sheet.component.html',
+  styleUrl: './sheet.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CollectionComponent {
+export class SheetComponent {
   ss = inject(SelectService);
   @Input() like: 'fractals' | 'controls' = 'fractals';
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.splitData('Columns');
+    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.splitData(SplitIndicators.Columns);
   }
 
   get dataSource(): unknown[] {

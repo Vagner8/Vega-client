@@ -1,16 +1,23 @@
+import { FormControl } from '@angular/forms';
+
 export const ControlInputs = {
-  New: '1',
-  Text: '2',
-  Select: '3',
-  Organizer: '4',
+  New: 'New',
+  Text: 'Text',
+  Select: 'Select',
+  Organizer: 'Organizer',
 } as const;
+
+export const ControlFieldsNames: (keyof ControlFields)[] = ['data', 'input'];
 
 export type ControlsDto = Record<string, ControlDto>;
 
-export interface ControlDto {
+export interface ControlFields<T = FormControl> {
+  data: T;
+  input: T;
+}
+
+export interface ControlDto extends ControlFields<string> {
   id: string;
-  data: string;
-  input: string;
   parentId: string;
   indicator: string;
 }

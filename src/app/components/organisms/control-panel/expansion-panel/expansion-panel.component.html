@@ -14,9 +14,9 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-collection class="collection" like="controls" [fractal]="fractal" />
+    <app-sheet class="collection" like="controls" [fractal]="fractal" />
     @if (hasColumns) {
-      <app-collection class="collection" [fractal]="fractal" />
+      <app-sheet class="collection" [fractal]="fractal" />
     }
     @if (fractal.fractals) {
       <ng-content />

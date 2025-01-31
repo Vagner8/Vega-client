@@ -10,20 +10,12 @@ import {
 } from '@mat';
 import { SelectService } from '@services';
 import { Fractal, FractalEntities, SplitIndicators } from '@types';
-import { CollectionComponent } from '@components/atoms';
+import { SheetComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
-  imports: [
-    MatExpansionModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatTableModule,
-    CollectionComponent,
-    NgClass,
-  ],
+  imports: [MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatTableModule, SheetComponent, NgClass],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })

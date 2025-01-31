@@ -1,33 +1,15 @@
-<mat-form-field class="mat-form-field">
-  <mat-label i18n>{{ label }}</mat-label>
-  <input #inputElementRef [type]="label" matInput formControlName="{{ label }}" />
-  @if (control.value && clearButton) {
+<mat-form-field [class]="className" class="app-form-field">
+  <mat-label>{{ name }}</mat-label>
+  <input #inputElementRef [type]="name" matInput [formControl]="formCtr" />
+  @if (inputElementRef.value && !formCtr.disabled) {
     <button
       type="button"
-      class="clear-button"
       matSuffix
       mat-icon-button
       i18n-aria-label
       aria-label="Clear input"
-      (click)="clearControl()">
+      (click)="formCtr.setValue('')">
       <mat-icon>close</mat-icon>
     </button>
-  }
-  @if (control.value && label === 'password') {
-    <button
-      type="button"
-      matSuffix
-      mat-icon-button
-      i18n-aria-label
-      aria-label="Password visibility"
-      (click)="toggleInputType()">
-      <mat-icon>{{ toggleVisibilityIcon() }}</mat-icon>
-    </button>
-  }
-  @if (control.hasError(label) && !control.hasError('required')) {
-    <mat-error>{{ messages.valid }} {{ label }}</mat-error>
-  }
-  @if (control.hasError('required')) {
-    <mat-error>{{ label }} {{ messages.required }}</mat-error>
   }
 </mat-form-field>
