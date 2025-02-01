@@ -4,15 +4,15 @@ import {
   Fractals,
   ControlDto,
   FractalsDto,
-  FractalEntities,
   Indicators,
   SplitIndicators,
   FractalForm,
-  ControlFields,
-  ControlFieldsNames,
+  ControlFormsFieldsNames,
+  ControlFormsFields,
 } from '@types';
-import { createForm, findFractalRecursively } from './helpers';
 import { FractalDtoFactory } from './fractal-dto-factory';
+import { checkValue, createForm } from '@utils';
+import { findFractalRecursively } from 'app/utils/getters';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
@@ -20,22 +20,20 @@ export class FractalFactory implements Fractal {
   parent: Fractal;
   fractals: Fractals | null = null;
 
-  constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal }) {
+  constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal | null }) {
     this.parent = parent ? parent : ({} as Fractal);
     this.dto = dto ? dto : new FractalDtoFactory(this.parent);
     this.form = createForm(this.dto.controls);
     this.fractals = this.createFractals(this.dto.fractals, this);
   }
 
-  get cursor(): string {
-    return this.getData(Indicators.Cursor) || this.getData(Indicators.Position);
+  get sort(): string[] {
+    const sort = Object.keys(this.parent).length > 0 ? this.parent.splitData(SplitIndicators.Sort) : [];
+    return sort.length === 0 && this.dto.fractals ? Object.keys(this.dto.fractals) : sort;
   }
 
-  get columns(): string[] {
-    if (this.is(FractalEntities.Root) || !this.parent.getData(SplitIndicators.Columns)) {
-      return Object.keys(this.dto.controls);
-    }
-    return this.parent.splitData(SplitIndicators.Columns);
+  get cursor(): string {
+    return this.getData(Indicators.Cursor) || this.getData(Indicators.Position);
   }
 
   get fractalsArray(): Fractal[] {
@@ -66,7 +64,7 @@ export class FractalFactory implements Fractal {
   }
 
   updateFractalByForm(): FractalDto {
-    const [data, input] = ControlFieldsNames;
+    const [data, input] = ControlFormsFieldsNames;
     for (const indicator in this.dto.controls) {
       const formRecord = this.form.get(indicator);
       if (formRecord) {
@@ -75,15 +73,12 @@ export class FractalFactory implements Fractal {
         control.input = formRecord.value[input];
       }
     }
-    console.log('🚀 ~ this.dto:', this.dto);
-
     return this.dto;
   }
 
   getFractal(test: string): Fractal {
     const fractal = findFractalRecursively(test, this.fractals);
-    if (fractal) return fractal;
-    else throw new Error(`Unable to get fractal by: ${test}`);
+    return checkValue<Fractal>(fractal, test);
   }
 
   findFractal(test: string): Fractal | null {
@@ -101,12 +96,12 @@ export class FractalFactory implements Fractal {
     return control ? control : null;
   }
 
-  getControlFields(name: string): ControlFields {
+  getControlFields(name: string): ControlFormsFields {
     const formRecord = this.form.controls[name];
-    return ControlFieldsNames.reduce((acc, field) => {
+    return ControlFormsFieldsNames.reduce((acc, field) => {
       acc[field] = formRecord.controls[field];
       return acc;
-    }, {} as ControlFields);
+    }, {} as ControlFormsFields);
   }
 
   private createFractals(fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null {

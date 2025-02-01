@@ -21,9 +21,7 @@ export class FractalDtoFactory implements FractalDto {
     this.parentId = parent.dto.id;
     this.fractals = null;
 
-    this.controls = parent.has(SplitIndicators.Columns)
-      ? this.itemControls(this.id, parent)
-      : this.groupControls(this.id);
+    this.controls = parent.has(SplitIndicators.Sort) ? this.itemControls(this.id, parent) : this.groupControls(this.id);
   }
 
   private groupControls(id: string): ControlsDto {
@@ -40,7 +38,7 @@ export class FractalDtoFactory implements FractalDto {
 
   private itemControls(id: string, collection: Fractal): ControlsDto {
     if (collection.fractalsArray.length === 0) {
-      return collection.splitData(SplitIndicators.Columns).reduce((acc: ControlsDto, column) => {
+      return collection.splitData(SplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
         acc[column] = {
           id: v4(),
           data: '',

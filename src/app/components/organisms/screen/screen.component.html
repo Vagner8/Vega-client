@@ -1,12 +1,12 @@
-@let root = bs.$root();
-@let parent = ss.$parent();
+@let root = ent.$root();
+@let parent = ss.$toShow();
 
 @if (root && parent) {
   @if (Modifiers) {
     <app-modifier />
   }
   @if (!Modifiers) {
-    @switch (Collections) {
+    @switch (Pages) {
       @case ('Home') {
         <h1>Home</h1>
       }

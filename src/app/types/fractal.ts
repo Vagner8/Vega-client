@@ -1,10 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlDto, ControlFields, ControlsDto } from './control';
-
-export enum Events {
-  Hold = 'Hold',
-  Touch = 'Touch',
-}
+import { ControlDto, ControlFormsFields, ControlsDto } from './control';
 
 export const FractalTypes = {
   Item: 'Item',
@@ -12,38 +7,9 @@ export const FractalTypes = {
   Collection: 'Collection',
 } as const;
 
-export enum Collections {
-  Home = 'Home',
-  Users = 'Users',
-  Products = 'Products',
-}
-
-export enum FractalEntities {
-  Root = 'Root',
-  Rows = 'Rows',
-  Taps = 'Taps',
-  Manager = 'Manager',
-  Modifiers = 'Modifiers',
-  Collections = 'Collections',
-}
-
-export enum Modifiers {
-  App = 'App',
-  New = 'New',
-  Edit = 'Edit',
-  Save = 'Save',
-  Delete = 'Delete',
-  Columns = 'Columns',
-}
-
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
 export type FractalForm = FormRecord<FormRecord<FormControl>>;
-
-export interface FractalEvent {
-  type: keyof typeof Events;
-  fractal: Fractal;
-}
 
 export interface FractalDto {
   id: string;
@@ -58,8 +24,8 @@ export interface Fractal {
   parent: Fractal;
   fractals: Fractals | null;
 
+  get sort(): string[];
   get cursor(): string;
-  get columns(): string[];
   get fractalsArray(): Fractal[];
   get controlsArray(): ControlDto[];
 
@@ -71,6 +37,6 @@ export interface Fractal {
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
-  getControlFields(name: string): ControlFields;
+  getControlFields(name: string): ControlFormsFields;
   updateFractalByForm(): FractalDto;
 }

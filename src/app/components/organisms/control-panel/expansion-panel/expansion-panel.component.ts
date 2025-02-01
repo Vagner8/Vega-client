@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, FractalEntities, SplitIndicators } from '@types';
+import { Fractal, AppEntities, SplitIndicators } from '@types';
 import { SheetComponent } from '@components/atoms';
 
 @Component({
@@ -26,14 +26,14 @@ export class ExpansionPanelComponent implements OnInit {
   closed = output<Fractal>();
 
   ngOnInit(): void {
-    if (this.fractal.is(FractalEntities.Root)) {
+    if (this.fractal.is(AppEntities.Root)) {
       this.ss.setParent(this.fractal);
       this.panel()?.open();
     }
   }
 
   get hasColumns(): boolean {
-    return Boolean(this.fractal.getData(SplitIndicators.Columns)) && this.fractal.fractals !== null;
+    return Boolean(this.fractal.getData(SplitIndicators.Sort)) && this.fractal.fractals !== null;
   }
 
   afterExpand(fractal: Fractal): void {

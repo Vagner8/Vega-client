@@ -1,6 +1,6 @@
 import { Component, computed, inject, Input, viewChild } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@mat';
-import { Collections, Fractal } from '@types';
+import { Pages, Fractal } from '@types';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { SelectService } from '@services';
 
@@ -17,8 +17,8 @@ export class ControlPanelComponent {
   accordion = viewChild(MatAccordion);
 
   shouldRender = computed(() => {
-    if (this.fractal.is(Collections)) return false;
-    let current = this.ss.$parent();
+    if (this.fractal.is(Pages)) return false;
+    let current = this.ss.$toShow();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -28,7 +28,7 @@ export class ControlPanelComponent {
 
   closed(): void {
     this.ss.reset();
-    this.ss.setParent(this.ss.$parent()?.parent || null);
+    this.ss.setParent(this.ss.$toShow()?.parent || null);
     this.accordion()?.closeAll();
   }
 }

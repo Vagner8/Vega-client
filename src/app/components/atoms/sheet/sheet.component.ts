@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core
 import { TapDirective } from '@directives';
 import { MatTableModule, MatSortModule } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, SplitIndicators } from '@types';
+import { ControlFields, Fractal, SplitIndicators } from '@types';
 
 @Component({
   selector: 'app-sheet',
@@ -18,7 +18,9 @@ export class SheetComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.like === 'controls' ? ['indicator', 'data'] : this.fractal.splitData(SplitIndicators.Columns);
+    return this.like === 'controls'
+      ? [ControlFields.indicator, ControlFields.data]
+      : this.fractal.splitData(SplitIndicators.Sort);
   }
 
   get dataSource(): unknown[] {

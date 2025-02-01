@@ -2,7 +2,7 @@
 
 <mat-expansion-panel
   hideToggle
-  [ngClass]="this.ss.$parent() === fractal ? 'active' : ''"
+  [ngClass]="this.ss.$toShow() === fractal ? 'active' : ''"
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>

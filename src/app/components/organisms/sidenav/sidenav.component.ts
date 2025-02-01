@@ -4,7 +4,7 @@ import { TapComponent } from '@components/atoms';
 import { FractalFactory } from '@fractal';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
-import { Fractal, Modifiers } from '@types';
+import { AppEntities, Fractal, Modifiers, SplitIndicators } from '@types';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -22,6 +22,9 @@ export class SidenavComponent {
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
 
+  appEntities = AppEntities;
+  splitIndicators = SplitIndicators;
+
   modifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
     const toUpdate = this.ss.$toUpdate();
@@ -37,12 +40,12 @@ export class SidenavComponent {
   modifierTouched(modifier: Fractal): void {
     this.ms.touch(modifier);
     if (modifier.is(Modifiers.New)) {
-      this.ss.setToAdd(new FractalFactory({ parent: this.ss.parent }));
+      this.ss.setToAdd(new FractalFactory({ parent: this.ss.$toShow() }));
     }
   }
 
-  async collectionTouched(tap: Fractal): Promise<void> {
-    this.ss.$toUpdate.set([]);
+  async pageTouched(tap: Fractal): Promise<void> {
+    this.ss.reset();
     this.ss.setParent(tap);
     await this.bs.navigate({}, [tap.cursor]);
     this.ms.touch(null);

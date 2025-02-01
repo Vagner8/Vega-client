@@ -5,20 +5,13 @@ import { Fractal } from '@types';
   providedIn: 'root',
 })
 export class SelectService {
-  $parent = signal<Fractal | null>(null);
-
   $toAdd = signal<Fractal[]>([]);
+  $toShow = signal<Fractal | null>(null);
   $toUpdate = signal<Fractal[]>([]);
-
-  get parent(): Fractal {
-    const parent = this.$parent();
-    if (!parent) throw new Error('Unable to get parent');
-    return parent;
-  }
 
   setParent(fractal: Fractal | null): void {
     this.$toUpdate.set([]);
-    this.$parent.set(fractal);
+    this.$toShow.set(fractal);
   }
 
   setToAdd(fractal: Fractal): void {
@@ -40,7 +33,7 @@ export class SelectService {
     this.$toUpdate.set([]);
   }
 
-  init({ root, Collections }: { root: Fractal; Collections: string }): void {
-    this.$parent.set(root.getFractal(Collections));
+  init({ root, Pages }: { root: Fractal; Pages: string }): void {
+    this.$toShow.set(root.getFractal(Pages));
   }
 }

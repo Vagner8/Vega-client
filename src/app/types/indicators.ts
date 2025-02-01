@@ -7,5 +7,4 @@ export const Indicators = {
 
 export const SplitIndicators = {
   Sort: 'Sort',
-  Columns: 'Columns',
 } as const;

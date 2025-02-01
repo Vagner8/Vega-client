@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { Events, FractalEntities } from '@types';
+import { AppEvents, AppEntities } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { EventService, ManagerService, ModifiersService, TapsService, SelectService } from '@services';
-import { BaseService } from 'app/services/base.service';
+import { EventService, ManagerService, TapsService, EntitiesService, BaseService } from '@services';
 
 @Component({
   selector: 'app-manager',
@@ -18,26 +17,25 @@ import { BaseService } from 'app/services/base.service';
 })
 export class ManagerComponent implements OnInit {
   showSpinner$!: Observable<boolean>;
-  prevEvent: keyof typeof Events | null = null;
+  prevEvent: keyof typeof AppEvents | null = null;
 
-  ts = inject(TapsService);
   bs = inject(BaseService);
+  ts = inject(TapsService);
   es = inject(EventService);
-  ss = inject(SelectService);
-  ms = inject(ModifiersService);
   mgr = inject(ManagerService);
+  ent = inject(EntitiesService);
 
   ngOnInit(): void {
     this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
   }
 
-  async holdAndTouch(event: keyof typeof Events): Promise<void> {
+  async holdAndTouch(event: keyof typeof AppEvents): Promise<void> {
     if (this.prevEvent !== event) {
       await this.mgr.set(event);
     }
-    if (event === Events.Touch && this.prevEvent !== Events.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(FractalEntities.Collections) ? this.ms.modifiers : this.bs.collections));
-      await this.bs.navigate({ [FractalEntities.Taps]: this.ts.$taps()?.cursor });
+    if (event === AppEvents.Touch && this.prevEvent !== AppEvents.Hold) {
+      this.ts.$taps.update(prev => (prev?.is(AppEntities.Pages) ? this.ent.modifiers : this.ent.pages));
+      await this.bs.navigate({ [AppEntities.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;
   }
