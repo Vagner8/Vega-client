@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { AppEvents, AppEntities } from '@types';
+import { AppEvents, AppEntities, AppGroups } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { EventService, ManagerService, TapsService, EntitiesService, BaseService } from '@services';
@@ -35,7 +35,7 @@ export class ManagerComponent implements OnInit {
     }
     if (event === AppEvents.Touch && this.prevEvent !== AppEvents.Hold) {
       this.ts.$taps.update(prev => (prev?.is(AppEntities.Pages) ? this.ent.modifiers : this.ent.pages));
-      await this.bs.navigate({ [AppEntities.Taps]: this.ts.$taps()?.cursor });
+      await this.bs.navigate({ [AppGroups.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;
   }

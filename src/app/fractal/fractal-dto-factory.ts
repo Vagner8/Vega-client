@@ -4,7 +4,7 @@ import {
   Fractal,
   FractalDto,
   FractalsDto,
-  FractalTypes,
+  AppTypes,
   Indicators,
   SplitIndicators,
 } from '@types';
@@ -28,7 +28,7 @@ export class FractalDtoFactory implements FractalDto {
     return {
       [Indicators.Type]: {
         id: v4(),
-        data: `${FractalTypes.Entity}:${FractalTypes.Collection}`,
+        data: `${AppTypes.Entity}:${AppTypes.Collection}`,
         input: ControlInputs.Select,
         parentId: id,
         indicator: Indicators.Type,

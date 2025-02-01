@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormCardComponent } from '@components/molecules';
-import { Modifiers } from '@types';
+import { AppModifiers } from '@types';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
@@ -24,7 +24,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
         const toAdd = this.ss.$toAdd();
         const toUpdate = this.ss.$toUpdate();
         switch (modifier?.cursor) {
-          case Modifiers.Save:
+          case AppModifiers.Save:
             if (toAdd.length > 0) {
               this.ds.add(toAdd.map(fractal => fractal.updateFractalByForm())).subscribe();
             }

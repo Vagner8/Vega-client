@@ -21,7 +21,7 @@ export class ModifiersService extends BaseService {
     await this.navigate({ [AppEntities.Modifiers]: modifier ? modifier.cursor : null });
   }
 
-  init({ root, Modifiers }: { root: Fractal; Modifiers: string }): void {
-    this.$modifier.set(Modifiers ? root.getFractal(Modifiers) : null);
+  init({ root, AppModifiers }: { root: Fractal; AppModifiers: string }): void {
+    this.$modifier.set(AppModifiers ? root.getFractal(AppModifiers) : null);
   }
 }

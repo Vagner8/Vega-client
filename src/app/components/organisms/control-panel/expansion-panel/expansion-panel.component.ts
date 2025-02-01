@@ -9,13 +9,13 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, AppEntities, SplitIndicators } from '@types';
-import { SheetComponent } from '@components/atoms';
+import { Fractal, AppEntities } from '@types';
+import { TableComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
-  imports: [MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatTableModule, SheetComponent, NgClass],
+  imports: [MatExpansionModule, MatButtonModule, MatIconModule, MatCardModule, MatTableModule, TableComponent, NgClass],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })
@@ -30,10 +30,6 @@ export class ExpansionPanelComponent implements OnInit {
       this.ss.setParent(this.fractal);
       this.panel()?.open();
     }
-  }
-
-  get hasColumns(): boolean {
-    return Boolean(this.fractal.getData(SplitIndicators.Sort)) && this.fractal.fractals !== null;
   }
 
   afterExpand(fractal: Fractal): void {

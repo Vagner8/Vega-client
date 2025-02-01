@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal, AppEntities } from '@types';
+import { Fractal, AppEntities, AppGroups } from '@types';
 import { BaseService } from './base.service';
 
 @Injectable({
@@ -14,6 +14,6 @@ export class TapsService extends BaseService {
 
   async set(taps: Fractal): Promise<void> {
     this.$taps.set(taps);
-    await this.navigate({ [AppEntities.Taps]: taps.cursor });
+    await this.navigate({ [AppGroups.Taps]: taps.cursor });
   }
 }

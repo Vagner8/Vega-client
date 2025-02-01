@@ -4,7 +4,7 @@ import { TapComponent } from '@components/atoms';
 import { FractalFactory } from '@fractal';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
-import { AppEntities, Fractal, Modifiers, SplitIndicators } from '@types';
+import { AppEntities, Fractal, AppModifiers, SplitIndicators } from '@types';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class SidenavComponent {
     this.ms.hold(modifier);
     const toUpdate = this.ss.$toUpdate();
     switch (modifier.cursor) {
-      case Modifiers.Delete:
+      case AppModifiers.Delete:
         if (toUpdate.length > 0) {
           this.ds.delete(toUpdate.map(({ dto }) => dto)).subscribe();
         }
@@ -39,7 +39,7 @@ export class SidenavComponent {
 
   modifierTouched(modifier: Fractal): void {
     this.ms.touch(modifier);
-    if (modifier.is(Modifiers.New)) {
+    if (modifier.is(AppModifiers.New)) {
       this.ss.setToAdd(new FractalFactory({ parent: this.ss.$toShow() }));
     }
   }

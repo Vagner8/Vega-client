@@ -7,7 +7,7 @@ import {
   Indicators,
   SplitIndicators,
   FractalForm,
-  ControlFormsFieldsNames,
+  ControlDtoFormsFields,
   ControlFormsFields,
 } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
@@ -64,7 +64,7 @@ export class FractalFactory implements Fractal {
   }
 
   updateFractalByForm(): FractalDto {
-    const [data, input] = ControlFormsFieldsNames;
+    const [data, input] = Object.values(ControlFormsFields);
     for (const indicator in this.dto.controls) {
       const formRecord = this.form.get(indicator);
       if (formRecord) {
@@ -96,12 +96,12 @@ export class FractalFactory implements Fractal {
     return control ? control : null;
   }
 
-  getControlFields(name: string): ControlFormsFields {
+  getControlFields(name: string): ControlDtoFormsFields {
     const formRecord = this.form.controls[name];
-    return ControlFormsFieldsNames.reduce((acc, field) => {
+    return Object.values(ControlFormsFields).reduce((acc, field) => {
       acc[field] = formRecord.controls[field];
       return acc;
-    }, {} as ControlFormsFields);
+    }, {} as ControlDtoFormsFields);
   }
 
   private createFractals(fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null {

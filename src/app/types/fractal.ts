@@ -1,11 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlDto, ControlFormsFields, ControlsDto } from './control';
-
-export const FractalTypes = {
-  Item: 'Item',
-  Entity: 'Entity',
-  Collection: 'Collection',
-} as const;
+import { ControlDto, ControlDtoFormsFields, ControlsDto } from './control';
 
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
@@ -37,6 +31,6 @@ export interface Fractal {
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
-  getControlFields(name: string): ControlFormsFields;
+  getControlFields(name: string): ControlDtoFormsFields;
   updateFractalByForm(): FractalDto;
 }

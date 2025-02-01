@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { Modifiers } from '@types';
+import { AppModifiers } from '@types';
 import { ModifiersService, SelectService } from '@services';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent {
 
   title = computed<string>(() => {
     const modifier = this.ms.$modifier();
-    const modifierTitle = modifier?.is(Modifiers.New) ? Modifiers.Edit : modifier?.cursor;
+    const modifierTitle = modifier?.is(AppModifiers.New) ? AppModifiers.Edit : modifier?.cursor;
     return `${this.ss.$toShow()?.cursor} ${modifierTitle || ''}`;
   });
 }

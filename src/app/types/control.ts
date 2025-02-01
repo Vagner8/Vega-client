@@ -15,16 +15,19 @@ export const ControlFields: Record<keyof ControlDto, keyof ControlDto> = {
   indicator: 'indicator',
 } as const;
 
-export const ControlFormsFieldsNames: (keyof ControlFormsFields)[] = ['data', 'input'];
+export const ControlFormsFields: Record<keyof ControlDtoFormsFields, keyof ControlDtoFormsFields> = {
+  data: 'data',
+  input: 'input',
+} as const;
 
 export type ControlsDto = Record<string, ControlDto>;
 
-export interface ControlFormsFields<T = FormControl> {
+export interface ControlDtoFormsFields<T = FormControl> {
   data: T;
   input: T;
 }
 
-export interface ControlDto extends ControlFormsFields<string> {
+export interface ControlDto extends ControlDtoFormsFields<string> {
   id: string;
   parentId: string;
   indicator: string;
