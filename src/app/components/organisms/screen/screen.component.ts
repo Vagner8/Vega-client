@@ -3,12 +3,12 @@ import { AppEvents, AppEntities } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService, EntitiesService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
-import { FractalsTableComponent } from '@components/atoms';
+import { TableComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [ControlPanelComponent, ModifierComponent, FractalsTableComponent],
+  imports: [ControlPanelComponent, ModifierComponent, TableComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
