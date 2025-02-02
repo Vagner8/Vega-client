@@ -19,8 +19,6 @@ export class ModifierComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    console.log('🚀 ~ this.ss.$toUpdate():', this.ss.$toUpdate());
-
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
         const toAdd = this.ss.$toAdd();

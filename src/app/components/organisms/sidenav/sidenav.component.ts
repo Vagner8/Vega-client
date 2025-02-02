@@ -45,7 +45,6 @@ export class SidenavComponent {
   }
 
   async pageTouched(tap: Fractal): Promise<void> {
-    console.log('🚀 ~ pageTouched:');
     this.ss.reset();
     this.ss.setCurrentFractal(tap);
     await this.bs.navigate({}, [tap.cursor]);

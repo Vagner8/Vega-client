@@ -18,6 +18,5 @@ export class EntitiesService {
     this.manager = root.findFractal(AppEntities.Manager) || this.manager;
     this.modifiers = root.findFractal(AppEntities.Modifiers) || this.modifiers;
     this.$root.set(root);
-    console.log('🚀 ~ this.$root:', this.$root());
   }
 }

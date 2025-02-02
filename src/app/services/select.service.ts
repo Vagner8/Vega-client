@@ -10,7 +10,6 @@ export class SelectService {
   $currentFractal = signal<Fractal | null>(null);
 
   setCurrentFractal(fractal: Fractal | null): void {
-    console.log('🚀 ~ setCurrentFractal:', fractal);
     this.$toUpdate.set([]);
     this.$currentFractal.set(fractal);
   }

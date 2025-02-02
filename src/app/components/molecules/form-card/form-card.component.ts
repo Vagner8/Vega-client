@@ -14,8 +14,4 @@ export class FormCardComponent {
   @Input() fractal!: Fractal;
   @Input() showCancelButton = true;
   cancel = output();
-
-  ngOnInit(): void {
-    console.log('🚀 ~ fractal:', this.fractal);
-  }
 }

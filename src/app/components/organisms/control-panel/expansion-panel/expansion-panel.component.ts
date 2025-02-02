@@ -29,16 +29,12 @@ export class ExpansionPanelComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.fractal.is(AppEntities.Root)) {
-      console.log('🚀 ~ ngOnInit:', this.fractal);
-
       this.ss.setCurrentFractal(this.fractal);
       this.panel()?.open();
     }
   }
 
   afterExpand(fractal: Fractal): void {
-    console.log('🚀 ~ afterExpand:', this.fractal);
-
     this.ss.setCurrentFractal(fractal);
   }
 }
