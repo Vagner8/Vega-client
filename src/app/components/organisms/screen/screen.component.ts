@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { TableComponent } from '@components/atoms';
 import { AppEvents, AppEntities } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService, EntitiesService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
+import { FractalsTableComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [TableComponent, ControlPanelComponent, ModifierComponent],
+  imports: [ControlPanelComponent, ModifierComponent, FractalsTableComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -22,6 +22,7 @@ export class SelectService {
     this.$toUpdate.update(prev =>
       prev.includes(fractal) ? prev.filter(child => child !== fractal) : [...prev, fractal]
     );
+    console.log('🚀 ~ this.$toUpdate:', this.$toUpdate());
   }
 
   select(fractal: Fractal): void {

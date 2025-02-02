@@ -20,19 +20,29 @@ export interface Fractal {
 
   get sort(): string[];
   get cursor(): string;
+
   get children(): Fractal[];
   get controls(): ControlDto[];
+
   get childrenKeys(): string[];
   get controlsKeys(): string[];
 
+  get isItem(): boolean;
+  get isRoot(): boolean;
+  get isCollection(): boolean;
+
   is(test: string | object): boolean;
   has(test: string): boolean;
+
   getFractal(test: string): Fractal;
   getControl(indicator: string): ControlDto;
+
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
+
   getControlData(indicator: string): string;
+  getControlFormsFields(name: string): ControlDtoFormsFields;
+
   splitControlData(indicator: string): string[];
   updateFractalByForm(): FractalDto;
-  getControlFormsFields(name: string): ControlDtoFormsFields;
 }

@@ -1,7 +1,7 @@
 @let root = ent.$root();
-@let parent = ss.$currentFractal();
+@let current = ss.$currentFractal();
 
-@if (root && parent) {
+@if (root && current) {
   @if (Modifiers) {
     <app-modifier />
   }
@@ -14,7 +14,7 @@
         <app-control-panel [fractal]="root" />
       }
       @default {
-        <app-table [fractal]="parent" />
+        <app-fractals-table [fractal]="current" />
       }
     }
   }
