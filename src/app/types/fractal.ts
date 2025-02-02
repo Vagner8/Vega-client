@@ -22,15 +22,16 @@ export interface Fractal {
   get cursor(): string;
   get fractalsArray(): Fractal[];
   get controlsArray(): ControlDto[];
+  get controlsIndicators(): string[];
 
   is(test: string | object): boolean;
   has(test: string): boolean;
-  getData(indicator: string): string;
-  splitData(indicator: string): string[];
   getFractal(test: string): Fractal;
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
-  getControlFields(name: string): ControlDtoFormsFields;
+  getControlData(indicator: string): string;
+  splitControlData(indicator: string): string[];
   updateFractalByForm(): FractalDto;
+  getControlFormsFields(name: string): ControlDtoFormsFields;
 }

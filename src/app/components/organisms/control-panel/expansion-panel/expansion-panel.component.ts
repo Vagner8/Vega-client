@@ -9,7 +9,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, AppEntities } from '@types';
+import { Fractal, AppEntities, Indicators } from '@types';
 import { TableComponent } from '@components/atoms';
 
 @Component({
@@ -25,14 +25,20 @@ export class ExpansionPanelComponent implements OnInit {
   panel = viewChild(MatExpansionPanel);
   closed = output<Fractal>();
 
+  indicators = Indicators;
+
   ngOnInit(): void {
     if (this.fractal.is(AppEntities.Root)) {
-      this.ss.setParent(this.fractal);
+      console.log('🚀 ~ ngOnInit:', this.fractal);
+
+      this.ss.setCurrentFractal(this.fractal);
       this.panel()?.open();
     }
   }
 
   afterExpand(fractal: Fractal): void {
-    this.ss.setParent(fractal);
+    console.log('🚀 ~ afterExpand:', this.fractal);
+
+    this.ss.setCurrentFractal(fractal);
   }
 }

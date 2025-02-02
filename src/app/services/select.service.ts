@@ -6,12 +6,13 @@ import { Fractal } from '@types';
 })
 export class SelectService {
   $toAdd = signal<Fractal[]>([]);
-  $toShow = signal<Fractal | null>(null);
   $toUpdate = signal<Fractal[]>([]);
+  $currentFractal = signal<Fractal | null>(null);
 
-  setParent(fractal: Fractal | null): void {
+  setCurrentFractal(fractal: Fractal | null): void {
+    console.log('🚀 ~ setCurrentFractal:', fractal);
     this.$toUpdate.set([]);
-    this.$toShow.set(fractal);
+    this.$currentFractal.set(fractal);
   }
 
   setToAdd(fractal: Fractal): void {
@@ -34,6 +35,6 @@ export class SelectService {
   }
 
   init({ root, Pages }: { root: Fractal; Pages: string }): void {
-    this.$toShow.set(root.getFractal(Pages));
+    this.$currentFractal.set(root.getFractal(Pages));
   }
 }

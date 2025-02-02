@@ -1,7 +1,7 @@
 <form>
-  @for (name of fractal.sort; track name) {
+  @for (name of fractal.controlsIndicators; track name) {
     @let control = fractal.getControl(name);
-    @let controlFields = fractal.getControlFields(name);
+    @let controlFields = fractal.getControlFormsFields(name);
     @let dataCtr = controlFields.data;
     @let inputCtr = controlFields.input;
 

@@ -1,7 +1,7 @@
 import { Component, Input, output } from '@angular/core';
-import { FormComponent } from '@components/atoms';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { Fractal } from '@types';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-form-card',
@@ -11,9 +11,11 @@ import { Fractal } from '@types';
   styleUrl: './form-card.component.scss',
 })
 export class FormCardComponent {
-  @Input() title = '';
   @Input() fractal!: Fractal;
-  @Input() subtitle = '';
   @Input() showCancelButton = true;
   cancel = output();
+
+  ngOnInit(): void {
+    console.log('🚀 ~ fractal:', this.fractal);
+  }
 }

@@ -28,12 +28,12 @@ export class FractalFactory implements Fractal {
   }
 
   get sort(): string[] {
-    const sort = Object.keys(this.parent).length > 0 ? this.parent.splitData(SplitIndicators.Sort) : [];
+    const sort = Object.keys(this.parent).length > 0 ? this.parent.splitControlData(SplitIndicators.Sort) : [];
     return sort.length === 0 && this.dto.fractals ? Object.keys(this.dto.fractals) : sort;
   }
 
   get cursor(): string {
-    return this.getData(Indicators.Cursor) || this.getData(Indicators.Position);
+    return this.getControlData(Indicators.Cursor) || this.getControlData(Indicators.Position);
   }
 
   get fractalsArray(): Fractal[] {
@@ -44,6 +44,10 @@ export class FractalFactory implements Fractal {
     return Object.values(this.dto.controls);
   }
 
+  get controlsIndicators(): string[] {
+    return Object.keys(this.dto.controls);
+  }
+
   is(test: string | object): boolean {
     if (test instanceof FractalFactory) return this === test;
     if (typeof test === 'object') return Object.values(test).includes(this.cursor);
@@ -51,15 +55,15 @@ export class FractalFactory implements Fractal {
   }
 
   has(test: string): boolean {
-    return Boolean(this.getData(test));
+    return Boolean(this.getControlData(test));
   }
 
-  getData(indicator: string): string {
+  getControlData(indicator: string): string {
     return this.dto.controls[indicator]?.data || '';
   }
 
-  splitData(indicator: string): string[] {
-    const data = this.getData(indicator);
+  splitControlData(indicator: string): string[] {
+    const data = this.getControlData(indicator);
     return data ? data.split(':') : [];
   }
 
@@ -96,7 +100,7 @@ export class FractalFactory implements Fractal {
     return control ? control : null;
   }
 
-  getControlFields(name: string): ControlDtoFormsFields {
+  getControlFormsFields(name: string): ControlDtoFormsFields {
     const formRecord = this.form.controls[name];
     return Object.values(ControlFormsFields).reduce((acc, field) => {
       acc[field] = formRecord.controls[field];

@@ -1,12 +1,12 @@
 @let toAdd = ss.$toAdd();
-@let parent = ss.$toShow();
 @let toUpdate = ss.$toUpdate();
+@let currentFractal = ss.$currentFractal();
 
 <div class="modifier">
-  @if (parent && toUpdate.includes(parent)) {
+  @if (currentFractal && toUpdate.includes(currentFractal)) {
     <ul class="list">
       <li class="parent">
-        <app-form-card [title]="parent.cursor" [subtitle]="'subtitle'" [fractal]="parent" />
+        <app-form-card [fractal]="currentFractal" />
       </li>
     </ul>
   }
@@ -14,9 +14,9 @@
   @if (toAdd.length > 0) {
     <ul class="list" [class.two-items]="toAdd.length === 2" [class.three-or-more-items]="toAdd.length >= 3">
       @for (fractal of toAdd; track fractal.dto.id) {
-        @if (fractal !== parent) {
+        @if (fractal !== currentFractal) {
           <li class="item">
-            <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+            <app-form-card [fractal]="fractal" />
           </li>
         }
       }
@@ -26,9 +26,9 @@
   @if (toUpdate.length > 0) {
     <ul class="list" [class.two-items]="toUpdate.length === 2" [class.three-or-more-items]="toUpdate.length >= 3">
       @for (fractal of toUpdate; track fractal.dto.id) {
-        @if (fractal !== parent) {
+        @if (fractal !== currentFractal) {
           <li class="item">
-            <app-form-card [title]="fractal.cursor" [subtitle]="'subtitle'" [fractal]="fractal" />
+            <app-form-card [fractal]="fractal" />
           </li>
         }
       }

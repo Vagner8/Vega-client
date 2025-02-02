@@ -38,7 +38,7 @@ export class FractalDtoFactory implements FractalDto {
 
   private itemControls(id: string, collection: Fractal): ControlsDto {
     if (collection.fractalsArray.length === 0) {
-      return collection.splitData(SplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
+      return collection.splitControlData(SplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
         acc[column] = {
           id: v4(),
           data: '',

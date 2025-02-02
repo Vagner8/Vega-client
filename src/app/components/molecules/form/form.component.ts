@@ -1,9 +1,8 @@
 import { Component, Input, output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputComponent, SelectComponent } from '@components/atoms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@mat';
 import { ControlInputs, Fractal, Indicators } from '@types';
-import { SelectComponent } from '../select/select.component';
-import { InputComponent } from '../input/input.component';
 
 @Component({
   selector: 'app-form',

@@ -1,8 +1,8 @@
-@let icon = fractal.getData('Icon');
+@let icon = fractal.getControlData(indicators.Icon);
 
 <mat-expansion-panel
   hideToggle
-  [ngClass]="this.ss.$toShow() === fractal ? 'active' : ''"
+  [ngClass]="this.ss.$currentFractal() === fractal ? 'active' : ''"
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>

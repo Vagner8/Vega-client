@@ -40,13 +40,14 @@ export class SidenavComponent {
   modifierTouched(modifier: Fractal): void {
     this.ms.touch(modifier);
     if (modifier.is(AppModifiers.New)) {
-      this.ss.setToAdd(new FractalFactory({ parent: this.ss.$toShow() }));
+      this.ss.setToAdd(new FractalFactory({ parent: this.ss.$currentFractal() }));
     }
   }
 
   async pageTouched(tap: Fractal): Promise<void> {
+    console.log('🚀 ~ pageTouched:');
     this.ss.reset();
-    this.ss.setParent(tap);
+    this.ss.setCurrentFractal(tap);
     await this.bs.navigate({}, [tap.cursor]);
     this.ms.touch(null);
   }
