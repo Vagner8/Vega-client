@@ -9,6 +9,7 @@ import {
   FractalForm,
   ControlDtoFormsFields,
   ControlFormsFields,
+  AppEntities,
 } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue, createForm } from '@utils';
@@ -28,23 +29,30 @@ export class FractalFactory implements Fractal {
   }
 
   get sort(): string[] {
-    const sort = Object.keys(this.parent).length > 0 ? this.parent.splitControlData(SplitIndicators.Sort) : [];
-    return sort.length === 0 && this.dto.fractals ? Object.keys(this.dto.fractals) : sort;
+    if (this.is(AppEntities.Root) || !this.has(SplitIndicators.Sort)) {
+      return this.childrenKeys;
+    } else {
+      return this.parent.splitControlData(SplitIndicators.Sort);
+    }
   }
 
   get cursor(): string {
     return this.getControlData(Indicators.Cursor) || this.getControlData(Indicators.Position);
   }
 
-  get fractalsArray(): Fractal[] {
-    return this.fractals ? Object.values(this.fractals) : [];
+  get children(): Fractal[] {
+    return Object.values(this.fractals || {});
   }
 
-  get controlsArray(): ControlDto[] {
+  get controls(): ControlDto[] {
     return Object.values(this.dto.controls);
   }
 
-  get controlsIndicators(): string[] {
+  get childrenKeys(): string[] {
+    return Object.keys(this.fractals || {});
+  }
+
+  get controlsKeys(): string[] {
     return Object.keys(this.dto.controls);
   }
 

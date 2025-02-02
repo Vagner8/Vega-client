@@ -1,9 +1,3 @@
-export const AppTypes = {
-  Item: 'Item',
-  Entity: 'Entity',
-  Collection: 'Collection',
-} as const;
-
 export const AppCollections = {
   Users: 'Users',
   Products: 'Products',

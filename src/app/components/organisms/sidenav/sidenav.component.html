@@ -7,8 +7,8 @@
     position="end">
     @if (ts.$taps(); as taps) {
       <mat-list>
-        @for (column of taps.sort; track column) {
-          @if (taps.findFractal(column); as tap) {
+        @for (indicator of taps.sort; track indicator) {
+          @if (taps.findFractal(indicator); as tap) {
             @switch (tap.parent.cursor) {
               @case (appEntities.Modifiers) {
                 <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />

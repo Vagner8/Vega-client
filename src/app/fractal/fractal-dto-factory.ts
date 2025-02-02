@@ -1,10 +1,10 @@
 import {
+  AppCollections,
   ControlInputs,
   ControlsDto,
   Fractal,
   FractalDto,
   FractalsDto,
-  AppTypes,
   Indicators,
   SplitIndicators,
 } from '@types';
@@ -21,23 +21,32 @@ export class FractalDtoFactory implements FractalDto {
     this.parentId = parent.dto.id;
     this.fractals = null;
 
-    this.controls = parent.has(SplitIndicators.Sort) ? this.itemControls(this.id, parent) : this.groupControls(this.id);
+    this.controls = Object.hasOwn(AppCollections, parent.cursor)
+      ? this.itemControls(this.id, parent)
+      : this.collectionControls(this.id);
   }
 
-  private groupControls(id: string): ControlsDto {
+  private collectionControls(id: string): ControlsDto {
     return {
-      [Indicators.Type]: {
+      [Indicators.Cursor]: {
         id: v4(),
-        data: `${AppTypes.Entity}:${AppTypes.Collection}`,
-        input: ControlInputs.Select,
+        data: '',
+        input: ControlInputs.Text,
         parentId: id,
-        indicator: Indicators.Type,
+        indicator: Indicators.Cursor,
+      },
+      [SplitIndicators.Sort]: {
+        id: v4(),
+        data: '',
+        input: ControlInputs.Organizer,
+        parentId: id,
+        indicator: SplitIndicators.Sort,
       },
     };
   }
 
   private itemControls(id: string, collection: Fractal): ControlsDto {
-    if (collection.fractalsArray.length === 0) {
+    if (collection.children.length === 0) {
       return collection.splitControlData(SplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
         acc[column] = {
           id: v4(),
@@ -51,8 +60,8 @@ export class FractalDtoFactory implements FractalDto {
     } else {
       const copy: ControlsDto = {};
 
-      for (const indicator in collection.fractalsArray[0].dto.controls) {
-        const control = collection.fractalsArray[0].dto.controls[indicator];
+      for (const indicator in collection.children[0].dto.controls) {
+        const control = collection.children[0].dto.controls[indicator];
         copy[indicator] = {
           ...control,
           id: v4(),

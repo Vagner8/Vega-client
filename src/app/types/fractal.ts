@@ -20,9 +20,10 @@ export interface Fractal {
 
   get sort(): string[];
   get cursor(): string;
-  get fractalsArray(): Fractal[];
-  get controlsArray(): ControlDto[];
-  get controlsIndicators(): string[];
+  get children(): Fractal[];
+  get controls(): ControlDto[];
+  get childrenKeys(): string[];
+  get controlsKeys(): string[];
 
   is(test: string | object): boolean;
   has(test: string): boolean;

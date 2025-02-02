@@ -15,18 +15,18 @@ import { AppCollections, ControlFields, Fractal } from '@types';
 export class TableComponent implements OnInit {
   ss = inject(SelectService);
   @Input() fractal!: Fractal;
-  isCollection = false;
+  printFractals = false;
 
   ngOnInit(): void {
-    this.isCollection = Object.hasOwn(AppCollections, this.fractal.cursor);
+    this.printFractals = this.fractal.is(AppCollections);
+    console.log('🚀 ~ this.printFractals:', this.printFractals);
   }
 
   get columns(): string[] {
-    const { indicator, data, input } = ControlFields;
-    return this.isCollection ? this.fractal.sort : [indicator, data, input];
+    return this.printFractals ? this.fractal.sort : [ControlFields.indicator, ControlFields.data];
   }
 
   get dataSource(): unknown[] {
-    return this.isCollection ? this.fractal.fractalsArray : this.fractal.controlsArray;
+    return this.printFractals ? this.fractal.children : this.fractal.controls;
   }
 }

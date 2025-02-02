@@ -1,5 +1,5 @@
 <form>
-  @for (name of fractal.controlsIndicators; track name) {
+  @for (name of fractal.controlsKeys; track name) {
     @let control = fractal.getControl(name);
     @let controlFields = fractal.getControlFormsFields(name);
     @let dataCtr = controlFields.data;

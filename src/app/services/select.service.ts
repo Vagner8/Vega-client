@@ -25,7 +25,7 @@ export class SelectService {
   }
 
   select(fractal: Fractal): void {
-    this.$toUpdate.update(prev => (prev.length > 0 ? [] : fractal.parent.fractalsArray));
+    this.$toUpdate.update(prev => (prev.length > 0 ? [] : fractal.parent.children));
   }
 
   reset(): void {
