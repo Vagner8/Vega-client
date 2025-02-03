@@ -14,9 +14,9 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-table [fractal]="fractal" [printControls]="true" />
+    <app-table class="controls-table" [fractal]="fractal" [printControls]="true" />
     @if (fractal.isCollection) {
-      <app-table class="collection" [fractal]="fractal" />
+      <app-table [fractal]="fractal" />
     }
     @if (fractal.fractals) {
       <ng-content />

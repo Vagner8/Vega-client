@@ -1,13 +1,4 @@
-import {
-  AppCollections,
-  ControlInputs,
-  ControlsDto,
-  Fractal,
-  FractalDto,
-  FractalsDto,
-  Indicators,
-  SplitIndicators,
-} from '@types';
+import { ControlInputs, ControlsDto, Fractal, FractalDto, FractalsDto, Indicators, SplitIndicators } from '@types';
 import { v4 } from 'uuid';
 
 export class FractalDtoFactory implements FractalDto {
@@ -21,9 +12,7 @@ export class FractalDtoFactory implements FractalDto {
     this.parentId = parent.dto.id;
     this.fractals = null;
 
-    this.controls = Object.hasOwn(AppCollections, parent.cursor)
-      ? this.itemControls(this.id, parent)
-      : this.collectionControls(this.id);
+    this.controls = parent.isCollection ? this.itemControls(this.id, parent) : this.collectionControls(this.id);
   }
 
   private collectionControls(id: string): ControlsDto {

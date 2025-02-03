@@ -1,45 +1,7 @@
 @use 'variables.scss' as *;
 
-.subtitle {
-  margin-bottom: $size-extra-small;
-  color: $color-success;
-}
-
-.Delete {
-  color: $color-danger;
-}
-
 .modifier {
   display: flex;
   flex-direction: column;
   gap: $size-medium;
-}
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $size-medium;
-}
-
-.parent {
-  width: 100%;
-}
-
-.item {
-  flex: 1 1 100%;
-  box-sizing: border-box;
-}
-
-.list.two-items > .item {
-  flex: 1 1 calc(50% - $size-medium);
-}
-
-.list.three-or-more-items > .item {
-  flex: 1 1 calc(30.33% - $size-medium);
-}
-
-@media (max-width: 768px) {
-  .item {
-    flex: 1 1 100%;
-  }
 }

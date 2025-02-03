@@ -38,9 +38,12 @@ export class SidenavComponent {
   }
 
   modifierTouched(modifier: Fractal): void {
-    this.ms.touch(modifier);
     if (modifier.is(AppModifiers.New)) {
       this.ss.setToAdd(new FractalFactory({ parent: this.ss.$currentFractal() }));
+      this.ms.touch(modifier);
+    }
+    if ((modifier.is(AppModifiers.Edit) || modifier.is(AppModifiers.Delete)) && this.ss.$toUpdate().length > 0) {
+      this.ms.touch(modifier);
     }
   }
 

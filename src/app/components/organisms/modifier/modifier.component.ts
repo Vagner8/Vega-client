@@ -1,14 +1,15 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { FormCardComponent } from '@components/molecules';
 import { AppModifiers } from '@types';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
+import { EditModifierComponent } from './edit-modifier/edit-modifier.component';
+import { FormCardComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, FormCardComponent],
+  imports: [MatButtonModule, MatCardModule, EditModifierComponent, FormCardComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })
