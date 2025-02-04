@@ -27,7 +27,7 @@ export class SidenavComponent {
 
   modifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
-    const toUpdate = this.ss.$toUpdate();
+    const toUpdate = this.ss.$items();
     switch (modifier.cursor) {
       case AppModifiers.Delete:
         if (toUpdate.length > 0) {
@@ -38,18 +38,20 @@ export class SidenavComponent {
   }
 
   modifierTouched(modifier: Fractal): void {
-    if (modifier.is(AppModifiers.New)) {
-      this.ss.setToAdd(new FractalFactory({ parent: this.ss.$currentFractal() }));
-      this.ms.touch(modifier);
-    }
-    if ((modifier.is(AppModifiers.Edit) || modifier.is(AppModifiers.Delete)) && this.ss.$toUpdate().length > 0) {
-      this.ms.touch(modifier);
+    switch (true) {
+      case modifier.is(AppModifiers.New):
+        this.ss.setNew(new FractalFactory({ parent: this.ss.$current() }));
+        this.ms.touch(modifier);
+        break;
+      case (modifier.is(AppModifiers.Edit), modifier.is(AppModifiers.Edit)):
+        if (this.ss.areItems || this.ss.isCurrent) this.ms.touch(modifier);
+        break;
     }
   }
 
   async pageTouched(tap: Fractal): Promise<void> {
-    this.ss.reset();
-    this.ss.setCurrentFractal(tap);
+    this.ss.clear();
+    this.ss.setCurrent(tap);
     await this.bs.navigate({}, [tap.cursor]);
     this.ms.touch(null);
   }

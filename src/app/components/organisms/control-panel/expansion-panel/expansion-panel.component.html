@@ -1,8 +1,8 @@
 @let icon = fractal.getControlData(indicators.Icon);
 
 <mat-expansion-panel
+  [class.clicked-panel]="ss.$current() === fractal"
   hideToggle
-  [ngClass]="this.ss.$currentFractal() === fractal ? 'active' : ''"
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
@@ -14,7 +14,7 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-table class="controls-table" [fractal]="fractal" [printControls]="true" />
+    <app-table [fractal]="fractal" [printControls]="true" />
     @if (fractal.isCollection) {
       <app-table [fractal]="fractal" />
     }

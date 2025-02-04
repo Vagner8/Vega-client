@@ -18,7 +18,7 @@ export class ControlPanelComponent {
 
   shouldRender = computed(() => {
     if (this.fractal.isItem) return false;
-    let current = this.ss.$currentFractal();
+    let current = this.ss.$current();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -27,9 +27,9 @@ export class ControlPanelComponent {
   });
 
   closed(): void {
-    this.ss.reset();
-    const current = this.ss.$currentFractal();
-    if (current && !this.fractal.isRoot) this.ss.setCurrentFractal(current.parent);
+    this.ss.clear();
+    const current = this.ss.$current();
+    if (current && !this.fractal.isRoot) this.ss.setCurrent(current.parent);
     this.accordion()?.closeAll();
   }
 }

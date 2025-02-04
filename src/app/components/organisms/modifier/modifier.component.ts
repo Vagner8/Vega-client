@@ -1,15 +1,14 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { AppModifiers } from '@types';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { EditModifierComponent } from './edit-modifier/edit-modifier.component';
-import { FormCardComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, EditModifierComponent, FormCardComponent],
+  imports: [MatButtonModule, MatCardModule, EditModifierComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })
@@ -19,11 +18,17 @@ export class ModifierComponent implements OnInit, OnDestroy {
   ms = inject(ModifiersService);
   private subs: Subscription[] = [];
 
+  $toUpdate = computed(() => {
+    const items = this.ss.$items();
+    const current = this.ss.$current();
+    return items.length === 0 && current ? [current] : items;
+  });
+
   ngOnInit(): void {
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
-        const toAdd = this.ss.$toAdd();
-        const toUpdate = this.ss.$toUpdate();
+        const toAdd = this.ss.$new();
+        const toUpdate = this.ss.$items();
         switch (modifier?.cursor) {
           case AppModifiers.Save:
             if (toAdd.length > 0) {
@@ -34,7 +39,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
             }
             break;
         }
-        this.ss.reset();
+        this.ss.clear();
       })
     );
   }

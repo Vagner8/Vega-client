@@ -16,7 +16,7 @@
   border-radius: 0 !important;
 }
 
-.mat-expansion-panel.active {
+.clicked-panel {
   background-color: $color-secondary;
 }
 
@@ -37,8 +37,4 @@
       gap: $size-medium;
     }
   }
-}
-
-.controls-table {
-  border: solid 1px $color-border;
 }

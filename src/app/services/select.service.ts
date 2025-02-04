@@ -5,35 +5,44 @@ import { Fractal } from '@types';
   providedIn: 'root',
 })
 export class SelectService {
-  $toAdd = signal<Fractal[]>([]);
-  $toUpdate = signal<Fractal[]>([]);
-  $currentFractal = signal<Fractal | null>(null);
+  $new = signal<Fractal[]>([]);
+  $items = signal<Fractal[]>([]);
+  $current = signal<Fractal | null>(null);
 
-  setCurrentFractal(fractal: Fractal | null): void {
-    this.$toUpdate.set([]);
-    this.$currentFractal.set(fractal);
+  get areItems(): boolean {
+    return this.$items().length > 0;
   }
 
-  setToAdd(fractal: Fractal): void {
-    this.$toAdd.update(prev => [...prev, fractal]);
+  get isCurrent(): boolean {
+    return this.$current() !== null;
   }
 
-  setToUpdate(fractal: Fractal): void {
-    this.$toUpdate.update(prev =>
-      prev.includes(fractal) ? prev.filter(child => child !== fractal) : [...prev, fractal]
+  setCurrent(fractal: Fractal | null): void {
+    this.$current.set(fractal);
+  }
+
+  setNew(fractal: Fractal): void {
+    this.$new.update(prevFractals => [...prevFractals, fractal]);
+  }
+
+  setItem(fractal: Fractal): void {
+    this.$items.update(prevFractals =>
+      prevFractals.includes(fractal)
+        ? prevFractals.filter(prevFractal => prevFractal !== fractal)
+        : [...prevFractals, fractal]
     );
   }
 
-  select(fractal: Fractal): void {
-    this.$toUpdate.update(prev => (prev.length > 0 ? [] : fractal.parent.children));
+  selectItems(fractal: Fractal): void {
+    this.$items.update(prevFractals => (prevFractals.length > 0 ? [] : fractal.parent.children));
   }
 
-  reset(): void {
-    this.$toAdd.set([]);
-    this.$toUpdate.set([]);
+  clear(): void {
+    this.$new.set([]);
+    this.$items.set([]);
   }
 
   init({ root, Pages }: { root: Fractal; Pages: string }): void {
-    this.$currentFractal.set(root.getFractal(Pages));
+    this.$current.set(root.getFractal(Pages));
   }
 }

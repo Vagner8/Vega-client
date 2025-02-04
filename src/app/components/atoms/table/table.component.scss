@@ -3,3 +3,11 @@
 .clicked-row {
   background-color: $color-secondary;
 }
+
+.disable-cursor-pointer {
+  cursor: default;
+}
+
+.table {
+  border: solid 1px $color-border;
+}

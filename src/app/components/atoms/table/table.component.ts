@@ -13,8 +13,8 @@ import { ControlFields, Fractal } from '@types';
 })
 export class TableComponent {
   ss = inject(SelectService);
-  @Input() fractal!: Fractal;
   @Input() printControls = false;
+  @Input() fractal!: Fractal;
 
   get columns(): string[] {
     return this.printControls ? [ControlFields.indicator, ControlFields.data] : this.fractal.sort;

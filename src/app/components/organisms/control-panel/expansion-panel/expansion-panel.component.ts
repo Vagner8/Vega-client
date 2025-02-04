@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component, inject, Input, OnInit, output, viewChild } from '@angular/core';
 import {
   MatButtonModule,
@@ -9,7 +8,7 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, AppEntities, Indicators } from '@types';
+import { Fractal, Indicators } from '@types';
 import { TableComponent } from '@components/atoms';
 
 @Component({
@@ -23,7 +22,6 @@ import { TableComponent } from '@components/atoms';
     MatTableModule,
     TableComponent,
     TableComponent,
-    NgClass,
   ],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
@@ -37,13 +35,13 @@ export class ExpansionPanelComponent implements OnInit {
   indicators = Indicators;
 
   ngOnInit(): void {
-    if (this.fractal.is(AppEntities.Root)) {
-      this.ss.setCurrentFractal(this.fractal);
+    if (this.fractal.isRoot) {
+      this.ss.setCurrent(this.fractal);
       this.panel()?.open();
     }
   }
 
   afterExpand(fractal: Fractal): void {
-    this.ss.setCurrentFractal(fractal);
+    this.ss.setCurrent(fractal);
   }
 }
