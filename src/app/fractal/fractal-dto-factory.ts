@@ -40,7 +40,7 @@ export class FractalDtoFactory implements FractalDto {
         acc[column] = {
           id: v4(),
           data: '',
-          input: ControlInputs.New,
+          input: ControlInputs.Text,
           parentId: id,
           indicator: column,
         };

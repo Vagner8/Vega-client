@@ -37,7 +37,6 @@
     "@angular-eslint/template-parser": "18.0.1",
     "@angular/cli": "^18.2.11",
     "@angular/compiler-cli": "^18.2.11",
-    "@types/hammerjs": "^2.0.46",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",

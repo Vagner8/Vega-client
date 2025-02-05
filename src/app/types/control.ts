@@ -1,7 +1,6 @@
 import { FormControl } from '@angular/forms';
 
 export const ControlInputs = {
-  New: 'New',
   Text: 'Text',
   Select: 'Select',
   Organizer: 'Organizer',
