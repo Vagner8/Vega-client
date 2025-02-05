@@ -20,6 +20,17 @@ export const ControlFormsFields: Record<keyof ControlDtoFormsFields, keyof Contr
   input: 'input',
 } as const;
 
+export const CollectionControlMenu = {
+  Edit: 'Edit',
+  Draft: 'Draft',
+  New: 'New',
+};
+
+export const ControlMenu = {
+  ...CollectionControlMenu,
+  Cancel: 'Cancel',
+};
+
 export type ControlsDto = Record<string, ControlDto>;
 
 export interface ControlDtoFormsFields<T = FormControl> {

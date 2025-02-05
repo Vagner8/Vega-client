@@ -1,9 +1,26 @@
+@let menuTitle = fractal.form.disabled ? controlMenu.Draft : controlMenu.Edit;
+
 <mat-card appearance="outlined">
   <mat-card-header>
-    <mat-card-title-group>
-      @if (showCancelButton) {
-        <button top type="button" mat-flat-button (click)="cancel.emit()">Cancel</button>
-      }
+    <mat-card-title-group class="mat-card-title-group">
+      <button mat-button [matMenuTriggerFor]="menu">
+        {{ menuTitle }}
+      </button>
+      <mat-menu #menu="matMenu">
+        @if (fractal.isItem) {
+          @for (item of itemMenu; track item) {
+            <button mat-menu-item appTap (hold)="onMenuItemHeld(item)" (touch)="onMnuItemTouched(item)">
+              <span>{{ item }}</span>
+            </button>
+          }
+        } @else {
+          @for (item of collectionMenu; track item) {
+            <button mat-menu-item appTap (click)="onMnuItemTouched(item)">
+              <span>{{ item }}</span>
+            </button>
+          }
+        }
+      </mat-menu>
       <mat-card-title>{{ fractal.cursor }}</mat-card-title>
     </mat-card-title-group>
   </mat-card-header>

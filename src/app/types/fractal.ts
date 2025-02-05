@@ -17,6 +17,7 @@ export interface Fractal {
   form: FractalForm;
   parent: Fractal;
   fractals: Fractals | null;
+  childrenForms: FormRecord;
 
   get sort(): string[];
   get cursor(): string;

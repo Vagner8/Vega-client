@@ -3,7 +3,6 @@ import {
   Fractal,
   Fractals,
   ControlDto,
-  FractalsDto,
   Indicators,
   SplitIndicators,
   FractalForm,
@@ -15,18 +14,19 @@ import {
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue, createForm } from '@utils';
 import { findFractalRecursively } from 'app/utils/getters';
+import { FormRecord } from '@angular/forms';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
   form: FractalForm;
   parent: Fractal;
   fractals: Fractals | null = null;
+  childrenForms = new FormRecord({});
 
   constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal | null }) {
     this.parent = parent ? parent : ({} as Fractal);
     this.dto = dto ? dto : new FractalDtoFactory(this.parent);
-    this.form = createForm(this.dto.controls);
-    this.fractals = this.createFractals(this.dto.fractals, this);
+    this.form = createForm(this);
   }
 
   get sort(): string[] {
@@ -123,16 +123,5 @@ export class FractalFactory implements Fractal {
       acc[field] = formRecord.controls[field];
       return acc;
     }, {} as ControlDtoFormsFields);
-  }
-
-  private createFractals(fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null {
-    if (!fractalsDto) return null;
-    const result: Fractals = {};
-    for (const indicator in fractalsDto) {
-      const fractal = new FractalFactory({ parent, dto: fractalsDto[indicator] });
-      fractal.fractals = this.createFractals(fractalsDto[indicator].fractals, fractal);
-      result[indicator] = fractal;
-    }
-    return result;
   }
 }

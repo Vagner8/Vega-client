@@ -1,10 +1,10 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { FractalFactory } from '@fractal';
-import { ControlFormsFields, ControlsDto, Fractal, FractalDto, FractalForm, Indicators } from '@types';
+import { ControlFormsFields, Fractal, FractalForm, Fractals, FractalsDto } from '@types';
 
-export const createForm = (controls: ControlsDto): FractalForm => {
-  return new FormRecord(
-    Object.values(controls).reduce((acc: Record<string, FormRecord>, controlDto) => {
+export const createForm = (fractal: Fractal): FractalForm => {
+  const formRecord = new FormRecord(
+    fractal.controls.reduce((acc: Record<string, FormRecord>, controlDto) => {
       acc[controlDto.indicator] = new FormRecord(
         Object.values(ControlFormsFields).reduce((acc: Record<string, FormControl>, field) => {
           acc[field] = new FormControl(controlDto[field]);
@@ -14,23 +14,21 @@ export const createForm = (controls: ControlsDto): FractalForm => {
       return acc;
     }, {})
   ) as FractalForm;
+
+  if (fractal.isItem) {
+    fractal.parent.childrenForms.addControl(fractal.cursor, formRecord);
+  }
+  new FormRecord({}).addControl(fractal.cursor, formRecord);
+  return formRecord;
 };
 
-export const createDefaultFractal = (cursor: string): Fractal => {
-  const dto: FractalDto = {
-    id: '',
-    parentId: '',
-    controls: {
-      [Indicators.Cursor]: {
-        id: '',
-        parentId: '',
-        indicator: Indicators.Cursor,
-        data: cursor,
-        input: '',
-      },
-    },
-    fractals: null,
-  };
-
-  return new FractalFactory({ dto });
+export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
+  if (!fractalsDto) return null;
+  const result: Fractals = {};
+  for (const indicator in fractalsDto) {
+    const fractal = new FractalFactory({ parent, dto: fractalsDto[indicator] });
+    fractal.fractals = createFractalsRecursively(fractalsDto[indicator].fractals, fractal);
+    result[indicator] = fractal;
+  }
+  return result;
 };
