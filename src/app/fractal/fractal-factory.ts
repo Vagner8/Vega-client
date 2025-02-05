@@ -6,10 +6,10 @@ import {
   Indicators,
   SplitIndicators,
   FractalForm,
-  ControlDtoFormsFields,
-  ControlFormsFields,
+  ControlFormControls,
   AppEntities,
   AppCollections,
+  ControlFormControlsKeys,
 } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue, createForm } from '@utils';
@@ -75,37 +75,6 @@ export class FractalFactory implements Fractal {
     return Boolean(this.getControlData(test));
   }
 
-  getControlData(indicator: string): string {
-    return this.dto.controls[indicator]?.data || '';
-  }
-
-  splitControlData(indicator: string): string[] {
-    const data = this.getControlData(indicator);
-    return data ? data.split(':') : [];
-  }
-
-  updateFractalByForm(): FractalDto {
-    const [data, input] = Object.values(ControlFormsFields);
-    for (const indicator in this.dto.controls) {
-      const formRecord = this.form.get(indicator);
-      if (formRecord) {
-        const control = this.dto.controls[indicator];
-        control.data = formRecord.value[data];
-        control.input = formRecord.value[input];
-      }
-    }
-    return this.dto;
-  }
-
-  getFractal(test: string): Fractal {
-    const fractal = findFractalRecursively(test, this.fractals);
-    return checkValue<Fractal>(fractal, test);
-  }
-
-  findFractal(test: string): Fractal | null {
-    return findFractalRecursively(test, this.fractals);
-  }
-
   getControl(indicator: string): ControlDto {
     const control = this.dto.controls[indicator];
     if (control) return control;
@@ -117,11 +86,42 @@ export class FractalFactory implements Fractal {
     return control ? control : null;
   }
 
-  getControlFormsFields(name: string): ControlDtoFormsFields {
+  getControlData(indicator: string): string {
+    return this.dto.controls[indicator]?.data || '';
+  }
+
+  splitControlData(indicator: string): string[] {
+    const data = this.getControlData(indicator);
+    return data ? data.split(':') : [];
+  }
+
+  addFormControl(): void {
+    // this.form.addControl(new FormRecord({}));
+  }
+
+  getFormControls(name: string): ControlFormControls {
     const formRecord = this.form.controls[name];
-    return Object.values(ControlFormsFields).reduce((acc, field) => {
+    return Object.values(ControlFormControlsKeys).reduce((acc, field) => {
       acc[field] = formRecord.controls[field];
       return acc;
-    }, {} as ControlDtoFormsFields);
+    }, {} as ControlFormControls);
+  }
+
+  getFractal(test: string): Fractal {
+    const fractal = findFractalRecursively(test, this.fractals);
+    return checkValue<Fractal>(fractal, test);
+  }
+
+  findFractal(test: string): Fractal | null {
+    return findFractalRecursively(test, this.fractals);
+  }
+
+  updateFractalByForm(): FractalDto {
+    for (const indicator in this.dto.controls) {
+      Object.values(ControlFormControlsKeys).forEach(key => {
+        this.dto.controls[indicator][key] = this.form.controls[indicator].value[key];
+      });
+    }
+    return this.dto;
   }
 }

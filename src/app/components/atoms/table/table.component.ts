@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { SelectService } from '@services';
-import { ControlFields, Fractal } from '@types';
+import { ControlKeys, Fractal } from '@types';
 
 @Component({
   selector: 'app-table',
@@ -17,7 +17,7 @@ export class TableComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.printControls ? [ControlFields.indicator, ControlFields.data] : this.fractal.sort;
+    return this.printControls ? [ControlKeys.indicator, ControlKeys.data] : this.fractal.sort;
   }
 
   get dataSource(): unknown[] {

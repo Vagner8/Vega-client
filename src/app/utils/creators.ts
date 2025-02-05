@@ -1,12 +1,12 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { FractalFactory } from '@fractal';
-import { ControlFormsFields, Fractal, FractalForm, Fractals, FractalsDto } from '@types';
+import { ControlFormControlsKeys, Fractal, FractalForm, Fractals, FractalsDto } from '@types';
 
 export const createForm = (fractal: Fractal): FractalForm => {
   const formRecord = new FormRecord(
     fractal.controls.reduce((acc: Record<string, FormRecord>, controlDto) => {
       acc[controlDto.indicator] = new FormRecord(
-        Object.values(ControlFormsFields).reduce((acc: Record<string, FormControl>, field) => {
+        Object.values(ControlFormControlsKeys).reduce((acc: Record<string, FormControl>, field) => {
           acc[field] = new FormControl(controlDto[field]);
           return acc;
         }, {})

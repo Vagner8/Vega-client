@@ -1,5 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlDto, ControlDtoFormsFields, ControlsDto } from './control';
+import { ControlDto, ControlFormControls, ControlsDto } from './control';
 
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
@@ -35,15 +35,16 @@ export interface Fractal {
   is(test: string | object): boolean;
   has(test: string): boolean;
 
-  getFractal(test: string): Fractal;
   getControl(indicator: string): ControlDto;
-
   findControl(indicator: string): ControlDto | null;
+  getControlData(indicator: string): string;
+  splitControlData(indicator: string): string[];
+
+  addFormControl(): void;
+  getFormControls(name: string): ControlFormControls;
+
+  getFractal(test: string): Fractal;
   findFractal(test: string): Fractal | null;
 
-  getControlData(indicator: string): string;
-  getControlFormsFields(name: string): ControlDtoFormsFields;
-
-  splitControlData(indicator: string): string[];
   updateFractalByForm(): FractalDto;
 }

@@ -7,17 +7,16 @@ export const ControlInputs = {
   Organizer: 'Organizer',
 } as const;
 
-export const ControlFields: Record<keyof ControlDto, keyof ControlDto> = {
-  id: 'id',
+export const ControlFormControlsKeys: Record<keyof ControlFormControls, keyof ControlFormControls> = {
   data: 'data',
   input: 'input',
+};
+
+export const ControlKeys: Record<keyof ControlDto, keyof ControlDto> = {
+  id: 'id',
   parentId: 'parentId',
   indicator: 'indicator',
-} as const;
-
-export const ControlFormsFields: Record<keyof ControlDtoFormsFields, keyof ControlDtoFormsFields> = {
-  data: 'data',
-  input: 'input',
+  ...ControlFormControlsKeys,
 } as const;
 
 export const CollectionControlMenu = {
@@ -32,14 +31,15 @@ export const ControlMenu = {
 };
 
 export type ControlsDto = Record<string, ControlDto>;
+export type ControlFormControls = ControlDtoChangeable<FormControl>;
 
-export interface ControlDtoFormsFields<T = FormControl> {
+type ControlDtoChangeable<T> = {
   data: T;
   input: T;
-}
+};
 
-export interface ControlDto extends ControlDtoFormsFields<string> {
+export type ControlDto = {
   id: string;
   parentId: string;
   indicator: string;
-}
+} & ControlDtoChangeable<string>;

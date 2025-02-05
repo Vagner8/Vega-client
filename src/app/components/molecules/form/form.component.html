@@ -1,20 +1,22 @@
 <form>
   @for (name of fractal.controlsKeys; track name) {
     @let control = fractal.getControl(name);
-    @let controlFields = fractal.getControlFormsFields(name);
-    @let dataCtr = controlFields.data;
-    @let inputCtr = controlFields.input;
+    @let formControls = fractal.getFormControls(name);
 
     @switch (control.input) {
       @case (controlInputs.New) {
-        <app-select className="form-field" [name]="name" [opts]="controlInputsArray" [formCtr]="inputCtr" />
-        <app-input [name]="name" [formCtr]="dataCtr" />
+        <app-select className="form-field" [name]="name" [opts]="controlInputsArray" [formCtr]="formControls.input" />
+        <app-input [name]="name" [formCtr]="formControls.data" />
       }
       @case (controlInputs.Select) {
-        <app-select className="form-field" [name]="name" [opts]="control.data.split(':')" [formCtr]="dataCtr" />
+        <app-select
+          className="form-field"
+          [name]="name"
+          [opts]="control.data.split(':')"
+          [formCtr]="formControls.data" />
       }
       @default {
-        <app-input [name]="name" [formCtr]="dataCtr" />
+        <app-input [name]="name" [formCtr]="formControls.data" />
       }
     }
   }
