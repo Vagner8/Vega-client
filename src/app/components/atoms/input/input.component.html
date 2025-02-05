@@ -1,6 +1,6 @@
 <mat-form-field [class]="className" class="app-form-field">
-  <mat-label>{{ name }}</mat-label>
-  <input #inputElementRef [type]="name" matInput [formControl]="formCtr" />
+  <mat-label>{{ label }}</mat-label>
+  <input #inputElementRef [type]="label" matInput [formControl]="formCtr" />
   @if (inputElementRef.value && !formCtr.disabled) {
     <button
       type="button"

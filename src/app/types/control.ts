@@ -7,7 +7,7 @@ export const ControlInputs = {
   Organizer: 'Organizer',
 } as const;
 
-export const ControlFormControlsKeys: Record<keyof ControlFormControls, keyof ControlFormControls> = {
+export const ControlFormcontrolsIndicators: Record<keyof ControlFormControls, keyof ControlFormControls> = {
   data: 'data',
   input: 'input',
 };
@@ -16,7 +16,7 @@ export const ControlKeys: Record<keyof ControlDto, keyof ControlDto> = {
   id: 'id',
   parentId: 'parentId',
   indicator: 'indicator',
-  ...ControlFormControlsKeys,
+  ...ControlFormcontrolsIndicators,
 } as const;
 
 export const CollectionControlMenu = {

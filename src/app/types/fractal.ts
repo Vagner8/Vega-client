@@ -25,8 +25,8 @@ export interface Fractal {
   get children(): Fractal[];
   get controls(): ControlDto[];
 
-  get childrenKeys(): string[];
-  get controlsKeys(): string[];
+  get childrenIndicators(): string[];
+  get controlsIndicators(): string[];
 
   get isItem(): boolean;
   get isRoot(): boolean;

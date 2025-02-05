@@ -11,8 +11,8 @@ import { MatSelectModule } from '@mat';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
-  @Input() name: string = '';
   @Input() opts: string[] = [];
+  @Input() label: string = '';
   @Input() formCtr!: FormControl;
   @Input() className: string = '';
 }

@@ -9,7 +9,7 @@ import {
   ControlFormControls,
   AppEntities,
   AppCollections,
-  ControlFormControlsKeys,
+  ControlFormcontrolsIndicators,
 } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue, createForm } from '@utils';
@@ -30,7 +30,7 @@ export class FractalFactory implements Fractal {
   }
 
   get sort(): string[] {
-    return this.has(SplitIndicators.Sort) ? this.splitControlData(SplitIndicators.Sort) : this.childrenKeys;
+    return this.has(SplitIndicators.Sort) ? this.splitControlData(SplitIndicators.Sort) : this.childrenIndicators;
   }
 
   get cursor(): string {
@@ -57,11 +57,11 @@ export class FractalFactory implements Fractal {
     return Object.values(this.dto.controls);
   }
 
-  get childrenKeys(): string[] {
+  get childrenIndicators(): string[] {
     return Object.keys(this.fractals || {});
   }
 
-  get controlsKeys(): string[] {
+  get controlsIndicators(): string[] {
     return Object.keys(this.dto.controls);
   }
 
@@ -101,7 +101,7 @@ export class FractalFactory implements Fractal {
 
   getFormControls(name: string): ControlFormControls {
     const formRecord = this.form.controls[name];
-    return Object.values(ControlFormControlsKeys).reduce((acc, field) => {
+    return Object.values(ControlFormcontrolsIndicators).reduce((acc, field) => {
       acc[field] = formRecord.controls[field];
       return acc;
     }, {} as ControlFormControls);
@@ -118,7 +118,7 @@ export class FractalFactory implements Fractal {
 
   updateFractalByForm(): FractalDto {
     for (const indicator in this.dto.controls) {
-      Object.values(ControlFormControlsKeys).forEach(key => {
+      Object.values(ControlFormcontrolsIndicators).forEach(key => {
         this.dto.controls[indicator][key] = this.form.controls[indicator].value[key];
       });
     }

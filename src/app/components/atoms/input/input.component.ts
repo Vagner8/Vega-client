@@ -11,7 +11,7 @@ import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@m
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  @Input() name: string = '';
+  @Input() label: string = '';
   @Input() formCtr!: FormControl;
   @Input() className: string = '';
 }
